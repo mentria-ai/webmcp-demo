@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>Decision Wheel | Mentria</title>
+    <meta name="description" content="Can&#39;t decide? Spin the wheel and let fate choose. Works offline.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/tools/decision-wheel/">
+    <meta property="og:title" content="Decision Wheel | Mentria">
+    <meta property="og:description" content="Can&#39;t decide? Spin the wheel and let fate choose. Works offline.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/tools/decision-wheel/">
+    <meta name="twitter:title" content="Decision Wheel | Mentria">
+    <meta name="twitter:description" content="Can&#39;t decide? Spin the wheel and let fate choose. Works offline.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/decision-wheel/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/decision-wheel/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/decision-wheel/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/decision-wheel/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/decision-wheel/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/decision-wheel/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "A creative studio for tools, experiments, and visual transmissions. Built with craft.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "en"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://webmcp.mentria.ai/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://webmcp.mentria.ai/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Decision Wheel", "item": "https://webmcp.mentria.ai/tools/decision-wheel/" }
+      ]
+    }
+    </script>
+<style>
+.dw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 0;
+  font-family: var(--font-mono);
+}
+
+.dw__stage {
+  position: relative;
+  width: min(340px, 80vw);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dw__ring-outer {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(34, 211, 238, 0.12);
+  pointer-events: none;
+}
+.dw__ring-outer::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px dashed rgba(34, 211, 238, 0.06);
+}
+
+.dw__wheel-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dw__wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  background: #0d0d0d;
+  box-shadow:
+    0 0 0 2px var(--term-border),
+    0 0 40px rgba(0,0,0,0.6),
+    inset 0 0 30px rgba(0,0,0,0.8);
+}
+
+.dw__wheel--spinning {
+  box-shadow:
+    0 0 0 2px rgba(34, 211, 238, 0.2),
+    0 0 60px rgba(34, 211, 238, 0.1),
+    inset 0 0 30px rgba(0,0,0,0.8);
+}
+
+.dw__segments { position: absolute; inset: 0; }
+
+.dw__segment {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--seg-angle), var(--seg-glow) 0%, var(--seg-soft) 100%);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dw__segment--active {
+  background: linear-gradient(var(--seg-angle), var(--seg-hi) 0%, var(--seg-soft) 100%);
+  box-shadow: inset 0 0 30px var(--seg-glow);
+}
+
+.dw__segment--winner {
+  background: linear-gradient(var(--seg-angle), var(--seg-hi) 0%, var(--seg-soft) 100%);
+  box-shadow: inset 0 0 40px var(--seg-glow), 0 0 20px var(--seg-soft);
+}
+
+.dw__options {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.dw__options-label {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--term-muted);
+}
+.dw__option-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.dw__option-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--term-fg);
+}
+.dw__option-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dw__option-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dw__option-remove {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: var(--text-sm);
+  line-height: 1;
+}
+.dw__option-form {
+  display: flex;
+  gap: var(--space-2);
+}
+.dw__option-input { flex: 1; min-width: 0; }
+
+.dw__hub {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a1a1a 0%, var(--term-bg) 100%);
+  border: 2px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 20px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  z-index: 2;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.dw__hub:hover {
+  border-color: var(--cyan-30);
+  box-shadow:
+    0 0 20px rgba(0,0,0,0.8),
+    0 0 12px var(--cyan-15),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.dw__hub::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--syn-cyan);
+  box-shadow: 0 0 10px var(--syn-cyan), 0 0 20px var(--cyan-30);
+}
+
+.dw__pointer {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.5));
+  animation: dw-pointer-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dw-pointer-pulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.4)); }
+  50% { filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.7)); }
+}
+
+.dw__result-wrap {
+  text-align: center;
+}
+
+.dw__result-label {
+  font-size: 0.65rem;
+  color: var(--term-muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.dw__result {
+  --result-color: var(--term-muted);
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--result-color);
+  min-height: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--result-color) 50%, transparent);
+  transition: color 0.3s ease;
+}
+
+.dw__result[data-outcome="yes"] { --result-color: var(--syn-green); }
+.dw__result[data-outcome="no"] { --result-color: var(--syn-pink); }
+.dw__result[data-outcome="upto"] { --result-color: var(--syn-cyan); }
+.dw__result[data-outcome="wait"] { --result-color: var(--syn-amber); }
+
+.dw__controls {
+  display: flex;
+  justify-content: center;
+}
+
+.dw__spin-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 0.7rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #000;
+  background: linear-gradient(135deg, var(--syn-cyan) 0%, #0ea5e9 100%);
+  box-shadow: 0 4px 20px var(--cyan-30);
+  transition: all 0.25s ease;
+}
+
+.dw__spin-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(34, 211, 238, 0.45);
+}
+
+.dw__spin-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+
+.dw__spin-icon {
+  font-size: 0.75rem;
+}
+
+.dw__legend {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--term-muted);
+}
+
+.dw__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dw__legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.dw__wheel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1px;
+  height: 100%;
+  background: var(--term-divider);
+  z-index: 1;
+}
+.dw__wheel::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--term-divider);
+  z-index: 1;
+}
+
+@media (max-width: 480px) {
+  .dw__legend {
+    gap: 0.75rem;
+    font-size: 0.7rem;
+  }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.decision-wheel.title","suffix":" | Mentria"},"desc":{"key":"tools.decision-wheel.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "en",
+        prefix: "",
+        tools: [
+          { slug: "search", title: "Search", category: "AI", keywords: "Find tools and feed posts. Type any query — keyword or natural language." },
+          { slug: "step-counter", title: "Step Counter", category: "Health", keywords: "Count your steps on a walk, right in the browser. Uses your phone's motion sensor — nothing is uploaded.", requires: "motion" },
+          { slug: "qr-scanner", title: "QR & Barcode Scanner + Generator", category: "Utility", keywords: "Scan QR codes and barcodes, or generate a QR code from any link or text — all on-device, nothing uploaded." },
+          { slug: "decision-wheel", title: "Decision Wheel", category: "Utility", keywords: "Can't decide? Spin the wheel and let fate choose. Works offline." },
+          { slug: "countdown-timer", title: "Countdown Timer", category: "Timer", keywords: "Set a duration or pick a target time. Up to 4 independent timers with alarm sound." },
+          { slug: "coin-flip", title: "Coin Flip", category: "Utility", keywords: "Heads or tails — flip a coin instantly. Run a best-of series for tiebreakers. Works offline." },
+          { slug: "quick-notes", title: "Quick Notes", category: "Productivity", keywords: "A minimal scratchpad that lives in your browser. Create multiple notes, auto-saved on every keystroke." },
+          { slug: "base64-codec", title: "Base64 Codec", category: "Developer", keywords: "Encode and decode text or files to and from Base64. Supports images, documents, and any file type. Everything runs locally in your browser." },
+          { slug: "totp", title: "TOTP", category: "Security", keywords: "Two-factor authentication codes that live in your browser, encrypted at rest. Nothing on a server." },
+          { slug: "exif", title: "EXIF Inspector", category: "Security", keywords: "See what a photo secretly carries — camera details, timestamps, GPS location — and download a clean copy with it all removed. Nothing is uploaded." },
+          { slug: "color-picker", title: "Color Picker", category: "Design", keywords: "Pick any color, view its HEX / RGB / HSL values, and generate harmonious palettes. Works offline." },
+          { slug: "annotate-image", title: "Annotate Image", category: "AI", keywords: "Upload an image and get an instant AI description, alt-text, transcription, or tags — with tested one-tap prompts. Runs locally in your browser, nothing uploaded." },
+          { slug: "ai-chat", title: "AI Chat", category: "AI", keywords: "Qwen3.5 running locally in your browser. No server, no API keys. Supports vision." },
+          { slug: "console", title: "Console", category: "AI", keywords: "Chat with the on-device model while it uses Mentria apps on a shared phone screen — or let it play a test user and report what it finds." },
+          { slug: "model-mirror", title: "Model Mirror", category: "AI", keywords: "Help deliver Mentria's on-device models peer-to-peer. Keep this tab open and your browser becomes a mirror." },
+          { slug: "quote", title: "Motivational Quote", category: "AI", keywords: "Original quotes generated by AI, running locally in your browser. No data leaves your device." },
+          { slug: "radio", title: "Infinite Radio", category: "AI", keywords: "AI-generated epic cinematic music, streaming infinitely. Learns your taste locally — no data leaves your device." },
+          { slug: "invoice", title: "Invoice Generator", category: "Utility", keywords: "Build clean, single-page invoices in your browser. Auto-saves as you type. Print to A4 or export to JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utility", keywords: "Write markdown, see a live preview, and download a clean professional PDF. Auto-saves to your browser. No data leaves your device." },
+          { slug: "tetris", title: "Tetris", category: "Game", keywords: "Stack tetrominoes. Clear lines. Speed ramps every 10 lines. Pieces in cyan, purple, pink, amber, green — the Mentria palette." },
+          { slug: "breakout", title: "Breakout", category: "Game", keywords: "Brick-buster meets paddle game. Catch falling powerups, clear the wall, survive levels that get faster and meaner. Runs locally — no data leaves your device." },
+          { slug: "flappy", title: "Flappy", category: "Game", keywords: "A paper plane threading a stack of command prompts. Tap, click, or press SPACE to flap. Don't crash the prompt." },
+          { slug: "minesweeper", title: "Minesweeper", category: "Game", keywords: "Classic logic puzzle in terminal dress. Click to dig, right-click (or F-mode) to flag. Numbers count adjacent mines. Don't pop the pink ones." },
+          { slug: "sudoku", title: "Sudoku", category: "Game", keywords: "Logic puzzle in terminal dress. Unique-solution generator, four difficulties, pencil marks. Runs locally — no data leaves your device." },
+          { slug: "ludo", title: "Ludo", category: "Game", keywords: "Four tokens home wins. Roll a six to break out, capture on contact, dodge to the safe stars. Play the bots or pass & play." },
+          { slug: "chess", title: "Chess", category: "Game", keywords: "Local engine, hot-seat, and online play — no servers. Full rules with castling, en passant, promotion; an alpha-beta engine with four strengths, eval bar, and hints." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Game", keywords: "Combat time trials in the browser — sprint, slide, mantle and a full-auto carbine across five dusk-lit courses. Medals, ghost racing, offline play." },
+          { slug: "extensions", title: "Extensions", category: "Utility", keywords: "Install private single-file extensions that live only on this device. They appear in your launcher and terminal — and never on the public site." },
+          { slug: "files", title: "Files", category: "Utility", keywords: "Browse, export, and delete the data Mentria tools store on this device. Everything stays local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Peer-to-peer chat, voice and video calls, and file drop. End-to-end encrypted, no accounts, no server in the middle.", url: "/comms/" },
+          { slug: "bubble-level", title: "Bubble Level", category: "Utility", keywords: "Turn your phone into a spirit level online — a bubble level online with no app needed, accurate to 0.1°, that works offline.", requires: "motion" },
+          { slug: "decibel-meter", title: "Decibel Meter", category: "Utility", keywords: "A sound level meter in your browser — measure noise in dB with your phone or laptop mic, no app to install." },
+          { slug: "compass", title: "Compass", category: "Utility", keywords: "A compass online with no app to install — open it in your browser and read your magnetic heading straight from your phone's sensor.", requires: "motion" },
+          { slug: "speedometer", title: "GPS Speedometer", category: "Utility", keywords: "A GPS speedometer online — no app to install. Live speed in km/h, mph or knots, plus trip distance, all computed on your device." },
+          { slug: "ruler", title: "Online Ruler", category: "Utility", keywords: "An online ruler in actual size — measure in cm, mm and inches right on the screen, and calibrate it with a bank card so the millimetres are real." }
+        ],
+        nav: [
+          { id: "home", title: "Home", href: "/" },
+          { id: "tools", title: "Tools", href: "/tools/" },
+          { id: "feed", title: "Feed", href: "/feed/" },
+          { id: "about", title: "About", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Search tools and pages…",
+          listLabel: "Search results",
+          noResults: "No matches",
+          recents: "Recent",
+          extensions: "Extensions",
+          actions: "Actions",
+          actNote: "Save note: “{text}”",
+          actNoteDone: "Note saved",
+          actNoteFail: "Couldn't save the note",
+          actTimer: "Start a {dur} timer",
+          actFlip: "Flip a coin",
+          actHeads: "Heads",
+          actTails: "Tails",
+          searchSite: "Search the site for “{q}”"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Skip to content</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/feed/"  class="nav-link" title="Feed" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+            </a>
+            <a href="/tools/" class="nav-link active" aria-current="page" title="Tools" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Tools</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/about/" class="nav-link nav-link--about" title="About" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">About</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Open command palette (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Current language: English" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="en">English</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/decision-wheel/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/decision-wheel/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/decision-wheel/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/decision-wheel/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/decision-wheel/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">decision-wheel</span></p>
+  <h1><i18n-t data-k="tools.decision-wheel.title">Decision Wheel</i18n-t></h1>
+  <p><i18n-t data-k="tools.decision-wheel.lede">Can&#39;t decide? Spin the wheel and let fate choose. Works offline.</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">What is this?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">Hide details</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.decision-wheel.title">What is Decision Wheel?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.decision-wheel.tldr">Spin a customizable wheel to pick from your own list of options. Add or remove choices on the fly; the outcome is selected locally with the browser&#39;s RNG. No accounts, no trackers, no server. Useful for restaurant picks, task assignment, or anything you would otherwise flip a coin for.</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-decision-wheel">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Toggle fullscreen" title="Toggle fullscreen" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">decision-wheel.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Toggle fullscreen" title="Toggle fullscreen" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="dw">
+  <div class="dw__stage">
+    <div class="dw__ring-outer"></div>
+
+    <div class="dw__wheel-wrap">
+      <div class="dw__pointer" aria-hidden="true">
+        <svg width="20" height="28" viewBox="0 0 20 28"><path d="M10 28L0 0h20z" fill="var(--syn-cyan)"/></svg>
+      </div>
+      <div class="dw__wheel" id="dw-wheel" role="img" aria-label="Decision wheel" data-i18na="aria-label=tool.decision-wheel.aria_wheel">
+        <div class="dw__segments" id="dw-segments"></div>
+        <button class="dw__hub" id="dw-hub" type="button" aria-label="Spin the wheel" data-i18na="aria-label=tool.decision-wheel.aria_spin"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dw__result-wrap">
+    <div class="dw__result-label"><i18n-t data-k="tool.decision-wheel.result_label">RESULT</i18n-t></div>
+    <div class="dw__result" id="dw-result" data-outcome="" role="status" aria-live="polite">
+      <span class="dw__result-text"><i18n-t data-k="tool.decision-wheel.result_ready">Ready</i18n-t></span>
+    </div>
+  </div>
+
+  <div class="dw__controls">
+    <button class="dw__spin-btn" id="dw-spin">
+      <span class="dw__spin-icon">&#x25B6;</span>
+      <i18n-t data-k="tool.decision-wheel.btn_spin">Spin</i18n-t>
+    </button>
+  </div>
+
+  <div class="dw__options">
+    <div class="dw__options-label" id="dw-options-label"><i18n-t data-k="tool.decision-wheel.options_label">Wheel options</i18n-t></div>
+    <ul class="dw__option-list" id="dw-option-list" aria-labelledby="dw-options-label"></ul>
+    <form class="dw__option-form" id="dw-option-form">
+      <input class="m-input dw__option-input" id="dw-option-input" maxlength="24" autocomplete="off" placeholder="Add an option…" aria-label="Add an option…" data-i18na="placeholder=tool.decision-wheel.add_placeholder;aria-label=tool.decision-wheel.add_placeholder">
+      <button type="submit" class="m-btn m-btn--ghost" id="dw-option-add"><i18n-t data-k="tool.decision-wheel.btn_add">Add</i18n-t></button>
+      <button type="button" class="m-btn m-btn--ghost" id="dw-option-reset"><i18n-t data-k="tool.decision-wheel.btn_reset">Reset</i18n-t></button>
+    </form>
+  </div>
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="More tools" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">More tools</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/tools/extensions/">
+        <span class="related-tools__name"><i18n-t data-k="tools.extensions.title">Extensions</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utility</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/tools/files/">
+        <span class="related-tools__name"><i18n-t data-k="tools.files.title">Files</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utility</i18n-t></span>
+      </a>
+    </li>
+    <li data-requires="motion">
+      <a class="related-tools__chip" href="/tools/bubble-level/">
+        <span class="related-tools__name"><i18n-t data-k="tools.bubble-level.title">Bubble Level</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utility</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/comms/">
+        <span class="related-tools__name"><i18n-t data-k="tools.comms.title">Comms</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Social">Social</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/tools/"><i18n-t data-k="tools_page.related_all">All tools</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Decision Wheel",
+  "url": "https://webmcp.mentria.ai/tools/decision-wheel/",
+  "description": "Can&#39;t decide? Spin the wheel and let fate choose. Works offline.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "en"
+}
+</script>
+
+
+<script>
+(() => {
+  const COPY = {
+    yes:  "Yes",
+    no:   "No",
+    upto: "Up to you",
+    wait: "Wait & try again",
+    errMin: "Keep at least 2 options",
+    errMax: "Up to 8 options",
+    btnRemove: "Remove {name}"
+  };
+  const DEFAULTS = [COPY.yes, COPY.no, COPY.upto, COPY.wait];
+  const PALETTE = [
+    { dot: "var(--syn-green)",  hi: "var(--green-30)",  glow: "var(--green-15)",  soft: "var(--green-8)" },
+    { dot: "var(--syn-pink)",   hi: "var(--pink-30)",   glow: "var(--pink-15)",   soft: "var(--pink-10)" },
+    { dot: "var(--syn-cyan)",   hi: "var(--cyan-30)",   glow: "var(--cyan-15)",   soft: "var(--cyan-8)" },
+    { dot: "var(--syn-amber)",  hi: "var(--amber-30)",  glow: "var(--amber-15)",  soft: "var(--amber-8)" },
+    { dot: "var(--syn-purple)", hi: "var(--purple-20)", glow: "var(--purple-20)", soft: "var(--purple-8)" },
+    { dot: "var(--syn-orange)", hi: "var(--orange-30)", glow: "var(--orange-15)", soft: "var(--orange-8)" }
+  ];
+  const MINN = 2, MAXN = 8;
+  const NS = "tools", KEY = "decision_wheel_options";
+
+  const wheel = document.getElementById("dw-wheel");
+  const segWrap = document.getElementById("dw-segments");
+  const resultEl = document.getElementById("dw-result");
+  const resultText = resultEl.querySelector(".dw__result-text");
+  const spinBtn = document.getElementById("dw-spin");
+  const hubBtn = document.getElementById("dw-hub");
+  const listEl = document.getElementById("dw-option-list");
+  const formEl = document.getElementById("dw-option-form");
+  const inputEl = document.getElementById("dw-option-input");
+  const resetBtn = document.getElementById("dw-option-reset");
+  const readyLabel = resultText.textContent;
+  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function loadOptions() {
+    try {
+      const v = window.MentriaStore && window.MentriaStore.get(NS, KEY);
+      if (Array.isArray(v)) {
+        const clean = v.filter((x) => typeof x === "string" && x.trim()).map((x) => x.trim().slice(0, 24));
+        if (clean.length >= MINN && clean.length <= MAXN) return clean;
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  let options = loadOptions() || DEFAULTS.slice();
+  let customized = !!loadOptions();
+  let segments = [];
+
+  function persist() {
+    if (!window.MentriaStore) return;
+    if (customized) window.MentriaStore.set(NS, KEY, options);
+    else window.MentriaStore.remove(NS, KEY);
+  }
+
+  function colorIdx(i, n) {
+    let c = i % PALETTE.length;
+    if (i === n - 1 && n > PALETTE.length && c === 0) c = 1;
+    return c;
+  }
+
+  function wedgeClip(a0, a1) {
+    const pts = ["50% 50%"];
+    const step = Math.min(22.5, a1 - a0);
+    for (let a = a0; a < a1 + 0.01; a += step) {
+      const ang = Math.min(a, a1) * Math.PI / 180;
+      const x = 50 + 150 * Math.sin(ang);
+      const y = 50 - 150 * Math.cos(ang);
+      pts.push(x.toFixed(2) + "% " + y.toFixed(2) + "%");
+    }
+    return "polygon(" + pts.join(", ") + ")";
+  }
+
+  function buildWheel() {
+    segWrap.innerHTML = "";
+    segments = [];
+    const angle = 360 / options.length;
+    options.forEach((label, i) => {
+      const pal = PALETTE[colorIdx(i, options.length)];
+      const d = document.createElement("div");
+      d.className = "dw__segment";
+      d.style.clipPath = wedgeClip(i * angle, (i + 1) * angle);
+      d.style.setProperty("--seg-angle", (i * angle + angle / 2) + "deg");
+      d.style.setProperty("--seg-hi", pal.hi);
+      d.style.setProperty("--seg-glow", pal.glow);
+      d.style.setProperty("--seg-soft", pal.soft);
+      segWrap.appendChild(d);
+      segments.push(d);
+    });
+  }
+
+  function renderOptions() {
+    listEl.innerHTML = "";
+    options.forEach((label, i) => {
+      const pal = PALETTE[colorIdx(i, options.length)];
+      const li = document.createElement("li");
+      li.className = "dw__option-row";
+      const dot = document.createElement("span");
+      dot.className = "dw__option-dot";
+      dot.style.background = pal.dot;
+      const text = document.createElement("span");
+      text.className = "dw__option-text";
+      text.textContent = label;
+      const rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "dw__option-remove m-btn m-btn--ghost m-btn--icon";
+      rm.textContent = "\u00d7";
+      rm.setAttribute("aria-label", COPY.btnRemove.replace("{name}", label));
+      rm.disabled = options.length <= MINN;
+      rm.addEventListener("click", () => {
+        if (options.length <= MINN) return;
+        options.splice(i, 1);
+        customized = true;
+        applyChange();
+      });
+      li.append(dot, text, rm);
+      listEl.appendChild(li);
+    });
+  }
+
+  function resetResult() {
+    resultText.textContent = readyLabel;
+    resultEl.dataset.outcome = "";
+    resultEl.style.removeProperty("--result-color");
+  }
+
+  function applyChange() {
+    persist();
+    buildWheel();
+    renderOptions();
+    resetResult();
+  }
+
+  formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const v = inputEl.value.trim().slice(0, 24);
+    if (!v) return;
+    if (options.length >= MAXN) {
+      if (window.MentriaUI) MentriaUI.toast(COPY.errMax);
+      return;
+    }
+    options.push(v);
+    customized = true;
+    inputEl.value = "";
+    applyChange();
+    inputEl.focus();
+  });
+
+  resetBtn.addEventListener("click", () => {
+    options = DEFAULTS.slice();
+    customized = false;
+    applyChange();
+  });
+
+  function rand() {
+    try { return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296; }
+    catch (_) { return Math.random(); }
+  }
+
+  let rotation = 0;
+  let velocity = 0;
+  let animating = false;
+  let lastActiveIndex = -1;
+  const FRICTION = 0.985;
+  const STOP_THRESHOLD = 0.3;
+
+  function getSegmentAtPointer() {
+    const angle = 360 / options.length;
+    const norm = ((rotation % 360) + 360) % 360;
+    const pointerAngle = (360 - norm) % 360;
+    return Math.floor(pointerAngle / angle) % options.length;
+  }
+
+  function highlightSegment(index) {
+    if (index === lastActiveIndex) return;
+    segments.forEach((s2) => s2.classList.remove("dw__segment--active"));
+    if (index >= 0 && index < segments.length) segments[index].classList.add("dw__segment--active");
+    lastActiveIndex = index;
+  }
+
+  function settle(finalIndex) {
+    const pal = PALETTE[colorIdx(finalIndex, options.length)];
+    resultText.textContent = options[finalIndex];
+    resultEl.style.setProperty("--result-color", pal.dot);
+    segments.forEach((s2) => s2.classList.remove("dw__segment--active"));
+    segments[finalIndex].classList.add("dw__segment--winner");
+    lastActiveIndex = -1;
+    if (navigator.vibrate) { try { navigator.vibrate(30); } catch (_) {} }
+  }
+
+  function tick() {
+    if (!animating) return;
+    velocity *= FRICTION;
+    rotation += velocity;
+    wheel.style.transform = "rotate(" + rotation + "deg)";
+    highlightSegment(getSegmentAtPointer());
+    if (velocity < STOP_THRESHOLD) {
+      animating = false;
+      velocity = 0;
+      wheel.classList.remove("dw__wheel--spinning");
+      settle(getSegmentAtPointer());
+      return;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function spin() {
+    segments.forEach((s2) => s2.classList.remove("dw__segment--winner"));
+    resultText.textContent = "...";
+    resultEl.dataset.outcome = "";
+    if (reducedMotion) {
+      const n = options.length;
+      const angle = 360 / n;
+      const finalIndex = Math.floor(rand() * n);
+      rotation = (360 - (finalIndex * angle + angle / 2)) % 360;
+      wheel.style.transform = "rotate(" + rotation + "deg)";
+      settle(finalIndex);
+      return;
+    }
+    velocity += 15 + rand() * 10 + rand() * 8;
+    if (velocity > 80) velocity = 80;
+    wheel.classList.add("dw__wheel--spinning");
+    if (!animating) {
+      animating = true;
+      requestAnimationFrame(tick);
+    }
+  }
+
+  if (spinBtn) spinBtn.addEventListener("click", spin);
+
+  import('/assets/js/mentria-bus.js').then(({ MentriaBus }) => {
+    MentriaBus.provide('wheel.spin', async (p) => {
+      const o = p || {};
+      if (Array.isArray(o.options)) {
+        const clean = o.options.map((s) => String(s).trim().slice(0, 24)).filter(Boolean);
+        if (clean.length < MINN || clean.length > MAXN) throw new Error('need ' + MINN + '-' + MAXN + ' options');
+        options = clean;
+        customized = true;
+        applyChange();
+      }
+      if (animating) throw new Error('the wheel is already spinning');
+      spin();
+      await new Promise((r) => setTimeout(r, 900));
+      for (let i = 0; i < 40 && animating; i++) await new Promise((r) => setTimeout(r, 150));
+      if (animating) {
+        animating = false;
+        velocity = 0;
+        wheel.classList.remove("dw__wheel--spinning");
+        settle(getSegmentAtPointer());
+      }
+      const winner = resultText.textContent.trim();
+      if (!winner || winner === '...') throw new Error('the spin did not settle');
+      return { winner, options: options.slice() };
+    }, { description: 'Spin the decision wheel and return the winning option. Optionally replace the options (2-8 short strings) first.', parameters: { type: 'object', properties: { options: { type: 'array', items: { type: 'string' } } } }, ai: true });
+  });
+  if (hubBtn) hubBtn.addEventListener("click", spin);
+
+  buildWheel();
+  renderOptions();
+})();
+</script>
+
+
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="App navigation" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Home</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Open command palette (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Search</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Install Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Add to home screen — works offline.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Install</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Dismiss" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Dismiss" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Install Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Install Mentria on iPhone",
+    macosTitle:  "Install Mentria on Mac",
+    chromeTitle: "Install Mentria",
+    iosStep1:    "Tap the <strong>Share</strong> button at the bottom of the screen",
+    iosStep2:    "Choose <strong>Add to Home Screen</strong>",
+    iosStep3:    "Tap <strong>Add</strong> in the top-right corner.",
+    macosStep1:  "Open this page in <strong>Safari 17+</strong>.",
+    macosStep2:  "From the menu bar, choose <strong>File → Add to Dock…</strong>",
+    macosStep3:  "Click <strong>Add</strong>.",
+    chromeStep1: "Click the <strong>install</strong> icon in your browser's address bar.",
+    chromeStep2: "Or open the menu (⋮) and choose <strong>Install Mentria</strong>.",
+    note:        "Once installed, Mentria runs offline and your local data stays on your device."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Cancel</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "Confirm";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "Couldn't save — your browser storage is full. Free up space to keep your changes.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("This downloads a large AI model (490 MB or more, depending on the model) and you appear to be on a slow or data-saving connection. Continue?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Share";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "About this tool");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Feature-test build (WebMCP submission snapshot), frozen for testing. For general use, go to <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

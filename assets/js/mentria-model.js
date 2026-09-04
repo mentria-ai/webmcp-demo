@@ -1,0 +1,313 @@
+import * as Tiers from '/assets/js/mentria-tiers.js';
+
+const IS_MOBILE = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+const PROBE_TIMEOUT = IS_MOBILE ? 120000 : 60000;
+const PROBE_STILL_MS = 20000;
+const READY_LINGER = 600;
+
+const DEFAULT_COPY = {
+  checking: 'Checking your device…',
+  testing: 'Testing the {name} model…',
+  still: 'Still working — the first run compiles shaders and can take a minute or two on phones.',
+  ready: '✓ {name} ready',
+  degrade: '{from} isn’t supported on this device — using {to}',
+  failed: 'Couldn’t run an on-device model on this device.',
+  chooseTitle: 'Choose your AI model',
+  chooseHint: 'Your device can run up to {name}. Bigger models are smarter but download more.',
+  choosePitch: 'Runs fully on your device — private, free, and works offline after the one-time download.',
+  chooseSample: 'Ask things like “explain quantum computing simply” and the answer is generated on your own hardware.',
+  chooseNotNow: 'Not now'
+};
+
+function t(key, vars) {
+  let s = DEFAULT_COPY[key];
+  try {
+    if (window.MentriaI18n && window.MentriaI18n.t) {
+      const v = window.MentriaI18n.t('tools.model.' + key);
+      if (v != null) s = v;
+    }
+  } catch (_) {}
+  return vars ? s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] != null ? vars[k] : m)) : s;
+}
+
+export class NoWebGpuError extends Error {
+  constructor() { super('no-webgpu'); this.name = 'NoWebGpuError'; }
+}
+
+function tierName(id) { return (Tiers.TIERS[id] && Tiers.TIERS[id].name) || id; }
+function tierSize(id) { return (Tiers.TIERS[id] && Tiers.TIERS[id].sizeLabel) || ''; }
+
+function ensureOverlayStyle() {
+  if (document.getElementById('mm-gate-style')) return;
+  const st = document.createElement('style');
+  st.id = 'mm-gate-style';
+  st.textContent = '.mm-gate{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);font-family:var(--font-mono,monospace)}.mm-gate[hidden]{display:none}.mm-gate__card{position:relative;background:#0d1014;border:1px solid #2a3138;border-radius:10px;padding:1.2rem 1.4rem;width:100%;max-width:22rem;display:flex;flex-direction:column;gap:.7rem}.mm-gate__title{font-size:.9rem;color:var(--accent,#6ef3c5)}.mm-gate__bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}.mm-gate__fill{height:100%;width:0;background:var(--accent,#6ef3c5);transition:width .3s}.mm-gate__detail{font-size:.75rem;color:var(--muted,#9ba6b1);min-height:1em}.mm-gate__actions{display:flex;flex-direction:column;gap:.5rem;margin-top:.2rem}.mm-gate__actions[hidden]{display:none}.mm-gate__btn{font:inherit;text-align:left;background:#0a0d10;border:1px solid #2a3138;color:#e6edf3;padding:.6rem .8rem;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;gap:1rem}.mm-gate__btn:hover{border-color:var(--accent,#6ef3c5);color:var(--accent,#6ef3c5)}.mm-gate__btn-size{color:var(--muted,#9ba6b1);font-size:.78rem}.mm-gate__detail{display:flex;flex-direction:column;gap:.45rem}.mm-gate__pitch{color:#e6edf3}.mm-gate__sample{color:var(--muted,#9ba6b1);font-style:italic}.mm-gate__hint{color:var(--muted,#9ba6b1)}.mm-gate__btn--ghost{justify-content:center;color:var(--muted,#9ba6b1);border-style:dashed}@media (prefers-reduced-motion: no-preference){.mm-gate__card{overflow:hidden}.mm-gate__card::before{content:\'\';position:absolute;left:0;right:0;top:0;height:30%;background:linear-gradient(transparent,rgba(110,243,197,.07),transparent);animation:mm-sweep 1.4s ease-in-out infinite;pointer-events:none}@keyframes mm-sweep{from{transform:translateY(-120%)}to{transform:translateY(420%)}}}';
+  document.head.appendChild(st);
+}
+
+function overlay() {
+  let el = document.getElementById('mm-gate');
+  if (el) return el;
+  ensureOverlayStyle();
+  el = document.createElement('div');
+  el.id = 'mm-gate';
+  el.className = 'mm-gate';
+  el.hidden = true;
+  const card = document.createElement('div');
+  card.className = 'mm-gate__card';
+  card.setAttribute('role', 'dialog');
+  card.setAttribute('aria-modal', 'true');
+  card.setAttribute('aria-labelledby', 'mm-gate-title');
+  const title = document.createElement('div');
+  title.className = 'mm-gate__title';
+  title.id = 'mm-gate-title';
+  title.setAttribute('role', 'heading');
+  title.setAttribute('aria-level', '2');
+  const bar = document.createElement('div');
+  bar.className = 'mm-gate__bar';
+  const fill = document.createElement('div');
+  fill.className = 'mm-gate__fill';
+  bar.appendChild(fill);
+  const detail = document.createElement('div');
+  detail.className = 'mm-gate__detail';
+  detail.setAttribute('role', 'status');
+  detail.setAttribute('aria-live', 'polite');
+  const actions = document.createElement('div');
+  actions.className = 'mm-gate__actions';
+  actions.hidden = true;
+  card.append(title, bar, detail, actions);
+  el.appendChild(card);
+  document.body.appendChild(el);
+  return el;
+}
+
+function show(title, detail) {
+  const el = overlay();
+  el.querySelector('.mm-gate__title').textContent = title;
+  el.querySelector('.mm-gate__detail').textContent = detail || '';
+  el.querySelector('.mm-gate__bar').style.display = '';
+  const actions = el.querySelector('.mm-gate__actions');
+  actions.innerHTML = '';
+  actions.hidden = true;
+  el.hidden = false;
+  return el;
+}
+
+function offerChoice(choices) {
+  const el = overlay();
+  el.querySelector('.mm-gate__title').textContent = t('chooseTitle');
+  const detail = el.querySelector('.mm-gate__detail');
+  detail.textContent = '';
+  const pitch = document.createElement('span');
+  pitch.className = 'mm-gate__pitch';
+  pitch.textContent = t('choosePitch');
+  const sample = document.createElement('span');
+  sample.className = 'mm-gate__sample';
+  sample.textContent = t('chooseSample');
+  const hint = document.createElement('span');
+  hint.className = 'mm-gate__hint';
+  hint.textContent = t('chooseHint', { name: tierName(choices[0]) });
+  detail.append(pitch, sample, hint);
+  el.querySelector('.mm-gate__bar').style.display = 'none';
+  const actions = el.querySelector('.mm-gate__actions');
+  actions.innerHTML = '';
+  actions.hidden = false;
+  el.hidden = false;
+  return new Promise((resolve) => {
+    let done = false;
+    const prevFocus = document.activeElement;
+    const inerted = Array.prototype.slice.call(document.body.children).filter((c) => c !== el && !c.hasAttribute('inert'));
+    inerted.forEach((c) => c.setAttribute('inert', ''));
+    const finish = (id) => {
+      if (done) return;
+      done = true;
+      actions.hidden = true;
+      document.removeEventListener('keydown', onKey);
+      el.removeEventListener('click', onBackdrop);
+      inerted.forEach((c) => c.removeAttribute('inert'));
+      if (prevFocus && prevFocus.focus) { try { prevFocus.focus(); } catch (_) {} }
+      resolve(id);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); finish('postpone'); return; }
+      if (e.key === 'Tab') {
+        const btns = Array.prototype.slice.call(actions.querySelectorAll('button'));
+        if (!btns.length) return;
+        const first = btns[0], last = btns[btns.length - 1];
+        if (!actions.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    const onBackdrop = (e) => { if (e.target === el) finish('postpone'); };
+    document.addEventListener('keydown', onKey);
+    el.addEventListener('click', onBackdrop);
+    choices.forEach((id) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mm-gate__btn';
+      const nm = document.createElement('span');
+      nm.textContent = tierName(id);
+      const sz = document.createElement('span');
+      sz.className = 'mm-gate__btn-size';
+      sz.textContent = tierSize(id);
+      b.append(nm, sz);
+      b.addEventListener('click', () => finish(id));
+      actions.appendChild(b);
+    });
+    const notNow = document.createElement('button');
+    notNow.type = 'button';
+    notNow.className = 'mm-gate__btn mm-gate__btn--ghost';
+    notNow.textContent = t('chooseNotNow');
+    notNow.addEventListener('click', () => finish('postpone'));
+    actions.appendChild(notNow);
+    const firstBtn = actions.querySelector('button');
+    if (firstBtn) firstBtn.focus();
+  });
+}
+
+async function tierChoices() {
+  const d = await Tiers.decideTier();
+  const set = new Set([d.tier].concat(d.eligible || []));
+  set.add('0.8b');
+  return Tiers.TIER_CHAIN.filter((id) => set.has(id));
+}
+
+function setProgress(p) {
+  const el = document.getElementById('mm-gate');
+  if (!el || el.hidden) return;
+  let ratio = null;
+  if (p && typeof p.progress === 'number') ratio = p.progress;
+  else if (p && p.total) ratio = p.loaded / p.total;
+  if (ratio == null) return;
+  const fill = el.querySelector('.mm-gate__fill');
+  if (fill) fill.style.width = Math.round(Math.max(0, Math.min(1, ratio)) * 100) + '%';
+}
+
+function hide() {
+  const el = document.getElementById('mm-gate');
+  if (el) el.hidden = true;
+}
+
+async function probeOnce(engine) {
+  let timer;
+  let stillTimer;
+  let firstToken;
+  const alive = new Promise((res) => { firstToken = res; });
+  const run = engine.generate({ messages: [{ role: 'user', content: 'hi' }], maxTokens: 2, temperature: 0, enableThinking: false }, () => { firstToken(); });
+  const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error('validation timeout')), PROBE_TIMEOUT); });
+  stillTimer = setTimeout(() => {
+    const el = document.getElementById('mm-gate');
+    if (el && !el.hidden) {
+      const detail = el.querySelector('.mm-gate__detail');
+      if (detail) detail.textContent = t('still');
+    }
+  }, PROBE_STILL_MS);
+  try { await Promise.race([run, alive, timeout]); } finally { clearTimeout(timer); clearTimeout(stillTimer); }
+}
+
+async function validateRun(engine) {
+  try {
+    await probeOnce(engine);
+  } catch (e) {
+    if (!e || e.message !== 'validation timeout') throw e;
+    await probeOnce(engine);
+  }
+}
+
+function requestPersistentStorage() {
+  try {
+    if (window.MentriaStore && window.MentriaStore.requestPersist) { window.MentriaStore.requestPersist(); return; }
+    if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+  } catch (_) {}
+}
+
+export async function ensureModel(engineFactory, opts) {
+  opts = opts || {};
+  const vision = !!opts.vision;
+  const onProgress = opts.onProgress || null;
+  const onDeviceLost = opts.onDeviceLost || null;
+  const offerUpgrade = !!opts.offerUpgrade;
+  const cachedOnly = !!opts.cachedOnly;
+
+  if (typeof navigator === 'undefined' || !navigator.gpu) throw new NoWebGpuError();
+
+  const makeEngine = () => {
+    const e = engineFactory();
+    e.onProgress = (p) => { setProgress(p); if (onProgress) onProgress(p); };
+    return e;
+  };
+
+  const attachDeviceLost = (engine, tier) => {
+    engine.onDeviceLost = (info) => {
+      try {
+        const idx = Tiers.TIER_CHAIN.indexOf(tier);
+        const lower = Tiers.TIER_CHAIN[idx + 1];
+        if (lower) Tiers.setTierCap(lower);
+        Tiers.clearValidatedTier();
+      } catch (_) {}
+      if (onDeviceLost) onDeviceLost(info);
+    };
+    return engine;
+  };
+
+  if (cachedOnly) {
+    const c = await Tiers.effectiveTier({ cachedOnly: true });
+    if (!c) throw new Error('model-not-cached');
+    const res = await Tiers.loadWithFallback(makeEngine, c, { vision });
+    return { engine: attachDeviceLost(res.engine, res.tier), tier: res.tier, maxSeq: res.maxSeq };
+  }
+
+  if (offerUpgrade && !Tiers.getUserTier()) {
+    const choices = await tierChoices();
+    if (choices.length > 1) {
+      const pick = await offerChoice(choices);
+      if (pick === 'postpone') { hide(); throw new Error('download-postponed'); }
+      if (pick) Tiers.setUserTier(pick);
+    }
+  }
+
+  const candidate = await Tiers.effectiveTier();
+  if (!candidate) throw new NoWebGpuError();
+
+  const validated = Tiers.getValidatedTier();
+  const proven = validated && Tiers.TIERS[candidate].order <= Tiers.TIERS[validated].order;
+  const cached = await Tiers.isTierCached(candidate);
+
+  if (proven && cached) {
+    hide();
+    requestPersistentStorage();
+    const res = await Tiers.loadWithFallback(makeEngine, candidate, { vision });
+    if (res.tier !== candidate) Tiers.clearValidatedTier();
+    return { engine: attachDeviceLost(res.engine, res.tier), tier: res.tier, maxSeq: res.maxSeq };
+  }
+
+  show(t('checking'), t('testing', { name: tierName(candidate) }));
+  if (!cached && typeof window.mentriaConfirmHeavyDownload === 'function') {
+    const ok = await window.mentriaConfirmHeavyDownload();
+    if (!ok) { hide(); throw new Error('download-postponed'); }
+  }
+  requestPersistentStorage();
+  try {
+    const P2P = await import('/assets/js/mentria-p2p-models.js');
+    await Promise.race([
+      P2P.prefetchTier(Tiers, candidate, { vision, onStatus: (st) => setProgress({ progress: st.progress || 0 }) }),
+      new Promise((r) => setTimeout(r, 480000))
+    ]);
+  } catch (_) {}
+  try {
+    const res = await Tiers.loadWithFallback(makeEngine, candidate, {
+      vision,
+      validate: validateRun,
+      onFallback: (from, to) => { show(t('checking'), t('degrade', { from: tierName(from), to: tierName(to) })); }
+    });
+    Tiers.setValidatedTier(res.tier);
+    show(t('checking'), t('ready', { name: tierName(res.tier) }));
+    await new Promise((r) => setTimeout(r, READY_LINGER));
+    hide();
+    return { engine: attachDeviceLost(res.engine, res.tier), tier: res.tier, maxSeq: res.maxSeq };
+  } catch (e) {
+    hide();
+    throw e;
+  }
+}

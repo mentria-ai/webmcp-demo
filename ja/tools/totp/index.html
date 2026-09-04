@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>TOTP | Mentria</title>
+    <meta name="description" content="ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/ja/tools/totp/">
+    <meta property="og:title" content="TOTP | Mentria">
+    <meta property="og:description" content="ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/ja/tools/totp/">
+    <meta name="twitter:title" content="TOTP | Mentria">
+    <meta name="twitter:description" content="ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/totp/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/totp/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/totp/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/totp/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/totp/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/totp/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "ツール、実験、ビジュアル・トランスミッションのクリエイティブスタジオ。職人技で構築。",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "ja"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://webmcp.mentria.ai/ja/" },
+        { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://webmcp.mentria.ai/ja/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "TOTP", "item": "https://webmcp.mentria.ai/ja/tools/totp/" }
+      ]
+    }
+    </script>
+<style>
+  .totp { display: flex; flex-direction: column; gap: 18px; padding: var(--space-2) 0; }
+
+  .totp-autolock { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; }
+  .totp-autolock__label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--term-muted); }
+  .totp-autolock__seg { font-size: 11px; }
+  .totp-autolock__seg > button { padding: 4px 9px; }
+  .totp-locked { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  .totp-locked__h { font-family: var(--font-mono); font-size: var(--text-base); margin: 0; color: var(--accent, #6ef3c5); }
+  .totp-locked__p { font-size: 13px; color: var(--term-muted); margin: 0; }
+  .totp-setup, .totp-unlock { display: flex; flex-direction: column; gap: 10px; }
+
+  .totp-field { display: flex; flex-direction: column; gap: var(--space-1); }
+  .totp-field > span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--term-subtle); text-transform: uppercase; }
+  .totp-field input { background: var(--term-bg); border: 1px solid var(--term-border); color: var(--term-fg); padding: 8px 10px; border-radius: 5px; font-family: var(--font-mono); font-size: 13px; }
+  .totp-field input:focus { outline: none; border-color: var(--accent, #6ef3c5); }
+
+  .totp-strength { font-family: var(--font-mono); font-size: 10px; color: var(--term-subtle); min-height: 12px; }
+  .totp-strength[data-level="weak"]   { color: var(--syn-pink, #f25fa8); }
+  .totp-strength[data-level="medium"] { color: var(--syn-amber, #f7b015); }
+  .totp-strength[data-level="strong"] { color: var(--syn-green, #34c46a); }
+
+  .totp-divider { display: flex; align-items: center; gap: 10px; color: var(--term-subtle); font-family: var(--font-mono); font-size: 10px; }
+  .totp-divider::before, .totp-divider::after { content: ''; flex: 1; height: 1px; background: var(--term-border); }
+
+  .totp-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .totp-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .totp-empty { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--term-muted); text-align: center; padding: var(--space-5); }
+
+  .totp-row { display: flex; align-items: center; gap: 14px; padding: 12px 14px; background: var(--term-bg); border: 1px solid var(--term-border); border-radius: var(--radius-md); }
+  .totp-row__meta { flex: 1; min-width: 0; }
+  .totp-row__issuer { font-family: var(--font-mono); font-size: 11px; color: var(--term-subtle); text-transform: uppercase; letter-spacing: 0.1em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .totp-row__account { font-size: 12px; color: var(--term-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .totp-row__code-stack { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 0; }
+  .totp-row__code { font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.1em; color: var(--accent, #6ef3c5); cursor: pointer; user-select: all; padding: 4px 8px; border-radius: 4px; display: inline-block; will-change: transform, opacity; }
+  .totp-row__code:hover { background: rgba(110,243,197,0.08); }
+  .totp-row__code.is-copied { color: var(--syn-green, #34c46a); }
+  .totp-row__next { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--term-subtle); opacity: .85; padding: 0 8px; transition: color 0.3s ease; display: inline-block; will-change: transform, opacity; }
+  .totp-row__next.is-warning { color: var(--syn-amber, #f7b015); }
+  .totp-row__next-label { color: var(--term-subtle); margin-right: 4px; opacity: .7; }
+  .totp-row__code.is-flipping, .totp-row__next.is-flipping { animation: totp-flip 0.45s ease-out; }
+  @keyframes totp-flip {
+    0%   { transform: translateY(0); opacity: 1; }
+    45%  { transform: translateY(-6px); opacity: 0; }
+    55%  { transform: translateY(6px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  .totp-row__ring { width: 32px; height: 32px; flex-shrink: 0; }
+  .totp-row__ring circle { fill: none; stroke-width: 3; }
+  .totp-row__ring .bg { stroke: var(--term-border); }
+  .totp-row__ring .fg { stroke: var(--accent, #6ef3c5); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 0.95s linear; }
+  .totp-row__ring.warning .fg { stroke: var(--syn-amber, #f7b015); }
+  .totp-row__del { background: transparent; border: none; color: var(--term-subtle); cursor: pointer; padding: 4px 6px; font-family: var(--font-mono); font-size: 11px; }
+  .totp-row__del:hover { color: var(--syn-pink, #f25fa8); }
+
+  .totp [hidden] { display: none; }
+  .totp-modal__backdrop { position: absolute; inset: 0; }
+  .totp-modal__card { position: relative; z-index: 1; max-width: 480px; max-height: 90vh; overflow: auto; }
+  .totp-modal__h { font-family: var(--font-mono); font-size: 14px; margin: 0; color: var(--accent, #6ef3c5); }
+  .totp-modal__p { font-size: 13px; color: var(--term-muted); margin: 0; }
+  .totp-modal__or { font-family: var(--font-mono); font-size: 10px; color: var(--term-subtle); text-align: center; margin: 4px 0; }
+  .totp-modal__actions { display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: 6px; }
+
+  .totp-scanner { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+  .totp-scanner__video { width: 100%; aspect-ratio: 1; background: #000; border: 1px solid var(--syn-cyan, #67e8f9); border-radius: 6px; object-fit: cover; }
+  .totp-scanner__note { font-family: var(--font-mono); font-size: 11px; color: var(--syn-amber, #f7b015); margin: 0; }
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.totp.title","suffix":" | Mentria"},"desc":{"key":"tools.totp.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "ja",
+        prefix: "/ja",
+        tools: [
+          { slug: "search", title: "検索", category: "AI", keywords: "ツールとフィード投稿を検索。キーワードでも自然言語でも入力可能。" },
+          { slug: "step-counter", title: "歩数カウンター", category: "健康", keywords: "ブラウザ内で散歩中の歩数をカウント。スマホのモーションセンサーを使用 — アップロードは一切なし。", requires: "motion" },
+          { slug: "qr-scanner", title: "QR・バーコード スキャナー＆ジェネレーター", category: "ユーティリティ", keywords: "QRコードやバーコードをスキャンしたり、リンクやテキストからQRコードを生成したり——すべて端末内で処理し、何もアップロードしません。" },
+          { slug: "decision-wheel", title: "決定の輪", category: "ユーティリティ", keywords: "決められない？ホイールを回して運命に任せましょう。オフラインでも動作。" },
+          { slug: "countdown-timer", title: "カウントダウンタイマー", category: "タイマー", keywords: "時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。" },
+          { slug: "coin-flip", title: "コインフリップ", category: "ユーティリティ", keywords: "表か裏 — 即座にコインを投げる。タイブレーカーには best-of-N シリーズ。オフラインでも動作。" },
+          { slug: "quick-notes", title: "クイックノート", category: "生産性", keywords: "ブラウザに住むミニマルなスクラッチパッド。複数のノートを作成、キー入力ごとに自動保存。" },
+          { slug: "base64-codec", title: "Base64コーデック", category: "開発", keywords: "テキストやファイルをBase64にエンコード・デコード。画像、ドキュメント、あらゆるファイルタイプに対応。すべてブラウザ内でローカル実行。" },
+          { slug: "totp", title: "TOTP", category: "セキュリティ", keywords: "ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。" },
+          { slug: "exif", title: "EXIFインスペクター", category: "セキュリティ", keywords: "写真にひそかに含まれる情報 — カメラ情報、日時、GPS位置 — を表示し、すべて削除したクリーンなコピーを保存。アップロードは一切ありません。" },
+          { slug: "color-picker", title: "カラーピッカー", category: "デザイン", keywords: "好きな色を選んで HEX / RGB / HSL の値を表示し、調和の取れたパレットを生成。オフラインでも動作。" },
+          { slug: "annotate-image", title: "画像を注釈", category: "AI", keywords: "画像をアップロードすると、AIによる説明・代替テキスト・文字起こし・タグを即座に取得 — テスト済みのワンタップ・プロンプト付き。ブラウザ内でローカル実行、アップロードは一切なし。" },
+          { slug: "ai-chat", title: "AIチャット", category: "AI", keywords: "Qwen3.5がブラウザ内でローカル実行。サーバーなし、APIキー不要。画像入力対応。" },
+          { slug: "console", title: "コンソール", category: "AI", keywords: "共有のスマホ画面でデバイス上のモデルがMentriaのアプリを操作するのを見ながらチャット。テストユーザーとして探索させ、見つけたことを報告させることもできます。" },
+          { slug: "model-mirror", title: "モデルミラー", category: "AI", keywords: "Mentria のオンデバイスモデルの P2P 配信に協力できます。このタブを開いたままにすると、ブラウザがミラーになります。" },
+          { slug: "quote", title: "モチベーション名言", category: "AI", keywords: "AIが生成するオリジナルの名言、ブラウザ内でローカル実行。データはデバイスから出ません。" },
+          { slug: "radio", title: "無限ラジオ", category: "AI", keywords: "AI生成の壮大なシネマティック音楽、無限ストリーミング。あなたの好みをローカルで学習 — データはデバイスから出ません。" },
+          { slug: "invoice", title: "請求書ジェネレーター", category: "ユーティリティ", keywords: "ブラウザでクリーンな1ページ請求書を作成。入力中に自動保存。A4印刷またはJSONエクスポート。" },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "ユーティリティ", keywords: "Markdownを書いて、ライブプレビューを見て、クリーンでプロフェッショナルなPDFをダウンロード。ブラウザに自動保存。データはデバイスから出ません。" },
+          { slug: "tetris", title: "テトリス", category: "ゲーム", keywords: "テトロミノを積み上げる。ラインを消す。10ライン毎にスピードアップ。シアン・パープル・ピンク・アンバー・グリーンのピース — Mentriaパレット。" },
+          { slug: "breakout", title: "Breakout", category: "ゲーム", keywords: "ブロック崩しとパドルゲームの融合。落ちてくるパワーアップをキャッチし、壁を崩し、ますます速く厳しくなるレベルを生き抜こう。ローカル動作 — データはデバイスから出ません。" },
+          { slug: "flappy", title: "Flappy", category: "ゲーム", keywords: "ターミナルプロンプトの山を縫って飛ぶ紙飛行機。タップ・クリック・SPACEキーで羽ばたき。プロンプトに墜落しないように。" },
+          { slug: "minesweeper", title: "マインスイーパー", category: "ゲーム", keywords: "ターミナル風の伝統的な論理パズル。クリックで掘る、右クリック(またはFモード)で旗を立てる。数字は隣接する地雷を示す。ピンクは押さないで。" },
+          { slug: "sudoku", title: "数独", category: "ゲーム", keywords: "ターミナル装いの論理パズル。唯一解ジェネレーター、4段階の難易度、鉛筆メモ。すべて端末内で動作 — データは外に出ません。" },
+          { slug: "ludo", title: "ルド", category: "ゲーム", keywords: "4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。" },
+          { slug: "chess", title: "チェス", category: "ゲーム", keywords: "ローカルエンジン、交代プレイ、オンライン対戦 — サーバー不要。キャスリング・アンパッサン・昇格まで完全ルール。4段階のアルファベータエンジン、評価バー、ヒント。" },
+          { slug: "phosphor", title: "PHOSPHOR", category: "ゲーム", keywords: "ブラウザで遊べる戦闘タイムトライアル。夕暮れの5コースをスプリント、スライディング、乗り越えで駆け抜け、フルオートのカービンで撃つ。メダル、ゴースト対戦、オフライン対応。" },
+          { slug: "extensions", title: "拡張機能", category: "ユーティリティ", keywords: "このデバイスにのみ存在するプライベートな単一ファイル拡張機能をインストール。ランチャーとターミナルに表示され、公開サイトには絶対に載りません。" },
+          { slug: "files", title: "ファイル", category: "ユーティリティ", keywords: "Mentria のツールがこの端末に保存したデータを閲覧・エクスポート・削除できます。すべて端末内にとどまります。" },
+          { slug: "comms", title: "Comms", category: "ソーシャル", keywords: "ピアツーピアのチャット、音声・ビデオ通話、ファイル送信。エンドツーエンド暗号化、アカウント不要、中間サーバーなし。", url: "/comms/" },
+          { slug: "bubble-level", title: "水平器", category: "ユーティリティ", keywords: "スマホがそのまま水平器に。アプリ不要のブラウザ版バブルレベルで、0.1°まで表示、オフラインでも使えます。", requires: "motion" },
+          { slug: "decibel-meter", title: "騒音計", category: "ユーティリティ", keywords: "ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。" },
+          { slug: "compass", title: "コンパス", category: "ユーティリティ", keywords: "アプリ不要のコンパス。ブラウザで開くだけで、スマートフォンのセンサーから磁方位をそのまま読み取れます。", requires: "motion" },
+          { slug: "speedometer", title: "GPS スピードメーター", category: "ユーティリティ", keywords: "アプリ不要のブラウザ版 GPS スピードメーター。km/h・mph・ノットでリアルタイムの速度と走行距離を、すべて端末内で計算して表示します。" },
+          { slug: "ruler", title: "オンライン定規", category: "ユーティリティ", keywords: "画面上で実寸のまま測れるオンライン定規。cm・mm・インチに対応し、銀行カードで校正すればミリ単位まで正確になります。" }
+        ],
+        nav: [
+          { id: "home", title: "ホーム", href: "/" },
+          { id: "tools", title: "ツール", href: "/tools/" },
+          { id: "feed", title: "フィード", href: "/feed/" },
+          { id: "about", title: "概要", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "ツールとページを検索…",
+          listLabel: "検索結果",
+          noResults: "一致するものがありません",
+          recents: "最近使ったもの",
+          extensions: "拡張機能",
+          actions: "アクション",
+          actNote: "メモを保存: 「{text}」",
+          actNoteDone: "メモを保存しました",
+          actNoteFail: "メモを保存できませんでした",
+          actTimer: "{dur}のタイマーを開始",
+          actFlip: "コインを投げる",
+          actHeads: "表",
+          actTails: "裏",
+          searchSite: "サイト内で「{q}」を検索"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">コンテンツへスキップ</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/ja/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/ja/feed/"  class="nav-link" title="フィード" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+            </a>
+            <a href="/ja/tools/" class="nav-link active" aria-current="page" title="ツール" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">ツール</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="コムズ" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/ja/about/" class="nav-link nav-link--about" title="概要" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">概要</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="コマンドパレットを開く（⌘K）" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="現在の言語: 日本語" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="ja">日本語</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/totp/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/totp/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/totp/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/totp/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/totp/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/ja/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/ja/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">totp</span></p>
+  <h1><i18n-t data-k="tools.totp.title">TOTP</i18n-t></h1>
+  <p><i18n-t data-k="tools.totp.lede">ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">これは何?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">詳細を隠す</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.totp.title">TOTPとは?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.totp.tldr">標準準拠の TOTP (RFC 6238) を完全にブラウザ内で動作。シークレットは AES-GCM-256 で保存時に暗号化、マスターキーはパスフレーズ (PBKDF2-SHA256 × 60万回) と任意で WebAuthn PRF 由来のキー (Touch ID / Windows Hello) でラップ。最初のシークレット保存前に暗号化 JSON バックアップを必須化 — 唯一の認証器を失うとロックアウトされます。オフライン動作。アカウントも同期サーバも不要。</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-totp">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">totp.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="totp" id="totp">
+  <div class="totp-status m-status" id="totp-status" role="status" aria-live="polite"></div>
+
+  <div class="totp-locked" id="totp-locked" hidden>
+    <h2 class="totp-locked__h"><i18n-t data-k="tool.totp.locked_title">ロック中</i18n-t></h2>
+    <p class="totp-locked__p" id="totp-locked-lede"><i18n-t data-k="tool.totp.locked_lede_setup">パスフレーズを設定して保管庫を作成します。解除のたびに使用します。</i18n-t></p>
+
+    <div class="totp-setup" id="totp-setup" hidden>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.pass_label">パスフレーズ</i18n-t></span>
+        <input type="password" id="totp-setup-pass" autocomplete="new-password" minlength="8">
+      </label>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.pass_confirm">パスフレーズ確認</i18n-t></span>
+        <input type="password" id="totp-setup-pass2" autocomplete="new-password" minlength="8">
+      </label>
+      <div class="totp-strength" id="totp-setup-strength" aria-live="polite"></div>
+      <button type="button" class="totp-btn m-btn m-btn--primary" id="totp-setup-btn"><i18n-t data-k="tool.totp.setup_button">保管庫を作成</i18n-t></button>
+    </div>
+
+    <div class="totp-unlock" id="totp-unlock" hidden>
+      <button type="button" class="totp-btn m-btn m-btn--primary" id="totp-prf-btn" hidden><i18n-t data-k="tool.totp.unlock_prf">Touch ID / Hello で解除</i18n-t></button>
+      <div class="totp-divider" id="totp-divider" hidden><span><i18n-t data-k="tool.totp.or">または</i18n-t></span></div>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.pass_label">パスフレーズ</i18n-t></span>
+        <input type="password" id="totp-unlock-pass" autocomplete="current-password">
+      </label>
+      <button type="button" class="totp-btn m-btn m-btn--primary" id="totp-unlock-btn"><i18n-t data-k="tool.totp.unlock_button">解除</i18n-t></button>
+    </div>
+  </div>
+
+  <div class="totp-vault" id="totp-vault" hidden>
+    <div class="totp-toolbar">
+      <button type="button" class="totp-btn m-btn m-btn--ghost" id="totp-add-btn">+ <i18n-t data-k="tool.totp.add_button">アカウント追加</i18n-t></button>
+      <button type="button" class="totp-btn m-btn m-btn--ghost" id="totp-prf-enroll-btn" hidden><i18n-t data-k="tool.totp.enroll_prf">+ クイック解除 (Touch ID) を追加</i18n-t></button>
+      <button type="button" class="totp-btn m-btn m-btn--ghost" id="totp-backup-btn"><i18n-t data-k="tool.totp.backup_button">バックアップを保存</i18n-t></button>
+      <button type="button" class="totp-btn m-btn m-btn--ghost" id="totp-lock-btn"><i18n-t data-k="tool.totp.lock_button">ロック</i18n-t></button>
+      <span class="totp-autolock">
+        <span class="totp-autolock__label"><i18n-t data-k="tool.totp.autolock_label">自動ロック</i18n-t></span>
+        <div class="m-seg totp-autolock__seg" id="totp-autolock-seg">
+          <button type="button" data-value="5">5m</button>
+          <button type="button" data-value="15">15m</button>
+          <button type="button" data-value="0"><i18n-t data-k="tool.totp.autolock_off">オフ</i18n-t></button>
+        </div>
+      </span>
+    </div>
+
+    <ul class="totp-list" id="totp-list"></ul>
+    <p class="totp-empty" id="totp-empty" hidden><i18n-t data-k="tool.totp.empty_state">アカウントがまだありません。「アカウント追加」で開始してください。</i18n-t></p>
+  </div>
+
+  <div class="totp-modal m-modal" id="totp-add-modal" hidden>
+    <div class="totp-modal__backdrop" data-close></div>
+    <div class="totp-modal__card m-modal__card">
+      <h3 class="totp-modal__h"><i18n-t data-k="tool.totp.add_title">TOTP アカウントを追加</i18n-t></h3>
+      <button type="button" class="totp-btn m-btn m-btn--ghost" id="totp-scan-btn"><i18n-t data-k="tool.totp.scan_button">📷 QRコードをスキャン</i18n-t></button>
+      <div class="totp-scanner" id="totp-scanner" hidden>
+        <video class="totp-scanner__video" id="totp-scanner-video" playsinline muted></video>
+        <p class="totp-scanner__note" id="totp-scanner-note" hidden></p>
+        <button type="button" class="totp-btn m-btn m-btn--ghost" id="totp-scan-cancel-btn"><i18n-t data-k="tool.totp.scan_cancel">スキャンをキャンセル</i18n-t></button>
+      </div>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.paste_uri_label">otpauth:// URI を貼り付け</i18n-t></span>
+        <input type="text" id="totp-uri" autocomplete="off" spellcheck="false" inputmode="text" lang="en" dir="ltr" autocapitalize="off" placeholder="otpauth://totp/Example:user@example.com?secret=ABCD1234&issuer=Example">
+      </label>
+      <p class="totp-modal__or"><i18n-t data-k="tool.totp.or_manual">— または手動入力 —</i18n-t></p>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.issuer_label">発行者 (例: GitHub)</i18n-t></span>
+        <input type="text" id="totp-issuer" autocomplete="off">
+      </label>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.account_label">アカウント (例: user@example.com)</i18n-t></span>
+        <input type="text" id="totp-account" autocomplete="off">
+      </label>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.secret_label">シークレット (base32)</i18n-t></span>
+        <input type="text" id="totp-secret" autocomplete="off" spellcheck="false" lang="en" dir="ltr" autocapitalize="characters">
+      </label>
+      <div class="totp-modal__actions">
+        <button type="button" class="totp-btn m-btn m-btn--ghost" data-close><i18n-t data-k="tool.totp.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="totp-btn m-btn m-btn--primary" id="totp-save-btn"><i18n-t data-k="tool.totp.save_button">保存</i18n-t></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="totp-modal m-modal" id="totp-backup-modal" hidden>
+    <div class="totp-modal__backdrop" data-close></div>
+    <div class="totp-modal__card m-modal__card">
+      <h3 class="totp-modal__h" id="totp-backup-title"><i18n-t data-k="tool.totp.backup_gate_title">保存前にバックアップ</i18n-t></h3>
+      <p class="totp-modal__p" id="totp-backup-lede"><i18n-t data-k="tool.totp.backup_gate_lede">デバイスを失ったりパスフレーズを忘れると TOTP シークレットは復元できません。今すぐ暗号化バックアップを保存してください。任意のパスフレーズを使えます (保管庫と同じでも可)。</i18n-t></p>
+      <label class="totp-field">
+        <span><i18n-t data-k="tool.totp.backup_pass_label">バックアップ用パスフレーズ（8文字以上）</i18n-t></span>
+        <input type="password" id="totp-backup-pass" autocomplete="new-password" minlength="8">
+      </label>
+      <div class="totp-modal__actions">
+        <button type="button" class="totp-btn m-btn m-btn--ghost" data-close><i18n-t data-k="tool.totp.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="totp-btn m-btn m-btn--primary" id="totp-backup-confirm-btn"><i18n-t data-k="tool.totp.backup_gate_confirm">バックアップして保存</i18n-t></button>
+      </div>
+    </div>
+  </div>
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="その他のツール" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">その他のツール</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/exif/">
+        <span class="related-tools__name"><i18n-t data-k="tools.exif.title">EXIFインスペクター</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Security">セキュリティ</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/sudoku/">
+        <span class="related-tools__name"><i18n-t data-k="tools.sudoku.title">数独</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/ludo/">
+        <span class="related-tools__name"><i18n-t data-k="tools.ludo.title">ルド</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/chess/">
+        <span class="related-tools__name"><i18n-t data-k="tools.chess.title">チェス</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/ja/tools/"><i18n-t data-k="tools_page.related_all">すべてのツール</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TOTP",
+  "url": "https://webmcp.mentria.ai/ja/tools/totp/",
+  "description": "ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "ja"
+}
+</script>
+
+
+
+
+<script>
+(function () {
+  'use strict';
+
+  const NS = 'totp';
+  const VAULT_KEY = 'vault';
+
+  const $ = (id) => document.getElementById(id);
+  const COPY = {
+    setup_strength_too_short: "パスフレーズは 8 文字以上にしてください。",
+    setup_mismatch:           "パスフレーズが一致しません。",
+    strength_weak:            "弱い",
+    strength_medium:          "中",
+    strength_strong:          "強い",
+    unlock_failed:            "解除に失敗しました — パスフレーズが違うか保管庫が壊れています。",
+    prf_unsupported:          "Touch ID / パスキーがこのデバイスで利用できないか失敗しました。",
+    prf_enroll_done:          "このデバイスでクイック解除が登録されました。",
+    prf_enroll_failed:        "クイック解除の登録に失敗しました",
+    locked_lede_setup:        "パスフレーズを設定して保管庫を作成します。解除のたびに使用します。",
+    locked_lede_unlock:       "パスフレーズを入力して TOTP 保管庫を解除します。",
+    add_invalid_secret:       "シークレットが有効な base32 ではありません。",
+    add_secret_bad_chars:     "シークレットに無効な文字があります: {chars}。Base32 は A–Z と 2–7 のみです。0とO、1とI/L、8とB の取り違えに注意してください。",
+    add_invalid_uri:          "otpauth://totp/ URI として無効です。",
+    add_missing_fields:       "シークレットと、発行者またはアカウントを少なくとも 1 つ入力してください。",
+    delete_confirm:           "{name} を削除しますか?",
+    copied:                   "コピー済み",
+    copyFailed:               "コピー失敗 — 手動でCtrl+Cを使用してください。",
+    backup_required:          "バックアップファイル用のパスフレーズを入力してください (8 文字以上)。復元に必要です。",
+    backup_done:              "バックアップを保存しました。",
+    scan_unsupported:         "このデバイスではQRスキャンに対応していません。下のURIを貼り付けるか手動で入力してください。",
+    scan_denied:              "カメラへのアクセスが拒否されました。ブラウザ設定で許可してから再試行してください。",
+    scan_no_camera:           "このデバイスには利用可能なカメラがありません。",
+    scan_secure_required:     "カメラアクセスにはHTTPSが必要です。ローカルURLではなく公開サイトをご利用ください。",
+    scan_invalid_qr:          "このQRコードは otpauth://totp/ URI ではありません。TOTP設定用のQRで再試行してください。",
+    next_label:               "次:"
+  };
+
+  function b64uEnc(bytes) {
+    const u8 = new Uint8Array(bytes);
+    let s = '';
+    for (let i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]);
+    return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function b64uDec(str) {
+    const pad = str.length % 4 === 0 ? '' : '='.repeat(4 - (str.length % 4));
+    const bin = atob(str.replace(/-/g, '+').replace(/_/g, '/') + pad);
+    const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return u8;
+  }
+  function b32Dec(s) {
+    const cleaned = s.toUpperCase().replace(/[^A-Z2-7]/g, '');
+    if (!cleaned) throw new Error('empty');
+    const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+    const out = [];
+    let bits = 0, value = 0;
+    for (let i = 0; i < cleaned.length; i++) {
+      const v = alpha.indexOf(cleaned[i]);
+      if (v < 0) throw new Error('bad base32');
+      value = (value << 5) | v;
+      bits += 5;
+      if (bits >= 8) {
+        out.push((value >>> (bits - 8)) & 0xff);
+        bits -= 8;
+      }
+    }
+    return new Uint8Array(out);
+  }
+
+  async function pbkdf2(pass, salt, iter) {
+    const baseKey = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: iter, hash: 'SHA-256' },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  async function encryptWith(key, plaintextBytes) {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plaintextBytes);
+    return { iv: b64uEnc(iv), ct: b64uEnc(new Uint8Array(ct)) };
+  }
+  async function decryptWith(key, env) {
+    const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64uDec(env.iv) }, key, b64uDec(env.ct));
+    return new Uint8Array(pt);
+  }
+
+  function randomMasterKey() {
+    return crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
+  }
+  async function exportRaw(key) {
+    return new Uint8Array(await crypto.subtle.exportKey('raw', key));
+  }
+  async function importRaw(bytes) {
+    return crypto.subtle.importKey('raw', bytes, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  }
+
+  async function totpCode(secretBytes, opts) {
+    opts = opts || {};
+    const period = opts.period || 30;
+    const digits = opts.digits || 6;
+    const offset = opts.offset || 0;
+    const hash = { SHA1: 'SHA-1', SHA256: 'SHA-256', SHA512: 'SHA-512' }[(opts.algorithm || 'SHA1').toUpperCase()] || 'SHA-1';
+    const counter = Math.floor(Date.now() / 1000 / period) + offset;
+    const buf = new ArrayBuffer(8);
+    const view = new DataView(buf);
+    view.setUint32(4, counter >>> 0, false);
+    view.setUint32(0, Math.floor(counter / 0x100000000), false);
+    const key = await crypto.subtle.importKey('raw', secretBytes, { name: 'HMAC', hash: hash }, false, ['sign']);
+    const sig = new Uint8Array(await crypto.subtle.sign('HMAC', key, buf));
+    const off = sig[sig.length - 1] & 0x0f;
+    const code = ((sig[off] & 0x7f) << 24 | (sig[off + 1] & 0xff) << 16 | (sig[off + 2] & 0xff) << 8 | (sig[off + 3] & 0xff)) % Math.pow(10, digits);
+    return String(code).padStart(digits, '0');
+  }
+
+  function parseOtpauthUri(uri) {
+    if (!/^otpauth:\/\/totp\//i.test(uri)) throw new Error('not totp');
+    const u = new URL(uri);
+    const label = decodeURIComponent(u.pathname.replace(/^\/+/, ''));
+    const params = u.searchParams;
+    const secret = params.get('secret');
+    if (!secret) throw new Error('no secret');
+    let issuer = params.get('issuer') || '';
+    let account = label;
+    const colon = label.indexOf(':');
+    if (colon > -1) {
+      if (!issuer) issuer = label.slice(0, colon);
+      account = label.slice(colon + 1);
+    }
+    return {
+      issuer: issuer.trim(),
+      account: account.trim(),
+      secret_b32: secret.replace(/\s+/g, ''),
+      digits: parseInt(params.get('digits'), 10) || 6,
+      period: parseInt(params.get('period'), 10) || 30,
+      algorithm: (params.get('algorithm') || 'SHA1').toUpperCase()
+    };
+  }
+
+  function scorePass(s) {
+    if (!s) return { score: 0, label: 'weak' };
+    let score = 0;
+    if (s.length >= 8) score++;
+    if (s.length >= 12) score++;
+    if (s.length >= 16) score++;
+    if (/[A-Z]/.test(s) && /[a-z]/.test(s)) score++;
+    if (/[0-9]/.test(s)) score++;
+    if (/[^A-Za-z0-9]/.test(s)) score++;
+    if (score <= 2) return { score, label: 'weak' };
+    if (score <= 4) return { score, label: 'medium' };
+    return { score, label: 'strong' };
+  }
+
+  const PRF_INFO = new TextEncoder().encode('mentria-totp-prf-v1');
+  async function prfDeriveKey(prfResult) {
+    const baseKey = await crypto.subtle.importKey('raw', prfResult, 'HKDF', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info: PRF_INFO },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  const prfSupported = !!(window.PublicKeyCredential && window.isSecureContext && crypto.subtle);
+
+  async function prfCreate(salt) {
+    const cred = await navigator.credentials.create({
+      publicKey: {
+        challenge: crypto.getRandomValues(new Uint8Array(32)),
+        rp: { name: 'Mentria TOTP' },
+        user: { id: crypto.getRandomValues(new Uint8Array(16)), name: 'mentria-totp', displayName: 'Mentria TOTP' },
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+        authenticatorSelection: { residentKey: 'required', userVerification: 'required' },
+        extensions: { prf: { eval: { first: salt } } }
+      }
+    });
+    if (!cred) throw new Error('cancelled');
+    const ext = cred.getClientExtensionResults().prf;
+    if (!ext || ext.enabled === false) throw new Error('prf-unsupported');
+    return { credId: new Uint8Array(cred.rawId), prfResult: ext.results ? ext.results.first : null };
+  }
+  async function prfGet(credId, salt) {
+    const assertion = await navigator.credentials.get({
+      publicKey: {
+        challenge: crypto.getRandomValues(new Uint8Array(32)),
+        allowCredentials: [{ type: 'public-key', id: credId }],
+        userVerification: 'required',
+        extensions: { prf: { eval: { first: salt } } }
+      }
+    });
+    const ext = assertion.getClientExtensionResults().prf;
+    if (!ext || !ext.results || !ext.results.first) throw new Error('prf-no-result');
+    return new Uint8Array(ext.results.first);
+  }
+
+  const state = {
+    vault: null,
+    masterKey: null,
+    accounts: [],
+    timer: null,
+    hiddenAt: null,
+    lastActivity: Date.now()
+  };
+
+  const AUTOLOCK_KEY = 'autolock_min';
+  function autolockMinutes() {
+    const v = window.MentriaStore ? window.MentriaStore.get(NS, AUTOLOCK_KEY) : null;
+    if (v === 0) return 0;
+    return (v === 5 || v === 15) ? v : 5;
+  }
+  function maybeAutoLock() {
+    const mins = autolockMinutes();
+    if (!mins || !state.masterKey) return false;
+    const now = Date.now();
+    if (state.hiddenAt && now - state.hiddenAt > mins * 60000) { lock(); return true; }
+    if (!document.hidden && now - state.lastActivity > mins * 3 * 60000) { lock(); return true; }
+    return false;
+  }
+
+  function loadVault() { return window.MentriaStore.get(NS, VAULT_KEY); }
+  function saveVault(v) { window.MentriaStore.set(NS, VAULT_KEY, v); }
+
+  async function reEncryptSecrets() {
+    const json = JSON.stringify(state.accounts);
+    const env = await encryptWith(state.masterKey, new TextEncoder().encode(json));
+    state.vault.secrets = env;
+    saveVault(state.vault);
+  }
+
+  async function decryptSecrets() {
+    if (!state.vault || !state.vault.secrets) { state.accounts = []; return; }
+    const pt = await decryptWith(state.masterKey, state.vault.secrets);
+    state.accounts = JSON.parse(new TextDecoder().decode(pt));
+  }
+
+  function setStatus(msg, tone) {
+    const el = $('totp-status');
+    el.textContent = msg || '';
+    if (tone) el.dataset.tone = tone; else delete el.dataset.tone;
+    if (tone === 'ok') setTimeout(() => { if (el.textContent === msg) { el.textContent = ''; delete el.dataset.tone; } }, 2500);
+  }
+
+  function showLocked() {
+    $('totp-locked').hidden = false;
+    $('totp-vault').hidden = true;
+    const hasVault = !!state.vault;
+    $('totp-setup').hidden = hasVault;
+    $('totp-unlock').hidden = !hasVault;
+    $('totp-locked-lede').textContent = hasVault ? COPY.locked_lede_unlock : COPY.locked_lede_setup;
+    if (hasVault && state.vault.prf && prfSupported) {
+      $('totp-prf-btn').hidden = false;
+      $('totp-divider').hidden = false;
+    } else {
+      $('totp-prf-btn').hidden = true;
+      $('totp-divider').hidden = true;
+    }
+  }
+
+  function showVault() {
+    $('totp-locked').hidden = true;
+    $('totp-vault').hidden = false;
+    $('totp-prf-enroll-btn').hidden = !!state.vault.prf || !prfSupported;
+    renderList();
+    if (!state.timer) state.timer = setInterval(tick, 1000);
+    tick();
+  }
+
+  function lock() {
+    if (state.timer) { clearInterval(state.timer); state.timer = null; }
+    state.masterKey = null;
+    state.accounts = [];
+    lastCodes.clear();
+    showLocked();
+    setStatus('', null);
+  }
+
+  function uuid() {
+    if (crypto.randomUUID) return crypto.randomUUID();
+    return b64uEnc(crypto.getRandomValues(new Uint8Array(12)));
+  }
+
+  function renderList() {
+    const list = $('totp-list');
+    list.innerHTML = '';
+    $('totp-empty').hidden = state.accounts.length > 0;
+    state.accounts.forEach((acc) => {
+      const li = document.createElement('li');
+      li.className = 'totp-row';
+      li.dataset.id = acc.id;
+      li.innerHTML = `
+        <svg class="totp-row__ring" viewBox="0 0 32 32" aria-hidden="true">
+          <circle class="bg" cx="16" cy="16" r="14"></circle>
+          <circle class="fg" cx="16" cy="16" r="14" stroke-dasharray="${2 * Math.PI * 14}" stroke-dashoffset="0"></circle>
+        </svg>
+        <div class="totp-row__meta">
+          <div class="totp-row__issuer"></div>
+          <div class="totp-row__account"></div>
+        </div>
+        <div class="totp-row__code-stack">
+          <span class="totp-row__code" data-copy>—</span>
+          <span class="totp-row__next"><span class="totp-row__next-label">${COPY.next_label}</span><span class="totp-row__next-value">—</span></span>
+        </div>
+        <button type="button" class="totp-row__del" data-del title="${COPY.delete_confirm.replace(/{name}/g, '')}"><svg viewBox="0 0 16 16" width="1em" height="1em" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6"></path></svg></button>
+      `;
+      li.querySelector('.totp-row__issuer').textContent = acc.issuer || '—';
+      li.querySelector('.totp-row__account').textContent = acc.account || '';
+      list.appendChild(li);
+    });
+  }
+
+  const lastCodes = new Map();
+
+  function fmtCode(s) { const h = Math.ceil(s.length / 2); return s.slice(0, h) + ' ' + s.slice(h); }
+
+  function flipUpdate(el, newText) {
+    el.classList.add('is-flipping');
+    setTimeout(() => { el.textContent = newText; }, 200);
+    setTimeout(() => { el.classList.remove('is-flipping'); }, 460);
+  }
+
+  async function tick() {
+    if (maybeAutoLock()) return;
+    const rows = $('totp-list').querySelectorAll('.totp-row');
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const acc = state.accounts.find((a) => a.id === row.dataset.id);
+      if (!acc) continue;
+      try {
+        const secretBytes = b64uDec(acc.secret);
+        const period = acc.period || 30;
+        const digits = acc.digits || 6;
+        const algorithm = acc.algorithm || 'SHA1';
+        const code = await totpCode(secretBytes, { period, digits, algorithm });
+        const nextCode = await totpCode(secretBytes, { period, digits, algorithm, offset: 1 });
+        const codeFmt = fmtCode(code);
+        const nextFmt = fmtCode(nextCode);
+
+        const codeEl = row.querySelector('.totp-row__code');
+        const nextEl = row.querySelector('.totp-row__next');
+        const nextValueEl = row.querySelector('.totp-row__next-value');
+        codeEl.dataset.code = code;
+
+        const prev = lastCodes.get(acc.id);
+        const isFirstRender = !prev;
+        const currentRotated = prev && prev.current !== code;
+
+        if (isFirstRender) {
+          if (!codeEl.classList.contains('is-copied')) codeEl.textContent = codeFmt;
+          nextValueEl.textContent = nextFmt;
+        } else if (currentRotated) {
+          if (!codeEl.classList.contains('is-copied')) flipUpdate(codeEl, codeFmt);
+          flipUpdate(nextValueEl, nextFmt);
+        } else {
+          if (!codeEl.classList.contains('is-copied') && codeEl.textContent !== codeFmt) codeEl.textContent = codeFmt;
+          if (nextValueEl.textContent !== nextFmt) nextValueEl.textContent = nextFmt;
+        }
+        lastCodes.set(acc.id, { current: code, next: nextCode });
+
+        const remaining = period - (Math.floor(Date.now() / 1000) % period);
+        const ring = row.querySelector('.totp-row__ring');
+        const fg = ring.querySelector('.fg');
+        const circumference = 2 * Math.PI * 14;
+        fg.setAttribute('stroke-dashoffset', String(circumference * (1 - remaining / period)));
+        const isWarning = remaining <= 5;
+        ring.classList.toggle('warning', isWarning);
+        nextEl.classList.toggle('is-warning', isWarning);
+      } catch (_) {
+        continue;
+      }
+    }
+  }
+
+  async function unlockWithPassphrase(pass) {
+    if (!state.vault || !state.vault.pass) throw new Error('no vault');
+    const salt = b64uDec(state.vault.pass.salt);
+    const wrapKey = await pbkdf2(pass, salt, state.vault.pass.iter);
+    const masterBytes = await decryptWith(wrapKey, { iv: state.vault.pass.iv, ct: state.vault.pass.wrap });
+    state.masterKey = await importRaw(masterBytes);
+    await decryptSecrets();
+  }
+  async function unlockWithPrf() {
+    if (!state.vault || !state.vault.prf) throw new Error('no prf');
+    const credId = b64uDec(state.vault.prf.cred_id);
+    const salt = b64uDec(state.vault.prf.salt);
+    const prfResult = await prfGet(credId, salt);
+    const wrapKey = await prfDeriveKey(prfResult);
+    const masterBytes = await decryptWith(wrapKey, { iv: state.vault.prf.iv, ct: state.vault.prf.wrap });
+    state.masterKey = await importRaw(masterBytes);
+    await decryptSecrets();
+  }
+
+  async function setupVault(pass) {
+    const masterKey = await randomMasterKey();
+    const rawMaster = await exportRaw(masterKey);
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const wrapKey = await pbkdf2(pass, salt, 600000);
+    const wrap = await encryptWith(wrapKey, rawMaster);
+    const secrets = await encryptWith(masterKey, new TextEncoder().encode('[]'));
+    state.vault = {
+      v: 1,
+      pass: { salt: b64uEnc(salt), iter: 600000, iv: wrap.iv, wrap: wrap.ct },
+      prf: null,
+      secrets
+    };
+    saveVault(state.vault);
+    state.masterKey = masterKey;
+    state.accounts = [];
+  }
+
+  async function enrollPrf() {
+    if (!prfSupported) throw new Error('prf-unsupported');
+    if (!state.masterKey) throw new Error('locked');
+    const salt = crypto.getRandomValues(new Uint8Array(32));
+    const { credId, prfResult } = await prfCreate(salt);
+    if (!prfResult) {
+      const r = await prfGet(credId, salt);
+      const wrapKey = await prfDeriveKey(r);
+      const rawMaster = await exportRaw(state.masterKey);
+      const wrap = await encryptWith(wrapKey, rawMaster);
+      state.vault.prf = { salt: b64uEnc(salt), cred_id: b64uEnc(credId), iv: wrap.iv, wrap: wrap.ct };
+    } else {
+      const wrapKey = await prfDeriveKey(new Uint8Array(prfResult));
+      const rawMaster = await exportRaw(state.masterKey);
+      const wrap = await encryptWith(wrapKey, rawMaster);
+      state.vault.prf = { salt: b64uEnc(salt), cred_id: b64uEnc(credId), iv: wrap.iv, wrap: wrap.ct };
+    }
+    saveVault(state.vault);
+  }
+
+  const scanner = { detector: null, useJsQR: false, stream: null, rafId: 0, scanning: false, lastDetect: 0, canvas: null, ctx: null };
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function initDetector() {
+    if (scanner.detector || scanner.useJsQR) return true;
+    if ('BarcodeDetector' in window) {
+      try {
+        const formats = await BarcodeDetector.getSupportedFormats();
+        if (formats && formats.includes('qr_code')) {
+          scanner.detector = new BarcodeDetector({ formats: ['qr_code'] });
+          return true;
+        }
+      } catch (_) {}
+    }
+    if (!window.jsQR) {
+      try { await loadScript('/assets/js/jsqr.js?v=ec54a8f-09040920'); } catch (_) {}
+    }
+    if (window.jsQR) { scanner.useJsQR = true; return true; }
+    return false;
+  }
+
+  function jsqrDecode(video) {
+    const sw = video.videoWidth, sh = video.videoHeight;
+    if (!sw || !sh) return null;
+    let w = sw, h = sh;
+    const max = 640;
+    if (Math.max(w, h) > max) { const s = max / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
+    if (!scanner.canvas) { scanner.canvas = document.createElement('canvas'); scanner.ctx = scanner.canvas.getContext('2d', { willReadFrequently: true }); }
+    scanner.canvas.width = w; scanner.canvas.height = h;
+    scanner.ctx.drawImage(video, 0, 0, w, h);
+    let img; try { img = scanner.ctx.getImageData(0, 0, w, h); } catch (_) { return null; }
+    const r = window.jsQR(img.data, w, h, { inversionAttempts: 'dontInvert' });
+    return r && r.data ? r.data : null;
+  }
+
+  function stopScanner() {
+    scanner.scanning = false;
+    if (scanner.rafId) { cancelAnimationFrame(scanner.rafId); scanner.rafId = 0; }
+    if (scanner.stream) { scanner.stream.getTracks().forEach((t) => t.stop()); scanner.stream = null; }
+    const v = $('totp-scanner-video');
+    if (v) v.srcObject = null;
+    $('totp-scanner').hidden = true;
+  }
+
+  function showScanNote(msg) {
+    const el = $('totp-scanner-note');
+    el.textContent = msg;
+    el.hidden = !msg;
+  }
+
+  async function scanLoop(ts) {
+    if (!scanner.scanning) return;
+    scanner.rafId = requestAnimationFrame(scanLoop);
+    if (ts - scanner.lastDetect < 220) return;
+    scanner.lastDetect = ts;
+    const video = $('totp-scanner-video');
+    if (!video || video.readyState < 2) return;
+    let rawValue = null;
+    if (scanner.detector) {
+      try { const codes = await scanner.detector.detect(video); if (codes && codes.length) rawValue = codes[0].rawValue; }
+      catch (_) {}
+    } else if (scanner.useJsQR) {
+      rawValue = jsqrDecode(video);
+    }
+    if (!rawValue) return;
+    if (!/^otpauth:\/\/totp\//i.test(rawValue)) {
+      showScanNote(COPY.scan_invalid_qr);
+      return;
+    }
+    if (navigator.vibrate) try { navigator.vibrate(40); } catch (_) {}
+    $('totp-uri').value = rawValue;
+    stopScanner();
+    $('totp-save-btn').click();
+  }
+
+  async function startScanner(opts) {
+    opts = opts || {};
+    showScanNote('');
+    $('totp-scanner').hidden = false;
+    if (!window.isSecureContext) {
+      if (!opts.silentOnFail) showScanNote(COPY.scan_secure_required);
+      else $('totp-scanner').hidden = true;
+      return false;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      if (!opts.silentOnFail) showScanNote(COPY.scan_no_camera);
+      else $('totp-scanner').hidden = true;
+      return false;
+    }
+    const ok = await initDetector();
+    if (!ok) {
+      if (!opts.silentOnFail) showScanNote(COPY.scan_unsupported);
+      else $('totp-scanner').hidden = true;
+      return false;
+    }
+    try {
+      scanner.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    } catch (err) {
+      const name = err && err.name;
+      if (opts.silentOnFail && (name === 'NotAllowedError' || name === 'SecurityError' || name === 'NotFoundError')) {
+        $('totp-scanner').hidden = true;
+        return false;
+      }
+      if (name === 'NotAllowedError' || name === 'SecurityError') showScanNote(COPY.scan_denied);
+      else if (name === 'NotFoundError' || name === 'OverconstrainedError') showScanNote(COPY.scan_no_camera);
+      else showScanNote(String(err && err.message || err));
+      return false;
+    }
+    const video = $('totp-scanner-video');
+    video.srcObject = scanner.stream;
+    try { await video.play(); } catch (_) {}
+    scanner.scanning = true;
+    scanner.lastDetect = 0;
+    scanner.rafId = requestAnimationFrame(scanLoop);
+    return true;
+  }
+
+  $('totp-scan-btn').addEventListener('click', () => startScanner({ silentOnFail: false }));
+
+  $('totp-scan-cancel-btn').addEventListener('click', () => { stopScanner(); });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && scanner.scanning) stopScanner();
+    if (document.hidden) {
+      state.hiddenAt = Date.now();
+    } else {
+      maybeAutoLock();
+      state.hiddenAt = null;
+      state.lastActivity = Date.now();
+    }
+  });
+  document.addEventListener('pointerdown', () => { state.lastActivity = Date.now(); }, { passive: true });
+  document.addEventListener('keydown', () => { state.lastActivity = Date.now(); }, { passive: true });
+  window.addEventListener('pagehide', () => { stopScanner(); });
+
+  $('totp-setup-pass').addEventListener('input', () => {
+    const s = scorePass($('totp-setup-pass').value);
+    const el = $('totp-setup-strength');
+    el.dataset.level = s.label;
+    el.textContent = $('totp-setup-pass').value ? '· ' + COPY['strength_' + s.label] : '';
+  });
+
+  $('totp-setup-btn').addEventListener('click', async () => {
+    const pass = $('totp-setup-pass').value;
+    const pass2 = $('totp-setup-pass2').value;
+    if (pass.length < 8) { setStatus(COPY.setup_strength_too_short, 'err'); return; }
+    if (pass !== pass2) { setStatus(COPY.setup_mismatch, 'err'); return; }
+    $('totp-setup-btn').disabled = true;
+    try {
+      await setupVault(pass);
+      $('totp-setup-pass').value = ''; $('totp-setup-pass2').value = '';
+      $('totp-setup-strength').textContent = '';
+      setStatus('', null);
+      showVault();
+    } catch (err) {
+      setStatus(String(err && err.message || err), 'err');
+    } finally {
+      $('totp-setup-btn').disabled = false;
+    }
+  });
+
+  $('totp-unlock-btn').addEventListener('click', async () => {
+    const pass = $('totp-unlock-pass').value;
+    if (!pass) return;
+    $('totp-unlock-btn').disabled = true;
+    try {
+      await unlockWithPassphrase(pass);
+      $('totp-unlock-pass').value = '';
+      setStatus('', null);
+      showVault();
+    } catch (err) {
+      setStatus(COPY.unlock_failed, 'err');
+    } finally {
+      $('totp-unlock-btn').disabled = false;
+    }
+  });
+
+  $('totp-prf-btn').addEventListener('click', async () => {
+    $('totp-prf-btn').disabled = true;
+    try {
+      await unlockWithPrf();
+      setStatus('', null);
+      showVault();
+    } catch (err) {
+      setStatus(COPY.prf_unsupported, 'err');
+    } finally {
+      $('totp-prf-btn').disabled = false;
+    }
+  });
+
+  $('totp-prf-enroll-btn').addEventListener('click', async () => {
+    $('totp-prf-enroll-btn').disabled = true;
+    try {
+      await enrollPrf();
+      setStatus(COPY.prf_enroll_done, 'ok');
+      $('totp-prf-enroll-btn').hidden = true;
+    } catch (err) {
+      setStatus(COPY.prf_enroll_failed + ' — ' + (err && err.message || err), 'err');
+    } finally {
+      $('totp-prf-enroll-btn').disabled = false;
+    }
+  });
+
+  $('totp-lock-btn').addEventListener('click', () => { lock(); });
+
+  (function initAutolockSeg() {
+    const seg = $('totp-autolock-seg');
+    if (!seg || !window.MentriaUI || !window.MentriaUI.segmented) return;
+    const ctl = window.MentriaUI.segmented(seg, (value) => {
+      const mins = parseInt(value, 10);
+      if (window.MentriaStore) window.MentriaStore.set(NS, AUTOLOCK_KEY, mins);
+      state.lastActivity = Date.now();
+    });
+    ctl.set(String(autolockMinutes()));
+  })();
+
+  document.body.appendChild($('totp-add-modal'));
+  document.body.appendChild($('totp-backup-modal'));
+  const addModal = MentriaUI.modal($('totp-add-modal'));
+  const backupModal = MentriaUI.modal($('totp-backup-modal'));
+  new MutationObserver(() => { if ($('totp-add-modal').hidden) stopScanner(); })
+    .observe($('totp-add-modal'), { attributes: true, attributeFilter: ['hidden'] });
+
+  $('totp-add-btn').addEventListener('click', () => {
+    $('totp-uri').value = '';
+    $('totp-issuer').value = '';
+    $('totp-account').value = '';
+    $('totp-secret').value = '';
+    addModal.open();
+    startScanner({ silentOnFail: true });
+  });
+
+  document.querySelectorAll('[data-close]').forEach((el) => {
+    el.addEventListener('click', () => {
+      stopScanner();
+      addModal.close();
+      backupModal.close();
+    });
+  });
+
+  let pendingAdd = null;
+  $('totp-save-btn').addEventListener('click', async () => {
+    const uri = $('totp-uri').value.trim();
+    let parsed = null;
+    if (uri) {
+      try { parsed = parseOtpauthUri(uri); } catch (_) { setStatus(COPY.add_invalid_uri, 'err'); return; }
+    } else {
+      const issuer = $('totp-issuer').value.trim();
+      const account = $('totp-account').value.trim();
+      const secret_b32 = $('totp-secret').value.trim().replace(/[\s-]+/g, '');
+      if (!secret_b32 || (!issuer && !account)) { setStatus(COPY.add_missing_fields, 'err'); return; }
+      const badChars = secret_b32.toUpperCase().replace(/=+$/, '').match(/[^A-Z2-7]/g);
+      if (badChars) {
+        setStatus(COPY.add_secret_bad_chars.replace('{chars}', [...new Set(badChars)].join(' ')), 'err');
+        return;
+      }
+      parsed = { issuer, account, secret_b32, digits: 6, period: 30, algorithm: 'SHA1' };
+    }
+    let secretBytes;
+    try { secretBytes = b32Dec(parsed.secret_b32); }
+    catch (_) { setStatus(COPY.add_invalid_secret, 'err'); return; }
+    if (!secretBytes.length) { setStatus(COPY.add_invalid_secret, 'err'); return; }
+
+    const account = {
+      id: uuid(),
+      issuer: parsed.issuer,
+      account: parsed.account,
+      secret: b64uEnc(secretBytes),
+      digits: parsed.digits,
+      period: parsed.period,
+      algorithm: parsed.algorithm || 'SHA1'
+    };
+
+    if (state.accounts.length === 0) {
+      pendingAdd = account;
+      addModal.close();
+      openBackupModal(true);
+      return;
+    }
+    state.accounts.push(account);
+    await reEncryptSecrets();
+    window.MentriaStore.requestPersist();
+    addModal.close();
+    renderList();
+    tick();
+  });
+
+  function openBackupModal(forFirstSave) {
+    $('totp-backup-pass').value = '';
+    backupModal.open();
+    $('totp-backup-pass').focus();
+  }
+
+  $('totp-backup-confirm-btn').addEventListener('click', async () => {
+    if (!window.MentriaBackup) { setStatus('backup library not loaded', 'err'); return; }
+    const pass = $('totp-backup-pass').value;
+    if (!pass || pass.length < 8) { setStatus(COPY.setup_strength_too_short, 'err'); return; }
+    $('totp-backup-confirm-btn').disabled = true;
+    try {
+      const next = pendingAdd ? state.accounts.concat([pendingAdd]) : state.accounts;
+      let vaultForBackup = state.vault;
+      if (pendingAdd) {
+        const tempEnv = await encryptWith(state.masterKey, new TextEncoder().encode(JSON.stringify(next)));
+        vaultForBackup = Object.assign({}, state.vault, { secrets: tempEnv });
+      }
+      const payload = { version: 1, exportedAt: new Date().toISOString(), store: { 'totp.vault': JSON.stringify(vaultForBackup) }, legacy: {} };
+      const env = await window.MentriaBackup.encryptBackup(payload, pass);
+      window.MentriaBackup.downloadBackupJson(env, 'mentria-totp-backup');
+      if (pendingAdd) {
+        state.accounts = next;
+        await reEncryptSecrets();
+        window.MentriaStore.requestPersist();
+        pendingAdd = null;
+        renderList();
+        tick();
+      }
+      $('totp-backup-pass').value = '';
+      backupModal.close();
+      setStatus(COPY.backup_done, 'ok');
+    } catch (err) {
+      setStatus(String(err && err.message || err), 'err');
+    } finally {
+      $('totp-backup-confirm-btn').disabled = false;
+    }
+  });
+
+  $('totp-backup-btn').addEventListener('click', () => {
+    pendingAdd = null;
+    openBackupModal(false);
+  });
+
+  $('totp-list').addEventListener('click', async (e) => {
+    const row = e.target.closest('.totp-row');
+    if (!row) return;
+    if (e.target.matches('[data-copy]')) {
+      const code = (e.target.dataset.code || e.target.textContent).replace(/\s/g, '');
+      let ok = true;
+      try { await navigator.clipboard.writeText(code); } catch (_) { ok = false; }
+      e.target.classList.add('is-copied');
+      e.target.textContent = ok ? COPY.copied : COPY.copyFailed;
+      setTimeout(() => { e.target.classList.remove('is-copied'); tick(); }, ok ? 900 : 1600);
+    } else if (e.target.matches('[data-del]')) {
+      const acc = state.accounts.find((a) => a.id === row.dataset.id);
+      if (!acc) return;
+      const name = (acc.issuer ? acc.issuer + ' ' : '') + (acc.account || '');
+      const ok = await (typeof mentriaConfirm === 'function' ? mentriaConfirm(COPY.delete_confirm.replace(/{name}/g, name)) : Promise.resolve(confirm(COPY.delete_confirm.replace(/{name}/g, name))));
+      if (!ok) return;
+      state.accounts = state.accounts.filter((a) => a.id !== row.dataset.id);
+      await reEncryptSecrets();
+      renderList();
+      tick();
+    }
+  });
+
+  function init() {
+    if (!window.MentriaStore) { setStatus('storage unavailable', 'err'); return; }
+    state.vault = loadVault();
+    showLocked();
+  }
+
+  function acceptExternalDelete() {
+    state.vault = null;
+    lock();
+  }
+  window.addEventListener('mentria:write', (e) => {
+    const d = e.detail || {};
+    if (d.ns === NS && d.key === VAULT_KEY && d.op === 'remove') acceptExternalDelete();
+  });
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'mentria.store.totp.vault' && !e.newValue) acceptExternalDelete();
+  });
+
+  init();
+})();
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="アプリナビゲーション" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/ja/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">ホーム</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/ja/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="コマンドパレットを開く（⌘K）" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">検索</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">ホーム画面に追加 — オフラインで動作します。</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">インストール</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="閉じる" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="閉じる" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "iPhoneにMentriaをインストール",
+    macosTitle:  "MacにMentriaをインストール",
+    chromeTitle: "Mentriaをインストール",
+    iosStep1:    "画面下部の<strong>共有</strong>ボタンをタップ",
+    iosStep2:    "<strong>ホーム画面に追加</strong>を選択",
+    iosStep3:    "右上の<strong>追加</strong>をタップ。",
+    macosStep1:  "このページを<strong>Safari 17+</strong>で開きます。",
+    macosStep2:  "メニューバーから<strong>ファイル → Dockに追加…</strong>を選択。",
+    macosStep3:  "<strong>追加</strong>をクリック。",
+    chromeStep1: "ブラウザのアドレスバーにある<strong>インストール</strong>アイコンをクリック。",
+    chromeStep2: "または、メニュー(⋮)を開いて<strong>Mentriaをインストール</strong>を選択。",
+    note:        "インストール後、Mentriaはオフラインで動作し、ローカルデータはお使いのデバイスに保存されます。"
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "確認";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "保存できませんでした。ブラウザのストレージがいっぱいです。空き容量を増やすと変更を保持できます。";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("大きなAIモデル（モデルにより490 MB以上）をダウンロードします。低速またはデータセーバー接続のようです。続行しますか？");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "共有";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "このツールについて");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">機能テスト用ビルド（WebMCP 応募スナップショット）。テストのため凍結中です。通常のご利用は <a href="https://mentria.ai/">mentria.ai</a> をお使いください。</div></body>
+</html>

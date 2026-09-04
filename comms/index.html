@@ -1,0 +1,3883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = false;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>comms | Mentria</title>
+    <meta name="description" content="Peer-to-peer chat, calls and file drop — end-to-end encrypted, no accounts, no server in the middle.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/comms/">
+    <meta property="og:title" content="comms | Mentria">
+    <meta property="og:description" content="Peer-to-peer chat, calls and file drop — end-to-end encrypted, no accounts, no server in the middle.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/comms/">
+    <meta name="twitter:title" content="comms | Mentria">
+    <meta name="twitter:description" content="Peer-to-peer chat, calls and file drop — end-to-end encrypted, no accounts, no server in the middle.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "A creative studio for tools, experiments, and visual transmissions. Built with craft.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "en"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://webmcp.mentria.ai/" }
+      ]
+    }
+    </script>
+<style>
+.comms{display:flex;flex-direction:column;gap:.75rem;font-family:var(--font-mono);font-size:.9rem;min-height:clamp(21rem,56vh,31rem)}
+.comms__onboard,.comms__lock{margin-top:auto;margin-bottom:auto}
+.comms [hidden]{display:none !important}
+.comms__onboard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;padding:2.5rem 1.25rem;background:#0d1115;border:1px solid #1a1f24;border-radius:10px}
+.comms__onboard[hidden]{display:none}
+.comms__onboard-step{display:flex;flex-direction:column;align-items:center;gap:.9rem;width:100%;max-width:30rem}
+.comms__onboard-step[hidden]{display:none}
+.comms__onboard-h{margin:0;font-size:1.05rem;color:var(--accent,#6ef3c5);letter-spacing:.02em;line-height:1.4;text-transform:none}
+.comms__onboard-p{margin:0;color:#c3ccd6;font-size:.85rem;line-height:1.65;max-width:26rem}
+.comms__onboard-fine{margin:0;color:#7a838d;font-size:.75rem;line-height:1.5}
+.comms__onboard-err{margin:0;color:#e5534b;font-size:.78rem;line-height:1.5}
+.comms__onboard-err[hidden]{display:none}
+.comms__onboard-actions{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.comms__btn--big{padding:.7rem 1.6rem;font-size:.92rem;min-height:44px}
+.comms__input--big{max-width:18rem;text-align:center;padding:.6rem .8rem;font-size:.95rem;flex:none;width:100%}
+.comms__recovery{display:block;width:100%;max-width:24rem;background:#0a0d10;border:1px dashed var(--accent,#6ef3c5);border-radius:6px;padding:.7rem;color:var(--accent,#6ef3c5);font-size:.95rem;letter-spacing:.12em;word-break:break-all;line-height:1.6}
+.comms__lock{display:flex;flex-direction:column;align-items:center;gap:.75rem;padding:2rem 1.25rem;background:#0d1115;border:1px solid #1a1f24;border-radius:10px;text-align:center}
+.comms__lock[hidden]{display:none}
+.comms__lock-h{margin:0;color:#c3ccd6;font-size:.95rem}
+.comms__lock-waiting{margin:0;color:var(--accent,#6ef3c5);font-size:.8rem}
+.comms__lock-waiting[hidden]{display:none}
+.comms__lock-alt{width:100%;max-width:24rem;color:#7a838d;font-size:.78rem}
+.comms__lock-alt summary{cursor:pointer;list-style:none;padding:.3rem}
+.comms__lock-alt summary::-webkit-details-marker{display:none}
+
+.comms__lock-row{display:none;gap:.5rem;margin-top:.6rem}
+.comms__lock-alt[open] .comms__lock-row{display:flex}
+.comms__app{display:flex;flex-direction:column;gap:.75rem}
+.comms__app[hidden]{display:none}
+.comms__topline{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.comms__id-row--you{flex:1;min-width:13rem}
+.comms__btn--gear{min-width:2.4rem;padding:.4rem .6rem;font-size:1rem;line-height:1}
+.comms__contacts-head{display:flex;gap:.5rem;align-items:center}
+.comms__contacts-head .comms__lbl{flex:1}
+.comms__adv{display:flex;flex-direction:column;gap:.75rem;background:#0a0d10;border:1px dashed #2a3138;border-radius:8px;padding:.85rem}
+.comms__adv[hidden]{display:none}
+.comms__relay{display:flex;align-items:center;gap:.55rem;background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer}
+.comms__relay svg{color:#8b97a3;transition:color .25s}
+.comms__relay[aria-checked="true"] svg{color:var(--accent,#6ef3c5)}
+.comms__relay-lbl{font-size:.85rem}
+.comms__relay-track{width:34px;height:20px;border-radius:10px;background:rgba(255,255,255,.12);position:relative;transition:background .25s}
+.comms__relay-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#8b97a3;transition:transform .25s,background .25s}
+.comms__relay[aria-checked="true"] .comms__relay-track{background:rgba(110,243,197,.25)}
+.comms__relay[aria-checked="true"] .comms__relay-thumb{transform:translateX(14px);background:var(--accent,#6ef3c5)}
+.comms__relay-note{margin:.35rem 0 0;font-size:.75rem;color:#8b97a3;max-width:46ch}
+.comms__adv-sec{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.comms__adv-sec--col{flex-direction:column;align-items:stretch}
+.comms__adv-row{display:flex;gap:.5rem;align-items:center;justify-content:space-between}
+.comms__push-log{white-space:pre-line;background:#0a0d10;border:1px solid #1a1f24;border-radius:8px;padding:.5rem .6rem;line-height:1.6}
+.comms__contact{cursor:pointer}
+@media (max-width:640px){
+  .comms__onboard{padding:1.75rem 1rem}
+  .comms__onboard-h{font-size:1rem}
+  .comms__topline{gap:.5rem}
+}
+.comms__bar{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.comms__room{display:flex;gap:.5rem;align-items:center;flex:1;min-width:14rem}
+.comms__meta{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.comms__lbl{color:var(--muted);text-transform:lowercase;letter-spacing:.05em;font-size:.78rem}
+.comms__input{background:#0a0d10;border:1px solid #2a3138;color:#e6edf3;padding:.45rem .6rem;border-radius:6px;font-family:inherit;font-size:.9rem;flex:1;min-width:6rem}
+.comms__input:focus{outline:none;border-color:var(--accent,#6ef3c5)}
+.comms__btn{background:transparent;border:1px solid var(--accent,#6ef3c5);color:var(--accent,#6ef3c5);padding:.4rem .8rem;border-radius:6px;font-family:inherit;font-size:.85rem;cursor:pointer;text-transform:lowercase;letter-spacing:.05em}
+
+.comms__btn:disabled{opacity:.4;cursor:not-allowed}
+.comms__btn--ghost{border-color:#3a4148;color:#9ba6b1}
+
+.comms__badge{background:#1a1f24;border:1px solid #2a3138;color:#9ba6b1;padding:.3rem .55rem;border-radius:4px;font-size:.75rem;text-transform:lowercase;letter-spacing:.05em}
+.comms__badge--peers{border-color:var(--accent,#6ef3c5);color:var(--accent,#6ef3c5)}
+.comms__badge--offline{border-color:#e05c5c;color:#e05c5c}
+.comms__send--offline{opacity:.55}
+.comms__line--pending .comms__what{color:#9ba6b1}
+.comms__pending-note{color:#d9a84e;font-style:italic;font-size:.75rem;margin-left:.45rem}
+.comms__resend{margin-left:.5rem;background:none;border:1px solid #2a3138;color:var(--accent,#6ef3c5);border-radius:4px;padding:.1rem .5rem;font:inherit;font-size:.72rem;cursor:pointer;text-transform:lowercase}
+
+.comms__share{display:flex;gap:.5rem;align-items:center;background:#0d1115;border:1px dashed #2a3138;border-radius:6px;padding:.5rem .75rem;flex-wrap:wrap}
+.comms__url{color:#e6edf3;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem}
+.comms__log{min-height:14rem;max-height:24rem;overflow-y:auto;background:#0a0d10;border:1px solid #1a1f24;border-radius:6px;padding:.75rem;display:flex;flex-direction:column;gap:.4rem}
+.comms__line{display:flex;gap:.5rem;align-items:baseline;line-height:1.4}
+.comms__who{color:var(--accent,#6ef3c5);font-size:.72rem;min-width:5.5rem;text-transform:lowercase;letter-spacing:.05em}
+.comms__who--sys{color:#7a838d}
+.comms__who--me{color:#a8b6c5}
+.comms__what{color:#e6edf3;word-break:break-word;flex:1}
+.comms__what--sys{color:#7a838d;font-style:italic}
+.comms__what a{color:var(--accent,#6ef3c5);text-decoration:underline}
+.comms__drop{display:block;border:1px dashed #2a3138;border-radius:6px;padding:.75rem;text-align:center;color:#7a838d;font-size:.82rem;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+
+.comms__drop--hot{border-color:var(--accent,#6ef3c5);color:var(--accent,#6ef3c5);background:rgba(110,243,197,.04)}
+.comms__prog{display:inline-block;width:96px;height:6px;background:#1a1f24;border-radius:3px;overflow:hidden;margin:0 .4rem;vertical-align:middle}
+.comms__prog-fill{display:block;height:100%;background:var(--accent,#6ef3c5);width:0%;transition:width .12s linear}
+.comms__thumb{display:block;margin-top:.4rem;max-width:240px;max-height:180px;border:1px solid #2a3138;border-radius:4px;cursor:zoom-in}
+.comms__peerlist{display:flex;gap:.35rem;align-items:center;flex-wrap:wrap;padding:.2rem 0}
+.comms__chip{font-family:var(--font-mono);font-size:.7rem;padding:.2rem .5rem;border-radius:3px;border:1px solid currentColor;line-height:1;letter-spacing:.05em;text-transform:lowercase}
+.comms__time{color:#5a636d;font-size:.66rem;margin-left:.3rem;font-variant-numeric:tabular-nums}
+.comms__btn--mute{min-width:5.5rem}
+.comms__btn--mute[aria-pressed="true"]{color:#7a838d;border-color:#3a4148}
+.comms__badge--eph{border-color:#d9a84e;color:#d9a84e;cursor:help}
+.comms__badge--enc{border-color:#9b6fd4;color:#9b6fd4;cursor:help}
+.comms__send{display:flex;gap:.5rem;align-items:center}
+.comms__input--msg{min-width:0}
+.comms__picker{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:1rem}
+.comms__picker[hidden]{display:none}
+.comms__picker-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.comms__picker-card{position:relative;z-index:1;background:#0d1014;border:1px solid #2a3138;border-radius:8px;padding:1rem;width:100%;max-width:24rem;max-height:80vh;overflow:auto;display:flex;flex-direction:column;gap:.7rem}
+.comms__picker-h{margin:0;font-size:.9rem;color:var(--accent,#6ef3c5);text-transform:lowercase;letter-spacing:.05em}
+.comms__picker-list{display:flex;flex-direction:column;gap:.4rem}
+.comms__picker-item{display:flex;justify-content:space-between;align-items:center;gap:.7rem;width:100%;text-align:left;background:#0a0d10;border:1px solid #2a3138;color:#e6edf3;padding:.5rem .7rem;border-radius:6px;font-family:inherit;font-size:.85rem;cursor:pointer}
+
+.comms__picker-ver{color:var(--muted);font-size:.75rem;flex:none}
+.comms__picker-actions{display:flex;justify-content:flex-end}
+.comms__id-row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;background:#0d1115;border:1px solid #1a1f24;border-radius:6px;padding:.5rem .75rem}
+.comms__id-note{color:#7a838d;font-size:.78rem}
+.comms__input--short{max-width:13rem;flex:0 1 auto}
+.comms__id-card{display:flex;gap:1rem;align-items:flex-start;background:#0d1115;border:1px dashed #2a3138;border-radius:6px;padding:.75rem;flex-wrap:wrap}
+.comms__id-qr{border-radius:4px;flex:none}
+.comms__id-card-side{display:flex;flex-direction:column;gap:.5rem;flex:1;min-width:12rem}
+.comms__id-card-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.comms__url--wrap{white-space:normal;word-break:break-all;font-size:.7rem;max-height:5.5rem;overflow:auto}
+.comms__contacts{display:flex;flex-direction:column;gap:.5rem;background:#0d1115;border:1px solid #1a1f24;border-radius:6px;padding:.6rem .75rem}
+.comms__contacts-add{display:flex;gap:.5rem;align-items:center}
+.comms__contacts-list{display:flex;flex-direction:column;gap:.3rem}
+.comms__contact{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;padding:.3rem 0;border-bottom:1px solid #14181d}
+.comms__contact--req{background:rgba(110,243,197,.05);border-left:2px solid var(--accent,#6ef3c5);padding-left:.5rem;border-radius:4px}
+.comms__unread{display:inline-block;min-width:1.15rem;padding:0 .3rem;border-radius:999px;background:var(--accent,#6ef3c5);color:#0a0d10;font-size:.68rem;text-align:center;line-height:1.15rem;font-weight:700}
+.comms__missed{display:inline-flex;align-items:center;color:#e5534b;flex:none}
+.comms__missed .comms__i{width:1.05em;height:1.05em}
+.comms__sprite{position:absolute;width:0;height:0;overflow:hidden}
+.comms__i{width:1em;height:1em;flex:none;vertical-align:-0.12em}
+.comms__btn--icon{display:inline-flex;align-items:center;gap:.4rem}
+.comms__btn--icon .comms__btn-t{line-height:1}
+.comms__btn.is-on{background:var(--accent,#6ef3c5);color:#0a0d10}
+.comms__btn.is-off{opacity:.45;text-decoration:line-through}
+.comms__btn:focus{outline:none}
+.comms__btn:focus-visible{outline:2px solid var(--accent,#6ef3c5);outline-offset:2px}
+@media (hover: hover) and (pointer: fine){
+.comms__btn:hover:not(:disabled){background:var(--accent,#6ef3c5);color:#0a0d10}
+.comms__btn--ghost:hover{background:#3a4148;color:#e6edf3}
+.comms__btn--danger:hover:not(:disabled){background:#e5534b;color:#0a0d10}
+.comms__drop:hover{border-color:#3a424a;color:#9ba6b1}
+.comms__contact:hover{background:#10151a}
+.comms__contact:hover .comms__rowbtn{opacity:1}
+.comms__rowbtn:hover{color:#e5534b}
+.comms__addopt:hover{border-color:var(--accent,#6ef3c5)}
+.comms__picker-item:hover{border-color:var(--accent,#6ef3c5);color:var(--accent,#6ef3c5)}
+.comms__resend:hover{border-color:var(--accent,#6ef3c5)}
+.comms__lock-alt summary:hover{color:#9ba6b1}
+.comms__attach:hover{color:var(--accent,#6ef3c5);border-color:var(--accent,#6ef3c5)}
+}
+
+.comms__badge{display:inline-flex;align-items:center;gap:.3rem}
+.comms__add{display:flex;flex-direction:column;gap:.6rem;margin-top:.5rem;padding-top:.6rem;border-top:1px solid #14181d}
+.comms__add[hidden]{display:none}
+.comms__scan{display:flex;flex-direction:column;gap:.5rem;align-items:flex-start}
+.comms__scan[hidden]{display:none}
+.comms__scan-video{width:100%;max-width:18rem;border-radius:8px;border:1px solid #2a3138;background:#000;aspect-ratio:1;object-fit:cover}
+@media (max-width:640px){
+  .comms__btn--icon .comms__btn-t{display:none}
+  .comms__contacts-head .comms__btn--icon .comms__btn-t{display:inline}
+}
+.comms__contact:last-child{border-bottom:none}
+.comms__contact-name{color:#e6edf3;font-size:.85rem}
+.comms__contact-fp{color:#5a636d;font-size:.7rem}
+.comms__contact-spacer{flex:1}
+.comms__chip-add{margin-left:.3rem;border:none;background:none;color:inherit;cursor:pointer;font-size:.75rem;padding:0}
+.comms__btn--danger{border-color:#e5534b;color:#e5534b}
+
+.comms__ring{display:flex;gap:.6rem;align-items:center;background:#141a12;border:1px solid var(--accent,#6ef3c5);border-radius:6px;padding:.55rem .75rem}
+.comms__ring-text{color:var(--accent,#6ef3c5);flex:1;font-size:.85rem}
+.comms__media{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.5rem;background:#0a0d10;border:1px solid #1a1f24;border-radius:6px;padding:.5rem}
+.comms__tile{position:relative;background:#0d1115;border:1px solid #2a3138;border-radius:6px;overflow:hidden;min-height:72px;display:flex;align-items:center;justify-content:center}
+.comms__tile video{width:100%;height:100%;max-height:200px;object-fit:cover;display:block}
+.comms__tile-label{position:absolute;left:.4rem;bottom:.3rem;background:rgba(0,0,0,.55);color:#e6edf3;font-size:.68rem;padding:.1rem .4rem;border-radius:3px;letter-spacing:.05em}
+.comms__tile-voice{color:var(--accent,#6ef3c5);font-size:1.3rem}
+
+.comms__upgrade{display:flex;align-items:center;gap:.6rem .9rem;flex-wrap:wrap;padding:.6rem .8rem;margin-bottom:.6rem;border:1px solid rgba(110,243,197,.35);border-radius:8px;background:rgba(110,243,197,.06)}
+.comms__upgrade[hidden]{display:none}
+.comms__upgrade-text{flex:1 1 14rem;color:#c3ccd6;font-size:.82rem}
+.comms__upgrade-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.comms__app--chat .comms__upgrade{display:none}
+.comms__profile{display:flex;align-items:center;gap:.6rem}
+.comms__profile-spacer{flex:1}
+.comms__id-row--you{border:0;background:transparent;padding:0;flex:1;min-width:0;display:grid;grid-template-columns:auto minmax(0,16rem);grid-template-areas:"av input" "av fp";column-gap:.65rem;row-gap:.15rem;align-items:center}
+.comms__id-row--you .comms__avatar{grid-area:av}
+.comms__id-row--you .comms__input{grid-area:input;width:100%}
+.comms__id-row--you .comms__badge--fp{grid-area:fp;justify-self:start}
+.comms__avatar{width:2.3rem;height:2.3rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.95rem;flex:none;user-select:none}
+.comms__avatar--me{width:2.1rem;height:2.1rem}
+.comms__badge--fp{border:0;background:transparent;color:#5a636d;padding:0;font-size:.7rem}
+.comms__app--people #comms-chathead{display:none}
+.comms__app--people .comms__chatbody{display:none}
+.comms__app--people .comms__send{display:none}
+.comms__app--people .comms__ring{display:none !important}
+.comms__app--chat .comms__profile{display:none}
+.comms__app--chat .comms__contacts{display:none !important}
+.comms__app--chat #comms-id-none{display:none !important}
+.comms__app--chat .comms__adv{display:none !important}
+.comms__chathead{display:flex;align-items:center;gap:.55rem;padding:.1rem 0 .55rem;border-bottom:1px solid #14181d}
+.comms__chathead-mid{display:flex;flex-direction:column;gap:.12rem;flex:1;min-width:0}
+.comms__chathead-name{color:#e6edf3;font-size:.95rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comms__chathead-sub{display:flex;align-items:center;gap:.55rem;color:#7a838d;font-size:.72rem;min-width:0}
+.comms__sub-bit{display:inline-flex;align-items:center;gap:.25rem;white-space:nowrap}
+#comms-enc.comms__sub-bit{color:#9b6fd4}
+#comms-eph.comms__sub-bit{color:#d9a84e}
+.comms__chathead .comms__btn--icon,.comms__profile .comms__btn--icon{width:2.4rem;height:2.4rem;border-radius:50%;padding:0;justify-content:center}
+.comms__chathead .comms__i{width:1.15em;height:1.15em}
+.comms__chatbody{position:relative;display:flex;flex-direction:column;gap:.5rem}
+.comms__chatbody.comms__drop--hot .comms__log{outline:2px dashed var(--accent,#6ef3c5);outline-offset:4px}
+.comms__log{background:transparent;border:0;border-radius:8px;padding:.35rem 0;height:clamp(15rem,52vh,28rem);min-height:0;max-height:none;gap:.55rem}
+.comms__line{flex-direction:column;align-items:flex-start;gap:.18rem}
+.comms__line--me{align-items:flex-end}
+.comms__line--sys{align-items:center}
+.comms__who{min-width:0;font-size:.68rem;letter-spacing:.04em;padding:0 .45rem}
+.comms__who--me{color:#5a636d;font-size:.62rem}
+.comms__what{flex:none;width:fit-content;max-width:min(52ch,84%);background:#161c23;border-radius:14px 14px 14px 5px;padding:.5rem .75rem;line-height:1.45}
+.comms__line--me .comms__what{background:#12352a;border-radius:14px 14px 5px 14px}
+.comms__line--sys .comms__what{background:#10151a;border:1px solid #171d24;border-radius:999px;padding:.28rem .75rem;font-size:.72rem;color:#6a737d;font-style:normal;text-align:center;max-width:94%}
+.comms__what--sys{color:#6a737d}
+.comms__send{align-items:center;padding-top:.4rem}
+.comms__attach{width:2.6rem;height:2.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#9ba6b1;cursor:pointer;border:1px solid #2a3138;flex:none;transition:color .15s,border-color .15s}
+
+.comms__attach .comms__i{width:1.2em;height:1.2em}
+.comms__input--msg{border-radius:999px;padding:.6rem 1rem;background:#10151a}
+.comms__btn--send{width:2.6rem;height:2.6rem;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;flex:none}
+.comms__btn--send .comms__i{width:1.15em;height:1.15em;margin-left:-.1em}
+.comms__contacts{border:0;background:transparent;padding:0;gap:.4rem}
+.comms__contacts-head{padding:0 .1rem}
+.comms__contact{gap:.65rem;padding:.55rem .45rem;border-bottom:1px solid #12161b;cursor:pointer;border-radius:10px;flex-wrap:nowrap;min-height:52px}
+
+.comms__contact:focus-visible{outline:2px solid var(--accent,#6ef3c5);outline-offset:-2px}
+.comms__contact--req{cursor:default}
+.comms__contact--req:hover{background:rgba(110,243,197,.05)}
+.comms__contact-mid{display:flex;flex-direction:column;gap:.12rem;flex:1;min-width:0}
+.comms__contact-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.9rem}
+.comms__contact-fp{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.comms__rowbtn{opacity:0;border:0;background:transparent;color:#7a838d;cursor:pointer;padding:.45rem;border-radius:8px;flex:none;display:flex;align-items:center;transition:opacity .15s,color .15s}
+
+
+.comms__rowbtn:focus-visible{opacity:1;outline:2px solid var(--accent,#6ef3c5)}
+@media (hover:none){.comms__rowbtn{opacity:.55}}
+.comms__chev{color:#3a4148;flex:none;display:flex;align-items:center}
+.comms__contacts-empty{padding:.65rem .3rem}
+.comms__notif{display:flex;align-items:center;gap:.6rem;background:rgba(110,243,197,.05);border:1px solid rgba(110,243,197,.25);border-radius:10px;padding:.55rem .75rem}
+.comms__notif[hidden]{display:none}
+.comms__notif-text{flex:1;color:#c3ccd6;font-size:.78rem;line-height:1.45}
+.comms__app--chat .comms__notif{display:none}
+.comms__addopt{display:flex;align-items:center;gap:.65rem;width:100%;background:#0a0d10;border:1px solid #2a3138;border-radius:12px;padding:.75rem .85rem;color:#e6edf3;font:inherit;font-size:.88rem;cursor:pointer;min-height:48px;transition:border-color .15s}
+
+.comms__addopt .comms__i{color:var(--accent,#6ef3c5);width:1.25em;height:1.25em}
+#comms-add-toggle .comms__i{transition:transform .18s ease}
+#comms-add-toggle.is-on .comms__i{transform:rotate(45deg)}
+.comms__add{border-top:0;padding-top:0}
+.comms__scan{width:100%;align-items:stretch}
+.comms__scan-video{max-width:100%;width:100%;aspect-ratio:1;border-radius:14px}
+.comms__scan-zoom{display:flex;align-items:center;gap:.6rem;color:#7a838d}
+.comms__scan-zoom .comms__i{flex:none}
+.comms__scan-zoom input[type=range]{flex:1;accent-color:var(--accent,#6ef3c5);min-height:28px}
+.comms__scan-actions{display:flex;gap:.5rem;align-items:center;justify-content:flex-end}
+.comms__id-card{margin:.2rem 0}
+@media (max-width:640px){
+  .comms__chathead .comms__btn--icon,.comms__profile .comms__btn--icon{width:2.25rem;height:2.25rem}
+  .comms__what{max-width:88%}
+  .comms__log{height:clamp(15rem,56vh,30rem)}
+  .comms__id-row--you{min-width:0}
+}
+</style><script type="application/json" id="m-i18n-head">{}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "en",
+        prefix: "",
+        tools: [
+          { slug: "search", title: "Search", category: "AI", keywords: "Find tools and feed posts. Type any query — keyword or natural language." },
+          { slug: "step-counter", title: "Step Counter", category: "Health", keywords: "Count your steps on a walk, right in the browser. Uses your phone's motion sensor — nothing is uploaded.", requires: "motion" },
+          { slug: "qr-scanner", title: "QR & Barcode Scanner + Generator", category: "Utility", keywords: "Scan QR codes and barcodes, or generate a QR code from any link or text — all on-device, nothing uploaded." },
+          { slug: "decision-wheel", title: "Decision Wheel", category: "Utility", keywords: "Can't decide? Spin the wheel and let fate choose. Works offline." },
+          { slug: "countdown-timer", title: "Countdown Timer", category: "Timer", keywords: "Set a duration or pick a target time. Up to 4 independent timers with alarm sound." },
+          { slug: "coin-flip", title: "Coin Flip", category: "Utility", keywords: "Heads or tails — flip a coin instantly. Run a best-of series for tiebreakers. Works offline." },
+          { slug: "quick-notes", title: "Quick Notes", category: "Productivity", keywords: "A minimal scratchpad that lives in your browser. Create multiple notes, auto-saved on every keystroke." },
+          { slug: "base64-codec", title: "Base64 Codec", category: "Developer", keywords: "Encode and decode text or files to and from Base64. Supports images, documents, and any file type. Everything runs locally in your browser." },
+          { slug: "totp", title: "TOTP", category: "Security", keywords: "Two-factor authentication codes that live in your browser, encrypted at rest. Nothing on a server." },
+          { slug: "exif", title: "EXIF Inspector", category: "Security", keywords: "See what a photo secretly carries — camera details, timestamps, GPS location — and download a clean copy with it all removed. Nothing is uploaded." },
+          { slug: "color-picker", title: "Color Picker", category: "Design", keywords: "Pick any color, view its HEX / RGB / HSL values, and generate harmonious palettes. Works offline." },
+          { slug: "annotate-image", title: "Annotate Image", category: "AI", keywords: "Upload an image and get an instant AI description, alt-text, transcription, or tags — with tested one-tap prompts. Runs locally in your browser, nothing uploaded." },
+          { slug: "ai-chat", title: "AI Chat", category: "AI", keywords: "Qwen3.5 running locally in your browser. No server, no API keys. Supports vision." },
+          { slug: "console", title: "Console", category: "AI", keywords: "Chat with the on-device model while it uses Mentria apps on a shared phone screen — or let it play a test user and report what it finds." },
+          { slug: "model-mirror", title: "Model Mirror", category: "AI", keywords: "Help deliver Mentria's on-device models peer-to-peer. Keep this tab open and your browser becomes a mirror." },
+          { slug: "quote", title: "Motivational Quote", category: "AI", keywords: "Original quotes generated by AI, running locally in your browser. No data leaves your device." },
+          { slug: "radio", title: "Infinite Radio", category: "AI", keywords: "AI-generated epic cinematic music, streaming infinitely. Learns your taste locally — no data leaves your device." },
+          { slug: "invoice", title: "Invoice Generator", category: "Utility", keywords: "Build clean, single-page invoices in your browser. Auto-saves as you type. Print to A4 or export to JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utility", keywords: "Write markdown, see a live preview, and download a clean professional PDF. Auto-saves to your browser. No data leaves your device." },
+          { slug: "tetris", title: "Tetris", category: "Game", keywords: "Stack tetrominoes. Clear lines. Speed ramps every 10 lines. Pieces in cyan, purple, pink, amber, green — the Mentria palette." },
+          { slug: "breakout", title: "Breakout", category: "Game", keywords: "Brick-buster meets paddle game. Catch falling powerups, clear the wall, survive levels that get faster and meaner. Runs locally — no data leaves your device." },
+          { slug: "flappy", title: "Flappy", category: "Game", keywords: "A paper plane threading a stack of command prompts. Tap, click, or press SPACE to flap. Don't crash the prompt." },
+          { slug: "minesweeper", title: "Minesweeper", category: "Game", keywords: "Classic logic puzzle in terminal dress. Click to dig, right-click (or F-mode) to flag. Numbers count adjacent mines. Don't pop the pink ones." },
+          { slug: "sudoku", title: "Sudoku", category: "Game", keywords: "Logic puzzle in terminal dress. Unique-solution generator, four difficulties, pencil marks. Runs locally — no data leaves your device." },
+          { slug: "ludo", title: "Ludo", category: "Game", keywords: "Four tokens home wins. Roll a six to break out, capture on contact, dodge to the safe stars. Play the bots or pass & play." },
+          { slug: "chess", title: "Chess", category: "Game", keywords: "Local engine, hot-seat, and online play — no servers. Full rules with castling, en passant, promotion; an alpha-beta engine with four strengths, eval bar, and hints." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Game", keywords: "Combat time trials in the browser — sprint, slide, mantle and a full-auto carbine across five dusk-lit courses. Medals, ghost racing, offline play." },
+          { slug: "extensions", title: "Extensions", category: "Utility", keywords: "Install private single-file extensions that live only on this device. They appear in your launcher and terminal — and never on the public site." },
+          { slug: "files", title: "Files", category: "Utility", keywords: "Browse, export, and delete the data Mentria tools store on this device. Everything stays local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Peer-to-peer chat, voice and video calls, and file drop. End-to-end encrypted, no accounts, no server in the middle.", url: "/comms/" },
+          { slug: "bubble-level", title: "Bubble Level", category: "Utility", keywords: "Turn your phone into a spirit level online — a bubble level online with no app needed, accurate to 0.1°, that works offline.", requires: "motion" },
+          { slug: "decibel-meter", title: "Decibel Meter", category: "Utility", keywords: "A sound level meter in your browser — measure noise in dB with your phone or laptop mic, no app to install." },
+          { slug: "compass", title: "Compass", category: "Utility", keywords: "A compass online with no app to install — open it in your browser and read your magnetic heading straight from your phone's sensor.", requires: "motion" },
+          { slug: "speedometer", title: "GPS Speedometer", category: "Utility", keywords: "A GPS speedometer online — no app to install. Live speed in km/h, mph or knots, plus trip distance, all computed on your device." },
+          { slug: "ruler", title: "Online Ruler", category: "Utility", keywords: "An online ruler in actual size — measure in cm, mm and inches right on the screen, and calibrate it with a bank card so the millimetres are real." }
+        ],
+        nav: [
+          { id: "home", title: "Home", href: "/" },
+          { id: "tools", title: "Tools", href: "/tools/" },
+          { id: "feed", title: "Feed", href: "/feed/" },
+          { id: "about", title: "About", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Search tools and pages…",
+          listLabel: "Search results",
+          noResults: "No matches",
+          recents: "Recent",
+          extensions: "Extensions",
+          actions: "Actions",
+          actNote: "Save note: “{text}”",
+          actNoteDone: "Note saved",
+          actNoteFail: "Couldn't save the note",
+          actTimer: "Start a {dur} timer",
+          actFlip: "Flip a coin",
+          actHeads: "Heads",
+          actTails: "Tails",
+          searchSite: "Search the site for “{q}”"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Skip to content</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/feed/"  class="nav-link" title="Feed" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+            </a>
+            <a href="/tools/" class="nav-link" title="Tools" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Tools</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms active" aria-current="page" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/about/" class="nav-link nav-link--about" title="About" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">About</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Open command palette (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Current language: " data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang=""></span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/">~</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">comms</span></p>
+  <h1>comms</h1>
+  <p>Peer-to-peer chat, voice and video calls, and file drop. End-to-end encrypted, no accounts, no server in the middle. Share a room URL, or trade contact codes and message people directly.</p>
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-comms">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Toggle fullscreen" title="Toggle fullscreen" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">comms.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Toggle fullscreen" title="Toggle fullscreen" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+
+<svg class="comms__sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="ci-lock" viewBox="0 0 24 24"><g transform="translate(0 1)"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="4" y="10" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="15" r="1.6" fill="currentColor"/></g></symbol>
+  <symbol id="ci-phone" viewBox="0 0 24 24"><path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 6.5 6.5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.2 2 2 0 0 1 6.5 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-hangup" viewBox="0 0 24 24"><path d="M2.5 13.5c5-4.5 14-4.5 19 0l-2.5 2.5-3.2-1.6v-2.2a12 12 0 0 0-7.6 0v2.2L5 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 20 20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="ci-cam" viewBox="0 0 24 24"><rect x="3" y="7" width="12" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 11 6-3v8l-6-3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="ci-users" viewBox="0 0 24 24"><g transform="translate(1.2 0.1)"><circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 19a6 6 0 0 1 12 0M16.5 5.5a3.2 3.2 0 0 1 0 6M18 19a5.5 5.5 0 0 0-2.5-4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g></symbol>
+  <symbol id="ci-gear" viewBox="0 0 24 24"><path d="M10.0 4.77 10.32 2.45 13.68 2.45 14.0 4.77 15.69 5.47 17.56 4.05 19.95 6.44 18.53 8.31 19.23 10.0 21.55 10.32 21.55 13.68 19.23 14.0 18.53 15.69 19.95 17.56 17.56 19.95 15.69 18.53 14.0 19.23 13.68 21.55 10.32 21.55 10.0 19.23 8.31 18.53 6.44 19.95 4.05 17.56 5.47 15.69 4.77 14.0 2.45 13.68 2.45 10.32 4.77 10.0 5.47 8.31 4.05 6.44 6.44 4.05 8.31 5.47Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ci-share" viewBox="0 0 24 24"><path d="M12 3.4v11.4M8.4 6.9 12 3.4l3.6 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10.4H5.6a1.4 1.4 0 0 0-1.4 1.4v7.4a1.4 1.4 0 0 0 1.4 1.4h12.8a1.4 1.4 0 0 0 1.4-1.4v-7.4a1.4 1.4 0 0 0-1.4-1.4H17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 14h3v3h-3zM19 19h2v2h-2z" fill="currentColor"/></symbol>
+  <symbol id="ci-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="ci-back" viewBox="0 0 24 24"><path d="M14.5 5 8 12l6.5 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-send" viewBox="0 0 24 24"><path d="M3.5 11.2 20.2 4l-3.4 16-5.3-6.2zM11.5 13.8l8.7-9.8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-clip" viewBox="0 0 24 24"><g transform="translate(0.9 1)"><path d="m17.5 11.5-6.1 6.1a4.3 4.3 0 0 1-6-6l7.4-7.4a3 3 0 0 1 4.2 4.2l-7.3 7.3a1.6 1.6 0 0 1-2.3-2.3l6.1-6.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g></symbol>
+  <symbol id="ci-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 3.5h5M7 6.5l.8 13a1.6 1.6 0 0 0 1.6 1.5h5.2a1.6 1.6 0 0 0 1.6-1.5l.8-13M10 10.5v6M14 10.5v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="ci-chev" viewBox="0 0 24 24"><path d="m9.5 5 6.5 7-6.5 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-flash" viewBox="0 0 24 24"><path d="M13 2.5 5.5 13.5H11L10 21.5l7.7-11H12.3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="ci-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<section class="comms">
+  <div class="comms__onboard" id="comms-onboard" hidden>
+    <div class="comms__onboard-step" id="comms-onboard-insecure" hidden>
+      <h2 class="comms__onboard-h">This page needs a secure connection</h2>
+      <p class="comms__onboard-p">Your browser only allows the encryption comms depends on over <strong>https</strong>. You're on a plain http address, so keys can't be created here.</p>
+      <p class="comms__onboard-p">Open <a class="comms__url" href="https://webmcp.mentria.ai/comms/">https://webmcp.mentria.ai/comms/</a> instead — or use an https address if you're testing locally.</p>
+    </div>
+    <div class="comms__onboard-step" id="comms-onboard-intro">
+      <h2 class="comms__onboard-h">Private chat that runs on your devices</h2>
+      <p class="comms__onboard-p">Messages, calls and files go straight to the other person — encrypted end to end. No account, no phone number, and no server that can read them.</p>
+      <button class="comms__btn comms__btn--big" id="comms-onboard-start" type="button">get started</button>
+      <p class="comms__onboard-fine">Takes about ten seconds. Everything stays on your device.</p>
+    </div>
+    <div class="comms__onboard-step" id="comms-onboard-form" hidden>
+      <h2 class="comms__onboard-h">What should people call you?</h2>
+      <input class="comms__input comms__input--big" id="comms-onboard-name" type="text" maxlength="32" placeholder="your name" autocomplete="nickname" enterkeyhint="done">
+      <button class="comms__btn comms__btn--big" id="comms-onboard-create" type="button">create my identity</button>
+      <p class="comms__onboard-fine" id="comms-onboard-hint">Your device will ask for Face&nbsp;ID, Touch&nbsp;ID or your screen lock to protect it.</p>
+      <p class="comms__onboard-err" id="comms-onboard-err" hidden></p>
+    </div>
+    <div class="comms__onboard-step" id="comms-onboard-done" hidden>
+      <h2 class="comms__onboard-h">You're set up</h2>
+      <p class="comms__onboard-p" id="comms-onboard-method"></p>
+      <p class="comms__onboard-p">Save this recovery code somewhere safe. It's the only way back in if you lose your devices — you won't need it day to day.</p>
+      <code class="comms__recovery" id="comms-onboard-code"></code>
+      <div class="comms__onboard-actions">
+        <button class="comms__btn comms__btn--ghost" id="comms-onboard-copy" type="button">copy code</button>
+        <button class="comms__btn" id="comms-onboard-passkey" type="button" hidden>protect with face id / touch id</button>
+        <button class="comms__btn comms__btn--big" id="comms-onboard-continue" type="button">start chatting</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="comms__lock" id="comms-id-locked" hidden>
+    <p class="comms__lock-h">Welcome back</p>
+    <p class="comms__lock-waiting" id="comms-lock-waiting" hidden></p>
+    <button class="comms__btn comms__btn--big" id="comms-id-passkey" type="button" hidden>unlock</button>
+    <details class="comms__lock-alt" id="comms-lock-alt">
+      <summary>use my recovery code instead</summary>
+      <div class="comms__lock-row">
+        <input class="comms__input" id="comms-id-pass" type="password" placeholder="recovery code or passphrase" autocomplete="current-password">
+        <button class="comms__btn" id="comms-id-unlock" type="button">unlock</button>
+      </div>
+    </details>
+    <span class="comms__id-note" id="comms-id-err"></span>
+  </div>
+
+  <div class="comms__app comms__app--people" id="comms-app" hidden>
+    <div class="comms__profile" id="comms-profile">
+      <div class="comms__id-row comms__id-row--you" id="comms-id-on" hidden>
+        <span class="comms__avatar comms__avatar--me" id="comms-prof-avatar" aria-hidden="true"></span>
+        <input class="comms__input comms__input--short" id="comms-id-name" type="text" maxlength="32" placeholder="display name" autocomplete="nickname" aria-label="your display name">
+        <span class="comms__badge comms__badge--fp" id="comms-id-fp" title="your identity fingerprint"></span>
+      </div>
+      <span class="comms__profile-spacer"></span>
+      <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-adv-toggle" type="button" aria-expanded="false" title="settings and rooms" aria-label="settings and rooms"><svg class="comms__i" aria-hidden="true"><use href="#ci-gear"></use></svg></button>
+    </div>
+
+    <div class="comms__upgrade" id="comms-pk-upgrade" hidden>
+      <span class="comms__upgrade-text">Unlock with Face ID / Touch ID next time instead of typing your code?</span>
+      <div class="comms__upgrade-actions">
+        <button class="comms__btn" id="comms-pk-enroll" type="button">add face id / touch id</button>
+        <button class="comms__btn comms__btn--ghost" id="comms-pk-later" type="button">not now</button>
+      </div>
+      <span class="comms__id-note" id="comms-pk-err" hidden></span>
+    </div>
+
+    <div class="comms__chathead" id="comms-chathead">
+      <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-leave" type="button" hidden title="back to your people" aria-label="back to your people"><svg class="comms__i" aria-hidden="true"><use href="#ci-back"></use></svg></button>
+      <span class="comms__avatar" id="comms-chat-avatar" aria-hidden="true"></span>
+      <div class="comms__chathead-mid">
+        <span class="comms__chathead-name" id="comms-chat-title"></span>
+        <span class="comms__chathead-sub">
+          <span class="comms__sub-bit" id="comms-status">not in a chat</span>
+          <span class="comms__sub-bit" id="comms-enc" title="end-to-end encrypted — only people in this chat can read it" hidden><svg class="comms__i" aria-hidden="true"><use href="#ci-lock"></use></svg></span>
+          <span class="comms__sub-bit" id="comms-eph" title="messages aren't saved (room starts with !)" hidden><svg class="comms__i" aria-hidden="true"><use href="#ci-clock"></use></svg></span>
+          <span class="comms__sub-bit" id="comms-peers" hidden><svg class="comms__i" aria-hidden="true"><use href="#ci-users"></use></svg><span id="comms-peers-n">0</span></span>
+        </span>
+      </div>
+      <button class="comms__btn comms__btn--icon" id="comms-call-start" type="button" hidden title="start a call" aria-label="start a call"><svg class="comms__i" aria-hidden="true"><use href="#ci-phone"></use></svg></button>
+      <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-call-cam" type="button" hidden aria-pressed="false" title="camera" aria-label="camera"><svg class="comms__i" aria-hidden="true"><use href="#ci-cam"></use></svg></button>
+      <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-call-mic" type="button" hidden aria-pressed="true" title="microphone" aria-label="microphone"><svg class="comms__i" aria-hidden="true"><use href="#ci-mic"></use></svg></button>
+      <button class="comms__btn comms__btn--danger comms__btn--icon" id="comms-call-hangup" type="button" hidden title="hang up" aria-label="hang up"><svg class="comms__i" aria-hidden="true"><use href="#ci-hangup"></use></svg></button>
+    </div>
+
+    <div class="comms__notif" id="comms-notif" hidden>
+      <span class="comms__notif-text">get a notification when a message arrives — even with comms closed</span>
+      <button class="comms__btn" id="comms-notif-enable" type="button">enable</button>
+      <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-notif-dismiss" type="button" title="not now" aria-label="not now"><svg class="comms__i" aria-hidden="true"><use href="#ci-plus" style="transform:rotate(45deg);transform-origin:center"></use></svg></button>
+    </div>
+
+    <div class="comms__id-row" id="comms-id-none" hidden>
+      <span class="comms__id-note">you're in a shared room as a guest. set up an identity to use your name, contacts and direct messages.</span>
+      <button class="comms__btn comms__btn--ghost" id="comms-id-setup-here" type="button">set up</button>
+    </div>
+
+    <div class="comms__contacts" id="comms-contacts" hidden>
+      <div class="comms__contacts-head">
+        <span class="comms__lbl">people</span>
+        <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-id-share" type="button" aria-pressed="false"><svg class="comms__i" aria-hidden="true"><use href="#ci-qr"></use></svg><span class="comms__btn-t" id="comms-id-share-t">my code</span></button>
+        <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-add-toggle" type="button" aria-expanded="false"><svg class="comms__i" aria-hidden="true"><use href="#ci-plus"></use></svg><span class="comms__btn-t" id="comms-add-toggle-t">add someone</span></button>
+        <button class="comms__btn comms__btn--ghost" id="comms-id-contacts" type="button" aria-expanded="false" hidden>contacts</button>
+      </div>
+      <div class="comms__id-card" id="comms-id-card" hidden>
+        <canvas class="comms__id-qr" id="comms-id-qr" width="0" height="0"></canvas>
+        <div class="comms__id-card-side">
+          <p class="comms__id-note">scan or paste this code on another person's device to become contacts. it contains your public key, never your secrets.</p>
+          <code class="comms__url comms__url--wrap" id="comms-id-code"></code>
+          <div class="comms__id-card-actions">
+          <button class="comms__btn comms__btn--ghost" id="comms-id-copy" type="button">copy code</button>
+          <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-id-share-out" type="button" hidden><svg class="comms__i" aria-hidden="true"><use href="#ci-share"></use></svg><span class="comms__btn-t">share</span></button>
+        </div>
+        </div>
+      </div>
+      <div class="comms__add" id="comms-add" hidden>
+        <button class="comms__addopt" id="comms-scan" type="button"><svg class="comms__i" aria-hidden="true"><use href="#ci-qr"></use></svg><span>scan their code</span></button>
+        <div class="comms__scan" id="comms-scan-wrap" hidden>
+          <video class="comms__scan-video" id="comms-scan-video" playsinline muted></video>
+          <div class="comms__scan-zoom" id="comms-scan-zoom-wrap" hidden>
+            <svg class="comms__i" aria-hidden="true"><use href="#ci-qr"></use></svg>
+            <input type="range" id="comms-scan-zoom" min="1" max="5" step="0.1" value="1" aria-label="camera zoom">
+          </div>
+          <p class="comms__id-note" id="comms-scan-note">point the camera at their “my code” screen</p>
+          <div class="comms__scan-actions">
+            <button class="comms__btn comms__btn--ghost comms__btn--icon" id="comms-scan-torch" type="button" hidden aria-pressed="false" title="flashlight" aria-label="flashlight"><svg class="comms__i" aria-hidden="true"><use href="#ci-flash"></use></svg></button>
+            <button class="comms__btn comms__btn--ghost" id="comms-scan-stop" type="button">cancel</button>
+          </div>
+        </div>
+        <div class="comms__contacts-add">
+          <input class="comms__input" id="comms-contact-in" type="text" enterkeyhint="done" placeholder="…or paste a contact code (MC1.…)" spellcheck="false" autocapitalize="off">
+          <button class="comms__btn comms__btn--ghost" id="comms-contact-add" type="button">add</button>
+        </div>
+      </div>
+      <div class="comms__contacts-list" id="comms-contacts-list"></div>
+    </div>
+
+    <div class="comms__ring" id="comms-ring" hidden>
+      <span class="comms__ring-text" id="comms-ring-text">incoming call</span>
+      <button class="comms__btn" id="comms-ring-accept" type="button">accept</button>
+      <button class="comms__btn comms__btn--ghost" id="comms-ring-decline" type="button">decline</button>
+    </div>
+
+    <div class="comms__chatbody" id="comms-drop">
+      <div class="comms__media" id="comms-media" hidden></div>
+      <div class="comms__peerlist" id="comms-peerlist" hidden></div>
+      <div class="comms__log" id="comms-log" aria-live="polite" aria-relevant="additions"></div>
+    </div>
+
+    <form class="comms__send" id="comms-send" autocomplete="off">
+      <label class="comms__attach" title="send a file" aria-label="send a file"><input type="file" id="comms-file" multiple hidden><svg class="comms__i" aria-hidden="true"><use href="#ci-clip"></use></svg></label>
+      <input class="comms__input comms__input--msg" id="comms-msg" type="text" enterkeyhint="send" placeholder="message" disabled>
+      <button class="comms__btn comms__btn--send" id="comms-go" type="submit" disabled title="send" aria-label="send"><svg class="comms__i" aria-hidden="true"><use href="#ci-send"></use></svg></button>
+    </form>
+
+    <div class="comms__adv" id="comms-adv" hidden>
+      <div class="comms__adv-sec">
+        <span class="comms__lbl">room</span>
+        <div class="comms__room">
+          <input class="comms__input" id="comms-room" type="text" enterkeyhint="go" autocomplete="off" spellcheck="false" lang="en" dir="ltr" autocapitalize="off" placeholder="!ephemeral">
+          <button class="comms__btn" id="comms-join" type="button">join</button>
+          <button class="comms__btn comms__btn--ghost" id="comms-newroom" type="button">new room link</button>
+        </div>
+      </div>
+      <div class="comms__adv-sec">
+        <span class="comms__lbl">privacy</span>
+        <button class="comms__relay" id="comms-relay" type="button" role="switch" aria-checked="false">
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 5 6v5c0 4.4 3 7.9 7 9 4-1.1 7-4.6 7-9V6Z"></path><path d="M9.4 11.8l1.9 1.9 3.3-3.4"></path></svg>
+          <span class="comms__relay-lbl">hide my ip</span>
+          <span class="comms__relay-track" aria-hidden="true"><span class="comms__relay-thumb"></span></span>
+        </button>
+        <p class="comms__relay-note" id="comms-relay-note" hidden>traffic routes through the mentria relay — peers only see the relay's address, not yours. slightly slower. applies when you next join.</p>
+      </div>
+      <div class="comms__share" id="comms-share" hidden>
+        <span class="comms__lbl">share</span>
+        <code class="comms__url" id="comms-url"></code>
+        <button class="comms__btn comms__btn--ghost" id="comms-copy" type="button">copy</button>
+        <button class="comms__btn comms__btn--ghost" id="comms-genkey" type="button" title="generate a fresh encryption key and append it to the URL">+ key</button>
+      </div>
+      <div class="comms__adv-sec comms__adv-sec--col">
+        <div class="comms__adv-row">
+          <span class="comms__lbl">notifications</span>
+          <button class="comms__btn comms__btn--ghost" id="comms-push-test" type="button">test my notifications</button>
+        </div>
+        <span class="comms__id-note" id="comms-push-status">…</span>
+        <span class="comms__id-note comms__push-log" id="comms-push-test-log" hidden></span>
+      </div>
+      <div class="comms__adv-sec">
+        <span class="comms__lbl">this device</span>
+        <button class="comms__btn comms__btn--ghost comms__btn--mute" id="comms-mute" type="button" aria-pressed="false">sound: on</button>
+        <button class="comms__btn comms__btn--ghost" id="comms-attach-ext" type="button">attach extension</button>
+        <button class="comms__btn comms__btn--ghost" id="comms-pk-settings" type="button" hidden>add face id / touch id</button>
+        <a class="comms__btn comms__btn--ghost" href="/about/">identity settings</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="comms__picker" id="comms-picker" hidden>
+    <div class="comms__picker-backdrop" data-picker-close></div>
+    <div class="comms__picker-card" role="dialog" aria-modal="true" aria-label="share extension">
+      <h3 class="comms__picker-h">share extension</h3>
+      <div class="comms__picker-list" id="comms-picker-list"></div>
+      <div class="comms__picker-actions">
+        <button type="button" class="comms__btn comms__btn--ghost" data-picker-close>cancel</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+    </div>
+</div>
+<nav class="related-tools" aria-label="More tools" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">More tools</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/tools/qr-scanner/">
+        <span class="related-tools__name"><i18n-t data-k="tools.qr-scanner.title">QR &amp; Barcode Scanner + Generator</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utility</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/tools/decision-wheel/">
+        <span class="related-tools__name"><i18n-t data-k="tools.decision-wheel.title">Decision Wheel</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utility</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/tools/countdown-timer/">
+        <span class="related-tools__name"><i18n-t data-k="tools.countdown-timer.title">Countdown Timer</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Timer">Timer</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/tools/coin-flip/">
+        <span class="related-tools__name"><i18n-t data-k="tools.coin-flip.title">Coin Flip</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utility</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/tools/"><i18n-t data-k="tools_page.related_all">All tools</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+<script src="/assets/js/mentria-identity.js?v=ec54a8f-09040920"></script>
+<script src="/assets/js/qrcode.js?v=ec54a8f-09040920"></script>
+<script type="module">
+import { joinRoom, selfId, createPersistentEvent, getRelaySockets } from '/assets/vendor/trystero-nostr.js';
+import { MentriaBus } from '/assets/js/mentria-bus.js';
+import { confirmInstall } from '/assets/js/mentria-ext-install-ui.js';
+import * as CID from '/assets/js/mentria-comms-id.js';
+
+const RELAY = 'wss://relay.mentria.ai';
+const TURN_CRED_URL = 'https://relay.mentria.ai/turn-cred';
+
+let cachedIce = null;
+let iceExpiry = 0;
+const REFRESH_LEAD = 60;
+const FALLBACK_ICE = [{ urls: 'stun:turn.mentria.ai:3478' }];
+
+const getIce = async () => {
+  const nowS = Date.now() / 1000;
+  if (cachedIce && nowS < iceExpiry - REFRESH_LEAD) return cachedIce;
+  try {
+    const r = await fetch(TURN_CRED_URL, { cache: 'no-store' });
+    if (!r.ok) throw new Error(`status ${r.status}`);
+    const data = await r.json();
+    iceExpiry = nowS + (data.ttl || 3600);
+    cachedIce = data.iceServers || FALLBACK_ICE;
+    return cachedIce;
+  } catch (err) {
+    console.warn('turn-cred fetch failed, using STUN-only fallback:', err);
+    return FALLBACK_ICE;
+  }
+};
+
+const $ = (id) => document.getElementById(id);
+const els = {
+  room: $('comms-room'), join: $('comms-join'),
+  status: $('comms-status'), peers: $('comms-peers'), mute: $('comms-mute'), eph: $('comms-eph'), enc: $('comms-enc'),
+  share: $('comms-share'), url: $('comms-url'), copy: $('comms-copy'), genkey: $('comms-genkey'),
+  peerlist: $('comms-peerlist'),
+  log: $('comms-log'), drop: $('comms-drop'), file: $('comms-file'),
+  send: $('comms-send'), msg: $('comms-msg'), go: $('comms-go'),
+  idNone: $('comms-id-none'), idLocked: $('comms-id-locked'), idOn: $('comms-id-on'),
+  idPass: $('comms-id-pass'), idUnlock: $('comms-id-unlock'), idErr: $('comms-id-err'), idPasskey: $('comms-id-passkey'),
+  idName: $('comms-id-name'), idFp: $('comms-id-fp'), idShare: $('comms-id-share'), idContacts: $('comms-id-contacts'),
+  idCard: $('comms-id-card'), idQr: $('comms-id-qr'), idCode: $('comms-id-code'), idCopy: $('comms-id-copy'),
+  idShareOut: $('comms-id-share-out'),
+  contacts: $('comms-contacts'), contactIn: $('comms-contact-in'), contactAdd: $('comms-contact-add'), contactList: $('comms-contacts-list'),
+  callStart: $('comms-call-start'), callCam: $('comms-call-cam'), callMic: $('comms-call-mic'), callHangup: $('comms-call-hangup'),
+  ring: $('comms-ring'), ringText: $('comms-ring-text'), ringAccept: $('comms-ring-accept'), ringDecline: $('comms-ring-decline'),
+  media: $('comms-media'),
+  app: $('comms-app'), adv: $('comms-adv'), advToggle: $('comms-adv-toggle'), newRoom: $('comms-newroom'),
+  pkUpgrade: $('comms-pk-upgrade'), pkEnroll: $('comms-pk-enroll'), pkLater: $('comms-pk-later'), pkErr: $('comms-pk-err'), pkSettings: $('comms-pk-settings'),
+  onboard: $('comms-onboard'), obPasskey: $('comms-onboard-passkey'), obIntro: $('comms-onboard-intro'), obInsecure: $('comms-onboard-insecure'), obForm: $('comms-onboard-form'), obDone: $('comms-onboard-done'),
+  obStart: $('comms-onboard-start'), obName: $('comms-onboard-name'), obCreate: $('comms-onboard-create'),
+  obErr: $('comms-onboard-err'), obHint: $('comms-onboard-hint'), obMethod: $('comms-onboard-method'),
+  obCode: $('comms-onboard-code'), obCopy: $('comms-onboard-copy'), obContinue: $('comms-onboard-continue'),
+  setupHere: $('comms-id-setup-here'), lockAlt: $('comms-lock-alt'),
+  leave: $('comms-leave'), peersN: $('comms-peers-n'), shareT: $('comms-id-share-t'),
+  addToggle: $('comms-add-toggle'), addToggleT: $('comms-add-toggle-t'), addBox: $('comms-add'),
+  scan: $('comms-scan'), scanWrap: $('comms-scan-wrap'), scanVideo: $('comms-scan-video'),
+  scanNote: $('comms-scan-note'), scanStop: $('comms-scan-stop'),
+  scanZoom: $('comms-scan-zoom'), scanZoomWrap: $('comms-scan-zoom-wrap'), scanTorch: $('comms-scan-torch'),
+  chatTitle: $('comms-chat-title'), chatAvatar: $('comms-chat-avatar'), profAvatar: $('comms-prof-avatar'),
+  notif: $('comms-notif'), notifEnable: $('comms-notif-enable'), notifDismiss: $('comms-notif-dismiss'),
+  lockWaiting: $('comms-lock-waiting'), pushStatus: $('comms-push-status'),
+  pushTest: $('comms-push-test'), pushTestLog: $('comms-push-test-log')
+};
+
+const updatePushStatus = () => {
+  if (!els.pushStatus) return;
+  const bits = [];
+  if (!window.MentriaPush || !MentriaPush.isSupported()) bits.push('not supported in this browser');
+  else if (MentriaPush.permission() !== 'granted') bits.push('yours: off — use the enable banner in your people list');
+  else bits.push(ringToken ? 'yours: on' : 'yours: registering…');
+  CID.getContacts().forEach((c) => {
+    bits.push(`${c.name || c.fp}: ${c.ring ? 'reachable' : 'no token yet — they need to enable notifications once'}`);
+  });
+  try {
+    const lk = MentriaStore.get('comms', 'last_knock');
+    if (lk && lk.t) bits.push(`last knock sent: ${hhmmOf(lk.t)} ${lk.ok ? '✓' : '✗ ' + (lk.reason || 'failed')}`);
+  } catch (_) {}
+  els.pushStatus.textContent = bits.join(' · ');
+  if (window.MentriaPushDB && MentriaPushDB.kvGet) {
+    MentriaPushDB.kvGet('last-push-at').then((t) => {
+      if (typeof t === 'number' && t > 0) els.pushStatus.textContent += ` · last push received: ${hhmmOf(t)}`;
+    }).catch(() => {});
+  }
+};
+
+const pushTestLog = (line, replace) => {
+  els.pushTestLog.hidden = false;
+  if (replace) {
+    const parts = els.pushTestLog.textContent.split('\n');
+    parts[parts.length - 1] = line;
+    els.pushTestLog.textContent = parts.join('\n');
+  } else {
+    els.pushTestLog.textContent += (els.pushTestLog.textContent ? '\n' : '') + line;
+  }
+};
+
+els.pushTest.addEventListener('click', async () => {
+  els.pushTest.disabled = true;
+  els.pushTestLog.textContent = '';
+  try {
+    if (!window.MentriaPush || !MentriaPush.isSupported()) {
+      const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      pushTestLog(isIos && !navigator.standalone
+        ? '1. push not available in the iPhone browser — install comms to your home screen first (share → add to home screen), then test from the installed app'
+        : '1. push not supported in this browser');
+      return;
+    }
+    pushTestLog('1. support: yes');
+    if (MentriaPush.permission() !== 'granted') {
+      pushTestLog('2. permission: asking…');
+      const ok = await MentriaPush.requestPermission();
+      pushTestLog('2. permission: ' + (ok ? 'granted' : 'NOT granted — the browser blocked or you declined; check site settings'), true);
+      if (!ok) return;
+    } else {
+      pushTestLog('2. permission: granted');
+    }
+    let sub = null;
+    let subErr = null;
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      sub = await reg.pushManager.getSubscription();
+      if (!sub) {
+        const r = await fetch('https://relay.mentria.ai/push/vapid-public', { cache: 'no-store' });
+        const { publicKey } = await r.json();
+        const pad = '='.repeat((4 - publicKey.length % 4) % 4);
+        const b64 = (publicKey + pad).replace(/-/g, '+').replace(/_/g, '/');
+        const raw = atob(b64), key = new Uint8Array(raw.length);
+        for (let i = 0; i < raw.length; i++) key[i] = raw.charCodeAt(i);
+        sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
+      }
+    } catch (e) { subErr = (e && e.name ? e.name + ': ' : '') + String(e && e.message || e).slice(0, 120); }
+    if (!sub) { pushTestLog('3. subscription: FAILED — ' + (subErr || 'unknown error')); return; }
+    let host = 'unknown';
+    try { host = new URL(sub.toJSON().endpoint).host; } catch (_) {}
+    pushTestLog('3. subscription: ' + host);
+    let testToken = MentriaStore.get('comms', 'selftest_token');
+    if (!testToken || !/^[A-Za-z0-9_-]{20,64}$/.test(testToken)) {
+      const b = crypto.getRandomValues(new Uint8Array(18));
+      testToken = 'st' + btoa(String.fromCharCode(...b)).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+      MentriaStore.set('comms', 'selftest_token', testToken);
+    }
+    const reg2 = await MentriaPush.ringRegister(testToken);
+    pushTestLog('4. register with relay: ' + (reg2 ? 'ok' : 'FAILED'));
+    if (!reg2) return;
+    const rung = await MentriaPush.ring(testToken, 'comms-msg');
+    if (rung && rung.throttled) { pushTestLog('5. self-knock: throttled — you just tested; wait ~25s and try again'); return; }
+    pushTestLog('5. self-knock: ' + (rung && rung.ok ? 'sent' : 'FAILED — ' + ((rung && rung.reason) || 'unknown')));
+    if (!rung || !rung.ok) return;
+    pushTestLog('6. waiting for the notification…');
+    const reg = await navigator.serviceWorker.ready;
+    const t0 = Date.now();
+    let seen = false;
+    while (Date.now() - t0 < 15000) {
+      await new Promise((r) => setTimeout(r, 600));
+      const notes = await reg.getNotifications({ tag: 'comms-msg' });
+      if (notes.length) { seen = true; break; }
+    }
+    pushTestLog(seen
+      ? '6. notification arrived ✓ — push works on this device'
+      : '6. relay accepted but NO notification in 15s ✗ — the push service (' + host + ') did not deliver; tell mihir this line', true);
+  } finally {
+    els.pushTest.disabled = false;
+    updatePushStatus();
+  }
+});
+
+const updateLockWaiting = async () => {
+  if (!els.lockWaiting) return;
+  let total = 0;
+  try {
+    const map = MentriaStore.get('comms', 'unread') || {};
+    for (const fp of Object.keys(map)) total += (map[fp] && map[fp].n) || 0;
+  } catch (_) {}
+  try {
+    if (window.MentriaPushDB && MentriaPushDB.kvGet) {
+      const n = await MentriaPushDB.kvGet('comms-msg-count');
+      if (typeof n === 'number') total = Math.max(total, n);
+    }
+  } catch (_) {}
+  els.lockWaiting.textContent = total > 0
+    ? (total > 1 ? total + ' messages waiting — unlock to read' : '1 message waiting — unlock to read')
+    : '';
+  els.lockWaiting.hidden = total === 0;
+};
+
+const setView = (v) => {
+  els.app.classList.toggle('comms__app--chat', v === 'chat');
+  els.app.classList.toggle('comms__app--people', v !== 'chat');
+};
+
+const hueOf = (seed) => {
+  let h = 0;
+  const s = String(seed || '');
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360;
+  return h;
+};
+const paintAvatar = (el, name, seed) => {
+  if (!el) return;
+  const label = String(name || '').trim();
+  el.textContent = label ? label[0].toUpperCase() : '#';
+  el.style.background = `hsl(${hueOf(seed || label)} 45% 26%)`;
+  el.style.color = `hsl(${hueOf(seed || label)} 80% 78%)`;
+};
+
+const MAX_FILE = 50 * 1024 * 1024;
+const MAX_TOTAL_WARN = 100 * 1024 * 1024;
+
+let room = null;
+let chatAction = null;
+let metaAction = null;
+let chunkAction = null;
+let profAction = null;
+let callAction = null;
+const call = { active: false, local: null, videoOn: false, micOff: false, ringTimer: null, ringDeadline: 0 };
+const callTiles = new Map();
+const pendingStreams = new Map();
+let myId = null;
+let myFp = null;
+let ringToken = null;
+let currentDmContact = null;
+let lastRingSentAt = 0;
+let myProfile = { name: '' };
+const peerProfiles = new Map();
+const peers = new Set();
+const objectUrls = new Set();
+const trackObjectUrl = (blob) => { const u = URL.createObjectURL(blob); objectUrls.add(u); return u; };
+const revokeObjectUrls = () => { objectUrls.forEach((u) => { try { URL.revokeObjectURL(u); } catch {} }); objectUrls.clear(); };
+let muted = false;
+try { muted = localStorage.getItem('comms.muted') === '1'; } catch (_) {}
+let relayOnly = false;
+try { relayOnly = localStorage.getItem('comms.relayOnly') === '1'; } catch (_) {}
+function hasTurn(list) {
+  return (list || []).some((s2) => {
+    const u = s2 && s2.urls;
+    return (Array.isArray(u) ? u : [u]).some((x) => String(x || '').startsWith('turn'));
+  });
+}
+function renderRelayToggle() {
+  const btn = document.getElementById('comms-relay');
+  const note = document.getElementById('comms-relay-note');
+  if (!btn) return;
+  btn.setAttribute('aria-checked', relayOnly ? 'true' : 'false');
+  if (note) note.hidden = !relayOnly;
+}
+document.getElementById('comms-relay').addEventListener('click', () => {
+  relayOnly = !relayOnly;
+  try { localStorage.setItem('comms.relayOnly', relayOnly ? '1' : '0'); } catch (_) {}
+  renderRelayToggle();
+});
+renderRelayToggle();
+let audioCtx = null;
+
+const CHAT_TOPIC_PREFIX = 'mentria.chat.v1.';
+const CHAT_KIND = 3838;
+const EPHEMERAL_PREFIX = '!';
+const HISTORY_LOOKBACK_SEC = 7 * 24 * 60 * 60;
+const HISTORY_LIMIT = 100;
+
+let chatSubId = null;
+let chatTopic = null;
+let chatPersist = true;
+let seenCmids = new Set();
+const socketListenersAttached = new WeakSet();
+
+const isEphemeralRoom = (name) => typeof name === 'string' && name.startsWith(EPHEMERAL_PREFIX);
+const isDmRoom = (name) => typeof name === 'string' && (name.startsWith('!dm-') || name.startsWith('dm-'));
+const newCmid = () => selfId + ':' + Math.random().toString(36).slice(2);
+
+let chatKey = null;
+
+const b64encode = (bytes) => btoa(String.fromCharCode(...bytes));
+const b64decode = (str) => Uint8Array.from(atob(str), c => c.charCodeAt(0));
+const b64urlEncode = (bytes) => b64encode(bytes).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');
+const b64urlDecode = (str) => {
+  const b64 = str.replaceAll('-','+').replaceAll('_','/');
+  const padded = b64 + '='.repeat((4 - b64.length % 4) % 4);
+  return b64decode(padded);
+};
+
+const parseHash = (hash) => {
+  const raw = (hash || '').slice(1).trim();
+  if (!raw) return { room: null, b64Key: null };
+  const colonIdx = raw.indexOf(':');
+  if (colonIdx === -1) return { room: raw, b64Key: null };
+  return { room: raw.slice(0, colonIdx), b64Key: raw.slice(colonIdx + 1) || null };
+};
+
+const formatHash = (room, b64Key) => '#' + room + (b64Key ? ':' + b64Key : '');
+
+const deriveKey = async (b64Key) => {
+  try {
+    const raw = b64urlDecode(b64Key);
+    if (raw.length !== 32) throw new Error('key must be 32 bytes');
+    return await crypto.subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+  } catch (err) {
+    console.warn('key parse failed:', err);
+    return null;
+  }
+};
+
+const encryptText = async (key, plaintext) => {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(plaintext));
+  return { v: 1, iv: b64encode(iv), ct: b64encode(new Uint8Array(ct)) };
+};
+
+const decryptText = async (key, payload) => {
+  if (!payload || payload.v !== 1) throw new Error('bad payload');
+  const iv = b64decode(payload.iv);
+  const ct = b64decode(payload.ct);
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+  return new TextDecoder().decode(pt);
+};
+
+const short = (id) => id ? id.slice(0, 6) : 'unknown';
+
+const displayName = (peerId) => {
+  const prof = peerProfiles.get(peerId);
+  if (prof && prof.fp) {
+    const contact = CID.getContacts().find((c) => c.fp === prof.fp);
+    if (contact && contact.name) return contact.name;
+  }
+  if (prof && prof.name) return prof.name;
+  return short(peerId);
+};
+
+const peerColor = (id) => {
+  let h = 0;
+  for (let i = 0; i < (id || '').length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return `hsl(${h % 360}, 55%, 65%)`;
+};
+
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtKB = (n) => (n / 1024).toFixed(1) + ' KB';
+const fmtMB = (n) => (n / 1024 / 1024).toFixed(1) + ' MB';
+const fmtSize = (n) => n >= 1024 * 1024 ? fmtMB(n) : fmtKB(n);
+const nowHHMM = () => { const d = new Date(); return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); };
+
+const playPing = (freq = 880) => {
+  if (muted) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = audioCtx;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = freq;
+    osc.type = 'sine';
+    const t = ctx.currentTime;
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.12, t + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.22);
+  } catch {}
+};
+
+const renderPeerList = () => {
+  if (!peers.size) { els.peerlist.hidden = true; els.peerlist.innerHTML = ''; return; }
+  els.peerlist.hidden = false;
+  els.peerlist.innerHTML = '';
+  peers.forEach(p => {
+    const chip = document.createElement('span');
+    chip.className = 'comms__chip';
+    chip.style.color = peerColor(p);
+    chip.textContent = displayName(p);
+    const prof = peerProfiles.get(p);
+    chip.title = prof && prof.fp ? 'fingerprint ' + prof.fp : p;
+    if (prof && prof.pub && prof.fp && !CID.getContacts().some((c) => c.fp === prof.fp)) {
+      const add = document.createElement('button');
+      add.type = 'button';
+      add.className = 'comms__chip-add';
+      add.textContent = '+';
+      add.title = 'add ' + (prof.name || short(p)) + ' as a contact';
+      add.addEventListener('click', async () => {
+        await CID.addContact({ name: prof.name, pub: prof.pub, ring: prof.ring });
+        sys(`${displayName(p)} added to contacts.`);
+        renderPeerList();
+        renderContacts();
+      });
+      chip.append(add);
+    }
+    els.peerlist.append(chip);
+  });
+};
+
+const hhmmOf = (ts) => {
+  const d = ts ? new Date(ts) : new Date();
+  return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+};
+
+const renderLine = (who, what, opts = {}) => {
+  const line = document.createElement('div');
+  line.className = 'comms__line' + (opts.sys ? ' comms__line--sys' : opts.me ? ' comms__line--me' : ' comms__line--peer');
+  const w = document.createElement('span');
+  w.className = 'comms__who' + (opts.sys ? ' comms__who--sys' : opts.me ? ' comms__who--me' : '');
+  if (opts.sys) {
+    w.hidden = true;
+  } else if (opts.me) {
+    w.textContent = hhmmOf(opts.ts);
+  } else {
+    w.textContent = who;
+    if (opts.peerId) w.style.color = peerColor(opts.peerId);
+    const time = document.createElement('span');
+    time.className = 'comms__time';
+    time.textContent = hhmmOf(opts.ts);
+    w.append(time);
+  }
+  const t = document.createElement('span');
+  t.className = 'comms__what' + (opts.sys ? ' comms__what--sys' : '');
+  if (opts.html) t.innerHTML = opts.html; else t.textContent = what;
+  if (opts.quiet) line.setAttribute('aria-live', 'off');
+  line.append(w, t);
+  const ts = (typeof opts.ts === 'number' && opts.ts > 0) ? opts.ts : Date.now();
+  line.dataset.ts = String(ts);
+  const kids = els.log.children;
+  let ref = null;
+  for (let i = kids.length - 1; i >= 0; i--) {
+    if (Number(kids[i].dataset.ts || 0) <= ts) break;
+    ref = kids[i];
+  }
+  if (ref) els.log.insertBefore(line, ref);
+  else els.log.append(line);
+  els.log.scrollTop = els.log.scrollHeight;
+  return { line, what: t };
+};
+
+const sys = (text) => renderLine('--', text, { sys: true });
+
+const progressHTML = (verb, name, size, transferred) => {
+  const pct = size > 0 ? Math.min(100, Math.round((transferred / size) * 100)) : 0;
+  return `${verb} <strong>${escapeHtml(name)}</strong>` +
+    ` <span class="comms__prog"><span class="comms__prog-fill" style="width:${pct}%"></span></span>` +
+    ` <span class="comms__prog-text">${pct}% (${fmtKB(transferred)} / ${fmtKB(size)})</span>`;
+};
+
+const completeHTML = (name, size, type, url) => {
+  const isImg = type && type.startsWith('image/');
+  const preview = isImg ? `<br><a href="${url}" target="_blank" rel="noopener"><img class="comms__thumb" src="${url}" alt="${escapeHtml(name)}"></a>` : '';
+  return `<a href="${url}" download="${escapeHtml(name)}">${escapeHtml(name)}</a> (${fmtKB(size)})${preview}`;
+};
+
+const updatePeers = () => {
+  if (els.peersN) els.peersN.textContent = String(peers.size);
+  els.peers.hidden = peers.size === 0;
+};
+
+let currentRoomName = null;
+let roomJoinedAt = 0;
+let pendingResends = 0;
+const setConnUI = () => {
+  const offline = !navigator.onLine;
+  els.send.classList.toggle('comms__send--offline', offline);
+  els.status.classList.toggle('comms__badge--offline', offline);
+  if (currentRoomName) {
+    els.status.textContent = offline ? 'reconnecting…' : (isDmRoom(currentRoomName) ? 'private chat' : `room: ${currentRoomName}`);
+  }
+};
+window.addEventListener('offline', setConnUI);
+window.addEventListener('online', () => {
+  setConnUI();
+  if (pendingResends > 0) sys(`back online — ${pendingResends} message${pendingResends === 1 ? '' : 's'} awaiting resend.`);
+});
+
+const renderPendingLine = (text, payload, cmid) => {
+  const line = renderLine('you', text, { me: true, quiet: true });
+  line.line.classList.add('comms__line--pending');
+  const note = document.createElement('span');
+  note.className = 'comms__pending-note';
+  note.textContent = 'not delivered — no connection';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'comms__resend';
+  btn.textContent = 'resend';
+  btn.addEventListener('click', () => {
+    if (!navigator.onLine) { sys('still offline — try again when the connection returns.'); return; }
+    if (!chatAction) { sys('not connected to a room — rejoin to send.'); return; }
+    chatAction.send(payload);
+    publishChat(text, cmid);
+    line.line.classList.remove('comms__line--pending');
+    note.remove();
+    btn.remove();
+    pendingResends = Math.max(0, pendingResends - 1);
+  });
+  line.what.append(note, btn);
+  pendingResends++;
+};
+
+const refreshShareUrl = (roomName, b64Key) => {
+  if (isDmRoom(roomName)) { els.share.hidden = true; els.url.textContent = ''; return; }
+  const u = new URL(window.location.href);
+  u.hash = formatHash(roomName, b64Key);
+  els.url.textContent = u.toString();
+  els.share.hidden = false;
+};
+
+const renderRemoteChat = (item, opts = {}) => {
+  if (item.sfp && myFp && item.sfp === myFp) {
+    renderLine('you', item.text, { me: true, quiet: true, ts: item.ts });
+    return;
+  }
+  let who = displayName(item.senderId);
+  if (currentDmContact && item.sfp && currentDmContact.fp === item.sfp) who = currentDmContact.name || who;
+  renderLine(who, item.text, { peerId: item.senderId, quiet: !!opts.silent, ts: item.ts });
+  if (!opts.silent) playPing(880);
+};
+
+const packChatPlain = (text) => JSON.stringify({ v: 2, t: text, sfp: myFp || undefined });
+const unpackChatPlain = (raw) => {
+  try {
+    const o = JSON.parse(raw);
+    if (o && o.v === 2 && typeof o.t === 'string') return { text: o.t, sfp: typeof o.sfp === 'string' ? o.sfp : null };
+  } catch (_) {}
+  return { text: raw, sfp: null };
+};
+
+const handleNostrMsg = async (msgEvent) => {
+  let msg;
+  try { msg = JSON.parse(msgEvent.data); } catch { return; }
+  if (!Array.isArray(msg)) return;
+  if (msg[0] === 'EVENT' && msg[1] === chatSubId && msg[2]) {
+    const ev = msg[2];
+    let content;
+    try { content = JSON.parse(ev.content); } catch { return; }
+    if (!content || !content.cmid || seenCmids.has(content.cmid)) return;
+    let text, sfp = null;
+    if (content.enc) {
+      if (!chatKey) return;
+      try {
+        const unpacked = unpackChatPlain(await decryptText(chatKey, content.enc));
+        text = unpacked.text;
+        sfp = unpacked.sfp;
+      } catch { return; }
+    } else if (typeof content.text === 'string') {
+      text = content.text;
+    } else {
+      return;
+    }
+    seenCmids.add(content.cmid);
+    const senderId = (content.cmid.split(':')[0]) || ev.pubkey;
+    const evTs = (ev.created_at || 0) * 1000;
+    let ts = (typeof content.ts === 'number' && content.ts > 0) ? content.ts : evTs;
+    if (evTs > 0 && Math.abs(ts - evTs) > 120000) ts = evTs;
+    const item = { senderId, text, ts, sfp };
+    renderRemoteChat(item, { silent: ts < roomJoinedAt - 2000 });
+  }
+};
+
+const closeChatSub = () => {
+  if (!chatSubId) return;
+  const closeMsg = JSON.stringify(['CLOSE', chatSubId]);
+  const sockets = getRelaySockets() || {};
+  for (const ws of Object.values(sockets)) {
+    try { ws.send(closeMsg); } catch {}
+  }
+};
+
+const setupChatPersistence = async (roomName) => {
+  chatTopic = CHAT_TOPIC_PREFIX + roomName;
+  chatPersist = !isEphemeralRoom(roomName);
+  seenCmids = new Set();
+
+  if (!chatPersist) {
+    chatSubId = null;
+    sys('ephemeral room — messages aren\'t saved. drop the leading ! to persist.');
+    return;
+  }
+
+  chatSubId = 'mc-' + Math.random().toString(36).slice(2);
+
+  const deadline = Date.now() + 8000;
+  let openSockets = [];
+  while (Date.now() < deadline) {
+    const socketsMap = getRelaySockets() || {};
+    openSockets = Object.values(socketsMap).filter(ws => ws && ws.readyState === 1);
+    if (openSockets.length > 0) break;
+    await new Promise(r => setTimeout(r, 200));
+  }
+  if (!openSockets.length) {
+    sys('relay unreachable — history disabled this session.');
+    return;
+  }
+
+  const sinceSec = Math.floor(Date.now() / 1000) - HISTORY_LOOKBACK_SEC;
+  const req = JSON.stringify(['REQ', chatSubId, {
+    kinds: [CHAT_KIND],
+    '#x': [chatTopic],
+    since: sinceSec,
+    limit: HISTORY_LIMIT
+  }]);
+
+  for (const ws of openSockets) {
+    try {
+      if (!socketListenersAttached.has(ws)) {
+        ws.addEventListener('message', handleNostrMsg);
+        socketListenersAttached.add(ws);
+      }
+      ws.send(req);
+    } catch (err) {
+      console.warn('chat history setup failed for socket:', err);
+    }
+  }
+
+};
+
+const rememberSentCmid = (cmid) => {
+  if (!currentDmContact || !cmid) return;
+  try {
+    const log = MentriaStore.get('comms', 'sentlog') || {};
+    const arr = Array.isArray(log[currentDmContact.fp]) ? log[currentDmContact.fp] : [];
+    arr.push(cmid);
+    log[currentDmContact.fp] = arr.slice(-300);
+    MentriaStore.set('comms', 'sentlog', log);
+  } catch (_) {}
+};
+
+const sentCmidsFor = (fp) => {
+  try {
+    const log = MentriaStore.get('comms', 'sentlog') || {};
+    return Array.isArray(log[fp]) ? log[fp] : [];
+  } catch (_) { return []; }
+};
+
+const publishChat = async (text, cmid) => {
+  if (!chatTopic || !chatPersist) return;
+  rememberSentCmid(cmid);
+  try {
+    let payload;
+    if (chatKey) {
+      const enc = await encryptText(chatKey, packChatPlain(text));
+      payload = { cmid, ts: Date.now(), enc };
+    } else {
+      payload = { text, cmid, ts: Date.now() };
+    }
+    const eventStr = await createPersistentEvent(CHAT_KIND, chatTopic, JSON.stringify(payload));
+    const sockets = getRelaySockets() || {};
+    for (const ws of Object.values(sockets)) {
+      if (ws && ws.readyState === 1) {
+        try { ws.send(eventStr); } catch {}
+      }
+    }
+  } catch (err) {
+    console.warn('chat publish failed:', err);
+  }
+};
+
+let joinSeq = 0;
+
+const joinNew = async (roomName, b64Key = null, opts = {}) => {
+  const seq = ++joinSeq;
+  const leavingDm = currentDmContact;
+  stopScan();
+  MentriaBus.unprovide('comms.peers');
+  MentriaBus.unprovide('comms.share');
+  MentriaBus.unprovide('extensions.requestInstall');
+  endCall(true);
+  if (room) {
+    closeChatSub();
+    try { await room.leave(); } catch {}
+    if (seq !== joinSeq) return;
+    room = null;
+    chatAction = metaAction = chunkAction = profAction = callAction = null;
+    peers.clear();
+    peerProfiles.clear();
+    chatSubId = null;
+    chatTopic = null;
+    chatKey = null;
+  }
+  revokeObjectUrls();
+  currentDmContact = null;
+  if (leavingDm) clearUnreadFor(leavingDm.fp);
+  els.log.innerHTML = '';
+  roomJoinedAt = Date.now();
+  els.status.textContent = 'connecting…';
+  els.peers.hidden = true;
+  els.enc.hidden = true;
+
+  if (opts.leave || !roomName) {
+    currentRoomName = null;
+    currentDmContact = null;
+    els.room.value = '';
+    els.status.textContent = 'not in a chat';
+    els.share.hidden = true;
+    els.eph.hidden = true;
+    els.leave.hidden = true;
+    els.callStart.hidden = true;
+    els.msg.disabled = true;
+    els.go.disabled = true;
+    if (window.location.hash) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    setView('people');
+    renderContacts();
+    return;
+  }
+
+  chatKey = b64Key ? await deriveKey(b64Key) : null;
+  if (seq !== joinSeq) return;
+  if (b64Key && !chatKey) sys('encryption key in URL is invalid — chat will appear unreadable.');
+
+  if (opts.share === false || isDmRoom(roomName)) {
+    if (window.location.hash) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  } else {
+    window.location.hash = formatHash(roomName, b64Key);
+  }
+  refreshShareUrl(roomName, b64Key);
+
+  let iceServers;
+  try {
+    iceServers = await getIce();
+  } catch {
+    iceServers = FALLBACK_ICE;
+  }
+  if (seq !== joinSeq) return;
+
+  const rtcConfig = { iceServers };
+  if (relayOnly && hasTurn(iceServers)) rtcConfig.iceTransportPolicy = 'relay';
+  else if (relayOnly) console.warn('hide-my-ip requested but no relay server available — connecting normally');
+  try {
+    room = joinRoom(
+      {
+        appId: 'mentria',
+        relayConfig: { urls: [RELAY] },
+        rtcConfig
+      },
+      roomName
+    );
+  } catch (err) {
+    sys(`failed to join: ${err.message}`);
+    els.status.textContent = 'error';
+    return;
+  }
+
+  currentRoomName = roomName;
+  if (opts.contact) currentDmContact = opts.contact;
+  els.chatTitle.textContent = opts.contact ? (opts.contact.name || opts.contact.fp) : roomName;
+  paintAvatar(els.chatAvatar, opts.contact ? (opts.contact.name || opts.contact.fp) : '#', opts.contact ? opts.contact.fp : roomName);
+  els.status.textContent = isDmRoom(roomName) ? 'private chat' : `room: ${roomName}`;
+  els.leave.hidden = false;
+  setView('chat');
+  setConnUI();
+  els.eph.hidden = !isEphemeralRoom(roomName);
+  els.enc.hidden = !chatKey;
+  els.msg.disabled = false;
+  els.go.disabled = false;
+  updatePeers();
+  updateCallUI();
+  if (isDmRoom(roomName)) sys('private chat — end-to-end encrypted, only your two identities can open it.');
+  else sys(`you are ${myProfile.name ? myProfile.name + ' (' + short(selfId) + ')' : short(selfId)} — alone in "${roomName}". share the URL to invite someone.`);
+  if (chatKey && !isDmRoom(roomName)) sys('end-to-end encrypted. anyone with the full URL (including the key after the colon) can decrypt.');
+
+  callAction = room.makeAction('call');
+  callAction.onMessage = (data, ctx) => {
+    const kind = data && data.kind;
+    if (kind === 'ring') {
+      if (call.active) return;
+      const prof = peerProfiles.get(ctx.peerId);
+      const byFp = prof && prof.fp ? CID.getContacts().find((c) => c.fp === prof.fp) : null;
+      const caller = (byFp && byFp.name) || displayName(ctx.peerId);
+      els.ringText.textContent = `${caller} is calling`;
+      els.ring.hidden = false;
+      call.ringDeadline = Date.now() + 30000;
+      if (call.ringTimer) clearInterval(call.ringTimer);
+      call.ringTimer = setInterval(() => {
+        if (Date.now() > call.ringDeadline) { stopRinging(); return; }
+        playPing(660);
+      }, 1400);
+      playPing(660);
+    } else if (kind === 'decline') {
+      sys(`${displayName(ctx.peerId)} declined the call.`);
+    } else if (kind === 'leave') {
+      removeTile(ctx.peerId);
+      sys(`${displayName(ctx.peerId)} left the call.`);
+    } else if (kind === 'join') {
+      sys(`${displayName(ctx.peerId)} joined the call.`);
+    }
+  };
+
+  room.onPeerStream = (stream, peerId) => {
+    if (call.active) addTile(peerId, stream, { label: displayName(peerId) });
+    else pendingStreams.set(peerId, stream);
+  };
+
+  profAction = room.makeAction('prof');
+  profAction.onMessage = async (data, ctx) => {
+    if (!data || typeof data !== 'object') return;
+    const prof = { name: String(data.name || '').slice(0, 32) };
+    if (data.pub && typeof data.pub.x === 'string' && typeof data.pub.y === 'string') {
+      prof.pub = { x: data.pub.x, y: data.pub.y };
+      try { prof.fp = await CID.fingerprint(prof.pub); } catch {}
+    }
+    if (typeof data.ring === 'string') prof.ring = data.ring.slice(0, 64);
+    const known = peerProfiles.get(ctx.peerId);
+    peerProfiles.set(ctx.peerId, prof);
+    if (prof.fp && prof.ring && prof.pub) {
+      const existing = CID.getContacts().find((c) => c.fp === prof.fp);
+      if (existing && existing.ring !== prof.ring) {
+        try {
+          await CID.addContact({ name: existing.name || prof.name, pub: prof.pub, ring: prof.ring });
+          if (currentDmContact && currentDmContact.fp === prof.fp) currentDmContact.ring = prof.ring;
+        } catch (_) {}
+      }
+    }
+    renderPeerList();
+    if (!known && prof.name) sys(`${short(ctx.peerId)} is ${prof.name}${prof.fp ? ' (' + prof.fp + ')' : ''}`);
+  };
+
+  chatAction = room.makeAction('chat');
+  chatAction.onMessage = async (data, ctx) => {
+    const cmid = data && data.cmid;
+    if (cmid && seenCmids.has(cmid)) return;
+    let text, sfp = null;
+    if (data && data.enc) {
+      if (!chatKey) return;
+      try {
+        const unpacked = unpackChatPlain(await decryptText(chatKey, data.enc));
+        text = unpacked.text;
+        sfp = unpacked.sfp;
+      } catch { return; }
+    } else {
+      text = String(data && data.text || '');
+    }
+    if (cmid) seenCmids.add(cmid);
+    renderRemoteChat({ senderId: ctx.peerId, text, ts: Date.now(), sfp });
+    playPing(880);
+  };
+
+  const incoming = new Map();
+  metaAction = room.makeAction('fmeta');
+  metaAction.onMessage = (meta, ctx) => {
+    const line = renderLine(displayName(ctx.peerId), '', { peerId: ctx.peerId, quiet: true, html: progressHTML('receiving', meta.name, meta.size, 0) });
+    incoming.set(ctx.peerId + ':' + meta.id, { meta, chunks: [], received: 0, line });
+  };
+
+  chunkAction = room.makeAction('fchunk');
+  chunkAction.onMessage = async (data, ctx) => {
+    const m = ctx.metadata || {};
+    const key = ctx.peerId + ':' + m.id;
+    const entry = incoming.get(key);
+    if (!entry) return;
+    entry.chunks.push(data);
+    entry.received += (data.byteLength || data.size || 0);
+    entry.line.what.innerHTML = progressHTML('receiving', entry.meta.name, entry.meta.size, entry.received);
+    if (m.done) {
+      entry.line.line.removeAttribute('aria-live');
+      const blob = new Blob(entry.chunks, { type: entry.meta.type || 'application/octet-stream' });
+      if (entry.meta.kind === 'mentria-ext') {
+        const html = await blob.text();
+        const who = short(ctx.peerId);
+        const label = document.createElement('span');
+        label.textContent = 'extension from ' + who + ': ' + (entry.meta.extName || entry.meta.name) + ' ';
+        const installBtn = document.createElement('button');
+        installBtn.type = 'button';
+        installBtn.className = 'comms__btn comms__btn--ghost';
+        installBtn.textContent = 'install';
+        installBtn.addEventListener('click', async () => {
+          installBtn.disabled = true;
+          try {
+            const installed = await MentriaBus.invoke('extensions.requestInstall', { html, from: who });
+            if (installed) {
+              installBtn.replaceWith(Object.assign(document.createElement('a'), { href: '/tools/extensions/run/?id=' + encodeURIComponent(installed.manifest.id), textContent: 'open' }));
+              label.textContent = 'installed ✓ ';
+            } else { installBtn.disabled = false; }
+          } catch (e) { sys('install failed: ' + e.message); installBtn.disabled = false; }
+        });
+        entry.line.what.innerHTML = '';
+        entry.line.what.append(label, installBtn);
+      } else {
+        const url = trackObjectUrl(blob);
+        entry.line.what.innerHTML = 'received ' + completeHTML(entry.meta.name, entry.meta.size, entry.meta.type, url);
+      }
+      incoming.delete(key);
+      playPing(660);
+    }
+  };
+
+  room.onPeerJoin = (peerId) => {
+    peers.add(peerId);
+    updatePeers();
+    renderPeerList();
+    sys(`${short(peerId)} joined`);
+    sendProfileTo(peerId);
+  };
+  room.onPeerLeave = (peerId) => {
+    const who = displayName(peerId);
+    for (const [key, entry] of incoming) {
+      if (key.startsWith(peerId + ':')) {
+        entry.line.line.removeAttribute('aria-live');
+        entry.line.what.innerHTML = `transfer interrupted — <strong>${escapeHtml(entry.meta.name)}</strong> (${escapeHtml(who)} left before finishing)`;
+        incoming.delete(key);
+      }
+    }
+    peers.delete(peerId);
+    peerProfiles.delete(peerId);
+    removeTile(peerId);
+    pendingStreams.delete(peerId);
+    updatePeers();
+    renderPeerList();
+    sys(`${displayName(peerId)} left`);
+  };
+
+  setupChatPersistence(roomName);
+
+  MentriaBus.provide('comms.peers', () => ({ count: peers.size }), { description: 'Number of connected comms peers.', parameters: { type: 'object', properties: {} }, ai: false });
+  MentriaBus.provide('comms.share', async ({ filename, html, name }) => {
+    if (!metaAction || !chunkAction) throw new Error('comms not connected');
+    if (peers.size === 0) throw new Error('no peers to send to');
+    if (new Blob([html]).size > MAX_FILE) throw new Error('extension too large to send');
+    const file = new File([html], filename || 'extension.html', { type: 'text/html' });
+    await sendOne(file, { kind: 'mentria-ext', extName: name });
+    return { sentTo: peers.size };
+  }, { description: 'Send an extension to connected comms peers.', parameters: { type: 'object', properties: { filename: { type: 'string' }, html: { type: 'string' }, name: { type: 'string' } }, required: ['html'] }, ai: false });
+  MentriaBus.provide('extensions.requestInstall', ({ html, from }) => confirmInstall(html, { from }), { description: 'Install a received extension after a human trust prompt.', parameters: { type: 'object', properties: { html: { type: 'string' }, from: { type: 'string' } }, required: ['html'] }, ai: false });
+};
+
+els.join.addEventListener('click', () => {
+  const name = (els.room.value || (EPHEMERAL_PREFIX + randomRoomSlug())).trim().slice(0, 64);
+  const { b64Key } = parseHash(window.location.hash);
+  joinNew(name, b64Key);
+});
+
+els.genkey.addEventListener('click', async () => {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  const key = b64urlEncode(bytes);
+  const name = (els.room.value || (EPHEMERAL_PREFIX + randomRoomSlug())).trim().slice(0, 64);
+  await joinNew(name, key);
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    els.genkey.textContent = 'key generated · url copied';
+    setTimeout(() => { els.genkey.textContent = '+ key'; }, 2000);
+  } catch {
+    els.genkey.textContent = 'key generated';
+    setTimeout(() => { els.genkey.textContent = '+ key'; }, 2000);
+  }
+});
+
+els.send.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const text = els.msg.value.trim();
+  if (!text || !chatAction) return;
+  const cmid = newCmid();
+  seenCmids.add(cmid);
+  let livePayload;
+  if (chatKey) {
+    try {
+      const enc = await encryptText(chatKey, packChatPlain(text));
+      livePayload = { cmid, enc };
+    } catch (err) {
+      sys('encryption failed: ' + err.message);
+      return;
+    }
+  } else {
+    livePayload = { text, cmid };
+  }
+  if (!navigator.onLine) {
+    renderPendingLine(text, livePayload, cmid);
+    els.msg.value = '';
+    return;
+  }
+  chatAction.send(livePayload);
+  publishChat(text, cmid);
+  renderLine('you', text, { me: true });
+  els.msg.value = '';
+  maybeRingContact();
+});
+
+els.copy.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(els.url.textContent); els.copy.textContent = 'copied'; setTimeout(() => els.copy.textContent = 'copy', 1200); } catch {}
+});
+
+const dragEvents = ['dragenter', 'dragover'];
+const undragEvents = ['dragleave', 'drop'];
+dragEvents.forEach(ev => els.drop.addEventListener(ev, (e) => { e.preventDefault(); els.drop.classList.add('comms__drop--hot'); }));
+undragEvents.forEach(ev => els.drop.addEventListener(ev, (e) => { e.preventDefault(); els.drop.classList.remove('comms__drop--hot'); }));
+const CHUNK = 32 * 1024;
+const sendOne = async (file, extra) => {
+  const id = Math.random().toString(36).slice(2);
+  const line = renderLine('you', '', { me: true, quiet: true, html: progressHTML('sending', file.name, file.size, 0) });
+  await metaAction.send(Object.assign({ id, name: file.name, size: file.size, type: file.type }, extra || {}));
+  const buf = await file.arrayBuffer();
+  let sent = 0;
+  for (let offset = 0; offset < buf.byteLength; offset += CHUNK) {
+    if (peers.size === 0) {
+      line.line.removeAttribute('aria-live');
+      line.what.innerHTML = `send interrupted — <strong>${escapeHtml(file.name)}</strong>: everyone left the room`;
+      throw new Error('all peers left during send');
+    }
+    const slice = buf.slice(offset, Math.min(offset + CHUNK, buf.byteLength));
+    const done = offset + CHUNK >= buf.byteLength;
+    await chunkAction.send(slice, { metadata: { id, done } });
+    sent += slice.byteLength;
+    line.what.innerHTML = progressHTML('sending', file.name, file.size, sent);
+  }
+  const previewUrl = trackObjectUrl(file);
+  const n = peers.size;
+  line.line.removeAttribute('aria-live');
+  line.what.innerHTML = (n > 0
+    ? `sent to ${n} peer${n === 1 ? '' : 's'} `
+    : 'delivery uncertain — no peers connected ') + completeHTML(file.name, file.size, file.type, previewUrl);
+};
+
+const sendFiles = async (fileList) => {
+  if (!metaAction || !chunkAction || peers.size === 0) {
+    if (currentDmContact) {
+      sys(`files go straight device-to-device, so ${whoNow()} has to be online too. they're not connected right now.`);
+      knockNow('comms-msg').then((ok) => {
+        if (ok) sys(`pinged their device — try again once they open comms.`);
+      });
+    } else {
+      sys('nobody is connected to this room yet — files send directly, so someone has to be here.');
+    }
+    return;
+  }
+  const all = Array.from(fileList || []);
+  if (!all.length) return;
+  const tooBig = all.filter(f => f.size > MAX_FILE);
+  const ok = all.filter(f => f.size <= MAX_FILE);
+  if (tooBig.length) {
+    sys(`skipped (over ${fmtMB(MAX_FILE)} cap): ${tooBig.map(f => `${f.name} ${fmtSize(f.size)}`).join(', ')}`);
+  }
+  if (!ok.length) return;
+  const total = ok.reduce((s, f) => s + f.size, 0);
+  if (ok.length > 1) sys(`sending ${ok.length} file${ok.length===1?'':'s'} (${fmtSize(total)}) to ${peers.size} peer${peers.size===1?'':'s'}…`);
+  if (total > MAX_TOTAL_WARN) sys(`heads up: ${fmtSize(total)} total — this may take a while.`);
+  for (const file of ok) {
+    try { await sendOne(file); } catch (err) { sys(`send failed for ${file.name}: ${err.message}`); }
+  }
+};
+
+els.drop.addEventListener('drop', (e) => { sendFiles(e.dataTransfer.files); });
+els.file.addEventListener('change', (e) => { sendFiles(e.target.files); e.target.value = ''; });
+
+const pickerEl = document.getElementById('comms-picker');
+const pickerListEl = document.getElementById('comms-picker-list');
+let pickerResolve = null;
+let pickerOpener = null;
+function pickerTrapTab(e) {
+  if (e.key !== 'Tab') return;
+  const focusables = [...pickerEl.querySelectorAll('button')].filter(b => b.offsetParent);
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  else if (!pickerEl.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+}
+function closePicker(value) {
+  const r = pickerResolve;
+  pickerResolve = null;
+  pickerEl.hidden = true;
+  pickerListEl.innerHTML = '';
+  document.removeEventListener('keydown', pickerTrapTab, true);
+  const opener = pickerOpener;
+  pickerOpener = null;
+  if (r) r(value);
+  if (opener) setTimeout(() => { if (document.contains(opener)) opener.focus(); }, 0);
+}
+pickerEl.querySelectorAll('[data-picker-close]').forEach((el) => el.addEventListener('click', () => closePicker(null)));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pickerEl.hidden) { e.preventDefault(); closePicker(null); } });
+function pickExtension(list) {
+  pickerListEl.innerHTML = '';
+  list.forEach((ext) => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'comms__picker-item';
+    const nm = document.createElement('span');
+    nm.textContent = (ext.icon && !/^data:/.test(ext.icon) ? ext.icon + ' ' : '') + ext.name;
+    const ver = document.createElement('span');
+    ver.className = 'comms__picker-ver';
+    ver.textContent = 'v' + ext.version;
+    item.append(nm, ver);
+    item.addEventListener('click', () => closePicker(ext));
+    pickerListEl.appendChild(item);
+  });
+  pickerOpener = (document.activeElement && document.activeElement !== document.body) ? document.activeElement : attachExtBtn;
+  pickerEl.hidden = false;
+  document.addEventListener('keydown', pickerTrapTab, true);
+  const first = pickerListEl.querySelector('.comms__picker-item');
+  if (first) first.focus();
+  return new Promise((res) => { pickerResolve = res; });
+}
+
+const attachExtBtn = document.getElementById('comms-attach-ext');
+attachExtBtn.addEventListener('click', async () => {
+  if (attachExtBtn.disabled) return;
+  attachExtBtn.disabled = true;
+  try {
+    if (peers.size === 0) {
+      sys(currentDmContact
+        ? `extensions go device-to-device — ${whoNow()} isn't connected right now.`
+        : 'nobody is connected to this room yet.');
+      return;
+    }
+    let list;
+    try { list = await MentriaBus.invoke('extensions.list'); } catch (e) { sys('extensions unavailable: ' + e.message); return; }
+    if (!list.length) { sys('no installed extensions to share.'); return; }
+    const chosen = await pickExtension(list);
+    if (!chosen) return;
+    let html;
+    try { html = await MentriaBus.invoke('extensions.getSource', { id: chosen.id }); } catch (e) { sys('could not read extension: ' + e.message); return; }
+    if (!html) { sys('extension source missing.'); return; }
+    const file = new File([html], chosen.id + '.html', { type: 'text/html' });
+    await sendOne(file, { kind: 'mentria-ext', extName: chosen.name });
+  } catch (e) { sys('send failed: ' + e.message); }
+  finally { attachExtBtn.disabled = false; }
+});
+
+els.mute.addEventListener('click', () => {
+  muted = !muted;
+  els.mute.textContent = muted ? 'sound: off' : 'sound: on';
+  els.mute.setAttribute('aria-pressed', String(muted));
+  try { localStorage.setItem('comms.muted', muted ? '1' : '0'); } catch (_) {}
+  if (!muted) playPing(880);
+});
+if (muted) { els.mute.textContent = 'sound: off'; els.mute.setAttribute('aria-pressed', 'true'); }
+
+const updateCallUI = () => {
+  const inRoom = !!room;
+  els.callStart.hidden = !inRoom || call.active;
+  els.callCam.hidden = !call.active;
+  els.callMic.hidden = !call.active;
+  els.callHangup.hidden = !call.active;
+  els.media.hidden = callTiles.size === 0;
+};
+
+const addTile = (key, stream, opts = {}) => {
+  removeTile(key);
+  const tile = document.createElement('div');
+  tile.className = 'comms__tile';
+  const hasVideo = stream.getVideoTracks().some((t) => t.readyState === 'live');
+  let mediaEl;
+  if (hasVideo) {
+    mediaEl = document.createElement('video');
+    mediaEl.autoplay = true;
+    mediaEl.playsInline = true;
+    if (opts.local) mediaEl.muted = true;
+  } else {
+    mediaEl = document.createElement('audio');
+    mediaEl.autoplay = true;
+    if (opts.local) mediaEl.muted = true;
+    mediaEl.style.display = 'none';
+    const voice = document.createElement('span');
+    voice.className = 'comms__tile-voice';
+    voice.textContent = '\u{1F399}';
+    tile.append(voice);
+  }
+  mediaEl.srcObject = stream;
+  tile.append(mediaEl);
+  const label = document.createElement('span');
+  label.className = 'comms__tile-label';
+  label.textContent = opts.label || 'peer';
+  tile.append(label);
+  els.media.append(tile);
+  callTiles.set(key, { tile, stream });
+  updateCallUI();
+};
+
+const removeTile = (key) => {
+  const t = callTiles.get(key);
+  if (!t) return;
+  t.tile.remove();
+  callTiles.delete(key);
+  updateCallUI();
+};
+
+const stopRinging = () => {
+  if (call.ringTimer) { clearInterval(call.ringTimer); call.ringTimer = null; }
+  els.ring.hidden = true;
+};
+
+const getLocalMedia = (video) => navigator.mediaDevices.getUserMedia({
+  audio: { echoCancellation: true, noiseSuppression: true },
+  video: video ? { width: { ideal: 640 }, height: { ideal: 480 } } : false
+});
+
+const startCall = async (answering) => {
+  if (call.active || !room) return;
+  if (!peers.size) {
+    if (currentDmContact) {
+      sys(`${whoNow()} isn't connected — ringing their device…`);
+      const target = currentDmContact;
+      const ok = await knockNow('comms-ring');
+      announceCallTo(target);
+      sys(ok
+        ? `notification sent — they'll see it was you. start the call again once they appear.`
+        : `couldn't reach their device — they'll see your missed call when they next open comms.`);
+    } else {
+      sys('nobody is here to call yet.');
+    }
+    return;
+  }
+  if (peers.size > 4) { sys('calls support up to 5 people in a room (peer-to-peer mesh).'); return; }
+  let local;
+  try { local = await getLocalMedia(false); }
+  catch (err) { sys('microphone unavailable: ' + err.message); return; }
+  call.active = true;
+  call.local = local;
+  call.videoOn = false;
+  call.micOff = false;
+  els.callCam.setAttribute('aria-pressed', 'false');
+  els.callCam.title = 'camera off — tap to turn on';
+  els.callCam.setAttribute('aria-pressed', 'false');
+  els.callMic.setAttribute('aria-pressed', 'true');
+  els.callMic.title = 'mic on — tap to mute';
+  els.callMic.setAttribute('aria-pressed', 'false');
+  room.addStream(local);
+  addTile('you', local, { local: true, label: myProfile.name || 'you' });
+  pendingStreams.forEach((stream, peerId) => addTile(peerId, stream, { label: displayName(peerId) }));
+  pendingStreams.clear();
+  if (!answering) {
+    callAction.send({ kind: 'ring' });
+    sys('calling the room… they need to accept.');
+  } else {
+    callAction.send({ kind: 'join' });
+  }
+  updateCallUI();
+};
+
+const endCall = (silent) => {
+  stopRinging();
+  if (!call.active) { pendingStreams.clear(); return; }
+  try { if (callAction && !silent) callAction.send({ kind: 'leave' }); } catch {}
+  try { if (room && call.local) room.removeStream(call.local); } catch {}
+  if (call.local) call.local.getTracks().forEach((t) => t.stop());
+  call.local = null;
+  call.active = false;
+  callTiles.forEach((t) => t.tile.remove());
+  callTiles.clear();
+  pendingStreams.clear();
+  updateCallUI();
+  if (!silent) sys('call ended.');
+};
+
+els.callStart.addEventListener('click', () => startCall(false));
+els.callHangup.addEventListener('click', () => endCall(false));
+
+els.callMic.addEventListener('click', () => {
+  if (!call.local) return;
+  call.micOff = !call.micOff;
+  call.local.getAudioTracks().forEach((t) => { t.enabled = !call.micOff; });
+  els.callMic.title = call.micOff ? 'mic off — tap to unmute' : 'mic on — tap to mute';
+  els.callMic.classList.toggle('is-off', call.micOff);
+  els.callMic.setAttribute('aria-pressed', String(!call.micOff));
+});
+
+els.callCam.addEventListener('click', async () => {
+  if (!call.active || !room) return;
+  els.callCam.disabled = true;
+  try {
+    const next = await getLocalMedia(!call.videoOn);
+    try { room.removeStream(call.local); } catch {}
+    call.local.getTracks().forEach((t) => t.stop());
+    call.local = next;
+    call.videoOn = !call.videoOn;
+    if (call.micOff) next.getAudioTracks().forEach((t) => { t.enabled = false; });
+    room.addStream(next);
+    addTile('you', next, { local: true, label: myProfile.name || 'you' });
+    els.callCam.title = call.videoOn ? 'camera on — tap to turn off' : 'camera off — tap to turn on';
+    els.callCam.classList.toggle('is-off', !call.videoOn);
+    els.callCam.setAttribute('aria-pressed', String(call.videoOn));
+    els.callCam.setAttribute('aria-pressed', String(call.videoOn));
+  } catch (err) {
+    sys('camera unavailable: ' + err.message);
+  } finally {
+    els.callCam.disabled = false;
+  }
+});
+
+els.ringAccept.addEventListener('click', () => { stopRinging(); startCall(true); });
+els.ringDecline.addEventListener('click', () => {
+  stopRinging();
+  try { if (callAction) callAction.send({ kind: 'decline' }); } catch {}
+  pendingStreams.clear();
+});
+
+const sendProfileTo = (peerId) => {
+  if (!profAction || !myId) return;
+  const payload = { name: myProfile.name, pub: { x: myId.publicJwk.x, y: myId.publicJwk.y } };
+  if (ringToken) payload.ring = ringToken;
+  try { profAction.send(payload, peerId || undefined); } catch {}
+};
+
+const broadcastProfile = () => sendProfileTo(null);
+
+let onboardDone = false;
+let onboardActive = false;
+
+const INBOX_KIND = 3839;
+const INBOX_LOOKBACK_SEC = 14 * 24 * 60 * 60;
+let sideWs = null;
+let sideOpen = null;
+let inboxSubId = null;
+let unreadSubId = null;
+let myInboxTopic = null;
+const topicToFp = new Map();
+const seenInboxIds = new Set();
+let unreadMap = {};
+
+let sideOpens = 0;
+
+const ensureSideSocket = () => {
+  if (sideWs && sideWs.readyState === 1) return Promise.resolve(sideWs);
+  if (sideOpen) return sideOpen;
+  sideOpen = new Promise((resolve) => {
+    let ws;
+    try { ws = new WebSocket(RELAY); } catch (_) { sideOpen = null; resolve(null); return; }
+    const done = (val) => { sideOpen = null; resolve(val); };
+    ws.addEventListener('open', () => {
+      sideWs = ws;
+      const isReconnect = sideOpens++ > 0;
+      done(ws);
+      if (isReconnect && myId) { subscribeInbox(); subscribeUnread(); }
+    });
+    ws.addEventListener('error', () => { done(null); });
+    ws.addEventListener('close', () => {
+      if (sideWs === ws) {
+        sideWs = null;
+        setTimeout(() => { if (myId && !document.hidden && !sideWs) ensureSideSocket(); }, 4000 + Math.random() * 4000);
+      }
+    });
+    ws.addEventListener('message', handleSideMsg);
+  });
+  return sideOpen;
+};
+
+const sideSend = async (str) => {
+  const ws = await ensureSideSocket();
+  if (!ws || ws.readyState !== 1) return false;
+  try { ws.send(str); return true; } catch (_) { return false; }
+};
+
+const publishToInbox = async (theirPub, payload) => {
+  try {
+    const env = await CID.sealToInbox(theirPub, payload);
+    const topic = await CID.inboxTopic(theirPub);
+    const evt = await createPersistentEvent(INBOX_KIND, topic, JSON.stringify(env));
+    let sent = await sideSend(evt);
+    const sockets = getRelaySockets() || {};
+    for (const ws of Object.values(sockets)) {
+      if (ws && ws.readyState === 1) { try { ws.send(evt); sent = true; } catch (_) {} }
+    }
+    return sent;
+  } catch (_) { return false; }
+};
+
+const announceToContact = async (contact) => {
+  if (!myId || !contact || !contact.pub) return;
+  const payload = { v: 1, name: (myProfile && myProfile.name) || '', pub: { x: myId.publicJwk.x, y: myId.publicJwk.y } };
+  if (ringToken) payload.ring = ringToken;
+  await publishToInbox(contact.pub, payload);
+};
+
+const subscribeInbox = async () => {
+  if (!myId) return;
+  myInboxTopic = await CID.inboxTopic(myId.publicJwk);
+  inboxSubId = 'mi-' + Math.random().toString(36).slice(2);
+  const since = Math.floor(Date.now() / 1000) - INBOX_LOOKBACK_SEC;
+  await sideSend(JSON.stringify(['REQ', inboxSubId, { kinds: [INBOX_KIND], '#x': [myInboxTopic], since, limit: 50 }]));
+};
+
+const subscribeUnread = async () => {
+  if (!myId) return;
+  const contacts = CID.getContacts();
+  topicToFp.clear();
+  const topics = [];
+  for (const c of contacts) {
+    try {
+      const { roomName } = await CID.deriveDm(myId.privateKey, c.pub);
+      const topic = CHAT_TOPIC_PREFIX + roomName;
+      topicToFp.set(topic, c.fp);
+      topics.push(topic);
+    } catch (_) {}
+  }
+  if (unreadSubId) await sideSend(JSON.stringify(['CLOSE', unreadSubId]));
+  if (!topics.length) { unreadSubId = null; return; }
+  unreadSubId = 'mu-' + Math.random().toString(36).slice(2);
+  const since = Math.floor(Date.now() / 1000) - HISTORY_LOOKBACK_SEC;
+  await sideSend(JSON.stringify(['REQ', unreadSubId, { kinds: [CHAT_KIND], '#x': topics, since, limit: 300 }]));
+};
+
+const handleSideMsg = async (msgEvent) => {
+  let msg;
+  try { msg = JSON.parse(msgEvent.data); } catch { return; }
+  if (!Array.isArray(msg) || msg[0] !== 'EVENT' || !msg[2]) return;
+  const ev = msg[2];
+  if (seenInboxIds.has(ev.id)) return;
+  seenInboxIds.add(ev.id);
+
+  if (msg[1] === inboxSubId) {
+    if (!myId) return;
+    let envelope;
+    try { envelope = JSON.parse(ev.content); } catch { return; }
+    const payload = await CID.openInboxEnvelope(myId.privateKey, envelope);
+    if (!payload) return;
+    if (payload.kind === 'call') {
+      let callerFp = null;
+      try { callerFp = await CID.fingerprint(payload.pub); } catch (_) {}
+      if (!callerFp) return;
+      const known = CID.getContacts().find((c) => c.fp === callerFp);
+      const who = (known && known.name) || payload.name || 'someone';
+      if (currentDmContact && currentDmContact.fp === callerFp && peers.size > 0) return;
+      markMissedCall(callerFp, payload.ts);
+      renderContacts();
+      playPing(660);
+      sys(`${who} tried to call you.`);
+      return;
+    }
+    let existingFp = null;
+    try { existingFp = await CID.fingerprint(payload.pub); } catch (_) {}
+    if (existingFp && CID.getContacts().some((c) => c.fp === existingFp)) {
+      try {
+        await CID.addContact(payload);
+        if (currentDmContact && currentDmContact.fp === existingFp) {
+          const fresh = freshContact(existingFp);
+          if (fresh) currentDmContact = fresh;
+        }
+        renderContacts();
+        updatePushStatus();
+      } catch (_) {}
+      return;
+    }
+    const saved = await CID.saveRequest(payload);
+    if (saved) {
+      renderContacts();
+      sys(`${saved.name || 'someone'} wants to connect — accept them in your people list.`);
+      playPing(660);
+    }
+    return;
+  }
+
+  if (msg[1] === unreadSubId) {
+    const tag = (ev.tags || []).find((t) => t && t[0] === 'x');
+    const fp = tag && topicToFp.get(tag[1]);
+    if (!fp) return;
+    let content;
+    try { content = JSON.parse(ev.content); } catch { return; }
+    const ts = (content && typeof content.ts === 'number') ? content.ts : (ev.created_at || 0) * 1000;
+    if (currentDmContact && currentDmContact.fp === fp) {
+      const seen = unreadMap[fp] || { n: 0, lastTs: 0 };
+      seen.n = 0;
+      seen.lastTs = Math.max(seen.lastTs || 0, ts, Date.now());
+      unreadMap[fp] = seen;
+      try { CID.setUnread(unreadMap); } catch (_) {}
+      return;
+    }
+    if (content && typeof content.cmid === 'string') {
+      if (content.cmid.startsWith(selfId + ':')) return;
+      if (sentCmidsFor(fp).includes(content.cmid)) return;
+    }
+    const entry = unreadMap[fp] || { n: 0, lastTs: 0 };
+    if (ts <= entry.lastTs) return;
+    entry.n = (entry.n || 0) + 1;
+    unreadMap[fp] = entry;
+    try { CID.setUnread(unreadMap); } catch (_) {}
+    renderContacts();
+    syncOsBadge();
+  }
+};
+
+const clearUnreadFor = (fp) => {
+  unreadMap[fp] = { n: 0, lastTs: Date.now() };
+  try { CID.setUnread(unreadMap); } catch (_) {}
+  syncOsBadge();
+};
+
+const hasRoomHash = () => {
+  const h = window.location.hash;
+  return !!(h && h !== '#' && h.length > 2);
+};
+
+const refreshIdUI = () => {
+  const state = CID.idState();
+  const guest = hasRoomHash();
+  if ((state === 'none' || state === 'unavailable') && !guest && !onboardDone) onboardActive = true;
+  els.onboard.hidden = !onboardActive;
+  if (onboardActive && !cryptoOk()) showOnboardStep('insecure');
+  els.idLocked.hidden = state !== 'locked' || onboardActive;
+  if (state === 'locked' && !onboardActive) updateLockWaiting();
+  els.app.hidden = onboardActive || (state === 'locked' && !guest);
+  els.idOn.hidden = state !== 'unlocked';
+  els.idNone.hidden = state === 'unlocked' || !guest;
+  els.idPasskey.hidden = state !== 'locked' || !(window.MentriaIdentity && MentriaIdentity.hasPasskey());
+  els.lockAlt.open = state === 'locked' && !(window.MentriaIdentity && MentriaIdentity.hasPasskey());
+  els.contacts.hidden = state !== 'unlocked';
+  if (state !== 'unlocked') els.idCard.hidden = true;
+};
+
+const refreshNotifBanner = () => {
+  const dismissed = !!(window.MentriaStore && MentriaStore.get('comms', 'notif_dismissed'));
+  const unlocked = CID.idState() === 'unlocked';
+  const supported = !!(window.MentriaPush && MentriaPush.isSupported());
+  const isIosBrowser = /iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone;
+  if (unlocked && !dismissed && !supported && isIosBrowser) {
+    els.notif.querySelector('.comms__notif-text').textContent = 'to get message notifications on iPhone, install comms: share button → add to home screen';
+    els.notifEnable.hidden = true;
+    els.notif.hidden = false;
+    return;
+  }
+  els.notifEnable.hidden = false;
+  const show = supported && MentriaPush.permission() === 'default' && unlocked && !dismissed;
+  els.notif.hidden = !show;
+};
+
+els.notifDismiss.addEventListener('click', () => {
+  try { MentriaStore.set('comms', 'notif_dismissed', true); } catch (_) {}
+  els.notif.hidden = true;
+});
+
+els.notifEnable.addEventListener('click', async () => {
+  els.notifEnable.disabled = true;
+  try {
+    const ok = await MentriaPush.requestPermission();
+    if (ok) {
+      await initRingToken();
+      const contacts = CID.getContacts();
+      for (const c of contacts) { try { await announceToContact(c); } catch (_) {} }
+      sys('notifications on — your contacts can now reach you when comms is closed.');
+    } else {
+      sys('notifications stayed off. you can enable them from your browser settings later.');
+    }
+  } finally {
+    els.notifEnable.disabled = false;
+    refreshNotifBanner();
+  }
+});
+
+const initRingToken = async () => {
+  if (!window.MentriaPush || !MentriaPush.isSupported() || MentriaPush.permission() !== 'granted') return;
+  let token = window.MentriaStore && MentriaStore.get('comms', 'ring_token');
+  if (!token || !/^[A-Za-z0-9_-]{20,64}$/.test(token)) {
+    const bytes = crypto.getRandomValues(new Uint8Array(18));
+    token = btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+  }
+  const ok = await MentriaPush.ringRegister(token);
+  if (ok) {
+    ringToken = token;
+    if (window.MentriaStore) MentriaStore.set('comms', 'ring_token', token);
+    refreshMyCode();
+    broadcastProfile();
+    try {
+      const announced = MentriaStore.get('comms', 'ring_announced');
+      if (announced !== token) {
+        const contacts = CID.getContacts();
+        await Promise.all(contacts.map((c) => announceToContact(c).catch(() => {})));
+        MentriaStore.set('comms', 'ring_announced', token);
+      }
+    } catch (_) {}
+  }
+  updatePushStatus();
+};
+
+const freshContact = (fp) => CID.getContacts().find((x) => x.fp === fp) || null;
+
+const maybeRingContact = () => {
+  if (!currentDmContact || peers.size > 0) return;
+  const fresh = freshContact(currentDmContact.fp);
+  const ring = (fresh && fresh.ring) || currentDmContact.ring;
+  if (fresh) currentDmContact = fresh;
+  if (!ring) { noticeNoToken(); return; }
+  if (Date.now() - lastRingSentAt < 8000) return;
+  lastRingSentAt = Date.now();
+  if (window.MentriaPush && MentriaPush.ring) {
+    MentriaPush.ring(ring, 'comms-msg').then((res) => {
+      const ok = !!(res && res.ok);
+      try { MentriaStore.set('comms', 'last_knock', { t: Date.now(), ok, reason: (res && res.reason) || null }); } catch (_) {}
+      if (!ok && res && res.reason === 'unknown-token' && currentDmContact) {
+        sys(`${currentDmContact.name || 'they'} can't be reached by notification — their device needs to reopen comms once.`);
+      }
+    });
+  }
+};
+
+const getMissed = () => {
+  try { const m = MentriaStore.get('comms', 'missed'); return (m && typeof m === 'object') ? m : {}; }
+  catch (_) { return {}; }
+};
+const markMissedCall = (fp, ts) => {
+  const m = getMissed();
+  m[fp] = { n: ((m[fp] && m[fp].n) || 0) + 1, ts: ts || Date.now() };
+  try { MentriaStore.set('comms', 'missed', m); } catch (_) {}
+};
+const clearMissedCall = (fp) => {
+  const m = getMissed();
+  if (!m[fp]) return;
+  delete m[fp];
+  try { MentriaStore.set('comms', 'missed', m); } catch (_) {}
+};
+
+const announceCallTo = async (contact) => {
+  if (!myId || !contact || !contact.pub) return false;
+  return publishToInbox(contact.pub, {
+    v: 1,
+    kind: 'call',
+    name: (myProfile && myProfile.name) || '',
+    pub: { x: myId.publicJwk.x, y: myId.publicJwk.y },
+    ts: Date.now()
+  });
+};
+
+const knockNow = async (kind) => {
+  if (!currentDmContact) return false;
+  const fresh = freshContact(currentDmContact.fp);
+  if (fresh) currentDmContact = fresh;
+  const ring = currentDmContact.ring;
+  if (!ring || !window.MentriaPush || !MentriaPush.ring) return false;
+  lastRingSentAt = Date.now();
+  const res = await MentriaPush.ring(ring, kind);
+  return !!(res && res.ok);
+};
+
+const whoNow = () => (currentDmContact && (currentDmContact.name || currentDmContact.fp)) || 'they';
+
+let noTokenNoticeShown = false;
+const noticeNoToken = () => {
+  if (noTokenNoticeShown || !currentDmContact) return;
+  noTokenNoticeShown = true;
+  sys(`${currentDmContact.name || 'they'} can't be notified yet — they haven't enabled notifications on their device.`);
+};
+
+const syncOsBadge = async () => {
+  let total = 0;
+  for (const fp of Object.keys(unreadMap)) total += (unreadMap[fp] && unreadMap[fp].n) || 0;
+  try { window.dispatchEvent(new CustomEvent('mentria:comms:unread', { detail: { total } })); } catch (_) {}
+  try {
+    if (window.MentriaPushDB) MentriaPushDB.kvSet('comms-msg-count', total).catch(() => {});
+    if (total > 0) {
+      if (navigator.setAppBadge) await navigator.setAppBadge(total);
+      return;
+    }
+    if (navigator.clearAppBadge) await navigator.clearAppBadge();
+    if ('serviceWorker' in navigator) {
+      const reg = await navigator.serviceWorker.ready;
+      const notes = await reg.getNotifications();
+      notes.forEach((note) => {
+        if (note.tag === 'comms-msg' || note.tag === 'comms-ring') note.close();
+      });
+    }
+  } catch (_) {}
+};
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    syncOsBadge();
+    if (myId && !sideWs) ensureSideSocket();
+  }
+});
+
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.addEventListener('message', (e) => {
+    const d = e && e.data;
+    if (!d || !d.type) return;
+    if (d.type === 'comms-unread') {
+      updateLockWaiting();
+      if (window.MentriaCommsNav) MentriaCommsNav.refresh();
+    } else if (d.type === 'push-resubscribed') {
+      MentriaStore.remove('comms', 'ring_announced');
+      initRingToken();
+    }
+  });
+}
+
+const PK_LATER_KEY = 'passkey_offer_dismissed';
+let pkSupportCache = null;
+const passkeyPossible = async () => {
+  if (pkSupportCache !== null) return pkSupportCache;
+  try {
+    const I = window.MentriaIdentity;
+    const sup = I && I.passkeySupport ? await I.passkeySupport() : 'no';
+    pkSupportCache = sup !== 'no' && !!window.isSecureContext;
+  } catch { pkSupportCache = false; }
+  return pkSupportCache;
+};
+const refreshPasskeyOffer = async (justUnlockedByCode) => {
+  const I = window.MentriaIdentity;
+  const unlocked = I && I.isUnlocked && I.isUnlocked();
+  const has = !!(I && I.hasPasskey && I.hasPasskey());
+  const possible = unlocked && !has && await passkeyPossible();
+  els.pkSettings.hidden = !possible;
+  const dismissed = !!(window.MentriaStore && MentriaStore.get('comms', PK_LATER_KEY));
+  els.pkUpgrade.hidden = !(possible && justUnlockedByCode && !dismissed);
+  if (!els.pkUpgrade.hidden) { els.pkErr.hidden = true; els.pkErr.textContent = ''; }
+};
+const enrollPasskeyFromComms = async (btn) => {
+  btn.disabled = true;
+  els.pkErr.hidden = true;
+  try {
+    await window.MentriaIdentity.enrollPasskey();
+    els.pkUpgrade.hidden = true;
+    els.pkSettings.hidden = true;
+    sys('face id / touch id added — your device lock unlocks comms from now on.');
+  } catch (err) {
+    const msg = err && err.message;
+    els.pkErr.textContent = msg === 'prf-unsupported'
+      ? 'this device can\'t use a passkey for encryption yet — your code still unlocks everything.'
+      : 'that didn\'t work — your code still unlocks everything. try again from ⚙ settings.';
+    els.pkErr.hidden = false;
+    if (msg === 'prf-unsupported') { pkSupportCache = false; els.pkSettings.hidden = true; }
+  } finally {
+    btn.disabled = false;
+  }
+};
+els.pkEnroll.addEventListener('click', () => enrollPasskeyFromComms(els.pkEnroll));
+els.pkSettings.addEventListener('click', () => { els.adv.hidden = true; els.advToggle.setAttribute('aria-expanded', 'false'); els.pkUpgrade.hidden = false; enrollPasskeyFromComms(els.pkEnroll); });
+els.pkLater.addEventListener('click', () => {
+  if (window.MentriaStore) MentriaStore.set('comms', PK_LATER_KEY, true);
+  els.pkUpgrade.hidden = true;
+});
+
+const initIdentity = async () => {
+  try {
+    myId = await CID.ensureKeypair();
+    myFp = await CID.fingerprint(myId.publicJwk);
+    myProfile = CID.getProfile();
+    els.idName.value = myProfile.name;
+    els.idFp.textContent = myFp;
+    paintAvatar(els.profAvatar, (myProfile && myProfile.name) || '', myFp);
+    refreshIdUI();
+    try { unreadMap = CID.getUnread(); } catch (_) { unreadMap = {}; }
+    renderContacts();
+    syncOsBadge();
+    broadcastProfile();
+    await initRingToken();
+    refreshNotifBanner();
+    subscribeInbox();
+    subscribeUnread();
+    refreshPasskeyOffer(false);
+  } catch (err) {
+    sys('identity error: ' + err.message);
+  }
+};
+
+els.idUnlock.addEventListener('click', async () => {
+  els.idErr.textContent = '';
+  els.idUnlock.disabled = true;
+  try {
+    await window.MentriaIdentity.unlock(els.idPass.value);
+    els.idPass.value = '';
+    await initIdentity();
+    refreshPasskeyOffer(true);
+  } catch {
+    els.idErr.textContent = 'wrong passphrase';
+  } finally {
+    els.idUnlock.disabled = false;
+  }
+});
+els.idPass.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); els.idUnlock.click(); } });
+els.idPasskey.addEventListener('click', async () => {
+  els.idErr.textContent = '';
+  els.idPasskey.disabled = true;
+  try {
+    await window.MentriaIdentity.unlockWithPasskey();
+    await initIdentity();
+  } catch {
+    els.idErr.textContent = 'passkey unlock failed — use your passphrase';
+  } finally {
+    els.idPasskey.disabled = false;
+  }
+});
+
+els.idName.addEventListener('change', () => {
+  myProfile = CID.setProfile({ name: els.idName.value });
+  els.idName.value = myProfile.name;
+  paintAvatar(els.profAvatar, myProfile.name, myFp);
+  broadcastProfile();
+  refreshMyCode();
+});
+
+const refreshMyCode = () => {
+  if (els.idCard.hidden || !myId) return;
+  const code = CID.encodeContactCode(myProfile, myId.publicJwk, ringToken);
+  els.idCode.textContent = code;
+  try {
+    const qr = qrcodegen.QrCode.encodeText(code, qrcodegen.QrCode.Ecc.LOW);
+    const border = 2, px = 4, dim = qr.size + border * 2;
+    els.idQr.width = dim * px; els.idQr.height = dim * px;
+    const ctx = els.idQr.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, els.idQr.width, els.idQr.height);
+    ctx.fillStyle = '#000000';
+    for (let y = 0; y < qr.size; y++) {
+      for (let x = 0; x < qr.size; x++) {
+        if (qr.getModule(x, y)) ctx.fillRect((x + border) * px, (y + border) * px, px, px);
+      }
+    }
+  } catch {}
+};
+
+els.idShare.addEventListener('click', () => {
+  const open = els.idCard.hidden;
+  els.idCard.hidden = !open;
+  els.idShare.setAttribute('aria-pressed', String(open));
+  els.idShare.classList.toggle('is-on', open);
+  els.shareT.textContent = open ? 'hide my code' : 'my code';
+  if (open) refreshMyCode();
+});
+
+els.addToggle.addEventListener('click', () => {
+  const open = els.addBox.hidden;
+  els.addBox.hidden = !open;
+  els.addToggle.setAttribute('aria-expanded', String(open));
+  els.addToggle.classList.toggle('is-on', open);
+  els.addToggleT.textContent = open ? 'close' : 'add someone';
+  if (open) els.contactIn.focus();
+  else stopScan();
+});
+
+let scanStream = null;
+let scanRaf = null;
+let scanDetector = null;
+let scanCanvas = null;
+let scanCtx = null;
+let scanTrack = null;
+let scanFocusCaps = null;
+let scanFocusBusy = false;
+let scanMisses = 0;
+let scanTorchOn = false;
+
+const setupScanTrack = () => {
+  scanTrack = scanStream && scanStream.getVideoTracks ? scanStream.getVideoTracks()[0] : null;
+  scanFocusCaps = null;
+  els.scanZoomWrap.hidden = true;
+  els.scanTorch.hidden = true;
+  scanTorchOn = false;
+  els.scanTorch.setAttribute('aria-pressed', 'false');
+  els.scanTorch.classList.remove('is-on');
+  if (!scanTrack || !scanTrack.getCapabilities) return;
+  let caps;
+  try { caps = scanTrack.getCapabilities(); } catch (_) { return; }
+  const modes = caps.focusMode && caps.focusMode.indexOf ? caps.focusMode : [];
+  scanFocusCaps = {
+    continuous: modes.indexOf('continuous') >= 0,
+    singleShot: modes.indexOf('single-shot') >= 0,
+    manualNear: null
+  };
+  if (modes.indexOf('manual') >= 0 && caps.focusDistance &&
+      typeof caps.focusDistance.min === 'number' && caps.focusDistance.max > caps.focusDistance.min) {
+    scanFocusCaps.manualNear = caps.focusDistance.min + (caps.focusDistance.max - caps.focusDistance.min) * 0.08;
+  }
+  if (!scanFocusCaps.continuous && !scanFocusCaps.singleShot && scanFocusCaps.manualNear === null) scanFocusCaps = null;
+  if (scanFocusCaps && scanFocusCaps.continuous) {
+    scanTrack.applyConstraints({ advanced: [{ focusMode: 'continuous' }] }).catch(() => {});
+  }
+  if (caps.torch) els.scanTorch.hidden = false;
+  if (caps.zoom && typeof caps.zoom.min === 'number' && caps.zoom.max > caps.zoom.min) {
+    const settings = scanTrack.getSettings ? scanTrack.getSettings() : {};
+    els.scanZoom.min = caps.zoom.min;
+    els.scanZoom.max = Math.min(caps.zoom.max, caps.zoom.min * 5);
+    els.scanZoom.step = 0.1;
+    els.scanZoom.value = typeof settings.zoom === 'number' ? settings.zoom : caps.zoom.min;
+    els.scanZoomWrap.hidden = false;
+  }
+};
+
+const restoreScanFocus = () => {
+  scanFocusBusy = false;
+  if (scanTrack && scanFocusCaps && scanFocusCaps.continuous) {
+    scanTrack.applyConstraints({ advanced: [{ focusMode: 'continuous' }] }).catch(() => {});
+  }
+};
+
+const nudgeScanFocus = () => {
+  if (!scanTrack || !scanFocusCaps || scanFocusBusy) return;
+  if (scanFocusCaps.manualNear !== null) {
+    scanFocusBusy = true;
+    scanTrack.applyConstraints({ advanced: [{ focusMode: 'manual', focusDistance: scanFocusCaps.manualNear }] })
+      .then(() => { setTimeout(restoreScanFocus, 900); })
+      .catch(() => { scanFocusBusy = false; });
+  } else if (scanFocusCaps.singleShot) {
+    scanFocusBusy = true;
+    scanTrack.applyConstraints({ advanced: [{ focusMode: 'single-shot' }] })
+      .then(() => { setTimeout(restoreScanFocus, 900); })
+      .catch(() => { scanFocusBusy = false; });
+  } else if (scanFocusCaps.continuous) {
+    scanTrack.applyConstraints({ advanced: [{ focusMode: 'continuous' }] }).catch(() => {});
+  }
+};
+
+const loadJsQR = () => new Promise((resolve) => {
+  if (window.jsQR) { resolve(true); return; }
+  const s = document.createElement('script');
+  s.src = '/assets/js/jsqr.js?v=ec54a8f-09040920';
+  s.onload = () => resolve(!!window.jsQR);
+  s.onerror = () => resolve(false);
+  document.head.appendChild(s);
+});
+
+const stopScan = () => {
+  els.scan.hidden = false;
+  if (scanRaf) { cancelAnimationFrame(scanRaf); scanRaf = null; }
+  if (scanStream) { scanStream.getTracks().forEach((t) => { try { t.stop(); } catch (_) {} }); scanStream = null; }
+  scanTrack = null;
+  scanFocusCaps = null;
+  scanFocusBusy = false;
+  try { els.scanVideo.srcObject = null; } catch (_) {}
+  els.scanWrap.hidden = true;
+};
+
+const handleScanned = async (value) => {
+  const raw = String(value || '').trim();
+  const idx = raw.indexOf('MC1.');
+  if (idx === -1) { els.scanNote.textContent = 'that code isn\'t a mentria contact code — keep pointing at their screen'; return false; }
+  stopScan();
+  els.contactIn.value = raw.slice(idx);
+  els.contactAdd.click();
+  return true;
+};
+
+const scanTick = async () => {
+  if (!scanStream) return;
+  const v = els.scanVideo;
+  if (v.readyState >= 2 && v.videoWidth) {
+    scanMisses++;
+    if (scanMisses % 48 === 0) nudgeScanFocus();
+    try {
+      if (scanDetector) {
+        const found = await scanDetector.detect(v);
+        if (found && found.length && await handleScanned(found[0].rawValue)) return;
+      } else if (window.jsQR) {
+        if (!scanCanvas) { scanCanvas = document.createElement('canvas'); scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true }); }
+        const w = Math.min(560, v.videoWidth), h = Math.round(v.videoHeight * (w / v.videoWidth));
+        scanCanvas.width = w; scanCanvas.height = h;
+        scanCtx.drawImage(v, 0, 0, w, h);
+        const img = scanCtx.getImageData(0, 0, w, h);
+        const r = window.jsQR(img.data, w, h, { inversionAttempts: 'dontInvert' });
+        if (r && r.data && await handleScanned(r.data)) return;
+      }
+    } catch (_) {}
+  }
+  scanRaf = requestAnimationFrame(scanTick);
+};
+
+els.scan.addEventListener('click', async () => {
+  if (scanStream) { stopScan(); return; }
+  els.scan.hidden = true;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    els.scanWrap.hidden = false;
+    els.scanNote.textContent = 'this browser can\'t open the camera — paste their code instead';
+    return;
+  }
+  els.scanWrap.hidden = false;
+  els.scanNote.textContent = 'starting camera…';
+  try {
+    scanStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }
+    });
+  } catch (_) {
+    els.scanNote.textContent = 'camera permission denied — paste their code instead';
+    return;
+  }
+  els.scanVideo.srcObject = scanStream;
+  setupScanTrack();
+  scanMisses = 0;
+  try { await els.scanVideo.play(); } catch (_) {}
+  scanDetector = null;
+  if ('BarcodeDetector' in window) {
+    try {
+      const formats = await BarcodeDetector.getSupportedFormats();
+      if (formats.includes('qr_code')) scanDetector = new BarcodeDetector({ formats: ['qr_code'] });
+    } catch (_) {}
+  }
+  if (!scanDetector) await loadJsQR();
+  els.scanNote.textContent = 'point the camera at their “my code” screen';
+  scanTick();
+});
+
+els.scanStop.addEventListener('click', stopScan);
+
+els.scanZoom.addEventListener('input', () => {
+  if (!scanTrack) return;
+  scanTrack.applyConstraints({ advanced: [{ zoom: parseFloat(els.scanZoom.value) }] }).catch(() => {});
+});
+
+els.scanTorch.addEventListener('click', () => {
+  scanTorchOn = !scanTorchOn;
+  els.scanTorch.setAttribute('aria-pressed', String(scanTorchOn));
+  els.scanTorch.classList.toggle('is-on', scanTorchOn);
+  if (scanTrack) scanTrack.applyConstraints({ advanced: [{ torch: scanTorchOn }] }).catch(() => {});
+});
+
+const leaveRoom = async () => {
+  stopScan();
+  await joinNew(null, null, { leave: true });
+};
+
+els.leave.addEventListener('click', leaveRoom);
+
+if (navigator.share) els.idShareOut.hidden = false;
+
+els.idShareOut.addEventListener('click', async () => {
+  const code = els.idCode.textContent || '';
+  if (!code) return;
+  const text = `add me on mentria comms:\n${code}`;
+  try {
+    const blob = await new Promise((resolve) => {
+      try { els.idQr.toBlob(resolve, 'image/png'); } catch (_) { resolve(null); }
+    });
+    const file = blob ? new File([blob], 'mentria-contact-code.png', { type: 'image/png' }) : null;
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], text });
+      return;
+    }
+    await navigator.share({ text });
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+    try { await navigator.clipboard.writeText(code); sys('code copied — share it however you like.'); } catch (_) {}
+  }
+});
+
+els.idCopy.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(els.idCode.textContent);
+    els.idCopy.textContent = 'copied';
+    setTimeout(() => { els.idCopy.textContent = 'copy code'; }, 1200);
+  } catch {}
+});
+
+els.idContacts.addEventListener('click', () => {
+  els.contacts.hidden = !els.contacts.hidden;
+  els.idContacts.setAttribute('aria-expanded', String(!els.contacts.hidden));
+  renderContacts();
+});
+
+let dmOpening = false;
+const openDmWith = async (c) => {
+  if (!myId || dmOpening) return;
+  dmOpening = true;
+  els.chatTitle.textContent = c.name || c.fp;
+  paintAvatar(els.chatAvatar, c.name || c.fp, c.fp);
+  els.status.textContent = 'connecting…';
+  setView('chat');
+  try {
+    const { roomName, b64Key } = await CID.deriveDm(myId.privateKey, c.pub);
+    els.room.value = roomName;
+    clearUnreadFor(c.fp);
+    clearMissedCall(c.fp);
+    renderContacts();
+    await joinNew(roomName, b64Key, { share: false, contact: c });
+  } catch (err) {
+    sys('could not open the chat: ' + err.message);
+  } finally {
+    dmOpening = false;
+  }
+};
+
+const renderContacts = () => {
+  if (!els.contactList) return;
+  els.contactList.innerHTML = '';
+
+  const requests = CID.getRequests();
+  requests.forEach((r) => {
+    const row = document.createElement('div');
+    row.className = 'comms__contact comms__contact--req';
+    const av = document.createElement('span');
+    av.className = 'comms__avatar';
+    paintAvatar(av, r.name, r.fp);
+    const mid = document.createElement('span');
+    mid.className = 'comms__contact-mid';
+    const name = document.createElement('span');
+    name.className = 'comms__contact-name';
+    name.textContent = r.name || '(unnamed)';
+    const sub = document.createElement('span');
+    sub.className = 'comms__contact-fp';
+    sub.textContent = 'wants to connect · ' + r.fp;
+    mid.append(name, sub);
+    const ok = document.createElement('button');
+    ok.type = 'button';
+    ok.className = 'comms__btn';
+    ok.textContent = 'accept';
+    ok.addEventListener('click', async () => {
+      try {
+        const added = await CID.addContact(r);
+        CID.dropRequest(r.fp);
+        renderContacts();
+        subscribeUnread();
+        if (added) announceToContact(added);
+      } catch (err) {
+        sys('could not accept: ' + err.message);
+      }
+    });
+    const no = document.createElement('button');
+    no.type = 'button';
+    no.className = 'comms__btn comms__btn--ghost';
+    no.textContent = 'ignore';
+    no.addEventListener('click', () => { CID.dropRequest(r.fp); renderContacts(); });
+    row.append(av, mid, ok, no);
+    els.contactList.append(row);
+  });
+
+  const contacts = CID.getContacts();
+  if (!contacts.length && !requests.length) {
+    const empty = document.createElement('div');
+    empty.className = 'comms__id-note comms__contacts-empty';
+    empty.textContent = 'no one here yet — share “my code” with someone, or use “add someone” to scan or paste theirs.';
+    els.contactList.append(empty);
+    return;
+  }
+  contacts.forEach((c) => {
+    const row = document.createElement('div');
+    row.className = 'comms__contact';
+    row.setAttribute('role', 'button');
+    row.setAttribute('tabindex', '0');
+    row.dataset.fp = c.fp;
+    row.setAttribute('aria-label', 'chat with ' + (c.name || c.fp));
+    const av = document.createElement('span');
+    av.className = 'comms__avatar';
+    paintAvatar(av, c.name, c.fp);
+    const mid = document.createElement('span');
+    mid.className = 'comms__contact-mid';
+    const name = document.createElement('span');
+    name.className = 'comms__contact-name';
+    name.textContent = c.name || '(unnamed)';
+    const sub = document.createElement('span');
+    sub.className = 'comms__contact-fp';
+    sub.textContent = c.fp;
+    mid.append(name, sub);
+    row.append(av, mid);
+    const missed = getMissed()[c.fp];
+    if (missed && missed.n > 0) {
+      const mc = document.createElement('span');
+      mc.className = 'comms__missed';
+      mc.title = missed.n > 1 ? `${missed.n} missed calls` : 'missed call';
+      mc.setAttribute('aria-label', mc.title);
+      mc.innerHTML = '<svg class="comms__i" aria-hidden="true"><use href="#ci-phone"></use></svg>';
+      row.append(mc);
+    }
+    const unread = (unreadMap[c.fp] && unreadMap[c.fp].n) || 0;
+    if (unread > 0) {
+      const badge = document.createElement('span');
+      badge.className = 'comms__unread';
+      badge.textContent = unread > 99 ? '99+' : String(unread);
+      badge.title = unread + ' unread';
+      row.append(badge);
+    }
+    const rm = document.createElement('button');
+    rm.type = 'button';
+    rm.className = 'comms__rowbtn';
+    rm.title = 'remove ' + (c.name || c.fp);
+    rm.setAttribute('aria-label', 'remove ' + (c.name || c.fp));
+    rm.innerHTML = '<svg class="comms__i" aria-hidden="true"><use href="#ci-trash"></use></svg>';
+    rm.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const ok = await (typeof mentriaConfirm === 'function' ? mentriaConfirm('Remove ' + (c.name || c.fp) + ' from contacts?') : Promise.resolve(true));
+      if (!ok) return;
+      CID.removeContact(c.fp);
+      renderContacts();
+      renderPeerList();
+    });
+    const chev = document.createElement('span');
+    chev.className = 'comms__chev';
+    chev.innerHTML = '<svg class="comms__i" aria-hidden="true"><use href="#ci-chev"></use></svg>';
+    row.append(rm, chev);
+    row.addEventListener('click', () => openDmWith(c));
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDmWith(c); }
+    });
+    els.contactList.append(row);
+  });
+};
+
+els.contactAdd.addEventListener('click', async () => {
+  try {
+    const payload = CID.decodeContactCode(els.contactIn.value);
+    const saved = await CID.addContact(payload);
+    els.contactIn.value = '';
+    renderContacts();
+    subscribeUnread();
+    const reached = await announceToContact(saved);
+    sys(reached
+      ? `contact added: ${saved.name || saved.fp} — they'll see your request next time they open comms.`
+      : `contact added: ${saved.name || saved.fp}`);
+  } catch (err) {
+    sys('could not add contact: ' + err.message);
+  }
+});
+els.contactIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); els.contactAdd.click(); } });
+
+const RECOVERY_ALPHA = 'abcdefghjkmnpqrstuvwxyz23456789';
+const makeRecoveryCode = () => {
+  const bytes = crypto.getRandomValues(new Uint8Array(20));
+  let out = '';
+  for (let i = 0; i < 20; i++) {
+    if (i && i % 5 === 0) out += '-';
+    out += RECOVERY_ALPHA[bytes[i] % RECOVERY_ALPHA.length];
+  }
+  return out;
+};
+
+const cryptoOk = () => !!(window.MentriaIdentity && MentriaIdentity.cryptoReady && MentriaIdentity.cryptoReady());
+
+const showOnboardStep = (which) => {
+  const step = cryptoOk() ? which : 'insecure';
+  els.obInsecure.hidden = step !== 'insecure';
+  els.obIntro.hidden = step !== 'intro';
+  els.obForm.hidden = step !== 'form';
+  els.obDone.hidden = step !== 'done';
+};
+
+els.obStart.addEventListener('click', () => {
+  showOnboardStep('form');
+  els.obName.focus();
+});
+
+els.obName.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); els.obCreate.click(); } });
+
+const setOnboardMethod = (ok) => {
+  els.obMethod.textContent = ok
+    ? 'Your device lock now unlocks comms — no password to remember.'
+    : 'This device can\'t use a passkey for encryption yet, so your recovery code is how you unlock.';
+  els.obPasskey.hidden = ok;
+};
+
+els.obCreate.addEventListener('click', async () => {
+  const name = (els.obName.value || '').trim().slice(0, 32);
+  if (!name) { els.obErr.hidden = false; els.obErr.textContent = 'pick a name first — it\'s only shared with people you add.'; els.obName.focus(); return; }
+  els.obErr.hidden = true;
+  els.obCreate.disabled = true;
+  const prevLabel = els.obCreate.textContent;
+  els.obCreate.textContent = 'setting up…';
+  try {
+    const code = makeRecoveryCode();
+    await window.MentriaIdentity.setup(code);
+    CID.setProfile({ name });
+    let passkeyOk = false;
+    try { await window.MentriaIdentity.enrollPasskey(); passkeyOk = true; } catch (_) { passkeyOk = false; }
+    els.obCode.textContent = code;
+    setOnboardMethod(passkeyOk);
+    showOnboardStep('done');
+    await initIdentity();
+  } catch (err) {
+    const code = err && err.message;
+    els.obErr.hidden = false;
+    els.obErr.textContent = code === 'insecure-context'
+      ? 'this page needs an https address before it can create keys — open https://webmcp.mentria.ai/comms/'
+      : 'could not set up: ' + (code || err);
+    if (code === 'insecure-context') showOnboardStep('insecure');
+  } finally {
+    els.obCreate.disabled = false;
+    els.obCreate.textContent = prevLabel;
+  }
+});
+
+els.obPasskey.addEventListener('click', async () => {
+  els.obPasskey.disabled = true;
+  try {
+    await window.MentriaIdentity.enrollPasskey();
+    setOnboardMethod(true);
+  } catch (err) {
+    const code = err && err.message;
+    els.obMethod.textContent = code === 'prf-unsupported'
+      ? 'This device can\'t use a passkey for encryption yet, so your recovery code is how you unlock.'
+      : 'That didn\'t work — your recovery code still unlocks everything. You can try again in identity settings.';
+    els.obPasskey.hidden = true;
+  } finally {
+    els.obPasskey.disabled = false;
+  }
+});
+
+els.obCopy.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(els.obCode.textContent || '');
+    els.obCopy.textContent = 'copied';
+    setTimeout(() => { els.obCopy.textContent = 'copy code'; }, 1600);
+  } catch (_) {}
+});
+
+els.obContinue.addEventListener('click', () => {
+  onboardDone = true;
+  onboardActive = false;
+  refreshIdUI();
+  if (!hasRoomHash()) els.contactIn.focus();
+});
+
+els.setupHere.addEventListener('click', () => {
+  onboardDone = false;
+  onboardActive = true;
+  refreshIdUI();
+  showOnboardStep('intro');
+  els.onboard.scrollIntoView({ block: 'center', behavior: 'smooth' });
+});
+
+els.advToggle.addEventListener('click', () => {
+  const open = els.adv.hidden;
+  if (open) updatePushStatus();
+  els.adv.hidden = !open;
+  els.advToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) els.adv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+});
+
+els.newRoom.addEventListener('click', async () => {
+  const name = EPHEMERAL_PREFIX + randomRoomSlug();
+  const key = b64urlEncode(crypto.getRandomValues(new Uint8Array(32)));
+  els.room.value = name;
+  await joinNew(name, key);
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    els.newRoom.textContent = 'link copied';
+    setTimeout(() => { els.newRoom.textContent = 'new room link'; }, 2000);
+  } catch (_) {}
+});
+
+refreshIdUI();
+if (CID.idState() === 'unlocked') initIdentity();
+else if (CID.idState() === 'locked' && window.MentriaIdentity && MentriaIdentity.tryDeviceUnlock) {
+  MentriaIdentity.tryDeviceUnlock().then((ok) => { if (ok) initIdentity(); else refreshIdUI(); });
+}
+
+function randomRoomSlug() {
+  const bytes = crypto.getRandomValues(new Uint8Array(5));
+  const alpha = 'abcdefghijklmnopqrstuvwxyz234567';
+  let bits = 0, value = 0, out = '';
+  for (let i = 0; i < bytes.length; i++) {
+    value = (value << 8) | bytes[i]; bits += 8;
+    while (bits >= 5) { out += alpha[(value >>> (bits - 5)) & 0x1f]; bits -= 5; }
+  }
+  return out;
+}
+
+const bootHash = window.location.hash && window.location.hash !== '#' ? parseHash(window.location.hash) : null;
+if (bootHash && isDmRoom(bootHash.room)) {
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
+}
+const hasHash = !!bootHash && !isDmRoom(bootHash.room);
+if (hasHash) {
+  const parsed = bootHash;
+  els.room.value = parsed.room;
+  refreshShareUrl(parsed.room, parsed.b64Key);
+  window.addEventListener('load', () => joinNew(parsed.room, parsed.b64Key));
+} else {
+  window.addEventListener('load', () => {
+    if (CID.idState() === 'unlocked') sys('pick someone below to start a private chat — or open ⚙ for a shareable room link.');
+  });
+}
+window.addEventListener('hashchange', () => {
+  const next = parseHash(window.location.hash);
+  if (isDmRoom(next.room)) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    refreshIdUI();
+    return;
+  }
+  const sameRoom = next.room === (els.room.value || '').trim();
+  const sameKey = next.b64Key === (chatKey ? next.b64Key : null);
+  if (!sameRoom || !sameKey) {
+    els.room.value = next.room;
+    joinNew(next.room, next.b64Key);
+  }
+  refreshIdUI();
+});
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="App navigation" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Home</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link aria-current="page">
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Open command palette (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Search</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Install Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Add to home screen — works offline.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Install</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Dismiss" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Dismiss" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Install Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Install Mentria on iPhone",
+    macosTitle:  "Install Mentria on Mac",
+    chromeTitle: "Install Mentria",
+    iosStep1:    "Tap the <strong>Share</strong> button at the bottom of the screen",
+    iosStep2:    "Choose <strong>Add to Home Screen</strong>",
+    iosStep3:    "Tap <strong>Add</strong> in the top-right corner.",
+    macosStep1:  "Open this page in <strong>Safari 17+</strong>.",
+    macosStep2:  "From the menu bar, choose <strong>File → Add to Dock…</strong>",
+    macosStep3:  "Click <strong>Add</strong>.",
+    chromeStep1: "Click the <strong>install</strong> icon in your browser's address bar.",
+    chromeStep2: "Or open the menu (⋮) and choose <strong>Install Mentria</strong>.",
+    note:        "Once installed, Mentria runs offline and your local data stays on your device."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Cancel</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "Confirm";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "Couldn't save — your browser storage is full. Free up space to keep your changes.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("This downloads a large AI model (490 MB or more, depending on the model) and you appear to be on a slow or data-saving connection. Continue?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Share";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "About this tool");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Feature-test build (WebMCP submission snapshot), frozen for testing. For general use, go to <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

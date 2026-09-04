@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>Breakout | Mentria</title>
+    <meta name="description" content="Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/pt-br/tools/breakout/">
+    <meta property="og:title" content="Breakout | Mentria">
+    <meta property="og:description" content="Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/pt-br/tools/breakout/">
+    <meta name="twitter:title" content="Breakout | Mentria">
+    <meta name="twitter:description" content="Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/breakout/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/breakout/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/breakout/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/breakout/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/breakout/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/breakout/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "Um estúdio criativo para ferramentas, experimentos e transmissões visuais. Feito com capricho.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "pt-BR"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://webmcp.mentria.ai/pt-br/" },
+        { "@type": "ListItem", "position": 2, "name": "Ferramentas", "item": "https://webmcp.mentria.ai/pt-br/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Breakout", "item": "https://webmcp.mentria.ai/pt-br/tools/breakout/" }
+      ]
+    }
+    </script>
+<style>
+html, body { overscroll-behavior: none; }
+main { max-width: 1100px; }
+
+.game-page .hero { text-align: center; padding: 0; margin-bottom: 32px; position: relative; z-index: 1; }
+.game-page .hero .eyebrow { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--term-muted); letter-spacing: 0.1em; margin: 0 0 12px; }
+.game-page .hero h1 { font-family: var(--font-mono); font-weight: 700; font-size: clamp(2rem, 4vw, 2.6rem); color: var(--term-fg-strong); margin: 0 0 12px; letter-spacing: -0.005em; line-height: 1.2; }
+.game-page .hero p { font-family: var(--font-mono); color: var(--term-muted); font-size: var(--text-sm); margin: 0 auto; max-width: 56ch; line-height: 1.6; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--term-border);
+}
+.stat {
+  padding: 12px 16px;
+  border-right: 1px solid var(--term-border);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.stat:last-child { border-right: none; }
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--term-muted);
+  font-weight: 500;
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--term-fg-strong);
+  font-variant-numeric: tabular-nums;
+  transform-origin: left center;
+}
+.stat-value.is-bump { animation: brk-bump 340ms cubic-bezier(.22,1,.36,1); }
+@keyframes brk-bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+.v-cyan   { color: var(--syn-cyan); text-shadow: 0 0 8px rgba(34,211,238,0.4); }
+.v-pink   { color: var(--syn-pink); }
+.v-purple { color: var(--syn-purple); }
+.v-amber  { color: var(--syn-amber); }
+
+.tray {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--term-border);
+  background: rgba(255,255,255,0.01);
+  min-height: 40px;
+  flex-wrap: wrap;
+}
+.tray-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--term-muted);
+  font-weight: 500;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--purple-8);
+  border: 1px solid var(--purple-20);
+  color: var(--syn-purple);
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+}
+.pill .pill-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--purple-8);
+  pointer-events: none;
+  z-index: 0;
+}
+.pill > span { position: relative; z-index: 1; }
+.pill.cyan  { background: var(--cyan-8); border-color: var(--cyan-15); color: var(--syn-cyan); }
+.pill.cyan .pill-fill { background: var(--cyan-8); }
+.pill.green { background: var(--green-8); border-color: rgba(74,222,128,0.20); color: var(--syn-green); }
+.pill.green .pill-fill { background: var(--green-8); }
+.pill.amber { background: var(--amber-8); border-color: rgba(251,191,36,0.20); color: var(--syn-amber); }
+.pill.amber .pill-fill { background: var(--amber-8); }
+.tray-empty { color: var(--term-subtle); font-size: 12px; font-family: var(--font-mono); }
+
+.canvas-wrap {
+  position: relative;
+  background: #050507;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: none;
+}
+
+.brk__touchbtn {
+  position: absolute;
+  z-index: 4;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cyan-30);
+  background: rgba(5,5,7,0.72);
+  color: var(--syn-cyan);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: var(--glow-cyan-soft);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+.brk__touchbtn--launch { left: 50%; bottom: 13%; transform: translateX(-50%); }
+.brk__touchbtn--pause { top: 12px; right: 12px; width: 44px; padding: 0; font-size: 13px; }
+@media (pointer: coarse) {
+  .brk__touchbtn { display: inline-flex; }
+  .brk__touchbtn[hidden] { display: none; }
+}
+
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(5,5,7,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 5;
+}
+.overlay.hidden { display: none; }
+.modal {
+  background: var(--term-surface-2);
+  border: 1px solid var(--term-border-strong);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: var(--elev-3), var(--glow-cyan-soft);
+}
+.modal.is-off { display: none; }
+.modal .eyebrow {
+  color: var(--syn-pink);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+.modal h2 {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--term-fg-strong);
+  margin: 0 0 12px;
+}
+.modal p {
+  font-family: var(--font-mono);
+  color: var(--term-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  text-align: center;
+}
+.modal .key-hints {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+.key-hints .row {
+  display: flex; justify-content: space-between; gap: 12px;
+}
+.key-hints .row span:first-child { color: var(--term-muted); }
+.key-hints .row span:last-child { color: var(--syn-cyan); font-weight: 600; }
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  text-align: left;
+  font-size: 11px;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+}
+.legend .li {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--term-muted);
+}
+.legend .swatch {
+  width: 12px; height: 12px; border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.brk__help { max-width: min(400px, calc(100vw - 1.5rem)); }
+.brk__method + .brk__method { margin-top: 0.9rem; }
+.brk__method-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.45rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--term-fg-strong);
+}
+.brk__glyph { width: 16px; height: 16px; flex: none; color: var(--syn-cyan); }
+.brk__badge {
+  display: none;
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cyan-30);
+  background: var(--cyan-8);
+  color: var(--syn-cyan);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.brk__method.is-last .brk__badge { display: inline-block; }
+.brk__help-foot { margin: 0.9rem 0 0; font-size: 0.7rem; line-height: 1.5; color: var(--term-subtle); }
+.brk__help .game-help-list .kbd { font-size: 0.68rem; }
+
+.footer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid var(--term-border);
+  font-size: 11px;
+  color: var(--term-muted);
+  font-family: var(--font-mono);
+}
+.footer-controls .keys { display: flex; gap: 14px; flex-wrap: wrap; }
+.kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--term-border);
+  border-radius: 3px;
+  color: var(--term-fg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+.toast {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--cyan-15);
+  border: 1px solid var(--cyan-30);
+  color: var(--syn-cyan);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--glow-cyan);
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-value.is-bump { animation: none; }
+  .toast { transition: none; }
+}
+
+@media (max-width: 600px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat { padding: 10px 12px; }
+  .stat-value { font-size: 16px; }
+  .stat:nth-child(2) { border-right: none; }
+  .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--term-border); }
+  .game-page .hero { margin-bottom: 18px; }
+  .game-page .hero h1 { font-size: 1.6rem; }
+  .game-page .hero p { font-size: 12px; }
+  canvas { cursor: default; }
+  .modal { padding: 20px 18px; max-width: 92vw; }
+  .modal h2 { font-size: 20px; }
+  .modal p { font-size: 12px; }
+  .modal .key-hints { font-size: 11px; padding: 10px; }
+  .legend { font-size: 10px; gap: 4px 10px; }
+  .footer-controls { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 10px; }
+  .tray { padding: 8px 12px; gap: 8px; }
+  .pill { font-size: 10px; padding: 3px 10px; }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.breakout.title","suffix":" | Mentria"},"desc":{"key":"tools.breakout.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "pt-BR",
+        prefix: "/pt-br",
+        tools: [
+          { slug: "search", title: "Busca", category: "IA", keywords: "Encontre ferramentas e posts do feed. Digite qualquer consulta — palavra-chave ou linguagem natural." },
+          { slug: "step-counter", title: "Contador de Passos", category: "Saúde", keywords: "Conte seus passos durante uma caminhada, direto no navegador. Usa o sensor de movimento do seu telefone — nada é enviado.", requires: "motion" },
+          { slug: "qr-scanner", title: "Scanner e gerador de QR e códigos de barras", category: "Utilitário", keywords: "Escaneie códigos QR e de barras, ou gere um código QR a partir de qualquer link ou texto — tudo no dispositivo, sem enviar nada." },
+          { slug: "decision-wheel", title: "Roda de Decisões", category: "Utilitário", keywords: "Não consegue decidir? Gire a roda e deixe o destino escolher. Funciona offline." },
+          { slug: "countdown-timer", title: "Cronômetro Regressivo", category: "Cronômetro", keywords: "Defina uma duração ou escolha um horário alvo. Até 4 cronômetros independentes com som de alarme." },
+          { slug: "coin-flip", title: "Cara ou Coroa", category: "Utilitário", keywords: "Cara ou coroa — jogue uma moeda instantaneamente. Faça uma série de melhor-de-N para desempates. Funciona offline." },
+          { slug: "quick-notes", title: "Notas Rápidas", category: "Produtividade", keywords: "Um bloco de notas mínimo que vive no seu navegador. Crie várias notas, salvas automaticamente a cada tecla pressionada." },
+          { slug: "base64-codec", title: "Codec Base64", category: "Desenvolvimento", keywords: "Codifique e decodifique texto ou arquivos para e de Base64. Suporta imagens, documentos e qualquer tipo de arquivo. Tudo roda localmente no seu navegador." },
+          { slug: "totp", title: "TOTP", category: "Segurança", keywords: "Códigos de dois fatores que ficam no seu navegador, criptografados em repouso. Nada em um servidor." },
+          { slug: "exif", title: "Inspetor EXIF", category: "Segurança", keywords: "Veja o que uma foto carrega em segredo — dados da câmera, datas, localização GPS — e baixe uma cópia limpa sem nada disso. Nada é enviado." },
+          { slug: "color-picker", title: "Seletor de Cores", category: "Design", keywords: "Escolha qualquer cor, veja seus valores HEX / RGB / HSL e gere paletas harmônicas. Funciona offline." },
+          { slug: "annotate-image", title: "Anotar imagem", category: "IA", keywords: "Envie uma imagem e obtenha na hora uma descrição de IA, texto alternativo, transcrição ou tags — com prompts testados de um toque. Roda localmente no seu navegador, nada é enviado." },
+          { slug: "ai-chat", title: "Chat IA", category: "IA", keywords: "Qwen3.5 rodando localmente no seu navegador. Sem servidor, sem chaves de API. Suporta visão." },
+          { slug: "console", title: "Console", category: "IA", keywords: "Converse com o modelo local enquanto ele usa os apps da Mentria em uma tela de celular compartilhada — ou deixe que ele atue como usuário de teste e relate o que encontrar." },
+          { slug: "model-mirror", title: "Espelho de Modelos", category: "IA", keywords: "Ajude a distribuir os modelos locais da Mentria em P2P. Mantenha esta aba aberta e seu navegador vira um espelho." },
+          { slug: "quote", title: "Frase Motivacional", category: "IA", keywords: "Frases originais geradas por IA, rodando localmente no seu navegador. Seus dados não saem do seu dispositivo." },
+          { slug: "radio", title: "Rádio Infinita", category: "IA", keywords: "Música cinematográfica épica gerada por IA, transmitindo infinitamente. Aprende seu gosto localmente — seus dados não saem do seu dispositivo." },
+          { slug: "invoice", title: "Gerador de Notas", category: "Utilitário", keywords: "Crie notas fiscais limpas de uma página no seu navegador. Salva automaticamente conforme você digita. Imprima em A4 ou exporte para JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utilitário", keywords: "Escreva markdown, veja uma pré-visualização ao vivo, e baixe um PDF profissional e limpo. Salva automaticamente no seu navegador. Seus dados não saem do seu dispositivo." },
+          { slug: "tetris", title: "Tetris", category: "Jogo", keywords: "Empilhe tetraminós. Limpe linhas. A velocidade acelera a cada 10 linhas. Peças em ciano, roxo, rosa, âmbar e verde — a paleta da Mentria." },
+          { slug: "breakout", title: "Breakout", category: "Jogo", keywords: "Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo." },
+          { slug: "flappy", title: "Flappy", category: "Jogo", keywords: "Um avião de papel passando por uma pilha de prompts de terminal. Toque, clique ou pressione ESPAÇO para bater asas. Não bata no prompt." },
+          { slug: "minesweeper", title: "Campo Minado", category: "Jogo", keywords: "Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas." },
+          { slug: "sudoku", title: "Sudoku", category: "Jogo", keywords: "Quebra-cabeça lógico em traje de terminal. Gerador de solução única, quatro dificuldades, anotações a lápis. Roda localmente — nenhum dado sai do seu dispositivo." },
+          { slug: "ludo", title: "Ludo", category: "Jogo", keywords: "Quatro peças em casa, você vence. Tire um seis para sair, capture no contato, refugie-se nas estrelas seguras. Jogue contra os bots ou no mesmo dispositivo." },
+          { slug: "chess", title: "Xadrez", category: "Jogo", keywords: "Motor local, revezamento e jogo online — sem servidores. Regras completas com roque, en passant e promoção; motor alfa-beta com quatro níveis, barra de avaliação e dicas." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Jogo", keywords: "Contrarrelógio de combate no navegador: corra, deslize, escale e atire com uma carabina automática em cinco percursos ao anoitecer. Medalhas, corrida contra fantasmas e jogo offline." },
+          { slug: "extensions", title: "Extensões", category: "Utilitário", keywords: "Instale extensões privadas em um único arquivo que vivem apenas neste dispositivo. Elas aparecem no seu lançador e terminal — e nunca no site público." },
+          { slug: "files", title: "Arquivos", category: "Utilitário", keywords: "Navegue, exporte e exclua os dados que as ferramentas da Mentria guardam neste dispositivo. Tudo fica local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Chat ponto a ponto, chamadas de voz e vídeo, e envio de arquivos. Criptografia de ponta a ponta, sem contas e sem servidor no meio.", url: "/comms/" },
+          { slug: "bubble-level", title: "Nível de bolha", category: "Utilitário", keywords: "Transforme o celular em um nível de bolha online: um nível de pedreiro sem instalar aplicativo, com precisão de 0,1° e que funciona offline.", requires: "motion" },
+          { slug: "decibel-meter", title: "Medidor de decibéis", category: "Utilitário", keywords: "Um medidor de som no navegador: meça o ruído em dB com o microfone do celular ou do notebook, sem instalar nenhum app." },
+          { slug: "compass", title: "Bússola", category: "Utilitário", keywords: "Uma bússola online sem app para instalar: abra no navegador e leia seu rumo magnético direto do sensor do celular.", requires: "motion" },
+          { slug: "speedometer", title: "Velocímetro GPS", category: "Utilitário", keywords: "Um velocímetro online por GPS, sem instalar aplicativo. Velocidade ao vivo em km/h, mph ou nós, com a distância do percurso, tudo calculado no seu aparelho." },
+          { slug: "ruler", title: "Régua Online", category: "Utilitário", keywords: "Uma régua online em tamanho real: meça em cm, mm e polegadas direto na tela e calibre com um cartão de banco para que os milímetros sejam de verdade." }
+        ],
+        nav: [
+          { id: "home", title: "Início", href: "/" },
+          { id: "tools", title: "Ferramentas", href: "/tools/" },
+          { id: "feed", title: "Feed", href: "/feed/" },
+          { id: "about", title: "Sobre", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Buscar ferramentas e páginas…",
+          listLabel: "Resultados da busca",
+          noResults: "Nenhum resultado",
+          recents: "Recentes",
+          extensions: "Extensões",
+          actions: "Ações",
+          actNote: "Salvar nota: “{text}”",
+          actNoteDone: "Nota salva",
+          actNoteFail: "Não foi possível salvar a nota",
+          actTimer: "Iniciar um timer de {dur}",
+          actFlip: "Jogar uma moeda",
+          actHeads: "Cara",
+          actTails: "Coroa",
+          searchSite: "Buscar “{q}” no site"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Pular para o conteúdo</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/pt-br/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/pt-br/feed/"  class="nav-link" title="Feed" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+            </a>
+            <a href="/pt-br/tools/" class="nav-link active" aria-current="page" title="Ferramentas" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Ferramentas</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/pt-br/about/" class="nav-link nav-link--about" title="Sobre" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">Sobre</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Idioma atual: Português (BR)" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="pt-BR">Português (BR)</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/breakout/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/breakout/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/breakout/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/breakout/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/breakout/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <div class="game-page">
+
+<section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/pt-br/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/pt-br/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">breakout</span></p>
+  <h1><i18n-t data-k="tools.breakout.title">Breakout</i18n-t><span style="color:var(--syn-cyan)">.</span>js</h1>
+  <p><i18n-t data-k="tools.breakout.lede">Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo.</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">O que é isso?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">Ocultar detalhes</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.breakout.title">O que é Breakout?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.breakout.tldr">Um quebra-tijolos no estilo Breakout: rebata a bola com a raquete para destruir paredes de tijolos em níveis que ficam mais rápidos, pegando os power-ups que caem (e desviando dos ruins). Construído em HTML5 Canvas com física determinística e controles de mouse, teclado e toque. Pontuação, vidas e a tabela de recordes ficam no JavaScript do lado do cliente — sem scripts de terceiros, sem servidor, e funciona offline depois de armazenado em cache.</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+
+<div class="terminal-frame" style="view-transition-name: tool-breakout">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Alternar tela cheia" title="Alternar tela cheia" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">breakout.js</span>
+        
+        
+        <button type="button" class="terminal-frame__help" popovertarget="breakout-help" aria-label="Controles" title="Controles" data-i18na="aria-label=tool.common.controls;title=tool.common.controls">?</button>
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Alternar tela cheia" title="Alternar tela cheia" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+
+<div id="breakout-help" popover class="game-help brk__help">
+  <p class="game-help-title"><i18n-t data-k="tool.breakout.controls_title">Controles</i18n-t></p>
+
+  <div class="brk__method" data-brk-method="touch" data-input="touch">
+    <p class="brk__method-head">
+      <svg class="brk__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 11.5V5.4a1.5 1.5 0 0 1 3 0v5.1"></path><path d="M12 8.9a1.5 1.5 0 0 1 3 0v2.6"></path><path d="M15 9.9a1.5 1.5 0 0 1 3 0V15a5 5 0 0 1-5 5h-1.2a5 5 0 0 1-4.1-2.1l-2.5-3.5a1.5 1.5 0 0 1 2.3-1.9L9 14.2"></path></svg>
+      <span class="brk__method-name"><i18n-t data-k="tool.breakout.ctrl_touch">Toque</i18n-t></span>
+      <span class="brk__badge"><i18n-t data-k="tool.breakout.ctrl_last_used">último usado</i18n-t></span>
+    </p>
+    <ul class="game-help-list">
+      <li><span><span class="kbd"><i18n-t data-k="tool.breakout.chip_drag">arraste</i18n-t></span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.touch_move">Arraste em qualquer ponto para mover a raquete</i18n-t></span></li>
+      <li><span><span class="kbd"><i18n-t data-k="tool.breakout.chip_tap">toque</i18n-t></span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.touch_launch">Toque no campo ou no botão de lançar</i18n-t></span></li>
+      <li><span><span class="kbd">❙❙</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.touch_pause">Pause com o botão sobre o campo</i18n-t></span></li>
+    </ul>
+  </div>
+
+  <div class="brk__method" data-brk-method="keyboard" data-input="keyboard">
+    <p class="brk__method-head">
+      <svg class="brk__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.6" y="6" width="18.8" height="12" rx="2.2"></rect><path d="M6.4 10h1.1M10 10h1.1M13.6 10h1.1M17.2 10h1.1M7.6 14h8.8"></path></svg>
+      <span class="brk__method-name"><i18n-t data-k="tool.breakout.ctrl_keyboard">Teclado</i18n-t></span>
+      <span class="brk__badge"><i18n-t data-k="tool.breakout.ctrl_last_used">último usado</i18n-t></span>
+    </p>
+    <ul class="game-help-list">
+      <li><span><span class="kbd">←</span><span class="kbd">→</span><span class="kbd">A</span><span class="kbd">D</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.kb_move">Mover a raquete</i18n-t></span></li>
+      <li><span><span class="kbd">SPACE</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.kb_launch">Lançar e depois pausar</i18n-t></span></li>
+      <li><span><span class="kbd">P</span><span class="kbd">ESC</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.kb_pause">Pausar / retomar</i18n-t></span></li>
+    </ul>
+  </div>
+
+  <div class="brk__method" data-brk-method="gamepad" data-input="gamepad">
+    <p class="brk__method-head">
+      <svg class="brk__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.6 6.6h10.8a3.6 3.6 0 0 1 3.5 2.8l1 4.5a2.7 2.7 0 0 1-2.7 3.3c-1 0-1.9-.5-2.4-1.4l-.8-1.3H8l-.8 1.3c-.5.9-1.4 1.4-2.4 1.4a2.7 2.7 0 0 1-2.7-3.3l1-4.5a3.6 3.6 0 0 1 3.5-2.8Z"></path><path d="M6.6 11.4h2.8M8 10v2.8"></path><circle cx="15.6" cy="10.6" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="17.9" cy="12.6" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+      <span class="brk__method-name"><i18n-t data-k="tool.breakout.ctrl_gamepad">Controle</i18n-t></span>
+      <span class="brk__badge"><i18n-t data-k="tool.breakout.ctrl_last_used">último usado</i18n-t></span>
+    </p>
+    <ul class="game-help-list">
+      <li><span><span class="kbd">D-PAD</span><span class="kbd">L-STICK</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.pad_move">Mover a raquete</i18n-t></span></li>
+      <li><span><span class="kbd">A</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.pad_launch">Lançar a bola</i18n-t></span></li>
+      <li><span><span class="kbd">START</span></span><span class="game-help-label"><i18n-t data-k="tool.breakout.pad_pause">Pausar / retomar</i18n-t></span></li>
+    </ul>
+  </div>
+
+  <p class="brk__help-foot"><i18n-t data-k="tool.breakout.help_hint">Reabra este painel quando quiser com o botão ?.</i18n-t></p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <span class="stat-label"><i18n-t data-k="tool.breakout.score">Pontos</i18n-t></span>
+    <span class="stat-value v-cyan" id="stat-score">0</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label"><i18n-t data-k="tool.breakout.level">Nível</i18n-t></span>
+    <span class="stat-value v-purple" id="stat-level">1</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label"><i18n-t data-k="tool.breakout.lives">Vidas</i18n-t></span>
+    <span class="stat-value v-pink" id="stat-lives">♥ ♥ ♥</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label"><i18n-t data-k="tool.breakout.high_score">Recorde</i18n-t></span>
+    <span class="stat-value v-amber" id="stat-high">0</span>
+  </div>
+</div>
+
+<div class="tray" id="tray">
+  <span class="tray-label"><i18n-t data-k="tool.breakout.active">Ativos</i18n-t></span>
+  <span class="tray-empty" id="tray-empty"><i18n-t data-k="tool.breakout.empty_powerups">sem power-ups · pegue os tokens que caem</i18n-t></span>
+</div>
+
+<div class="canvas-wrap" id="canvasWrap">
+  <canvas id="game" width="900" height="640" role="img" aria-label="campo de jogo do breakout" data-i18na="aria-label=tool.breakout.canvas_label"></canvas>
+
+  <div class="toast" id="toast"></div>
+
+  <button type="button" class="brk__touchbtn brk__touchbtn--launch" id="brk-launch" hidden>
+    <span aria-hidden="true">▲</span><span><i18n-t data-k="tool.breakout.btn_launch">lançar</i18n-t></span>
+  </button>
+  <button type="button" class="brk__touchbtn brk__touchbtn--pause" id="brk-pause" hidden aria-label="pausa" data-i18na="aria-label=tool.breakout.btn_pause_label">
+    <span aria-hidden="true">❙❙</span>
+  </button>
+
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal-start">
+      <p class="eyebrow">&gt; <i18n-t data-k="tool.breakout.eyebrow_ready">JOGADOR UM PRONTO</i18n-t></p>
+      <h2>breakout.js</h2>
+      <p><i18n-t data-k="tool.breakout.modal_intro">Rebata a bola com sua raquete. Quebre cada bloco para avançar. Pegue os tokens de power-up que caem — mas cuidado com os rosas.</i18n-t></p>
+
+      <div class="key-hints">
+        <div class="row"><span><i18n-t data-k="tool.breakout.key_move_paddle">Mover raquete</i18n-t></span><span>← → · A D · <i18n-t data-k="tool.breakout.chip_drag">arraste</i18n-t></span></div>
+        <div class="row"><span><i18n-t data-k="tool.breakout.key_launch">Lançar bola</i18n-t></span><span>SPACE · A · <i18n-t data-k="tool.breakout.chip_tap">toque</i18n-t></span></div>
+        <div class="row"><span><i18n-t data-k="tool.breakout.key_pause">Pausa</i18n-t></span><span>P · ESC · START</span></div>
+      </div>
+
+      <div class="legend">
+        <div class="li"><span class="swatch" style="background:var(--syn-cyan); box-shadow: var(--glow-cyan-soft)"></span><i18n-t data-k="tool.breakout.legend_wide">Raquete larga</i18n-t></div>
+        <div class="li"><span class="swatch" style="background:var(--syn-purple); box-shadow: var(--glow-purple)"></span><i18n-t data-k="tool.breakout.legend_slow">Bola lenta</i18n-t></div>
+        <div class="li"><span class="swatch" style="background:var(--syn-green); box-shadow: var(--glow-green)"></span><i18n-t data-k="tool.breakout.legend_multi">Multi-bola</i18n-t></div>
+        <div class="li"><span class="swatch" style="background:var(--syn-amber); box-shadow: var(--glow-amber)"></span><i18n-t data-k="tool.breakout.legend_life">+1 vida</i18n-t></div>
+        <div class="li"><span class="swatch" style="background:var(--syn-pink); box-shadow: var(--glow-pink)"></span><i18n-t data-k="tool.breakout.legend_shrink">Encolher (evitar!)</i18n-t></div>
+        <div class="li"><span class="swatch" style="background:var(--term-subtle)"></span><i18n-t data-k="tool.breakout.legend_brick">Bloco</i18n-t></div>
+      </div>
+
+      <button class="m-btn m-btn--primary" id="btn-start">$ <i18n-t data-k="tool.breakout.btn_start">iniciar_jogo</i18n-t></button>
+      <div style="height:8px"></div>
+      <button class="m-btn m-btn--ghost" id="btn-help" popovertarget="breakout-help">? <i18n-t data-k="tool.breakout.controls_title">Controles</i18n-t></button>
+    </div>
+
+    <div class="modal is-off" id="modal-dyn"></div>
+  </div>
+</div>
+
+<div class="footer-controls">
+  <div class="keys">
+    <span><span class="kbd">←</span><span class="kbd">→</span> <i18n-t data-k="tool.breakout.footer_move">mover</i18n-t></span>
+    <span><span class="kbd">SPACE</span> <i18n-t data-k="tool.breakout.footer_launch">lançar</i18n-t></span>
+    <span><span class="kbd">P</span> <i18n-t data-k="tool.breakout.footer_pause">pausa</i18n-t></span>
+    <span id="brk-padhint" hidden><span class="kbd">A</span> <i18n-t data-k="tool.breakout.footer_launch">lançar</i18n-t> <span class="kbd">START</span> <i18n-t data-k="tool.breakout.footer_pause">pausa</i18n-t></span>
+  </div>
+  <div>
+    <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--syn-green); box-shadow:var(--glow-green); margin-right:6px"></span>
+    <i18n-t data-k="tool.breakout.offline">local · pronto offline</i18n-t>
+  </div>
+</div>
+
+    </div>
+</div>
+<nav class="related-tools" aria-label="Mais ferramentas" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">Mais ferramentas</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/flappy/">
+        <span class="related-tools__name"><i18n-t data-k="tools.flappy.title">Flappy</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jogo</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/minesweeper/">
+        <span class="related-tools__name"><i18n-t data-k="tools.minesweeper.title">Campo Minado</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jogo</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/sudoku/">
+        <span class="related-tools__name"><i18n-t data-k="tools.sudoku.title">Sudoku</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jogo</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/speedometer/">
+        <span class="related-tools__name"><i18n-t data-k="tools.speedometer.title">Velocímetro GPS</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utilitário</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/pt-br/tools/"><i18n-t data-k="tools_page.related_all">Todas as ferramentas</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Breakout",
+  "url": "https://webmcp.mentria.ai/pt-br/tools/breakout/",
+  "description": "Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo.",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "pt-BR"
+}
+</script>
+
+
+
+
+<script>
+(() => {
+  'use strict';
+
+  const T = {
+    powerWide:    "RAQUETE LARGA",
+    powerSlow:    "BOLA LENTA",
+    powerMulti:   "MULTI-BOLA",
+    powerLife:    "+1 VIDA",
+    powerShrink:  "ENCOLHER",
+    levelInit:    "nível {n} — iniciado",
+    wallRebuilt:  "nível {n} — muro reconstruído",
+    toastPowerup: "+ {label}",
+    newHigh:      "novo recorde!",
+    launchHint:   "pressione ESPAÇO, A ou toque para lançar ▲",
+    paused:       "pausado",
+    pauseDesc:    "Pressione P ou ESC para retomar ou reinicie do zero.",
+    gameOver:     "fim de jogo",
+    gameoverDesc: "Você chegou ao nível <b style=\"color:var(--syn-purple)\">{level}</b> com uma pontuação de <b style=\"color:var(--syn-cyan)\">{score}</b>.<br/>Recorde: <b style=\"color:var(--syn-amber)\">{high}</b>",
+    eyebrowPaused:"SIGINT — PAUSADO",
+    eyebrowOver:  "PROCESSO ENCERRADO",
+    btnResume:    "retomar",
+    btnRestart:   "reiniciar",
+    btnAgain:     "jogar_de_novo"
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const canvas = $('game');
+  if (window.innerWidth <= 720) {
+    canvas.width = 640;
+    canvas.height = 1100;
+  }
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.aspectRatio = `${W} / ${H}`;
+  ctx.scale(dpr, dpr);
+
+  const C = {
+    bg: '#050507',
+    paddle: '#22D3EE',
+    paddleGlow: 'rgba(34,211,238,0.5)',
+    ball: '#F8FAFC',
+    brick: '#E2E8F0',
+    cyan: '#22D3EE',
+    purple: '#A78BFA',
+    pink: '#F472B6',
+    green: '#4ADE80',
+    amber: '#FBBF24',
+    muted: '#475569',
+    fg: '#E2E8F0'
+  };
+
+  const LEGACY_HIGH = 'mentria_breakout_high';
+  function readLegacyHigh() {
+    try { return parseInt(localStorage.getItem(LEGACY_HIGH) || '0', 10) || 0; } catch (_) { return 0; }
+  }
+  function readHigh() {
+    if (window.MentriaStore) {
+      const v = window.MentriaStore.get('games', 'breakout_high');
+      if (v != null) return v;
+      const legacy = readLegacyHigh();
+      if (legacy > 0) { window.MentriaStore.set('games', 'breakout_high', legacy); try { localStorage.removeItem(LEGACY_HIGH); } catch (_) {} }
+      return legacy;
+    }
+    return readLegacyHigh();
+  }
+  function writeHigh(v) {
+    if (window.MentriaStore) window.MentriaStore.set('games', 'breakout_high', v);
+    else try { localStorage.setItem(LEGACY_HIGH, String(v)); } catch (_) {}
+  }
+  function prefGet(key) {
+    try { return window.MentriaStore ? window.MentriaStore.get('tools', key) : null; } catch (_) { return null; }
+  }
+  function prefSet(key, value) {
+    try { if (window.MentriaStore) window.MentriaStore.set('tools', key, value); } catch (_) {}
+  }
+
+  const State = {
+    running: false,
+    paused: false,
+    awaitingLaunch: true,
+    score: 0,
+    level: 1,
+    lives: 3,
+    high: readHigh()
+  };
+
+  const paddle = {
+    w: 110, h: 12,
+    x: W / 2 - 55,
+    y: H - 32,
+    speed: 9,
+    baseW: 110,
+    flash: 0
+  };
+
+  const balls = [];
+  const bricks = [];
+  const powerups = [];
+  const particles = [];
+  const activeEffects = [];
+
+  const POWER_KINDS = [
+    { id: 'wide',   label: T.powerWide,   color: C.cyan,   pclass: 'cyan',  weight: 22, dur: 10000 },
+    { id: 'slow',   label: T.powerSlow,   color: C.purple, pclass: '',      weight: 20, dur: 8000  },
+    { id: 'multi',  label: T.powerMulti,  color: C.green,  pclass: 'green', weight: 14, dur: 0     },
+    { id: 'life',   label: T.powerLife,   color: C.amber,  pclass: 'amber', weight: 8,  dur: 0     },
+    { id: 'shrink', label: T.powerShrink, color: C.pink,   pclass: '',      weight: 14, dur: 7000  }
+  ];
+
+  const SPEED_CAP = 9.6;
+  const MAX_BALLS = 6;
+  const MAX_PARTICLES = 220;
+  const PAD_DEAD = 0.18;
+  const KEY_ACCEL = 1.9;
+  const PATTERNS = ['solid', 'checker', 'wedge', 'pyramid', 'diamond', 'columns'];
+
+  const elScore = $('stat-score');
+  const elLevel = $('stat-level');
+  const elLives = $('stat-lives');
+  const elHigh = $('stat-high');
+  const elTray = $('tray');
+  const elTrayEmpty = $('tray-empty');
+  const elOverlay = $('overlay');
+  const elModalStart = $('modal-start');
+  const elModalDyn = $('modal-dyn');
+  const elToast = $('toast');
+  const elHelp = $('breakout-help');
+  const btnLaunch = $('brk-launch');
+  const btnPause = $('brk-pause');
+  const elPadHint = $('brk-padhint');
+
+  const keys = { left: false, right: false };
+  let keyVel = 0;
+  let padAxis = 0;
+  let pointerX = null;
+
+  const coarse = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  let lastInput = coarse ? 'touch' : 'keyboard';
+
+  function renderBadges() {
+    const nodes = document.querySelectorAll('[data-brk-method]');
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.toggle('is-last', nodes[i].getAttribute('data-brk-method') === lastInput);
+    }
+  }
+  function setLastInput(kind) {
+    if (lastInput === kind) return;
+    lastInput = kind;
+    renderBadges();
+  }
+
+  let lastVibe = 0;
+  function vibrate(ms) {
+    if (!navigator.vibrate) return;
+    const now = performance.now();
+    if (now - lastVibe < 45) return;
+    lastVibe = now;
+    try { navigator.vibrate(ms); } catch (_) {}
+  }
+
+  function esc(s) {
+    return String(s).split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;');
+  }
+
+  function levelSpeed(n) {
+    return Math.min(5 + (n - 1) * 0.55, SPEED_CAP);
+  }
+
+  function patternCell(name, r, c, rows, cols) {
+    const mid = (cols - 1) / 2;
+    const dc = Math.abs(c - mid);
+    if (name === 'checker') return r === 0 || ((r + c) % 2) === 0;
+    if (name === 'wedge') return dc <= mid - Math.max(0, r - 1) * 0.9;
+    if (name === 'pyramid') return dc <= r + 1;
+    if (name === 'diamond') {
+      const midR = (rows - 1) / 2;
+      return (dc / mid) + (Math.abs(r - midR) / Math.max(midR, 1)) <= 1.15;
+    }
+    if (name === 'columns') return r === 0 || r === rows - 1 || ((c % 3) !== 2);
+    return true;
+  }
+
+  function buildLevel(n) {
+    bricks.length = 0;
+    powerups.length = 0;
+    particles.length = 0;
+    activeEffects.length = 0;
+    paddle.w = paddle.baseW;
+
+    const cols = 11;
+    const rows = Math.min(4 + Math.floor((n - 1) / 2), 8);
+    const pattern = PATTERNS[(n - 1) % PATTERNS.length];
+    const padTop = 70;
+    const padSide = 30;
+    const gap = 6;
+    const bw = (W - padSide * 2 - gap * (cols - 1)) / cols;
+    const bh = 20;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        let on = patternCell(pattern, r, c, rows, cols);
+        if (!on && n >= 7 && ((r + c + n) % 3) === 0) on = true;
+        if (!on && n >= 13 && ((r * 2 + c + n) % 4) === 0) on = true;
+        if (!on) continue;
+        let hp = 1;
+        if (n >= 3 && r === 0) hp = 2;
+        if (n >= 6 && r <= 1) hp = 2;
+        if (n >= 9 && r === 0) hp = 3;
+        bricks.push({
+          x: padSide + c * (bw + gap),
+          y: padTop + r * (bh + gap),
+          w: bw,
+          h: bh,
+          hp,
+          row: r,
+          flash: 0
+        });
+      }
+    }
+    if (bricks.length === 0) {
+      for (let c = 0; c < cols; c++) {
+        bricks.push({ x: padSide + c * (bw + gap), y: padTop, w: bw, h: bh, hp: 1, row: 0, flash: 0 });
+      }
+    }
+    resetBall();
+  }
+
+  function resetBall() {
+    balls.length = 0;
+    balls.push({
+      x: paddle.x + paddle.w / 2,
+      y: paddle.y - 10,
+      vx: 0,
+      vy: 0,
+      r: 7,
+      speed: levelSpeed(State.level),
+      stuck: true,
+      trail: []
+    });
+    State.awaitingLaunch = true;
+  }
+
+  function clampBall(b) {
+    const m = Math.hypot(b.vx, b.vy);
+    if (m === 0) return;
+    let ux = b.vx / m;
+    let uy = b.vy / m;
+    const minY = 0.3;
+    if (Math.abs(uy) < minY) {
+      uy = (uy < 0 ? -1 : 1) * minY;
+      ux = (ux < 0 ? -1 : 1) * Math.sqrt(Math.max(0, 1 - minY * minY));
+    }
+    b.vx = ux * b.speed;
+    b.vy = uy * b.speed;
+  }
+
+  function launchBall() {
+    let launched = false;
+    for (const b of balls) {
+      if (!b.stuck) continue;
+      b.stuck = false;
+      const angle = (-Math.PI / 2) + (Math.random() * 0.6 - 0.3);
+      b.vx = Math.cos(angle) * b.speed;
+      b.vy = Math.sin(angle) * b.speed;
+      launched = true;
+    }
+    if (launched) State.awaitingLaunch = false;
+  }
+
+  function helpOpen() {
+    if (!elHelp) return false;
+    try { return elHelp.matches(':popover-open'); } catch (_) { return false; }
+  }
+
+  function primaryAction() {
+    if (helpOpen()) return;
+    if (!State.running) { startGame(); return; }
+    if (State.paused) { togglePause(); return; }
+    if (State.awaitingLaunch) { launchBall(); return; }
+    togglePause();
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target && e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+    const k = e.key;
+    if (k === 'ArrowLeft' || k === 'a' || k === 'A') {
+      keys.left = true; pointerX = null; setLastInput('keyboard');
+    } else if (k === 'ArrowRight' || k === 'd' || k === 'D') {
+      keys.right = true; pointerX = null; setLastInput('keyboard');
+    } else if (e.code === 'Space') {
+      e.preventDefault();
+      setLastInput('keyboard');
+      primaryAction();
+    } else if (k === 'p' || k === 'P') {
+      setLastInput('keyboard');
+      if (State.running && !helpOpen()) togglePause();
+    } else if (k === 'Escape') {
+      if (helpOpen()) return;
+      if (State.running && !State.paused) togglePause();
+    }
+  });
+  document.addEventListener('keyup', (e) => {
+    const k = e.key;
+    if (k === 'ArrowLeft' || k === 'a' || k === 'A') keys.left = false;
+    else if (k === 'ArrowRight' || k === 'd' || k === 'D') keys.right = false;
+  });
+
+  function canvasX(clientX) {
+    const rect = canvas.getBoundingClientRect();
+    return (clientX - rect.left) * (W / rect.width);
+  }
+
+  canvas.addEventListener('mousemove', (e) => { pointerX = canvasX(e.clientX); });
+  canvas.addEventListener('mouseleave', () => { pointerX = null; });
+
+  function trackTouch(e) {
+    if (e.touches && e.touches.length) pointerX = canvasX(e.touches[0].clientX);
+    setLastInput('touch');
+    e.preventDefault();
+  }
+  canvas.addEventListener('touchstart', (e) => {
+    trackTouch(e);
+    if (!State.running) { startGame(); return; }
+    if (State.paused) { togglePause(); return; }
+    if (State.awaitingLaunch) launchBall();
+  }, { passive: false });
+  canvas.addEventListener('touchmove', trackTouch, { passive: false });
+  canvas.addEventListener('touchend', (e) => { pointerX = null; e.preventDefault(); }, { passive: false });
+  canvas.addEventListener('touchcancel', () => { pointerX = null; });
+  canvas.addEventListener('click', () => {
+    if (State.awaitingLaunch && State.running && !State.paused) launchBall();
+  });
+
+  btnLaunch.addEventListener('click', () => {
+    setLastInput('touch');
+    if (!State.running) { startGame(); return; }
+    if (!State.paused && State.awaitingLaunch) launchBall();
+  });
+  btnPause.addEventListener('click', () => {
+    setLastInput('touch');
+    if (State.running) togglePause();
+  });
+
+  $('btn-start').addEventListener('click', startGame);
+
+  window.addEventListener('mentria:gamepad:button', (e) => {
+    const d = e.detail || {};
+    if (!d.pressed) return;
+    setLastInput('gamepad');
+    if (d.name === 'a') primaryAction();
+    else if (d.name === 'start') {
+      if (helpOpen()) return;
+      if (State.running) togglePause();
+      else startGame();
+    } else if (d.name === 'b') {
+      if (State.paused) togglePause();
+    }
+  });
+  window.addEventListener('mentria:gamepad:direction', () => setLastInput('gamepad'));
+
+  function syncPadHint() {
+    const on = !!(window.MentriaGamepad && window.MentriaGamepad.isConnected());
+    elPadHint.hidden = !on;
+  }
+  window.addEventListener('mentria:gamepad:connect', syncPadHint);
+  window.addEventListener('mentria:gamepad:disconnect', syncPadHint);
+
+  function pollPad() {
+    requestAnimationFrame(pollPad);
+    const gp = window.MentriaGamepad;
+    if (!gp || !gp.isConnected()) { padAxis = 0; return; }
+    const pads = gp.getPads();
+    let x = 0;
+    for (let i = 0; i < pads.length; i++) {
+      const p = pads[i];
+      if (p.buttons[14] && p.buttons[14].pressed) x = -1;
+      else if (p.buttons[15] && p.buttons[15].pressed) x = 1;
+      else if (p.axes.length >= 1 && Math.abs(p.axes[0]) > PAD_DEAD) {
+        const raw = p.axes[0];
+        const mag = (Math.abs(raw) - PAD_DEAD) / (1 - PAD_DEAD);
+        x = (raw < 0 ? -1 : 1) * Math.min(1, mag);
+      }
+      if (x !== 0) break;
+    }
+    if (x !== 0 && padAxis === 0) setLastInput('gamepad');
+    padAxis = x;
+  }
+  requestAnimationFrame(pollPad);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && State.running && !State.paused) togglePause();
+  });
+
+  if (elHelp) {
+    elHelp.addEventListener('toggle', (e) => {
+      if (e.newState !== 'open') return;
+      renderBadges();
+      if (State.running && !State.paused) togglePause();
+    });
+  }
+
+  function togglePause() {
+    State.paused = !State.paused;
+    showOverlay(State.paused ? 'paused' : null);
+    syncTouchUI();
+  }
+
+  function startGame() {
+    State.running = true;
+    State.paused = false;
+    State.score = 0;
+    State.level = 1;
+    State.lives = 3;
+    keyVel = 0;
+    paddle.w = paddle.baseW;
+    paddle.x = W / 2 - paddle.w / 2;
+    buildLevel(State.level);
+    showOverlay(null);
+    showToast(T.levelInit.replace('{n}', String(State.level)));
+    updateHUD();
+    syncTouchUI();
+  }
+
+  function loseLife() {
+    State.lives--;
+    activeEffects.length = 0;
+    paddle.w = paddle.baseW;
+    vibrate(35);
+    if (State.lives <= 0) {
+      gameOver();
+    } else {
+      resetBall();
+      flash(C.pink, 0.2);
+    }
+    bump(elLives);
+    updateHUD();
+    syncTouchUI();
+  }
+
+  function gameOver() {
+    State.running = false;
+    const beat = State.score > State.high;
+    if (beat) {
+      State.high = State.score;
+      writeHigh(State.high);
+      bump(elHigh);
+    }
+    showOverlay('gameover');
+    if (beat) showToast(T.newHigh);
+    updateHUD();
+  }
+
+  function nextLevel() {
+    State.level++;
+    buildLevel(State.level);
+    showToast(T.wallRebuilt.replace('{n}', String(State.level)));
+    flash(C.cyan, 0.16);
+    bump(elLevel);
+    updateHUD();
+    syncTouchUI();
+  }
+
+  function maybeSpawnPowerup(brick) {
+    if (Math.random() > 0.22) return;
+    const total = POWER_KINDS.reduce((s, k) => s + k.weight, 0);
+    let r = Math.random() * total;
+    let chosen = POWER_KINDS[0];
+    for (const k of POWER_KINDS) { r -= k.weight; if (r <= 0) { chosen = k; break; } }
+    powerups.push({
+      x: brick.x + brick.w / 2,
+      y: brick.y + brick.h / 2,
+      vy: 2.2,
+      r: 11,
+      kind: chosen
+    });
+  }
+
+  function applyPowerup(kind) {
+    const now = performance.now();
+    if (kind.id === 'multi') {
+      const copies = balls.slice();
+      for (const b of copies) {
+        if (b.stuck) continue;
+        for (let i = 0; i < 2; i++) {
+          if (balls.length >= MAX_BALLS) break;
+          const angle = Math.atan2(b.vy, b.vx) + (i === 0 ? 0.4 : -0.4);
+          balls.push({
+            x: b.x, y: b.y, r: b.r, speed: b.speed,
+            vx: Math.cos(angle) * b.speed,
+            vy: Math.sin(angle) * b.speed,
+            stuck: false,
+            trail: []
+          });
+        }
+      }
+      flashEffect(kind);
+      return;
+    }
+    if (kind.id === 'life') {
+      State.lives = Math.min(State.lives + 1, 6);
+      flashEffect(kind);
+      bump(elLives);
+      updateHUD();
+      return;
+    }
+    const existing = activeEffects.findIndex((e) => e.kind.id === kind.id);
+    if (kind.id === 'wide') {
+      const other = activeEffects.findIndex((e) => e.kind.id === 'shrink');
+      if (other >= 0) activeEffects.splice(other, 1);
+      paddle.w = paddle.baseW * 1.6;
+      paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x - (paddle.baseW * 0.3)));
+    }
+    if (kind.id === 'shrink') {
+      const other = activeEffects.findIndex((e) => e.kind.id === 'wide');
+      if (other >= 0) activeEffects.splice(other, 1);
+      paddle.w = paddle.baseW * 0.6;
+    }
+    if (kind.id === 'slow' && existing < 0) {
+      for (const b of balls) {
+        b.speed *= 0.65;
+        const m = Math.hypot(b.vx, b.vy);
+        if (m > 0) { b.vx = b.vx / m * b.speed; b.vy = b.vy / m * b.speed; }
+      }
+    }
+    const eff = { kind, until: now + kind.dur, total: kind.dur };
+    if (existing >= 0) activeEffects[existing] = eff;
+    else activeEffects.push(eff);
+    flashEffect(kind);
+  }
+
+  function expireEffect(eff) {
+    if (eff.kind.id === 'wide' || eff.kind.id === 'shrink') {
+      paddle.w = paddle.baseW;
+    }
+    if (eff.kind.id === 'slow') {
+      const base = levelSpeed(State.level);
+      for (const b of balls) {
+        b.speed = base;
+        const m = Math.hypot(b.vx, b.vy);
+        if (m > 0) { b.vx = b.vx / m * b.speed; b.vy = b.vy / m * b.speed; }
+      }
+    }
+  }
+
+  function flashEffect(kind) {
+    flash(kind.color, 0.14);
+    showToast(T.toastPowerup.replace('{label}', kind.label.toLowerCase()));
+    vibrate(12);
+  }
+
+  let flashColor = null, flashAlpha = 0;
+  function flash(color, a) { flashColor = color; flashAlpha = a; }
+
+  function spawnParticles(x, y, color, n) {
+    if (particles.length > MAX_PARTICLES) return;
+    const count = n || 8;
+    for (let i = 0; i < count; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const s = 1 + Math.random() * 2.5;
+      particles.push({
+        x, y,
+        vx: Math.cos(a) * s,
+        vy: Math.sin(a) * s,
+        life: 1,
+        color
+      });
+    }
+  }
+
+  function movePaddle() {
+    const speed = paddle.speed;
+    if (Math.abs(padAxis) > 0.001) {
+      paddle.x += padAxis * speed;
+      keyVel = 0;
+    } else if (pointerX !== null) {
+      const target = pointerX - paddle.w / 2;
+      paddle.x += (target - paddle.x) * 0.4;
+      keyVel = 0;
+    } else {
+      const dir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+      if (dir !== 0) keyVel = Math.max(-speed, Math.min(speed, keyVel + dir * KEY_ACCEL));
+      else keyVel *= 0.55;
+      if (Math.abs(keyVel) < 0.06) keyVel = 0;
+      paddle.x += keyVel;
+    }
+    paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
+  }
+
+  function update() {
+    if (!State.running || State.paused) return;
+
+    movePaddle();
+
+    const now = performance.now();
+    for (let i = activeEffects.length - 1; i >= 0; i--) {
+      if (activeEffects[i].kind.dur > 0 && now > activeEffects[i].until) {
+        expireEffect(activeEffects[i]);
+        activeEffects.splice(i, 1);
+      }
+    }
+
+    for (let i = balls.length - 1; i >= 0; i--) {
+      const b = balls[i];
+      if (b.stuck) {
+        b.x = paddle.x + paddle.w / 2;
+        b.y = paddle.y - b.r - 2;
+        b.trail.length = 0;
+        continue;
+      }
+      b.x += b.vx;
+      b.y += b.vy;
+
+      b.trail.push(b.x, b.y);
+      if (b.trail.length > 16) b.trail.splice(0, 2);
+
+      if (b.x - b.r < 0) { b.x = b.r; b.vx *= -1; }
+      else if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -1; }
+      if (b.y - b.r < 0) { b.y = b.r; b.vy *= -1; }
+
+      if (b.y - b.r > H) {
+        balls.splice(i, 1);
+        if (balls.length === 0) loseLife();
+        continue;
+      }
+
+      if (b.vy > 0
+          && b.y + b.r >= paddle.y
+          && b.y - b.r <= paddle.y + paddle.h
+          && b.x >= paddle.x
+          && b.x <= paddle.x + paddle.w) {
+        b.y = paddle.y - b.r;
+        const hit = (b.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+        const angle = (-Math.PI / 2) + Math.max(-1, Math.min(1, hit)) * (Math.PI / 3);
+        b.vx = Math.cos(angle) * b.speed;
+        b.vy = Math.sin(angle) * b.speed;
+        clampBall(b);
+        paddle.flash = 1;
+        spawnParticles(b.x, paddle.y, C.cyan, 5);
+      }
+
+      for (let j = bricks.length - 1; j >= 0; j--) {
+        const br = bricks[j];
+        if (b.x + b.r < br.x || b.x - b.r > br.x + br.w
+         || b.y + b.r < br.y || b.y - b.r > br.y + br.h) continue;
+
+        const overlapX = Math.min(b.x + b.r - br.x, br.x + br.w - (b.x - b.r));
+        const overlapY = Math.min(b.y + b.r - br.y, br.y + br.h - (b.y - b.r));
+        if (overlapX < overlapY) b.vx *= -1;
+        else b.vy *= -1;
+        clampBall(b);
+
+        br.hp -= 1;
+        if (br.hp <= 0) {
+          spawnParticles(br.x + br.w / 2, br.y + br.h / 2, br.row === 0 ? C.purple : C.cyan, 10);
+          maybeSpawnPowerup(br);
+          bricks.splice(j, 1);
+          State.score += 10 * State.level;
+          vibrate(8);
+        } else {
+          br.flash = 1;
+          spawnParticles(b.x, b.y, C.purple, 4);
+          State.score += 2;
+        }
+        updateHUD();
+        break;
+      }
+    }
+
+    for (let i = powerups.length - 1; i >= 0; i--) {
+      const p = powerups[i];
+      p.y += p.vy;
+      if (p.y + p.r >= paddle.y
+          && p.y - p.r <= paddle.y + paddle.h
+          && p.x >= paddle.x && p.x <= paddle.x + paddle.w) {
+        applyPowerup(p.kind);
+        powerups.splice(i, 1);
+        continue;
+      }
+      if (p.y - p.r > H) powerups.splice(i, 1);
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= 0.96; p.vy *= 0.96; p.vy += 0.05;
+      p.life -= 0.02;
+      if (p.life <= 0) particles.splice(i, 1);
+    }
+
+    for (let i = 0; i < bricks.length; i++) {
+      if (bricks[i].flash > 0) bricks[i].flash = Math.max(0, bricks[i].flash - 0.08);
+    }
+    if (paddle.flash > 0) paddle.flash = Math.max(0, paddle.flash - 0.07);
+    if (flashAlpha > 0) flashAlpha = Math.max(0, flashAlpha - 0.012);
+
+    if (bricks.length === 0 && State.running) {
+      nextLevel();
+    }
+
+    renderTray();
+  }
+
+  function brickStroke(hp) {
+    if (hp >= 3) return C.pink;
+    if (hp === 2) return C.purple;
+    return C.cyan;
+  }
+  function brickFill(hp) {
+    if (hp >= 3) return 'rgba(244,114,182,0.20)';
+    if (hp === 2) return 'rgba(167,139,250,0.18)';
+    return 'rgba(34,211,238,0.12)';
+  }
+
+  function render() {
+    syncTouchUI();
+
+    ctx.fillStyle = C.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = 'rgba(167,139,250,0.12)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, 60);
+    ctx.lineTo(W, 60);
+    ctx.stroke();
+
+    for (const br of bricks) {
+      ctx.fillStyle = brickFill(br.hp);
+      ctx.strokeStyle = brickStroke(br.hp);
+      ctx.lineWidth = 1;
+      ctx.fillRect(br.x, br.y, br.w, br.h);
+      ctx.strokeRect(br.x + 0.5, br.y + 0.5, br.w - 1, br.h - 1);
+      if (br.flash > 0) {
+        ctx.globalAlpha = br.flash * 0.5;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(br.x, br.y, br.w, br.h);
+        ctx.globalAlpha = 1;
+      }
+      ctx.fillStyle = br.hp >= 2 ? 'rgba(167,139,250,0.45)' : 'rgba(34,211,238,0.45)';
+      ctx.fillRect(br.x + 4, br.y + 3, 3, 3);
+    }
+
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = C.paddleGlow;
+    ctx.fillStyle = C.paddle;
+    roundRect(ctx, paddle.x, paddle.y, paddle.w, paddle.h, 4, true);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(255,255,255,' + (0.35 + paddle.flash * 0.5).toFixed(2) + ')';
+    ctx.fillRect(paddle.x + 6, paddle.y + 2, paddle.w - 12, 1 + paddle.flash * 2);
+
+    for (const b of balls) {
+      const pts = b.trail.length / 2;
+      for (let i = 0; i < pts; i++) {
+        const f = (i + 1) / pts;
+        ctx.globalAlpha = f * 0.22;
+        ctx.fillStyle = C.cyan;
+        ctx.beginPath();
+        ctx.arc(b.trail[i * 2], b.trail[i * 2 + 1], b.r * (0.3 + 0.5 * f), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = 'rgba(34,211,238,0.6)';
+      ctx.fillStyle = C.ball;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    for (const p of powerups) {
+      ctx.shadowBlur = 14;
+      ctx.shadowColor = p.kind.color;
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.strokeStyle = p.kind.color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = p.kind.color;
+      ctx.font = '600 11px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const glyph = { wide: 'W', slow: 'S', multi: 'x', life: '+', shrink: '-' }[p.kind.id];
+      ctx.fillText(glyph, p.x, p.y + 0.5);
+    }
+
+    for (const pa of particles) {
+      ctx.globalAlpha = pa.life;
+      ctx.fillStyle = pa.color;
+      ctx.fillRect(pa.x - 1, pa.y - 1, 2, 2);
+    }
+    ctx.globalAlpha = 1;
+
+    if (State.awaitingLaunch && State.running && !State.paused) {
+      ctx.fillStyle = 'rgba(34,211,238,0.7)';
+      ctx.font = '600 12px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(T.launchHint, W / 2, paddle.y - 40);
+    }
+
+    if (flashAlpha > 0 && flashColor) {
+      ctx.fillStyle = flashColor;
+      ctx.globalAlpha = flashAlpha;
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function roundRect(c2, x, y, w, h, r, fill) {
+    c2.beginPath();
+    c2.moveTo(x + r, y);
+    c2.lineTo(x + w - r, y);
+    c2.quadraticCurveTo(x + w, y, x + w, y + r);
+    c2.lineTo(x + w, y + h - r);
+    c2.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    c2.lineTo(x + r, y + h);
+    c2.quadraticCurveTo(x, y + h, x, y + h - r);
+    c2.lineTo(x, y + r);
+    c2.quadraticCurveTo(x, y, x + r, y);
+    c2.closePath();
+    if (fill) c2.fill();
+  }
+
+  function bump(el) {
+    if (!el) return;
+    el.classList.remove('is-bump');
+    void el.offsetWidth;
+    el.classList.add('is-bump');
+  }
+
+  function updateHUD() {
+    elScore.textContent = State.score.toLocaleString();
+    elLevel.textContent = String(State.level).padStart(2, '0');
+    elLives.textContent = State.lives > 0 ? '♥ '.repeat(State.lives).trim() : '—';
+    elHigh.textContent = State.high.toLocaleString();
+  }
+
+  let touchUIKey = '';
+  function syncTouchUI() {
+    const key = (State.running ? '1' : '0') + (State.paused ? '1' : '0') + (State.awaitingLaunch ? '1' : '0');
+    if (key === touchUIKey) return;
+    touchUIKey = key;
+    btnLaunch.hidden = !(State.running && !State.paused && State.awaitingLaunch);
+    btnPause.hidden = !(State.running && !State.paused);
+  }
+
+  let trayKey = '';
+  let trayAt = 0;
+  function renderTray() {
+    const now = performance.now();
+    let key = '';
+    for (let i = 0; i < activeEffects.length; i++) key += activeEffects[i].kind.id + ',';
+    if (key === trayKey && now - trayAt < 150) return;
+    trayKey = key;
+    trayAt = now;
+
+    const pills = elTray.querySelectorAll('.pill');
+    for (let i = 0; i < pills.length; i++) pills[i].remove();
+    if (activeEffects.length === 0) {
+      elTrayEmpty.style.display = '';
+      return;
+    }
+    elTrayEmpty.style.display = 'none';
+    for (const eff of activeEffects) {
+      const pill = document.createElement('span');
+      pill.className = 'pill ' + (eff.kind.pclass || '');
+      const remaining = eff.kind.dur > 0 ? Math.max(0, eff.until - now) : 0;
+      const pct = eff.kind.dur > 0 ? (remaining / eff.total) : 1;
+      const fill = document.createElement('span');
+      fill.className = 'pill-fill';
+      fill.style.width = (pct * 100).toFixed(1) + '%';
+      pill.appendChild(fill);
+      const txt = document.createElement('span');
+      const secs = eff.kind.dur > 0 ? ` ${(remaining / 1000).toFixed(1)}s` : '';
+      txt.textContent = eff.kind.label + secs;
+      pill.appendChild(txt);
+      elTray.appendChild(pill);
+    }
+  }
+
+  function showOverlay(kind) {
+    if (!kind) { elOverlay.classList.add('hidden'); return; }
+    if (kind === 'start') {
+      elModalDyn.classList.add('is-off');
+      elModalStart.classList.remove('is-off');
+      elOverlay.classList.remove('hidden');
+      return;
+    }
+    elModalStart.classList.add('is-off');
+    elModalDyn.classList.remove('is-off');
+    if (kind === 'paused') {
+      elModalDyn.innerHTML =
+        '<p class="eyebrow">&gt; ' + esc(T.eyebrowPaused) + '</p>' +
+        '<h2>' + esc(T.paused) + '</h2>' +
+        '<p>' + esc(T.pauseDesc) + '</p>' +
+        '<button class="m-btn m-btn--primary" id="btn-resume">$ ' + esc(T.btnResume) + '</button>' +
+        '<div style="height:8px"></div>' +
+        '<button class="m-btn m-btn--ghost" id="btn-restart">$ ' + esc(T.btnRestart) + '</button>';
+      elOverlay.classList.remove('hidden');
+      $('btn-resume').onclick = () => togglePause();
+      $('btn-restart').onclick = () => startGame();
+    } else if (kind === 'gameover') {
+      const desc = T.gameoverDesc
+        .replace('{level}', String(State.level))
+        .replace('{score}', State.score.toLocaleString())
+        .replace('{high}', State.high.toLocaleString());
+      elModalDyn.innerHTML =
+        '<p class="eyebrow" style="color:var(--syn-pink)">&gt; ' + esc(T.eyebrowOver) + '</p>' +
+        '<h2>' + esc(T.gameOver) + '</h2>' +
+        '<p>' + desc + '</p>' +
+        '<button class="m-btn m-btn--primary" id="btn-again">$ ' + esc(T.btnAgain) + '</button>';
+      elOverlay.classList.remove('hidden');
+      $('btn-again').onclick = () => startGame();
+    }
+  }
+
+  let toastTimer = null;
+  function showToast(msg) {
+    elToast.textContent = msg;
+    elToast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => elToast.classList.remove('show'), 1600);
+  }
+
+  let last = performance.now();
+  let acc = 0;
+  const STEP = 1000 / 60;
+  function loop(now) {
+    acc += now - last;
+    last = now;
+    if (acc > 250) acc = STEP;
+    let steps = 0;
+    while (acc >= STEP && steps < 6) { update(); acc -= STEP; steps++; }
+    render();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  function autoHelp() {
+    if (prefGet('breakout_help_seen') === true) return;
+    prefSet('breakout_help_seen', true);
+    if (!elHelp || typeof elHelp.showPopover !== 'function') return;
+    setTimeout(() => { try { elHelp.showPopover(); } catch (_) {} }, 700);
+  }
+
+  renderBadges();
+  syncPadHint();
+  updateHUD();
+  syncTouchUI();
+  autoHelp();
+})();
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="Navegação do aplicativo" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/pt-br/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Início</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/pt-br/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Buscar</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Adicionar à tela inicial — funciona offline.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Instalar</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Fechar" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Fechar" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Instalar Mentria no iPhone",
+    macosTitle:  "Instalar Mentria no Mac",
+    chromeTitle: "Instalar Mentria",
+    iosStep1:    "Toque no botão <strong>Compartilhar</strong> na parte inferior da tela",
+    iosStep2:    "Escolha <strong>Adicionar à Tela de Início</strong>",
+    iosStep3:    "Toque em <strong>Adicionar</strong> no canto superior direito.",
+    macosStep1:  "Abra esta página no <strong>Safari 17+</strong>.",
+    macosStep2:  "Na barra de menus, escolha <strong>Arquivo → Adicionar ao Dock…</strong>",
+    macosStep3:  "Clique em <strong>Adicionar</strong>.",
+    chromeStep1: "Clique no ícone de <strong>instalação</strong> na barra de endereços do seu navegador.",
+    chromeStep2: "Ou abra o menu (⋮) e escolha <strong>Instalar Mentria</strong>.",
+    note:        "Depois de instalada, a Mentria funciona offline e seus dados locais permanecem no seu dispositivo."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Cancelar</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "Confirmar";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "Não foi possível salvar — o armazenamento do navegador está cheio. Libere espaço para manter suas alterações.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("Isso baixa um modelo de IA grande (490 MB ou mais, dependendo do modelo) e você parece estar em uma conexão lenta ou com economia de dados. Continuar?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Compartilhar";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "Sobre esta ferramenta");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Versão de teste (snapshot da submissão WebMCP), congelada para testes. Para uso geral, acesse <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

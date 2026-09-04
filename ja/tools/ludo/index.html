@@ -1,0 +1,2296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>ルド | Mentria</title>
+    <meta name="description" content="4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/ja/tools/ludo/">
+    <meta property="og:title" content="ルド | Mentria">
+    <meta property="og:description" content="4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/ja/tools/ludo/">
+    <meta name="twitter:title" content="ルド | Mentria">
+    <meta name="twitter:description" content="4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/ludo/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/ludo/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/ludo/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/ludo/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/ludo/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/ludo/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "ツール、実験、ビジュアル・トランスミッションのクリエイティブスタジオ。職人技で構築。",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "ja"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://webmcp.mentria.ai/ja/" },
+        { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://webmcp.mentria.ai/ja/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "ルド", "item": "https://webmcp.mentria.ai/ja/tools/ludo/" }
+      ]
+    }
+    </script>
+<style>
+  .ludo-app .controls { display: flex; align-items: center; gap: 14px; padding: 11px 4px 14px; flex-wrap: wrap; }
+  .ludo-app .ctrl-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--term-muted); font-weight: 500; }
+  .ludo-app .layout { display: grid; grid-template-columns: 1fr 220px; gap: 0; border: 1px solid var(--term-border); border-radius: var(--radius-md); overflow: hidden; }
+  @media (max-width: 760px) { .ludo-app .layout { grid-template-columns: 1fr; } }
+
+  .ludo-app .board-wrap { position: relative; display: flex; justify-content: center; align-items: center; padding: 18px; background: #050507; }
+  .ludo-app canvas#board { display: block; width: 100%; height: auto; max-width: 460px; aspect-ratio: 1; border-radius: 8px; touch-action: manipulation; }
+
+  .ludo-app .side { border-left: 1px solid var(--term-border); display: flex; flex-direction: column; }
+  @media (max-width: 760px) { .ludo-app .side { border-left: none; border-top: 1px solid var(--term-border); } }
+  .ludo-app .side-sec { padding: 14px; border-bottom: 1px solid var(--term-divider); }
+  .ludo-app .side-sec:last-child { border-bottom: none; }
+  .ludo-app .side-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--term-muted); font-weight: 500; margin-bottom: 10px; }
+
+  .ludo-app .players-list { display: flex; flex-direction: column; gap: 6px; }
+  .ludo-app .prow { display: flex; align-items: center; gap: 8px; font-size: 12px; padding: 6px 8px; border-radius: var(--radius-md); border: 1px solid transparent; transition: all 150ms; }
+  .ludo-app .prow.active { border-color: var(--cyan-30); background: rgba(255,255,255,0.025); box-shadow: var(--glow-cyan); }
+  .ludo-app .prow .chip { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; box-shadow: 0 0 6px currentColor; }
+  .ludo-app .prow .pname { color: var(--term-fg); font-weight: 600; }
+  .ludo-app .prow .ptag { font-size: 9px; color: var(--term-subtle); letter-spacing: 0.1em; text-transform: uppercase; }
+  .ludo-app .prow .phome { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--term-muted); }
+  .ludo-app .prow.done .pname { text-decoration: line-through; opacity: 0.6; }
+
+  .ludo-app .dice-area { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .ludo-app .die { width: 72px; height: 72px; border-radius: 14px; background: linear-gradient(155deg, var(--term-surface-3), var(--term-surface-2)); border: 1px solid var(--term-border-strong); display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); padding: 11px; box-sizing: border-box; gap: 2px; box-shadow: var(--elev-2); will-change: transform; appearance: none; -webkit-appearance: none; cursor: pointer; font: inherit; color: inherit; transition: border-color 140ms, box-shadow 140ms, opacity 140ms; }
+  .ludo-app .die.is-live { border-color: var(--syn-cyan); box-shadow: var(--elev-2), var(--glow-cyan); }
+  .ludo-app .die:disabled { cursor: default; opacity: 0.62; }
+  .ludo-app .die.rolling { animation: ld-roll 0.5s ease-in-out; }
+  @keyframes ld-roll { 0%,100%{transform:scale(1)} 25%{transform:scale(0.9)} 50%{transform:scale(1)} 75%{transform:scale(0.9)} }
+  .ludo-app .pip { border-radius: 50%; background: transparent; align-self: center; justify-self: center; width: 11px; height: 11px; }
+  .ludo-app .pip.on { background: var(--die-color, var(--syn-cyan)); box-shadow: 0 0 6px var(--die-color, var(--syn-cyan)); }
+  .ludo-app .roll-btn { width: 100%; min-height: 44px; padding: 11px; border-radius: var(--radius-md); border: 1px solid var(--syn-cyan); background: var(--cyan-8); color: var(--syn-cyan); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; font-family: var(--font-mono); cursor: pointer; transition: all 120ms; }
+  .ludo-app .roll-btn::before { content: "$ "; }
+  .ludo-app .roll-btn:hover:not(:disabled) { background: var(--syn-cyan); color: #041016; box-shadow: var(--glow-cyan); }
+  .ludo-app .roll-btn:disabled { opacity: 0.35; cursor: default; }
+  .ludo-app .status-line { font-size: 11px; color: var(--term-muted); text-align: center; min-height: 16px; line-height: 1.4; }
+  .ludo-app .status-line b { color: var(--syn-cyan); }
+
+  .ludo-app .ludo-turn { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; min-height: 44px; padding: 8px 12px; margin-bottom: 11px; border: 1px solid var(--term-border); border-radius: var(--radius-md); background: var(--term-surface-2); font-size: 12px; }
+  .ludo-app .ludo-turn.is-live { border-color: var(--cyan-30); box-shadow: var(--glow-cyan); }
+  .ludo-app .ludo-turn__dot { width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
+  .ludo-app .ludo-turn.is-live .ludo-turn__dot { animation: ld-pulse 1.6s ease-in-out infinite; }
+  @keyframes ld-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.42;transform:scale(0.8)} }
+  .ludo-app .ludo-turn__name { font-weight: 700; color: var(--term-fg-strong); }
+  .ludo-app .ludo-turn__tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--term-subtle); }
+  .ludo-app .ludo-turn__act { color: var(--term-muted); }
+  .ludo-app .ludo-turn__die { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--syn-cyan); font-weight: 700; letter-spacing: 0.04em; }
+
+  .ludo-app .ludo-opt { display: flex; align-items: center; gap: 9px; min-height: 44px; cursor: pointer; font-size: 12px; color: var(--term-fg); }
+  .ludo-app .ludo-opt input { width: 17px; height: 17px; flex-shrink: 0; accent-color: var(--syn-cyan); cursor: pointer; }
+  .ludo-app .ludo-opt__hint { margin: 0; font-size: 10px; line-height: 1.5; color: var(--term-subtle); }
+
+  .ludo-app .toolbar { display: flex; gap: 8px; padding: 14px 4px 4px; }
+  .ludo-app .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; font-weight: 600; font-size: 12px; padding: 8px 10px; border-radius: var(--radius-md); border: 1px solid var(--term-border); background: transparent; color: var(--term-muted); transition: all 120ms; font-family: var(--font-mono); cursor: pointer; }
+  .ludo-app .btn:hover { border-color: var(--term-border-strong); color: var(--term-fg); }
+  .ludo-app .btn.primary { border-color: var(--syn-cyan); color: var(--syn-cyan); background: var(--cyan-8); }
+  .ludo-app .btn.primary::before { content: "$ "; }
+
+  .ludo-app .overlay { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(5,5,7,0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 5; padding: 16px; }
+  .ludo-app .overlay.show { display: flex; }
+  .ludo-app .modal { background: var(--term-surface-2); border: 1px solid var(--syn-cyan); border-radius: var(--radius-lg); padding: 24px 28px; text-align: center; max-width: 340px; box-shadow: var(--elev-3), var(--glow-cyan); }
+  .ludo-app .modal .eyebrow { font-size: 11px; letter-spacing: 0.15em; margin: 0 0 8px; color: var(--syn-cyan); }
+  .ludo-app .modal h2 { font-size: 22px; margin: 0 0 14px; color: var(--term-fg-strong); }
+  .ludo-app .modal .winchip { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 13px; }
+  .ludo-app .modal .winchip .chip { width: 16px; height: 16px; border-radius: 5px; box-shadow: 0 0 10px currentColor; }
+  .ludo-app .modal .btn { width: 100%; }
+
+  @media (max-width: 560px) { .ludo-app .die { width: 60px; height: 60px; } }
+
+  .ludo-app .ludo-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .ludo-app .ludo-choose { flex-wrap: wrap; gap: 8px; padding: 12px 4px 0; }
+  .ludo-app .ludo-choose:not([hidden]) { display: flex; }
+  .ludo-app .ludo-choose__btn { font-size: 12px; padding: 6px 12px; min-height: 44px; }
+  .ludo-app .ludo-choose__btn.is-cursor { border-color: var(--syn-cyan); color: var(--syn-cyan); }
+
+  .ludo-app .ludo-help__chip { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--term-border); background: transparent; color: var(--term-muted); cursor: pointer; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; transition: all 120ms; }
+  .ludo-app .ludo-help__chip:hover { border-color: var(--syn-cyan); color: var(--syn-cyan); }
+  .ludo-app .ludo-help__badge { font-size: 9px; line-height: 1.4; padding: 1px 7px; border-radius: 999px; background: var(--cyan-8); border: 1px solid var(--cyan-30); color: var(--syn-cyan); }
+  .ludo-app .ludo-help__badge[hidden] { display: none; }
+
+  .ludo-app .ludo-help { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(4,4,6,0.9); }
+  .ludo-app .ludo-help[hidden] { display: none; }
+  .ludo-app .ludo-help__panel { width: 100%; max-width: 660px; max-height: 88vh; overflow-y: auto; background: var(--term-surface-2); border: 1px solid var(--syn-cyan); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--elev-3), var(--glow-cyan); }
+  .ludo-app .ludo-help__eyebrow { font-size: 11px; letter-spacing: 0.15em; margin: 0 0 6px; color: var(--syn-cyan); }
+  .ludo-app .ludo-help__title { font-size: 20px; margin: 0; color: var(--term-fg-strong); }
+  .ludo-app .ludo-help__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0 18px; }
+  @media (max-width: 640px) { .ludo-app .ludo-help__grid { grid-template-columns: 1fr; } }
+  .ludo-app .ludo-help__method { border: 1px solid var(--term-border); border-radius: var(--radius-md); padding: 13px; background: rgba(255,255,255,0.015); }
+  .ludo-app .ludo-help__icon { display: inline-flex; color: var(--syn-cyan); }
+  .ludo-app .ludo-help__icon svg { width: 22px; height: 22px; }
+  .ludo-app .ludo-help__name { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--term-fg-strong); margin: 9px 0 9px; }
+  .ludo-app .ludo-help__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .ludo-app .ludo-help__list li { font-size: 12px; line-height: 1.5; color: var(--term-muted); padding-left: 13px; position: relative; }
+  .ludo-app .ludo-help__list li::before { content: "\203A"; position: absolute; left: 0; color: var(--syn-cyan); }
+  .ludo-app .ludo-help__close { width: 100%; min-height: 44px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ludo-app .ludo-turn.is-live .ludo-turn__dot { animation: none; }
+    .ludo-app .die.rolling { animation: none; }
+  }
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.ludo.title","suffix":" | Mentria"},"desc":{"key":"tools.ludo.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "ja",
+        prefix: "/ja",
+        tools: [
+          { slug: "search", title: "検索", category: "AI", keywords: "ツールとフィード投稿を検索。キーワードでも自然言語でも入力可能。" },
+          { slug: "step-counter", title: "歩数カウンター", category: "健康", keywords: "ブラウザ内で散歩中の歩数をカウント。スマホのモーションセンサーを使用 — アップロードは一切なし。", requires: "motion" },
+          { slug: "qr-scanner", title: "QR・バーコード スキャナー＆ジェネレーター", category: "ユーティリティ", keywords: "QRコードやバーコードをスキャンしたり、リンクやテキストからQRコードを生成したり——すべて端末内で処理し、何もアップロードしません。" },
+          { slug: "decision-wheel", title: "決定の輪", category: "ユーティリティ", keywords: "決められない？ホイールを回して運命に任せましょう。オフラインでも動作。" },
+          { slug: "countdown-timer", title: "カウントダウンタイマー", category: "タイマー", keywords: "時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。" },
+          { slug: "coin-flip", title: "コインフリップ", category: "ユーティリティ", keywords: "表か裏 — 即座にコインを投げる。タイブレーカーには best-of-N シリーズ。オフラインでも動作。" },
+          { slug: "quick-notes", title: "クイックノート", category: "生産性", keywords: "ブラウザに住むミニマルなスクラッチパッド。複数のノートを作成、キー入力ごとに自動保存。" },
+          { slug: "base64-codec", title: "Base64コーデック", category: "開発", keywords: "テキストやファイルをBase64にエンコード・デコード。画像、ドキュメント、あらゆるファイルタイプに対応。すべてブラウザ内でローカル実行。" },
+          { slug: "totp", title: "TOTP", category: "セキュリティ", keywords: "ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。" },
+          { slug: "exif", title: "EXIFインスペクター", category: "セキュリティ", keywords: "写真にひそかに含まれる情報 — カメラ情報、日時、GPS位置 — を表示し、すべて削除したクリーンなコピーを保存。アップロードは一切ありません。" },
+          { slug: "color-picker", title: "カラーピッカー", category: "デザイン", keywords: "好きな色を選んで HEX / RGB / HSL の値を表示し、調和の取れたパレットを生成。オフラインでも動作。" },
+          { slug: "annotate-image", title: "画像を注釈", category: "AI", keywords: "画像をアップロードすると、AIによる説明・代替テキスト・文字起こし・タグを即座に取得 — テスト済みのワンタップ・プロンプト付き。ブラウザ内でローカル実行、アップロードは一切なし。" },
+          { slug: "ai-chat", title: "AIチャット", category: "AI", keywords: "Qwen3.5がブラウザ内でローカル実行。サーバーなし、APIキー不要。画像入力対応。" },
+          { slug: "console", title: "コンソール", category: "AI", keywords: "共有のスマホ画面でデバイス上のモデルがMentriaのアプリを操作するのを見ながらチャット。テストユーザーとして探索させ、見つけたことを報告させることもできます。" },
+          { slug: "model-mirror", title: "モデルミラー", category: "AI", keywords: "Mentria のオンデバイスモデルの P2P 配信に協力できます。このタブを開いたままにすると、ブラウザがミラーになります。" },
+          { slug: "quote", title: "モチベーション名言", category: "AI", keywords: "AIが生成するオリジナルの名言、ブラウザ内でローカル実行。データはデバイスから出ません。" },
+          { slug: "radio", title: "無限ラジオ", category: "AI", keywords: "AI生成の壮大なシネマティック音楽、無限ストリーミング。あなたの好みをローカルで学習 — データはデバイスから出ません。" },
+          { slug: "invoice", title: "請求書ジェネレーター", category: "ユーティリティ", keywords: "ブラウザでクリーンな1ページ請求書を作成。入力中に自動保存。A4印刷またはJSONエクスポート。" },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "ユーティリティ", keywords: "Markdownを書いて、ライブプレビューを見て、クリーンでプロフェッショナルなPDFをダウンロード。ブラウザに自動保存。データはデバイスから出ません。" },
+          { slug: "tetris", title: "テトリス", category: "ゲーム", keywords: "テトロミノを積み上げる。ラインを消す。10ライン毎にスピードアップ。シアン・パープル・ピンク・アンバー・グリーンのピース — Mentriaパレット。" },
+          { slug: "breakout", title: "Breakout", category: "ゲーム", keywords: "ブロック崩しとパドルゲームの融合。落ちてくるパワーアップをキャッチし、壁を崩し、ますます速く厳しくなるレベルを生き抜こう。ローカル動作 — データはデバイスから出ません。" },
+          { slug: "flappy", title: "Flappy", category: "ゲーム", keywords: "ターミナルプロンプトの山を縫って飛ぶ紙飛行機。タップ・クリック・SPACEキーで羽ばたき。プロンプトに墜落しないように。" },
+          { slug: "minesweeper", title: "マインスイーパー", category: "ゲーム", keywords: "ターミナル風の伝統的な論理パズル。クリックで掘る、右クリック(またはFモード)で旗を立てる。数字は隣接する地雷を示す。ピンクは押さないで。" },
+          { slug: "sudoku", title: "数独", category: "ゲーム", keywords: "ターミナル装いの論理パズル。唯一解ジェネレーター、4段階の難易度、鉛筆メモ。すべて端末内で動作 — データは外に出ません。" },
+          { slug: "ludo", title: "ルド", category: "ゲーム", keywords: "4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。" },
+          { slug: "chess", title: "チェス", category: "ゲーム", keywords: "ローカルエンジン、交代プレイ、オンライン対戦 — サーバー不要。キャスリング・アンパッサン・昇格まで完全ルール。4段階のアルファベータエンジン、評価バー、ヒント。" },
+          { slug: "phosphor", title: "PHOSPHOR", category: "ゲーム", keywords: "ブラウザで遊べる戦闘タイムトライアル。夕暮れの5コースをスプリント、スライディング、乗り越えで駆け抜け、フルオートのカービンで撃つ。メダル、ゴースト対戦、オフライン対応。" },
+          { slug: "extensions", title: "拡張機能", category: "ユーティリティ", keywords: "このデバイスにのみ存在するプライベートな単一ファイル拡張機能をインストール。ランチャーとターミナルに表示され、公開サイトには絶対に載りません。" },
+          { slug: "files", title: "ファイル", category: "ユーティリティ", keywords: "Mentria のツールがこの端末に保存したデータを閲覧・エクスポート・削除できます。すべて端末内にとどまります。" },
+          { slug: "comms", title: "Comms", category: "ソーシャル", keywords: "ピアツーピアのチャット、音声・ビデオ通話、ファイル送信。エンドツーエンド暗号化、アカウント不要、中間サーバーなし。", url: "/comms/" },
+          { slug: "bubble-level", title: "水平器", category: "ユーティリティ", keywords: "スマホがそのまま水平器に。アプリ不要のブラウザ版バブルレベルで、0.1°まで表示、オフラインでも使えます。", requires: "motion" },
+          { slug: "decibel-meter", title: "騒音計", category: "ユーティリティ", keywords: "ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。" },
+          { slug: "compass", title: "コンパス", category: "ユーティリティ", keywords: "アプリ不要のコンパス。ブラウザで開くだけで、スマートフォンのセンサーから磁方位をそのまま読み取れます。", requires: "motion" },
+          { slug: "speedometer", title: "GPS スピードメーター", category: "ユーティリティ", keywords: "アプリ不要のブラウザ版 GPS スピードメーター。km/h・mph・ノットでリアルタイムの速度と走行距離を、すべて端末内で計算して表示します。" },
+          { slug: "ruler", title: "オンライン定規", category: "ユーティリティ", keywords: "画面上で実寸のまま測れるオンライン定規。cm・mm・インチに対応し、銀行カードで校正すればミリ単位まで正確になります。" }
+        ],
+        nav: [
+          { id: "home", title: "ホーム", href: "/" },
+          { id: "tools", title: "ツール", href: "/tools/" },
+          { id: "feed", title: "フィード", href: "/feed/" },
+          { id: "about", title: "概要", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "ツールとページを検索…",
+          listLabel: "検索結果",
+          noResults: "一致するものがありません",
+          recents: "最近使ったもの",
+          extensions: "拡張機能",
+          actions: "アクション",
+          actNote: "メモを保存: 「{text}」",
+          actNoteDone: "メモを保存しました",
+          actNoteFail: "メモを保存できませんでした",
+          actTimer: "{dur}のタイマーを開始",
+          actFlip: "コインを投げる",
+          actHeads: "表",
+          actTails: "裏",
+          searchSite: "サイト内で「{q}」を検索"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">コンテンツへスキップ</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/ja/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/ja/feed/"  class="nav-link" title="フィード" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+            </a>
+            <a href="/ja/tools/" class="nav-link active" aria-current="page" title="ツール" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">ツール</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="コムズ" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/ja/about/" class="nav-link nav-link--about" title="概要" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">概要</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="コマンドパレットを開く（⌘K）" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="現在の言語: 日本語" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="ja">日本語</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/ludo/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/ludo/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/ludo/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/ludo/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/ludo/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <div class="game-page">
+
+<section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/ja/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/ja/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">ludo</span></p>
+  <h1><i18n-t data-k="tools.ludo.title">ルド</i18n-t><span style="color:var(--syn-cyan)">.</span>js</h1>
+  <p><i18n-t data-k="tools.ludo.lede">4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">これは何?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">詳細を隠す</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.ludo.title">ルドとは?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.ludo.tldr">十字と円の定番すごろくレースを、HTML5キャンバスとシンセウェーブなターミナル美学で再構築。6を出すとコマが出発、時計回りに進み、相手に重なると振り出しに戻し、安全な星マスで休めます。6・捕獲・中央到達のいずれかでもう一度振れます。2〜4人でボット相手、または1台で交代プレイ。インストール・登録・解析なし — サイコロもAIもすべてブラウザ内でローカルに動作し、オフラインでも遊べます。</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-ludo">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">ludo.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+
+<div class="ludo-app">
+  <div class="controls">
+    <span class="ctrl-label"><i18n-t data-k="tool.ludo.mode">モード</i18n-t></span>
+    <div class="m-seg" id="mode-seg">
+      <button data-m="ai" data-value="ai" class="is-active"><i18n-t data-k="tool.ludo.mode_ai">ボット対戦</i18n-t></button>
+      <button data-m="hotseat" data-value="hotseat"><i18n-t data-k="tool.ludo.mode_hotseat">交代プレイ</i18n-t></button>
+    </div>
+    <span class="ctrl-label" style="margin-left:8px"><i18n-t data-k="tool.ludo.players">プレイヤー</i18n-t></span>
+    <div class="m-seg" id="count-seg">
+      <button data-n="2" data-value="2">2</button>
+      <button data-n="3" data-value="3">3</button>
+      <button data-n="4" data-value="4" class="is-active">4</button>
+    </div>
+    <button type="button" class="ludo-help__chip" id="ludo-help-chip" aria-haspopup="dialog" aria-expanded="false" aria-label="操作方法" title="操作方法" data-i18na="aria-label=tool.ludo.help_open;title=tool.ludo.help_open">
+      <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="10" cy="10" r="8.4"></circle>
+        <path d="M7.7 7.7a2.4 2.4 0 1 1 3.1 2.4c-.7.3-.9.8-.9 1.4v.4"></path>
+        <circle cx="10" cy="14.4" r="0.95" fill="currentColor" stroke="none"></circle>
+      </svg>
+      <span class="ludo-help__badge" id="ludo-method-badge" hidden></span>
+    </button>
+  </div>
+
+  <div class="ludo-turn" id="ludo-turn" aria-hidden="true">
+    <span class="ludo-turn__dot" id="ludo-turn-dot"></span>
+    <span class="ludo-turn__name" id="ludo-turn-name"></span>
+    <span class="ludo-turn__tag" id="ludo-turn-tag"></span>
+    <span class="ludo-turn__act" id="ludo-turn-act"></span>
+    <span class="ludo-turn__die" id="ludo-turn-die" hidden></span>
+  </div>
+
+  <div class="layout">
+    <div class="board-wrap">
+      <canvas id="board" width="600" height="600" role="img" aria-labelledby="status ludo-summary"></canvas>
+      <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+    </div>
+
+    <div class="side">
+      <div class="side-sec">
+        <div class="side-label"><i18n-t data-k="tool.ludo.players">プレイヤー</i18n-t></div>
+        <div class="players-list" id="players-list"></div>
+      </div>
+      <div class="side-sec">
+        <div class="side-label"><i18n-t data-k="tool.ludo.dice">サイコロ</i18n-t></div>
+        <div class="dice-area">
+          <button class="die" id="die" type="button" aria-label="サイコロを振る" data-i18na="aria-label=tool.ludo.die_label"></button>
+          <button class="roll-btn" id="roll-btn" aria-keyshortcuts="Enter Space"><i18n-t data-k="tool.ludo.roll">振る</i18n-t></button>
+          <div class="status-line" id="status" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="side-sec">
+        <div class="side-label"><i18n-t data-k="tool.ludo.settings">設定</i18n-t></div>
+        <label class="ludo-opt" for="ludo-auto">
+          <input type="checkbox" id="ludo-auto" checked>
+          <span class="ludo-opt__txt"><i18n-t data-k="tool.ludo.auto_move">自動で動かす</i18n-t></span>
+        </label>
+        <p class="ludo-opt__hint"><i18n-t data-k="tool.ludo.auto_move_hint">動かせる手が 1 つだけのとき自動で動かします</i18n-t></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ludo-choose" id="ludo-choose" role="group" aria-label="動かすコマを選択" hidden data-i18na="aria-label=tool.ludo.a11y_choose"></div>
+  <div id="ludo-summary" class="ludo-sr"></div>
+  <div id="ludo-live" class="ludo-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="toolbar">
+    <button class="btn primary" id="btn-new"><i18n-t data-k="tool.ludo.new_game">新しいゲーム</i18n-t></button>
+    <button class="btn" id="btn-rules"><i18n-t data-k="tool.ludo.rules">ルール</i18n-t></button>
+  </div>
+
+  <div class="ludo-help" id="ludo-help" hidden>
+    <div class="ludo-help__panel" id="ludo-help-panel" role="dialog" aria-modal="true" aria-labelledby="ludo-help-title">
+      <p class="ludo-help__eyebrow"><i18n-t data-k="tool.ludo.help_eyebrow">&gt; 操作方法</i18n-t></p>
+      <h2 class="ludo-help__title" id="ludo-help-title"><i18n-t data-k="tool.ludo.help_title">3 つの遊び方</i18n-t></h2>
+      <div class="ludo-help__grid">
+        <section class="ludo-help__method" data-input="touch">
+          <span class="ludo-help__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2.8" width="16" height="18.4" rx="3"></rect>
+              <circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"></circle>
+              <path d="M8.9 8.9a4.4 4.4 0 0 0 0 6.2"></path>
+              <path d="M15.1 8.9a4.4 4.4 0 0 1 0 6.2"></path>
+            </svg>
+          </span>
+          <h3 class="ludo-help__name"><i18n-t data-k="tool.ludo.help_touch">タッチ</i18n-t></h3>
+          <ul class="ludo-help__list">
+            <li><i18n-t data-k="tool.ludo.help_touch_1">サイコロかロールボタンをタップして振ります。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_touch_2">リングの付いたコマをタップすると動きます。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_touch_3">リングの付いたコマが、その出目で動かせる手です。</i18n-t></li>
+          </ul>
+        </section>
+        <section class="ludo-help__method" data-input="keyboard">
+          <span class="ludo-help__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2.4" y="6" width="19.2" height="12" rx="2.6"></rect>
+              <path d="M6 9.6h1M9 9.6h1M12 9.6h1M15 9.6h1M18 9.6h1"></path>
+              <path d="M6 12.6h1M9 12.6h1M12 12.6h1M15 12.6h1M18 12.6h1"></path>
+              <path d="M8.2 15.4h7.6"></path>
+            </svg>
+          </span>
+          <h3 class="ludo-help__name"><i18n-t data-k="tool.ludo.help_keyboard">キーボード</i18n-t></h3>
+          <ul class="ludo-help__list">
+            <li><i18n-t data-k="tool.ludo.help_kb_1">スペースまたは Enter — サイコロを振る。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_kb_2">矢印キーまたは Tab — 動かせるコマを切り替える。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_kb_3">Enter — 選択中のコマを動かす。</i18n-t></li>
+          </ul>
+        </section>
+        <section class="ludo-help__method" data-input="gamepad">
+          <span class="ludo-help__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.6 7.8h6.8a5.5 5.5 0 0 1 5.4 4.5l.5 3a3 3 0 0 1-5.4 2.3l-1-1.3H9.1l-1 1.3a3 3 0 0 1-5.4-2.3l.5-3a5.5 5.5 0 0 1 5.4-4.5Z"></path>
+              <path d="M6.7 12.6h2.6M8 11.3v2.6"></path>
+              <circle cx="15.4" cy="11.9" r="0.95" fill="currentColor" stroke="none"></circle>
+              <circle cx="17.5" cy="13.7" r="0.95" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </span>
+          <h3 class="ludo-help__name"><i18n-t data-k="tool.ludo.help_gamepad">コントローラー</i18n-t></h3>
+          <ul class="ludo-help__list">
+            <li><i18n-t data-k="tool.ludo.help_pad_1">A — サイコロを振る。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_pad_2">十字キーまたはスティック — 動かせるコマを切り替える。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_pad_3">A — 選択中のコマを確定する。</i18n-t></li>
+            <li><i18n-t data-k="tool.ludo.help_pad_4">Start — このパネルを開閉する。</i18n-t></li>
+          </ul>
+        </section>
+      </div>
+      <button class="btn primary ludo-help__close" id="ludo-help-close" type="button"><i18n-t data-k="tool.ludo.got_it">わかった</i18n-t></button>
+    </div>
+  </div>
+</div>
+
+    </div>
+</div>
+<nav class="related-tools" aria-label="その他のツール" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">その他のツール</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/tetris/">
+        <span class="related-tools__name"><i18n-t data-k="tools.tetris.title">テトリス</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/breakout/">
+        <span class="related-tools__name"><i18n-t data-k="tools.breakout.title">Breakout</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/flappy/">
+        <span class="related-tools__name"><i18n-t data-k="tools.flappy.title">Flappy</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/countdown-timer/">
+        <span class="related-tools__name"><i18n-t data-k="tools.countdown-timer.title">カウントダウンタイマー</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Timer">タイマー</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/ja/tools/"><i18n-t data-k="tools_page.related_all">すべてのツール</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ルド",
+  "url": "https://webmcp.mentria.ai/ja/tools/ludo/",
+  "description": "4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "ja"
+}
+</script>
+
+</div>
+
+
+
+<script>
+(() => {
+  'use strict';
+
+  const COPY = {
+    pnames: [
+      "シアン",
+      "アンバー",
+      "ピンク",
+      "グリーン"
+    ],
+    tagYou:   "あなた",
+    tagHuman: "人間",
+    tagBot:   "ボット",
+    stYouRoll:  "あなたの番 — サイコロを振る",
+    stYouMove:  "あなたの番 — コマを動かす",
+    stNameRoll: "{name}の番 — サイコロを振る",
+    stNameMove: "{name}の番 — コマを動かす",
+    stBotRoll:  "{name}（ボット）— 振っています",
+    stBotMove:  "{name}（ボット）— 動かしています",
+    noMovesYou:  "動かせる手なし — パス",
+    noMovesName: "{name} — 動かせる手なし",
+    tripleSix:  "6が3回 — この番は無効",
+    capture:    "{p}が{o}を捕獲！",
+    winEyebrow: "> 全コマがゴール",
+    winTitle:   "{name}の勝ち",
+    wonYou:     "あなたが勝ちました",
+    wonHuman:   "人間プレイヤーが勝ちました",
+    wonBot:     "ボットが勝ちました",
+    newGame:    "新しいゲーム",
+    confirmRestart: "新しいゲームを始めますか？ 進行中のゲームは失われます。",
+    rulesEyebrow: "> 遊び方",
+    rulesTitle:   "ルドのルール",
+    rulesBody:    "• <b style=\"color:var(--syn-cyan)\">6</b>を出すとコマがベースから出る<br>• サイコロの目だけ時計回りに進む<br>• 相手に重なると振り出しに戻す<br>• <b style=\"color:var(--syn-cyan)\">★ 星</b>とスタートマスは安全<br>• 6・捕獲・中央到達でもう一度振れる<br>• 4つのコマすべてを中央に入れたら勝ち",
+    gotIt:        "わかった",
+    a11yRolled:        "{n} が出ました",
+    a11yMoved:         "コマ {t} を移動、4個中 {home} 個がゴール",
+    a11yMoveToken:     "コマ {t} を移動",
+    a11ySummaryPlayer: "{name}: ゴール {home}、盤上 {board}、基地 {base}",
+    actRoll:     "サイコロを振ってください",
+    actMove:     "コマを選んでください",
+    actThinking: "考え中…",
+    actNone:     "動かせる手がありません",
+    actOver:     "ゲーム終了",
+    turnRolled:  "{n} が出ました",
+    selToken:    "コマ {t} を選択中",
+    methodTouch:    "タッチ",
+    methodKeyboard: "キー",
+    methodGamepad:  "パッド",
+    methodLabel:    "操作 — 最後に使用: {m}",
+    helpOpen:  "操作方法"
+  };
+
+  const N = 15;
+  const PATH = [
+    [6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],
+    [1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],
+    [8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],
+    [13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0]
+  ];
+  const STARTS = [0, 13, 26, 39];
+  const SAFE = new Set([0,8,13,21,26,34,39,47]);
+  const HOME = [
+    [[7,1],[7,2],[7,3],[7,4],[7,5]],
+    [[1,7],[2,7],[3,7],[4,7],[5,7]],
+    [[7,13],[7,12],[7,11],[7,10],[7,9]],
+    [[13,7],[12,7],[11,7],[10,7],[9,7]]
+  ];
+  const CENTER = [7,7];
+  const COLORS = ['#22D3EE','#FBBF24','#F472B6','#4ADE80'];
+  const COLORS_D = ['#0E7490','#B45309','#BE185D','#15803D'];
+  const PNAMES = COPY.pnames;
+  const BASE_SLOTS = [
+    [[1.5,1.5],[4.5,1.5],[1.5,4.5],[4.5,4.5]],
+    [[10.5,1.5],[13.5,1.5],[10.5,4.5],[13.5,4.5]],
+    [[10.5,10.5],[13.5,10.5],[10.5,13.5],[13.5,13.5]],
+    [[1.5,10.5],[4.5,10.5],[1.5,13.5],[4.5,13.5]]
+  ];
+  const BASE_ORIGIN = [[0,0],[9,0],[9,9],[0,9]];
+  const ROLL_LOCK_MS = 280;
+
+  let REDUCE = false;
+  try { REDUCE = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch(e){}
+
+  const canvas = document.getElementById('board');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  let CELL = 0;
+  function resize(){ const size = 600; canvas.width = size*dpr; canvas.height = size*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); CELL = size/N; }
+  resize();
+
+  const State = {
+    mode: 'ai', numPlayers: 4,
+    active: [], tokens: [], turnIdx: 0,
+    dice: 0, rolled: false, rolling: false, sixStreak: 0,
+    movable: [], over: false, winner: -1,
+    animating: false, finishers: [],
+    cursor: 0, autoMove: true, method: null, helpOpen: false, modal: null, forfeit: false,
+  };
+
+  function curPlayer(){ return State.active[State.turnIdx]; }
+  function isHuman(p){ return State.mode === 'hotseat' ? true : p === 0; }
+
+  function prefGet(key){
+    try {
+      if (window.MentriaStore){
+        const v = window.MentriaStore.get('tools', key);
+        if (v !== null && v !== undefined) return v;
+      }
+      const raw = localStorage.getItem('mentria_' + key);
+      if (raw === null || raw === undefined) return null;
+      return JSON.parse(raw);
+    } catch(e){ return null; }
+  }
+  function prefSet(key, val){
+    try {
+      if (window.MentriaStore) window.MentriaStore.set('tools', key, val);
+      else localStorage.setItem('mentria_' + key, JSON.stringify(val));
+    } catch(e){}
+  }
+
+  function save(){
+    if (State.over) return;
+    const data = {
+      mode: State.mode, numPlayers: State.numPlayers, active: State.active,
+      tokens: State.tokens, turnIdx: State.turnIdx, sixStreak: State.sixStreak,
+      finishers: State.finishers
+    };
+    try {
+      if (window.MentriaStore) window.MentriaStore.set('games', 'ludo', data);
+      else localStorage.setItem('mentria_ludo_v1', JSON.stringify(data));
+    } catch(e){}
+  }
+  function clearSave(){
+    try {
+      if (window.MentriaStore) window.MentriaStore.remove('games', 'ludo');
+      else localStorage.removeItem('mentria_ludo_v1');
+    } catch(e){}
+  }
+  function load(){
+    try {
+      let d = window.MentriaStore ? window.MentriaStore.get('games', 'ludo') : null;
+      if (!d){ const raw = localStorage.getItem('mentria_ludo_v1'); if (raw) d = JSON.parse(raw); }
+      if (!d || !Array.isArray(d.tokens) || d.tokens.length !== 4 || !Array.isArray(d.active) || !d.active.length) return false;
+      if (!d.tokens.every(t => Array.isArray(t) && t.length === 4)) return false;
+      State.mode = d.mode === 'hotseat' ? 'hotseat' : 'ai';
+      State.numPlayers = [2,3,4].includes(d.numPlayers) ? d.numPlayers : 4;
+      State.active = d.active;
+      State.tokens = d.tokens;
+      State.turnIdx = (d.turnIdx >= 0 && d.turnIdx < d.active.length) ? d.turnIdx : 0;
+      State.sixStreak = d.sixStreak || 0;
+      State.finishers = Array.isArray(d.finishers) ? d.finishers : [];
+      return true;
+    } catch(e){ return false; }
+  }
+
+  let gen = 0;
+  let diceInterval = null;
+  let rollLockUntil = 0;
+  function now(){ return (window.performance && window.performance.now) ? window.performance.now() : Date.now(); }
+  function gtimeout(fn, ms){ const g = gen; return setTimeout(() => { if (g === gen) fn(); }, ms); }
+
+  function newGame(){
+    gen++;
+    if (diceInterval){ clearInterval(diceInterval); diceInterval = null; }
+    const n = State.numPlayers;
+    if (n === 2) State.active = [0,2];
+    else if (n === 3) State.active = [0,1,2];
+    else State.active = [0,1,2,3];
+    State.tokens = [];
+    for (let p=0;p<4;p++) State.tokens[p] = [-1,-1,-1,-1];
+    State.turnIdx = 0;
+    State.dice = 0; State.rolled = false; State.rolling = false; State.sixStreak = 0;
+    State.movable = []; State.over = false; State.winner = -1; State.finishers = [];
+    State.animating = false; State.cursor = 0; State.modal = null; State.forfeit = false;
+    fx.length = 0;
+    rollLockUntil = 0;
+    document.getElementById('overlay').classList.remove('show');
+    renderPlayers(); draw(); updateDie(0); setStatus(); updateRollBtn();
+    save();
+    maybeAITurn();
+  }
+  function resume(){
+    modeSeg.set(State.mode);
+    countSeg.set(State.numPlayers);
+    State.cursor = 0; State.modal = null; State.forfeit = false;
+    document.getElementById('overlay').classList.remove('show');
+    renderPlayers(); draw(); updateDie(0); setStatus(); updateRollBtn();
+    maybeAITurn();
+  }
+
+  function tokenCell(p, pos){
+    if (pos < 0) return null;
+    if (pos <= 50) return PATH[(STARTS[p]+pos)%52];
+    if (pos <= 55) return HOME[p][pos-51];
+    return CENTER;
+  }
+  function tokenXY(p, pos, t){
+    if (pos < 0){ const slot = BASE_SLOTS[p][t]; return [slot[0]*CELL, slot[1]*CELL]; }
+    const rc = tokenCell(p, pos);
+    return [(rc[1]+0.5)*CELL, (rc[0]+0.5)*CELL];
+  }
+
+  const fx = [];
+  let fxRaf = 0;
+  function addFx(x, y, color){
+    if (REDUCE) return;
+    fx.push({ x, y, color, t0: now() });
+    if (!fxRaf) fxRaf = requestAnimationFrame(fxTick);
+  }
+  function fxTick(){
+    fxRaf = 0;
+    draw();
+    if (fx.length && !fxRaf) fxRaf = requestAnimationFrame(fxTick);
+  }
+  function drawFx(){
+    if (!fx.length) return;
+    const t = now();
+    for (let i = fx.length - 1; i >= 0; i--){
+      const f = fx[i];
+      const k = (t - f.t0) / 460;
+      if (k >= 1){ fx.splice(i,1); continue; }
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, CELL*(0.3 + k*0.62), 0, 7);
+      ctx.strokeStyle = hexA(f.color, 0.8*(1-k));
+      ctx.lineWidth = 1 + 3*(1-k);
+      ctx.stroke();
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,600,600);
+    ctx.fillStyle = '#0a0a0c'; ctx.fillRect(0,0,600,600);
+    for (let p=0;p<4;p++){
+      const inPlay = State.active.includes(p);
+      const [oc,or] = BASE_ORIGIN[p];
+      const x = oc*CELL, y = or*CELL, s = 6*CELL;
+      ctx.fillStyle = inPlay ? hexA(COLORS[p],0.10) : 'rgba(255,255,255,0.015)';
+      roundRect(x+3,y+3,s-6,s-6,10); ctx.fill();
+      ctx.strokeStyle = inPlay ? COLORS[p] : 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 2; roundRect(x+3,y+3,s-6,s-6,10); ctx.stroke();
+      ctx.fillStyle = '#0c0c10';
+      roundRect(x+CELL*0.9,y+CELL*0.9,s-CELL*1.8,s-CELL*1.8,8); ctx.fill();
+      if (inPlay){
+        for (const slot of BASE_SLOTS[p]){
+          const sx = slot[0]*CELL, sy = slot[1]*CELL;
+          ctx.beginPath(); ctx.arc(sx,sy,CELL*0.42,0,7); ctx.fillStyle = hexA(COLORS[p],0.14); ctx.fill();
+          ctx.strokeStyle = hexA(COLORS[p],0.5); ctx.lineWidth = 1.5; ctx.stroke();
+        }
+      }
+    }
+    for (let i=0;i<52;i++) drawCell(PATH[i], '#15151b', 'rgba(255,255,255,0.06)');
+    for (let p=0;p<4;p++){ if (!State.active.includes(p)) continue; drawCell(PATH[STARTS[p]], hexA(COLORS[p],0.22), COLORS[p]); }
+    for (const idx of SAFE){ const [r,c] = PATH[idx]; drawSafeMark((c+0.5)*CELL,(r+0.5)*CELL); }
+    for (let p=0;p<4;p++){ if (!State.active.includes(p)) continue; for (const rc of HOME[p]) drawCell(rc, hexA(COLORS[p],0.28), hexA(COLORS[p],0.6)); }
+    drawCenter();
+    syncCursorKey();
+    drawTargets();
+    drawTokens();
+    drawFx();
+  }
+  function syncCursorKey(){
+    cursorKey = '';
+    if (!awaitingChoice()) return;
+    const m = State.movable[State.cursor] || State.movable[0];
+    if (m) cursorKey = m.p + '-' + m.t;
+  }
+  function drawTargets(){
+    if (!awaitingChoice()) return;
+    const m = State.movable[State.cursor] || State.movable[0];
+    if (!m) return;
+    const p = m.p;
+    const rc = m.to === 56 ? CENTER : tokenCell(p, m.to);
+    if (!rc) return;
+    const x = (rc[1]+0.5)*CELL, y = (rc[0]+0.5)*CELL;
+    ctx.beginPath(); ctx.arc(x, y, CELL*0.4, 0, 7);
+    ctx.fillStyle = hexA(COLORS[p], 0.2); ctx.fill();
+    ctx.setLineDash([4,4]);
+    ctx.strokeStyle = hexA(m.cap ? '#F87171' : '#F8FAFC', 0.85); ctx.lineWidth = 2; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  function drawCell(rc, fill, stroke){
+    const x=(rc[1])*CELL, y=(rc[0])*CELL;
+    ctx.fillStyle = fill; roundRect(x+1.5,y+1.5,CELL-3,CELL-3,3); ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = 1; roundRect(x+1.5,y+1.5,CELL-3,CELL-3,3); ctx.stroke();
+  }
+  function drawCenter(){
+    const cx=6*CELL, cy=6*CELL;
+    const tl=[cx,cy], tr=[cx+3*CELL,cy], br=[cx+3*CELL,cy+3*CELL], bl=[cx,cy+3*CELL], mid=[cx+1.5*CELL,cy+1.5*CELL];
+    const tris = [ [tl,tr,mid,1], [tr,br,mid,2], [br,bl,mid,3], [bl,tl,mid,0] ];
+    for (const [a,b,m,p] of tris){
+      ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.lineTo(m[0],m[1]); ctx.closePath();
+      const inPlay = State.active.includes(p);
+      ctx.fillStyle = inPlay ? hexA(COLORS[p],0.5) : 'rgba(255,255,255,0.04)'; ctx.fill();
+      ctx.strokeStyle = inPlay ? COLORS[p] : 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1; ctx.stroke();
+    }
+  }
+  function drawTokens(){
+    const list = [];
+    for (const p of State.active){
+      for (let t=0;t<4;t++){
+        const pos = State.tokens[p][t];
+        const xy = tokenXY(p, pos, t);
+        const key = pos<0 ? ('b'+p+t) : (Math.round(xy[0])+','+Math.round(xy[1]));
+        list.push({p,t,pos,xy,key});
+      }
+    }
+    const counts = {}; list.forEach(o => counts[o.key]=(counts[o.key]||0)+1);
+    const seen = {};
+    for (const o of list){
+      seen[o.key] = (seen[o.key]||0);
+      const c = counts[o.key];
+      let [x,y] = o.xy;
+      if (c>1 && o.pos>=0){ const ang = (seen[o.key]/c)*Math.PI*2; x += Math.cos(ang)*CELL*0.18; y += Math.sin(ang)*CELL*0.18; }
+      seen[o.key]++;
+      const absIdx = (o.pos>=0 && o.pos<=50) ? (STARTS[o.p]+o.pos)%52 : -1;
+      drawToken(x,y,o.p,o.t, absIdx>=0 && SAFE.has(absIdx));
+    }
+  }
+  let highlightSet = new Set();
+  let cursorKey = '';
+  function drawToken(x,y,p,t,onSafe){
+    const r = CELL*0.34;
+    const id = p+'-'+t;
+    const hi = highlightSet.has(id);
+    const sel = cursorKey === id;
+    ctx.beginPath(); ctx.ellipse(x, y+r*0.5, r*0.85, r*0.4, 0,0,7); ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fillStyle = COLORS[p]; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = COLORS_D[p]; ctx.stroke();
+    ctx.beginPath(); ctx.arc(x-r*0.25,y-r*0.28,r*0.34,0,7); ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(x,y,r*0.28,0,7); ctx.fillStyle = COLORS_D[p]; ctx.fill();
+    if (hi){
+      ctx.beginPath(); ctx.arc(x,y,r+3,0,7); ctx.strokeStyle='#F8FAFC'; ctx.lineWidth=2.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x,y,r+6,0,7); ctx.strokeStyle=hexA('#F8FAFC',0.4); ctx.lineWidth=2; ctx.stroke();
+    }
+    if (sel){
+      ctx.beginPath(); ctx.arc(x,y,r+9,0,7); ctx.strokeStyle='#6EF3C5'; ctx.lineWidth=3; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x,y,r+12.5,0,7); ctx.strokeStyle=hexA('#6EF3C5',0.35); ctx.lineWidth=2; ctx.stroke();
+    }
+    if (onSafe){
+      const bx = x + r*0.70, by = y - r*0.70, br = r*0.46;
+      ctx.beginPath(); ctx.arc(bx,by,br,0,7);
+      ctx.fillStyle = 'rgba(12,16,20,0.92)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.65)'; ctx.lineWidth = 1.2; ctx.stroke();
+      drawStar(bx,by,br*0.78,'#FFD873');
+    }
+  }
+  function drawStar(x,y,r,fill){
+    ctx.beginPath();
+    for (let i=0;i<5;i++){
+      const a = -Math.PI/2 + i*2*Math.PI/5;
+      const a2 = a + Math.PI/5;
+      ctx.lineTo(x+Math.cos(a)*r, y+Math.sin(a)*r);
+      ctx.lineTo(x+Math.cos(a2)*r*0.45, y+Math.sin(a2)*r*0.45);
+    }
+    ctx.closePath(); ctx.fillStyle = fill || 'rgba(255,255,255,0.18)'; ctx.fill();
+  }
+  function drawSafeMark(cx,cy){
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx,cy,CELL*0.44,0,7);
+    ctx.strokeStyle = 'rgba(255,255,255,0.30)';
+    ctx.lineWidth = Math.max(1.5, CELL*0.05);
+    ctx.setLineDash([CELL*0.14, CELL*0.1]);
+    ctx.stroke();
+    ctx.restore();
+    drawStar(cx,cy,CELL*0.2,'rgba(255,255,255,0.26)');
+  }
+  function roundRect(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`; }
+
+  function getMoves(p, dice){
+    const moves = [];
+    const toks = State.tokens[p];
+    for (let t=0;t<4;t++){
+      const pos = toks[t];
+      if (pos === 56) continue;
+      if (pos < 0){ if (dice === 6) moves.push({p,t,from:-1,to:0,cap:detectCapture(p,0)}); continue; }
+      const np = pos + dice;
+      if (np > 56) continue;
+      moves.push({p,t,from:pos,to:np,cap: np<=50 ? detectCapture(p,np) : null});
+    }
+    return moves;
+  }
+  function detectCapture(p, toPos){
+    if (toPos > 50) return null;
+    const absIdx = (STARTS[p]+toPos)%52;
+    if (SAFE.has(absIdx)) return null;
+    for (const op of State.active){
+      if (op === p) continue;
+      for (let t=0;t<4;t++){
+        const opos = State.tokens[op][t];
+        if (opos<0 || opos>50) continue;
+        if ((STARTS[op]+opos)%52 === absIdx) return {op,t};
+      }
+    }
+    return null;
+  }
+
+  function rollLocked(){ return now() < rollLockUntil; }
+  function canRollNow(){
+    return !State.over && !State.animating && !State.rolled && !State.rolling
+      && !rollLocked() && isHuman(curPlayer());
+  }
+  function awaitingChoice(){
+    return State.rolled && !State.rolling && !State.animating && !State.over
+      && isHuman(curPlayer()) && State.movable.length > 0;
+  }
+
+  function updateRollBtn(){
+    const btn = document.getElementById('roll-btn');
+    const die = document.getElementById('die');
+    const human = isHuman(curPlayer());
+    const blocked = State.over || State.animating || State.rolled || State.rolling || !human || rollLocked();
+    btn.disabled = blocked;
+    if (die){
+      die.disabled = blocked;
+      die.classList.toggle('is-live', !blocked);
+    }
+  }
+  function setStatus(msg){
+    const el = document.getElementById('status');
+    if (msg){ el.innerHTML = msg; updateTurn(); return; }
+    const p = curPlayer();
+    const name = `<b>${PNAMES[p]}</b>`;
+    if (!isHuman(p)){
+      el.innerHTML = State.rolled ? COPY.stBotMove.replace('{name}', name) : COPY.stBotRoll.replace('{name}', name);
+    } else if (State.mode === 'hotseat'){
+      el.innerHTML = State.rolled ? COPY.stNameMove.replace('{name}', name) : COPY.stNameRoll.replace('{name}', name);
+    } else {
+      el.innerHTML = State.rolled ? COPY.stYouMove : COPY.stYouRoll;
+    }
+    updateTurn();
+  }
+  function updateTurn(){
+    const bar = document.getElementById('ludo-turn');
+    if (!bar) return;
+    const dot = document.getElementById('ludo-turn-dot');
+    const nameEl = document.getElementById('ludo-turn-name');
+    const tagEl = document.getElementById('ludo-turn-tag');
+    const actEl = document.getElementById('ludo-turn-act');
+    const dieEl = document.getElementById('ludo-turn-die');
+    const p = State.over && State.winner >= 0 ? State.winner : curPlayer();
+    if (p === undefined || p === null) return;
+    const human = isHuman(p);
+    dot.style.background = COLORS[p];
+    dot.style.color = COLORS[p];
+    nameEl.textContent = PNAMES[p];
+    tagEl.textContent = human ? (State.mode === 'hotseat' ? COPY.tagHuman : COPY.tagYou) : COPY.tagBot;
+    let act;
+    if (State.over) act = COPY.actOver;
+    else if (State.forfeit) act = COPY.tripleSix;
+    else if (!human) act = COPY.actThinking;
+    else if (!State.rolled) act = COPY.actRoll;
+    else if (State.movable.length === 0) act = COPY.actNone;
+    else act = COPY.actMove;
+    actEl.textContent = act;
+    const showDie = !State.over && State.rolled && State.dice > 0;
+    dieEl.hidden = !showDie;
+    dieEl.textContent = showDie ? COPY.turnRolled.split('{n}').join(State.dice) : '';
+    bar.classList.toggle('is-live', !State.over && human && !State.animating && !State.rolling);
+  }
+
+  function rollDice(){
+    if (State.over || State.animating || State.rolled || State.rolling || rollLocked()) return;
+    const p = curPlayer();
+    const d = 1 + Math.floor(Math.random()*6);
+    State.rolling = true;
+    updateRollBtn(); updateTurn();
+    const die = document.getElementById('die');
+    die.style.setProperty('--die-color', COLORS[p]);
+    die.classList.remove('rolling'); void die.offsetWidth;
+    if (!REDUCE) die.classList.add('rolling');
+    const spin = REDUCE ? 160 : 500;
+    if (!REDUCE) diceInterval = setInterval(()=>{ updateDie(1 + Math.floor(Math.random()*6), p); }, 80);
+    gtimeout(() => {
+      if (diceInterval){ clearInterval(diceInterval); diceInterval = null; }
+      die.classList.remove('rolling');
+      updateDie(d, p);
+      State.rolling = false;
+      rollLockUntil = now() + ROLL_LOCK_MS;
+      gtimeout(updateRollBtn, ROLL_LOCK_MS + 20);
+      finishRoll(p, d);
+    }, spin);
+  }
+  function finishRoll(p, d){
+    State.dice = d; State.rolled = true; State.cursor = 0;
+    if (d === 6) State.sixStreak++; else State.sixStreak = 0;
+    if (State.sixStreak >= 3){
+      State.forfeit = true;
+      showToast(COPY.tripleSix); setStatus(COPY.tripleSix); updateRollBtn();
+      gtimeout(endTurn, 800);
+      return;
+    }
+    const moves = getMoves(p, d);
+    State.movable = moves;
+    if (moves.length === 0){
+      const name = `<b>${PNAMES[p]}</b>`;
+      setStatus(isHuman(p) && State.mode!=='hotseat' ? COPY.noMovesYou : COPY.noMovesName.replace('{name}', name));
+      gtimeout(endTurn, 850);
+      return;
+    }
+    if (isHuman(p)){
+      highlightSet = new Set(moves.map(m => m.p+'-'+m.t));
+      if (moves.length === 1 && State.autoMove){ gtimeout(()=>doMove(moves[0]), 350); }
+      draw(); setStatus(); updateRollBtn();
+    } else {
+      gtimeout(()=>{ const m = aiChoose(p, moves); doMove(m); }, 600);
+    }
+  }
+
+  function aiChoose(p, moves){
+    let best = moves[0], bestScore = -1e9;
+    for (const m of moves){
+      let s = 0;
+      if (m.cap) s += 100;
+      if (m.to === 56) s += 80;
+      if (m.from === -1) s += 40;
+      if (m.to >= 51) s += 25;
+      if (m.to<=50){ const ai=(STARTS[p]+m.to)%52; if (SAFE.has(ai)) s += 15; }
+      s += m.to * 0.4;
+      s += Math.random()*3;
+      if (s > bestScore){ bestScore = s; best = m; }
+    }
+    return best;
+  }
+
+  function doMove(m){
+    if (State.animating) return;
+    highlightSet = new Set();
+    cursorKey = '';
+    State.animating = true;
+    State.cursor = 0;
+    updateRollBtn(); updateTurn();
+    const p = m.p, t = m.t;
+    const steps = [];
+    if (m.from === -1){ steps.push(0); }
+    else { for (let s=m.from+1; s<=m.to; s++) steps.push(s); }
+    let si = 0;
+    const stepFn = () => {
+      State.tokens[p][t] = steps[si];
+      draw(); si++;
+      if (si < steps.length){ gtimeout(stepFn, 110); }
+      else { finishMove(m); }
+    };
+    if (steps.length) stepFn(); else finishMove(m);
+  }
+  function finishMove(m){
+    const p = m.p, t = m.t;
+    let captured = false;
+    if (m.cap){
+      const cxy = tokenXY(m.cap.op, State.tokens[m.cap.op][m.cap.t], m.cap.t);
+      State.tokens[m.cap.op][m.cap.t] = -1;
+      captured = true;
+      addFx(cxy[0], cxy[1], COLORS[m.cap.op]);
+      showToast(COPY.capture.replace('{p}', PNAMES[p]).replace('{o}', PNAMES[m.cap.op]));
+    }
+    const reachedHome = (State.tokens[p][t] === 56);
+    if (reachedHome) addFx((CENTER[1]+0.5)*CELL, (CENTER[0]+0.5)*CELL, COLORS[p]);
+    draw(); renderPlayers();
+    if (State.tokens[p].every(x => x === 56)){
+      if (!State.finishers.includes(p)) State.finishers.push(p);
+      if (State.winner === -1) State.winner = p;
+      finishGame(p);
+      State.animating = false;
+      return;
+    }
+    State.animating = false;
+    const extra = (State.dice === 6) || captured || reachedHome;
+    if (extra && State.sixStreak < 3){
+      State.rolled = false; State.movable = []; State.cursor = 0;
+      rollLockUntil = now() + ROLL_LOCK_MS;
+      setStatus(); updateDie(0); updateRollBtn();
+      gtimeout(updateRollBtn, ROLL_LOCK_MS + 20);
+      save();
+      if (!isHuman(p)) gtimeout(()=>aiRoll(p), 600);
+    } else {
+      endTurn();
+    }
+  }
+
+  function endTurn(){
+    State.rolled = false; State.movable = []; State.sixStreak = 0; State.dice = 0; State.cursor = 0;
+    State.forfeit = false;
+    highlightSet = new Set();
+    cursorKey = '';
+    do { State.turnIdx = (State.turnIdx + 1) % State.active.length; }
+    while (State.tokens[curPlayer()].every(x => x === 56) && State.finishers.length < State.active.length);
+    rollLockUntil = now() + ROLL_LOCK_MS;
+    updateDie(0); draw(); renderPlayers(); setStatus(); updateRollBtn();
+    gtimeout(updateRollBtn, ROLL_LOCK_MS + 20);
+    save();
+    maybeAITurn();
+  }
+  function maybeAITurn(){
+    const p = curPlayer();
+    if (!State.over && !isHuman(p)) gtimeout(()=>aiRoll(p), 700);
+  }
+  function aiRoll(p){ if (State.over) return; if (curPlayer() !== p) return; rollLockUntil = 0; rollDice(); }
+
+  const PIP_MAP = { 1:[4], 2:[0,8], 3:[0,4,8], 4:[0,2,6,8], 5:[0,2,4,6,8], 6:[0,2,3,5,6,8] };
+  function updateDie(v, p){
+    const die = document.getElementById('die');
+    die.style.setProperty('--die-color', p!=null ? COLORS[p] : 'var(--syn-cyan)');
+    die.innerHTML = '';
+    const on = new Set(PIP_MAP[v]||[]);
+    for (let i=0;i<9;i++){ const pip=document.createElement('div'); pip.className='pip'+(on.has(i)?' on':''); die.appendChild(pip); }
+  }
+
+  canvas.addEventListener('click', e => {
+    if (!awaitingChoice()) return;
+    const p = curPlayer();
+    const rect = canvas.getBoundingClientRect();
+    const scale = rect.width > 0 ? (600 / rect.width) : 1;
+    const mx = (e.clientX-rect.left)*scale;
+    const my = (e.clientY-rect.top)*scale;
+    let hit = null, hitIdx = -1;
+    let bestD = Math.max(CELL*0.55, 22*scale);
+    for (let i=0;i<State.movable.length;i++){
+      const m = State.movable[i];
+      const xy = tokenXY(p, m.from, m.t);
+      const d = Math.hypot(mx-xy[0],my-xy[1]);
+      if (d < bestD){ bestD = d; hit = m; hitIdx = i; }
+    }
+    if (hit){ State.cursor = hitIdx; confirmCursor(); }
+  });
+
+  function renderPlayers(){
+    const el = document.getElementById('players-list');
+    el.innerHTML = '';
+    for (const p of State.active){
+      const homeCount = State.tokens[p].filter(x => x===56).length;
+      const row = document.createElement('div');
+      row.className = 'prow' + (p===curPlayer()&&!State.over?' active':'') + (homeCount===4?' done':'');
+      const tag = isHuman(p) ? (State.mode==='hotseat'?COPY.tagHuman:COPY.tagYou) : COPY.tagBot;
+      row.innerHTML = `<span class="chip" style="background:${COLORS[p]};color:${COLORS[p]}"></span>
+        <span class="pname">${PNAMES[p]}</span><span class="ptag">${tag}</span>
+        <span class="phome">${homeCount}/4</span>`;
+      el.appendChild(row);
+    }
+  }
+
+  function finishGame(p){
+    State.over = true;
+    State.modal = 'win';
+    clearSave();
+    const who = isHuman(p) ? (State.mode==='hotseat'?COPY.wonHuman:COPY.wonYou) : COPY.wonBot;
+    const m = document.getElementById('modal');
+    m.innerHTML = `<p class="eyebrow">${COPY.winEyebrow}</p>
+      <h2>${COPY.winTitle.replace('{name}', PNAMES[p])}</h2>
+      <div class="winchip"><span class="chip" style="background:${COLORS[p]};color:${COLORS[p]}"></span>
+      <span style="color:var(--term-muted)">${who}</span></div>
+      <button class="btn primary" id="m-new">${COPY.newGame}</button>`;
+    document.getElementById('overlay').classList.add('show');
+    document.getElementById('m-new').onclick = newGame;
+    renderPlayers();
+    updateTurn();
+    updateRollBtn();
+  }
+
+  function showToast(msg){
+    MentriaUI.toast(msg, { duration: 1400 });
+  }
+
+  function setCursor(i){
+    const n = State.movable.length;
+    if (!n){ State.cursor = 0; return; }
+    State.cursor = ((i % n) + n) % n;
+    draw();
+    focusCursorBtn();
+    const m = State.movable[State.cursor];
+    if (m) announce(COPY.selToken.split('{t}').join(String(m.t + 1)));
+  }
+  function cycleCursor(delta){
+    if (!awaitingChoice()) return;
+    if (State.movable.length < 2){ setCursor(0); return; }
+    setCursor(State.cursor + delta);
+  }
+  function confirmCursor(){
+    if (!awaitingChoice()) return false;
+    const m = State.movable[State.cursor] || State.movable[0];
+    if (!m) return false;
+    chooserSig = null;
+    if (A11Y.choose){ A11Y.choose.hidden = true; A11Y.choose.innerHTML = ''; chooserBtns = []; }
+    doMove(m);
+    return true;
+  }
+
+  const METHOD_LABEL = {
+    touch: COPY.methodTouch,
+    keyboard: COPY.methodKeyboard,
+    gamepad: COPY.methodGamepad
+  };
+  function applyMethodBadge(){
+    const badge = document.getElementById('ludo-method-badge');
+    const chip = document.getElementById('ludo-help-chip');
+    const label = METHOD_LABEL[State.method];
+    if (badge){
+      badge.hidden = !label;
+      badge.textContent = label || '';
+    }
+    if (chip) chip.title = label ? COPY.methodLabel.split('{m}').join(label) : COPY.helpOpen;
+  }
+  function markMethod(m){
+    if (!METHOD_LABEL[m] || State.method === m) return;
+    State.method = m;
+    applyMethodBadge();
+    prefSet('ludo_last_input', m);
+  }
+
+  const helpEl = document.getElementById('ludo-help');
+  const helpPanel = document.getElementById('ludo-help-panel');
+  const helpChip = document.getElementById('ludo-help-chip');
+  function helpFocusables(){
+    if (!helpPanel) return [];
+    return Array.prototype.slice.call(helpPanel.querySelectorAll('button, [href], input, select, textarea, [tabindex]'))
+      .filter(el => !el.disabled && el.getAttribute('tabindex') !== '-1');
+  }
+  function openHelp(){
+    if (!helpEl || State.helpOpen) return;
+    State.helpOpen = true;
+    helpEl.hidden = false;
+    if (helpChip) helpChip.setAttribute('aria-expanded', 'true');
+    const f = helpFocusables();
+    if (f.length) f[f.length - 1].focus();
+  }
+  function closeHelp(){
+    if (!helpEl || !State.helpOpen) return;
+    State.helpOpen = false;
+    helpEl.hidden = true;
+    if (helpChip){ helpChip.setAttribute('aria-expanded', 'false'); helpChip.focus(); }
+    prefSet('ludo_help_seen', true);
+  }
+  function toggleHelp(){ if (State.helpOpen) closeHelp(); else openHelp(); }
+
+  if (helpChip) helpChip.addEventListener('click', () => { toggleHelp(); });
+  const helpCloseBtn = document.getElementById('ludo-help-close');
+  if (helpCloseBtn) helpCloseBtn.addEventListener('click', closeHelp);
+  if (helpEl) helpEl.addEventListener('click', e => { if (e.target === helpEl) closeHelp(); });
+  if (helpPanel) helpPanel.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const f = helpFocusables();
+    if (!f.length){ e.preventDefault(); return; }
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  const autoBox = document.getElementById('ludo-auto');
+  if (autoBox) autoBox.addEventListener('change', () => {
+    State.autoMove = !!autoBox.checked;
+    prefSet('ludo_auto_move', State.autoMove);
+    chooserSig = null;
+    draw();
+  });
+
+  document.getElementById('roll-btn').onclick = rollDice;
+  const dieBtn = document.getElementById('die');
+  if (dieBtn) dieBtn.addEventListener('click', rollDice);
+  document.getElementById('btn-new').onclick = () => {
+    confirmRestart().then((ok) => { if (ok) newGame(); });
+  };
+  document.getElementById('btn-rules').onclick = () => {
+    const m = document.getElementById('modal');
+    State.modal = 'rules';
+    m.innerHTML = `<p class="eyebrow">${COPY.rulesEyebrow}</p><h2>${COPY.rulesTitle}</h2>
+      <div style="text-align:left;font-size:12px;color:var(--term-muted);line-height:1.7;margin-bottom:18px">${COPY.rulesBody}</div>
+      <button class="btn primary" id="m-close">${COPY.gotIt}</button>`;
+    document.getElementById('overlay').classList.add('show');
+    document.getElementById('m-close').onclick = closeBoardModal;
+    document.getElementById('m-close').focus();
+  };
+  function closeBoardModal(){
+    if (State.modal !== 'rules') return;
+    State.modal = null;
+    document.getElementById('overlay').classList.remove('show');
+    const rb = document.getElementById('btn-rules');
+    if (rb) rb.focus({ preventScroll: true });
+  }
+
+  function gameInProgress(){
+    if (State.over) return false;
+    if (State.finishers && State.finishers.length) return true;
+    for (const p of State.active){
+      for (let t=0;t<4;t++) if (State.tokens[p] && State.tokens[p][t] !== -1) return true;
+    }
+    return false;
+  }
+  async function confirmRestart(){
+    if (!gameInProgress()) return true;
+    if (typeof window.mentriaConfirm !== 'function') return true;
+    return await window.mentriaConfirm(COPY.confirmRestart);
+  }
+
+  const modeSeg = MentriaUI.segmented(document.getElementById('mode-seg'), (value) => {
+    if (value === State.mode) return;
+    const prev = State.mode;
+    confirmRestart().then((ok) => {
+      if (!ok){ modeSeg.set(prev); return; }
+      State.mode = value; newGame();
+    });
+  });
+  const countSeg = MentriaUI.segmented(document.getElementById('count-seg'), (value) => {
+    if (+value === State.numPlayers) return;
+    const prev = String(State.numPlayers);
+    confirmRestart().then((ok) => {
+      if (!ok){ countSeg.set(prev); return; }
+      State.numPlayers = +value; newGame();
+    });
+  });
+
+  const app = document.querySelector('.ludo-app');
+  if (app) app.addEventListener('pointerdown', () => { markMethod('touch'); }, true);
+
+  document.addEventListener('keydown', e => {
+    const el = e.target;
+    const closest = (sel) => (el && el.closest) ? el.closest(sel) : null;
+    if (State.helpOpen){
+      if (e.key === 'Escape'){ e.preventDefault(); markMethod('keyboard'); closeHelp(); }
+      return;
+    }
+    if (closest('input, select, textarea')) return;
+    if (e.key === 'Escape'){ if (State.modal === 'rules'){ e.preventDefault(); closeBoardModal(); } return; }
+    if (closest('.m-seg')) return;
+
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+      if (!awaitingChoice()) return;
+      e.preventDefault(); markMethod('keyboard'); cycleCursor(-1); return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+      if (!awaitingChoice()) return;
+      e.preventDefault(); markMethod('keyboard'); cycleCursor(1); return;
+    }
+    if (e.key === 'Tab'){
+      if (!awaitingChoice() || State.movable.length < 2) return;
+      const inChooser = !!(A11Y.choose && el && A11Y.choose.contains(el));
+      if (!inChooser && closest('button, a, [tabindex]')) return;
+      e.preventDefault(); markMethod('keyboard'); cycleCursor(e.shiftKey ? -1 : 1); return;
+    }
+    if (e.code !== 'Space' && e.key !== 'Enter') return;
+    if (e.repeat) return;
+    if (closest('button, a')) return;
+    if (canRollNow()){ e.preventDefault(); markMethod('keyboard'); rollDice(); return; }
+    if (awaitingChoice()){ e.preventDefault(); markMethod('keyboard'); confirmCursor(); }
+  });
+
+  window.addEventListener('mentria:gamepad:direction', e => {
+    if (State.helpOpen) return;
+    if (!awaitingChoice()) return;
+    markMethod('gamepad');
+    const d = e.detail && e.detail.direction;
+    cycleCursor((d === 'left' || d === 'up') ? -1 : 1);
+  });
+  window.addEventListener('mentria:gamepad:button', e => {
+    if (!e.detail || !e.detail.pressed) return;
+    const n = e.detail.name;
+    if (n === 'start'){ markMethod('gamepad'); toggleHelp(); return; }
+    if (State.helpOpen){ if (n === 'a' || n === 'b'){ markMethod('gamepad'); closeHelp(); } return; }
+    if (n === 'b'){ if (State.modal === 'rules'){ markMethod('gamepad'); closeBoardModal(); } return; }
+    if (n !== 'a') return;
+    markMethod('gamepad');
+    if (State.modal === 'rules'){ closeBoardModal(); return; }
+    if (State.over){ newGame(); return; }
+    if (canRollNow()){ rollDice(); return; }
+    confirmCursor();
+  });
+
+  const A11Y = {
+    live: document.getElementById('ludo-live'),
+    summary: document.getElementById('ludo-summary'),
+    choose: document.getElementById('ludo-choose')
+  };
+  let annTimer = null, annPending = null;
+  function announce(msg){
+    if (msg == null || !A11Y.live) return;
+    msg = String(msg);
+    if (annTimer){ annPending = msg; return; }
+    A11Y.live.textContent = msg;
+    annTimer = setTimeout(() => {
+      annTimer = null;
+      if (annPending != null){ const next = annPending; annPending = null; announce(next); }
+    }, 600);
+  }
+  function updateSummary(){
+    if (!A11Y.summary) return;
+    const parts = [];
+    for (const p of State.active){
+      const toks = State.tokens[p];
+      const home = toks.filter(x => x === 56).length;
+      const base = toks.filter(x => x < 0).length;
+      const board = 4 - home - base;
+      parts.push(COPY.a11ySummaryPlayer
+        .replace('{name}', PNAMES[p])
+        .replace('{home}', home)
+        .replace('{board}', board)
+        .replace('{base}', base));
+    }
+    A11Y.summary.textContent = parts.join('. ');
+  }
+  function chooserVisible(){
+    if (!awaitingChoice()) return false;
+    return State.movable.length >= 2 || !State.autoMove;
+  }
+  let chooserSig = null;
+  let chooserBtns = [];
+  function markCursorBtn(){
+    for (let i=0;i<chooserBtns.length;i++) chooserBtns[i].classList.toggle('is-cursor', i === State.cursor);
+  }
+  function focusCursorBtn(){
+    markCursorBtn();
+    const btn = chooserBtns[State.cursor];
+    if (btn && document.activeElement !== btn && A11Y.choose && !A11Y.choose.hidden) btn.focus({ preventScroll: true });
+  }
+  function syncChooser(){
+    if (!A11Y.choose) return;
+    const show = chooserVisible();
+    const sig = show ? State.movable.map(m => m.t + ':' + m.from + '>' + m.to).join('|') : '';
+    if (sig === chooserSig){ if (show) markCursorBtn(); return; }
+    chooserSig = sig;
+    A11Y.choose.innerHTML = '';
+    chooserBtns = [];
+    if (!show){ A11Y.choose.hidden = true; return; }
+    A11Y.choose.hidden = false;
+    for (const m of State.movable){
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'm-btn m-btn--ghost ludo-choose__btn';
+      btn.textContent = COPY.a11yMoveToken.replace('{t}', m.t + 1);
+      btn.addEventListener('click', () => {
+        if (!awaitingChoice()) return;
+        const idx = chooserBtns.indexOf(btn);
+        if (idx >= 0) State.cursor = idx;
+        confirmCursor();
+        const st = document.getElementById('status');
+        if (st){ st.tabIndex = -1; st.focus({ preventScroll: true }); }
+      });
+      A11Y.choose.appendChild(btn);
+      chooserBtns.push(btn);
+    }
+    focusCursorBtn();
+  }
+
+  const _draw = draw;
+  draw = function(){ _draw(); syncChooser(); };
+  const _renderPlayers = renderPlayers;
+  renderPlayers = function(){ _renderPlayers(); updateSummary(); };
+  const _finishRoll = finishRoll;
+  finishRoll = function(p, d){ announce(COPY.a11yRolled.replace('{n}', d)); _finishRoll(p, d); };
+  const _finishMove = finishMove;
+  finishMove = function(m){
+    const home = State.tokens[m.p].filter(x => x === 56).length;
+    announce(COPY.a11yMoved.replace('{t}', m.t + 1).replace('{home}', home));
+    _finishMove(m);
+  };
+  const _finishGame = finishGame;
+  finishGame = function(p){
+    _finishGame(p);
+    const who = isHuman(p) ? (State.mode === 'hotseat' ? COPY.wonHuman : COPY.wonYou) : COPY.wonBot;
+    announce(COPY.winTitle.replace('{name}', PNAMES[p]) + '. ' + who);
+  };
+
+  const storedAuto = prefGet('ludo_auto_move');
+  State.autoMove = storedAuto === null ? true : !!storedAuto;
+  if (autoBox) autoBox.checked = State.autoMove;
+  const storedMethod = prefGet('ludo_last_input');
+  if (METHOD_LABEL[storedMethod]) State.method = storedMethod;
+  applyMethodBadge();
+
+  if (load()) resume(); else newGame();
+
+  if (!prefGet('ludo_help_seen')) openHelp();
+})();
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="アプリナビゲーション" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/ja/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">ホーム</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/ja/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="コマンドパレットを開く（⌘K）" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">検索</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">ホーム画面に追加 — オフラインで動作します。</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">インストール</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="閉じる" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="閉じる" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "iPhoneにMentriaをインストール",
+    macosTitle:  "MacにMentriaをインストール",
+    chromeTitle: "Mentriaをインストール",
+    iosStep1:    "画面下部の<strong>共有</strong>ボタンをタップ",
+    iosStep2:    "<strong>ホーム画面に追加</strong>を選択",
+    iosStep3:    "右上の<strong>追加</strong>をタップ。",
+    macosStep1:  "このページを<strong>Safari 17+</strong>で開きます。",
+    macosStep2:  "メニューバーから<strong>ファイル → Dockに追加…</strong>を選択。",
+    macosStep3:  "<strong>追加</strong>をクリック。",
+    chromeStep1: "ブラウザのアドレスバーにある<strong>インストール</strong>アイコンをクリック。",
+    chromeStep2: "または、メニュー(⋮)を開いて<strong>Mentriaをインストール</strong>を選択。",
+    note:        "インストール後、Mentriaはオフラインで動作し、ローカルデータはお使いのデバイスに保存されます。"
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "確認";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "保存できませんでした。ブラウザのストレージがいっぱいです。空き容量を増やすと変更を保持できます。";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("大きなAIモデル（モデルにより490 MB以上）をダウンロードします。低速またはデータセーバー接続のようです。続行しますか？");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "共有";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "このツールについて");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">機能テスト用ビルド（WebMCP 応募スナップショット）。テストのため凍結中です。通常のご利用は <a href="https://mentria.ai/">mentria.ai</a> をお使いください。</div></body>
+</html>

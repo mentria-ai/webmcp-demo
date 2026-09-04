@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>Campo Minado | Mentria</title>
+    <meta name="description" content="Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/pt-br/tools/minesweeper/">
+    <meta property="og:title" content="Campo Minado | Mentria">
+    <meta property="og:description" content="Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/pt-br/tools/minesweeper/">
+    <meta name="twitter:title" content="Campo Minado | Mentria">
+    <meta name="twitter:description" content="Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/minesweeper/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/minesweeper/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/minesweeper/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/minesweeper/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/minesweeper/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/minesweeper/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "Um estúdio criativo para ferramentas, experimentos e transmissões visuais. Feito com capricho.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "pt-BR"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://webmcp.mentria.ai/pt-br/" },
+        { "@type": "ListItem", "position": 2, "name": "Ferramentas", "item": "https://webmcp.mentria.ai/pt-br/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Campo Minado", "item": "https://webmcp.mentria.ai/pt-br/tools/minesweeper/" }
+      ]
+    }
+    </script>
+<style>
+html, body { overscroll-behavior: none; }
+main { max-width: 1100px; }
+
+.game-page .hero { text-align: center; padding: 0; margin-bottom: 28px; position: relative; z-index: 1; }
+.game-page .hero .eyebrow { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--term-muted); letter-spacing: 0.1em; margin: 0 0 12px; }
+.game-page .hero h1 { font-family: var(--font-mono); font-weight: 700; font-size: clamp(2rem, 4vw, 2.6rem); color: var(--term-fg-strong); margin: 0 0 12px; letter-spacing: -0.005em; line-height: 1.2; }
+.game-page .hero p { font-family: var(--font-mono); color: var(--term-muted); font-size: var(--text-sm); margin: 0 auto; max-width: 56ch; line-height: 1.6; }
+
+.ms-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--term-border);
+  flex-wrap: wrap;
+}
+.ctrl-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--term-muted);
+  font-weight: 500;
+  margin-right: 4px;
+}
+.stats-spread { margin-left: auto; display: flex; gap: 18px; font-size: 13px; }
+.stat-item { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.stat-key { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--term-muted); }
+.stat-val { font-family: var(--font-mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat-val.pink  { color: var(--syn-pink); }
+.stat-val.cyan  { color: var(--syn-cyan); }
+.stat-val.amber { color: var(--syn-amber); }
+#stat-mines { transition: color 150ms ease; }
+#stat-mines.is-clear { color: var(--syn-green); }
+#stat-mines.is-over  { color: var(--syn-amber); }
+
+.ms-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--term-border);
+  background: rgba(255,255,255,0.01);
+  font-size: 12px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+}
+.mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--term-border);
+  color: var(--term-muted);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: transparent;
+  transition: all 150ms;
+}
+.mode-toggle.flag-mode {
+  background: var(--pink-10);
+  border-color: var(--syn-pink);
+  color: var(--syn-pink);
+  box-shadow: var(--glow-pink);
+}
+.mode-toggle .indicator {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--term-subtle);
+}
+.mode-toggle.flag-mode .indicator {
+  background: var(--syn-pink);
+  box-shadow: var(--glow-pink);
+}
+.hint {
+  color: var(--term-subtle);
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
+@media (pointer: coarse) {
+  .ms-toolbar { gap: 10px; }
+  .mode-toggle { min-height: 44px; padding: 0 16px; font-size: 12px; }
+  .hint { flex-basis: 100%; margin-left: 0; }
+}
+
+.board-wrap {
+  position: relative;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050507;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  min-height: 400px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+@supports (justify-content: safe center) {
+  .board-wrap { justify-content: safe center; }
+}
+.board {
+  --ms-cell: 32px;
+  display: grid;
+  gap: 2px;
+  user-select: none;
+  touch-action: manipulation;
+  transition: filter 220ms ease;
+}
+.board-wrap.is-veiled .board {
+  filter: blur(3px) brightness(0.55) saturate(0.7);
+  pointer-events: none;
+}
+.cell {
+  background: var(--term-surface-2);
+  border: 1px solid var(--term-border);
+  border-radius: 3px;
+  width: var(--ms-cell); height: var(--ms-cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: calc(var(--ms-cell) * 0.47);
+  cursor: pointer;
+  transition: background 100ms, border-color 100ms, box-shadow 100ms;
+  position: relative;
+  color: transparent;
+}
+.ms-row { display: contents; }
+.cell:focus-visible { outline: 2px solid var(--syn-cyan); outline-offset: -2px; z-index: 2; }
+.board.is-cursor-on .cell.is-cursor {
+  outline: 2px solid var(--syn-cyan);
+  outline-offset: -1px;
+  box-shadow: 0 0 10px rgba(34,211,238,0.45);
+  z-index: 2;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.cell:hover:not(.revealed):not(.exploded) {
+  background: var(--term-surface-3);
+  border-color: var(--term-border-strong);
+}
+.cell.revealed {
+  background: rgba(255,255,255,0.015);
+  border-color: var(--term-divider);
+  cursor: default;
+}
+.cell.empty { color: transparent; }
+.cell.flag {
+  color: var(--syn-pink);
+  background: var(--pink-10);
+  border-color: rgba(244,114,182,0.3);
+  box-shadow: 0 0 6px rgba(244,114,182,0.25);
+}
+.cell.flag::after { content: "⚑"; font-size: calc(var(--ms-cell) * 0.52); }
+.cell.q { color: var(--syn-amber); }
+.cell.q::after { content: "?"; font-size: calc(var(--ms-cell) * 0.52); }
+
+.cell.mine.exploded {
+  background: var(--syn-pink);
+  border-color: var(--syn-pink);
+  color: #0a0a0a;
+  box-shadow: var(--glow-pink), 0 0 18px rgba(244,114,182,0.6);
+}
+.cell.mine.revealed:not(.exploded) {
+  background: rgba(244,114,182,0.08);
+  border-color: rgba(244,114,182,0.25);
+  color: var(--syn-pink);
+}
+.cell.mine.exploded::after,
+.cell.mine.revealed:not(.exploded)::after {
+  content: "✱";
+  font-size: calc(var(--ms-cell) * 0.52);
+}
+.cell.flag.wrong {
+  background: rgba(244,114,182,0.05);
+  color: var(--syn-pink);
+  text-decoration: line-through;
+}
+.cell.flag.wrong::after { content: "⚑"; }
+
+.n1 { color: var(--syn-cyan)   !important; }
+.n2 { color: var(--syn-green)  !important; }
+.n3 { color: var(--syn-amber)  !important; }
+.n4 { color: var(--syn-purple) !important; }
+.n5 { color: var(--syn-pink)   !important; }
+.n6 { color: #5EEAD4 !important; }
+.n7 { color: #FB923C !important; }
+.n8 { color: #F8FAFC !important; }
+
+.pulse-cyan { animation: ms-pulse-cyan 600ms ease-out; }
+@keyframes ms-pulse-cyan {
+  0%   { box-shadow: 0 0 0 0 rgba(34,211,238,0.5); }
+  100% { box-shadow: 0 0 0 8px rgba(34,211,238,0); }
+}
+.cell.nudge { animation: ms-nudge 300ms ease; }
+@keyframes ms-nudge {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-2px); }
+  75%      { transform: translateX(2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-cyan, .cell.nudge { animation: none; }
+  .board { transition: none; }
+}
+
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(5,5,7,0.55);
+  z-index: 5;
+  padding: 12px;
+}
+.overlay.hidden { display: none; }
+.modal {
+  background: var(--term-surface-2);
+  border: 1px solid var(--term-border-strong);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  text-align: center;
+  max-width: 420px;
+  box-shadow: var(--elev-3);
+  font-family: var(--font-mono);
+}
+.modal.win   { box-shadow: var(--elev-3), var(--glow-cyan-soft); }
+.modal.lose  { box-shadow: var(--elev-3), var(--glow-pink); }
+.modal.pause { box-shadow: var(--elev-3), var(--glow-amber); }
+.modal .eyebrow { font-size: var(--text-xs); letter-spacing: 0.15em; margin: 0 0 8px; }
+.modal.win   .eyebrow { color: var(--syn-cyan); }
+.modal.lose  .eyebrow { color: var(--syn-pink); }
+.modal.pause .eyebrow { color: var(--syn-amber); }
+.modal h2 { font-size: 24px; margin: 0 0 12px; color: var(--term-fg-strong); }
+.modal p  { color: var(--term-muted); font-size: 13px; line-height: 1.6; margin: 0 0 20px; }
+.modal .stats-mini {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  text-align: left;
+}
+.stats-mini .k { color: var(--term-muted); }
+.stats-mini .v { color: var(--syn-cyan); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.ms-modal__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.ms-modal__btn { min-height: 44px; padding-inline: 20px; }
+
+.ms-help { max-width: min(430px, calc(100vw - 1.5rem)); position: relative; }
+.ms-help__close {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--term-border);
+  border-radius: 50%;
+  color: var(--term-muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ms-help__close:hover { color: var(--syn-cyan); border-color: var(--cyan-30); }
+.ms-help__badge {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 14px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+.ms-help__badge-k { text-transform: uppercase; letter-spacing: 0.14em; color: var(--term-subtle); }
+.ms-help__badge-v {
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cyan-30);
+  background: var(--cyan-8);
+  color: var(--syn-cyan);
+  font-size: 11px;
+  font-weight: 600;
+}
+.ms-help__methods { display: flex; flex-direction: column; gap: 14px; }
+.ms-help__head {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 7px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--term-fg-strong);
+}
+.ms-help__icon { width: 16px; height: 16px; color: var(--syn-cyan); flex: none; }
+.ms-help__rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.ms-help__rows li { display: flex; align-items: baseline; gap: 10px; font-size: 12px; }
+.ms-help__rows .kbd { flex: none; }
+.ms-help__note { margin: 14px 0 0; font-size: 11px; color: var(--term-subtle); line-height: 1.55; }
+
+.footer-hints {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid var(--term-border);
+  font-size: 11px;
+  color: var(--term-muted);
+  flex-wrap: wrap; gap: 12px;
+  font-family: var(--font-mono);
+}
+.footer-hints .keys { display: flex; gap: 14px; flex-wrap: wrap; }
+.kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--term-border);
+  border-radius: 3px;
+  color: var(--term-fg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+@media (max-width: 600px) {
+  .game-page .hero { margin-bottom: 18px; }
+  .game-page .hero h1 { font-size: 1.6rem; }
+  .game-page .hero p  { font-size: 12px; }
+  .board { --ms-cell: 30px; }
+  .board[data-size="big"] { --ms-cell: 25px; }
+  .stats-spread { width: 100%; justify-content: space-between; margin-left: 0; }
+  .board-wrap { padding: 14px 12px; min-height: 320px; }
+  .modal { padding: 20px 18px; max-width: 92vw; }
+  .modal h2 { font-size: 20px; }
+  .footer-hints { font-size: 10px; padding: 10px 12px; }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.minesweeper.title","suffix":" | Mentria"},"desc":{"key":"tools.minesweeper.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "pt-BR",
+        prefix: "/pt-br",
+        tools: [
+          { slug: "search", title: "Busca", category: "IA", keywords: "Encontre ferramentas e posts do feed. Digite qualquer consulta — palavra-chave ou linguagem natural." },
+          { slug: "step-counter", title: "Contador de Passos", category: "Saúde", keywords: "Conte seus passos durante uma caminhada, direto no navegador. Usa o sensor de movimento do seu telefone — nada é enviado.", requires: "motion" },
+          { slug: "qr-scanner", title: "Scanner e gerador de QR e códigos de barras", category: "Utilitário", keywords: "Escaneie códigos QR e de barras, ou gere um código QR a partir de qualquer link ou texto — tudo no dispositivo, sem enviar nada." },
+          { slug: "decision-wheel", title: "Roda de Decisões", category: "Utilitário", keywords: "Não consegue decidir? Gire a roda e deixe o destino escolher. Funciona offline." },
+          { slug: "countdown-timer", title: "Cronômetro Regressivo", category: "Cronômetro", keywords: "Defina uma duração ou escolha um horário alvo. Até 4 cronômetros independentes com som de alarme." },
+          { slug: "coin-flip", title: "Cara ou Coroa", category: "Utilitário", keywords: "Cara ou coroa — jogue uma moeda instantaneamente. Faça uma série de melhor-de-N para desempates. Funciona offline." },
+          { slug: "quick-notes", title: "Notas Rápidas", category: "Produtividade", keywords: "Um bloco de notas mínimo que vive no seu navegador. Crie várias notas, salvas automaticamente a cada tecla pressionada." },
+          { slug: "base64-codec", title: "Codec Base64", category: "Desenvolvimento", keywords: "Codifique e decodifique texto ou arquivos para e de Base64. Suporta imagens, documentos e qualquer tipo de arquivo. Tudo roda localmente no seu navegador." },
+          { slug: "totp", title: "TOTP", category: "Segurança", keywords: "Códigos de dois fatores que ficam no seu navegador, criptografados em repouso. Nada em um servidor." },
+          { slug: "exif", title: "Inspetor EXIF", category: "Segurança", keywords: "Veja o que uma foto carrega em segredo — dados da câmera, datas, localização GPS — e baixe uma cópia limpa sem nada disso. Nada é enviado." },
+          { slug: "color-picker", title: "Seletor de Cores", category: "Design", keywords: "Escolha qualquer cor, veja seus valores HEX / RGB / HSL e gere paletas harmônicas. Funciona offline." },
+          { slug: "annotate-image", title: "Anotar imagem", category: "IA", keywords: "Envie uma imagem e obtenha na hora uma descrição de IA, texto alternativo, transcrição ou tags — com prompts testados de um toque. Roda localmente no seu navegador, nada é enviado." },
+          { slug: "ai-chat", title: "Chat IA", category: "IA", keywords: "Qwen3.5 rodando localmente no seu navegador. Sem servidor, sem chaves de API. Suporta visão." },
+          { slug: "console", title: "Console", category: "IA", keywords: "Converse com o modelo local enquanto ele usa os apps da Mentria em uma tela de celular compartilhada — ou deixe que ele atue como usuário de teste e relate o que encontrar." },
+          { slug: "model-mirror", title: "Espelho de Modelos", category: "IA", keywords: "Ajude a distribuir os modelos locais da Mentria em P2P. Mantenha esta aba aberta e seu navegador vira um espelho." },
+          { slug: "quote", title: "Frase Motivacional", category: "IA", keywords: "Frases originais geradas por IA, rodando localmente no seu navegador. Seus dados não saem do seu dispositivo." },
+          { slug: "radio", title: "Rádio Infinita", category: "IA", keywords: "Música cinematográfica épica gerada por IA, transmitindo infinitamente. Aprende seu gosto localmente — seus dados não saem do seu dispositivo." },
+          { slug: "invoice", title: "Gerador de Notas", category: "Utilitário", keywords: "Crie notas fiscais limpas de uma página no seu navegador. Salva automaticamente conforme você digita. Imprima em A4 ou exporte para JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utilitário", keywords: "Escreva markdown, veja uma pré-visualização ao vivo, e baixe um PDF profissional e limpo. Salva automaticamente no seu navegador. Seus dados não saem do seu dispositivo." },
+          { slug: "tetris", title: "Tetris", category: "Jogo", keywords: "Empilhe tetraminós. Limpe linhas. A velocidade acelera a cada 10 linhas. Peças em ciano, roxo, rosa, âmbar e verde — a paleta da Mentria." },
+          { slug: "breakout", title: "Breakout", category: "Jogo", keywords: "Quebra-blocos encontra jogo de raquete. Pegue os power-ups caindo, limpe a parede, sobreviva a níveis cada vez mais rápidos e difíceis. Roda localmente — seus dados não saem do seu dispositivo." },
+          { slug: "flappy", title: "Flappy", category: "Jogo", keywords: "Um avião de papel passando por uma pilha de prompts de terminal. Toque, clique ou pressione ESPAÇO para bater asas. Não bata no prompt." },
+          { slug: "minesweeper", title: "Campo Minado", category: "Jogo", keywords: "Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas." },
+          { slug: "sudoku", title: "Sudoku", category: "Jogo", keywords: "Quebra-cabeça lógico em traje de terminal. Gerador de solução única, quatro dificuldades, anotações a lápis. Roda localmente — nenhum dado sai do seu dispositivo." },
+          { slug: "ludo", title: "Ludo", category: "Jogo", keywords: "Quatro peças em casa, você vence. Tire um seis para sair, capture no contato, refugie-se nas estrelas seguras. Jogue contra os bots ou no mesmo dispositivo." },
+          { slug: "chess", title: "Xadrez", category: "Jogo", keywords: "Motor local, revezamento e jogo online — sem servidores. Regras completas com roque, en passant e promoção; motor alfa-beta com quatro níveis, barra de avaliação e dicas." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Jogo", keywords: "Contrarrelógio de combate no navegador: corra, deslize, escale e atire com uma carabina automática em cinco percursos ao anoitecer. Medalhas, corrida contra fantasmas e jogo offline." },
+          { slug: "extensions", title: "Extensões", category: "Utilitário", keywords: "Instale extensões privadas em um único arquivo que vivem apenas neste dispositivo. Elas aparecem no seu lançador e terminal — e nunca no site público." },
+          { slug: "files", title: "Arquivos", category: "Utilitário", keywords: "Navegue, exporte e exclua os dados que as ferramentas da Mentria guardam neste dispositivo. Tudo fica local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Chat ponto a ponto, chamadas de voz e vídeo, e envio de arquivos. Criptografia de ponta a ponta, sem contas e sem servidor no meio.", url: "/comms/" },
+          { slug: "bubble-level", title: "Nível de bolha", category: "Utilitário", keywords: "Transforme o celular em um nível de bolha online: um nível de pedreiro sem instalar aplicativo, com precisão de 0,1° e que funciona offline.", requires: "motion" },
+          { slug: "decibel-meter", title: "Medidor de decibéis", category: "Utilitário", keywords: "Um medidor de som no navegador: meça o ruído em dB com o microfone do celular ou do notebook, sem instalar nenhum app." },
+          { slug: "compass", title: "Bússola", category: "Utilitário", keywords: "Uma bússola online sem app para instalar: abra no navegador e leia seu rumo magnético direto do sensor do celular.", requires: "motion" },
+          { slug: "speedometer", title: "Velocímetro GPS", category: "Utilitário", keywords: "Um velocímetro online por GPS, sem instalar aplicativo. Velocidade ao vivo em km/h, mph ou nós, com a distância do percurso, tudo calculado no seu aparelho." },
+          { slug: "ruler", title: "Régua Online", category: "Utilitário", keywords: "Uma régua online em tamanho real: meça em cm, mm e polegadas direto na tela e calibre com um cartão de banco para que os milímetros sejam de verdade." }
+        ],
+        nav: [
+          { id: "home", title: "Início", href: "/" },
+          { id: "tools", title: "Ferramentas", href: "/tools/" },
+          { id: "feed", title: "Feed", href: "/feed/" },
+          { id: "about", title: "Sobre", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Buscar ferramentas e páginas…",
+          listLabel: "Resultados da busca",
+          noResults: "Nenhum resultado",
+          recents: "Recentes",
+          extensions: "Extensões",
+          actions: "Ações",
+          actNote: "Salvar nota: “{text}”",
+          actNoteDone: "Nota salva",
+          actNoteFail: "Não foi possível salvar a nota",
+          actTimer: "Iniciar um timer de {dur}",
+          actFlip: "Jogar uma moeda",
+          actHeads: "Cara",
+          actTails: "Coroa",
+          searchSite: "Buscar “{q}” no site"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Pular para o conteúdo</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/pt-br/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/pt-br/feed/"  class="nav-link" title="Feed" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+            </a>
+            <a href="/pt-br/tools/" class="nav-link active" aria-current="page" title="Ferramentas" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Ferramentas</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/pt-br/about/" class="nav-link nav-link--about" title="Sobre" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">Sobre</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Idioma atual: Português (BR)" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="pt-BR">Português (BR)</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/minesweeper/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/minesweeper/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/minesweeper/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/minesweeper/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/minesweeper/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <div class="game-page">
+
+<section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/pt-br/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/pt-br/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">minesweeper</span></p>
+  <h1><i18n-t data-k="tools.minesweeper.title">Campo Minado</i18n-t><span style="color:var(--syn-cyan)">.</span>js</h1>
+  <p><i18n-t data-k="tools.minesweeper.lede">Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas.</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">O que é isso?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">Ocultar detalhes</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.minesweeper.title">O que é Campo Minado?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.minesweeper.tldr">Campo Minado clássico reconstruído com estética synthwave/terminal. Presets de dificuldade (fácil, médio, difícil, extremo), controles por teclado e toque, melhores tempos persistentes via localStorage. Sem instalação, sem cadastro, sem analítica; lógica do jogo e cronômetro rodam localmente no navegador. Funciona offline depois que a página carrega.</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+
+<div class="terminal-frame" style="view-transition-name: tool-minesweeper">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Alternar tela cheia" title="Alternar tela cheia" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">minesweeper.js</span>
+        
+        
+        <button type="button" class="terminal-frame__help" popovertarget="minesweeper-help" aria-label="Controles" title="Controles" data-i18na="aria-label=tool.common.controls;title=tool.common.controls">?</button>
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Alternar tela cheia" title="Alternar tela cheia" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+
+<div id="minesweeper-help" popover class="game-help ms-help">
+  <button type="button" class="ms-help__close" popovertarget="minesweeper-help" popovertargetaction="hide" aria-label="fechar" data-i18na="aria-label=tool.minesweeper.help_close"><svg viewBox="0 0 16 16" width="1em" height="1em" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6"></path></svg>
+</button>
+  <p class="game-help-title"><i18n-t data-k="tool.common.controls">Controles</i18n-t></p>
+
+  <p class="ms-help__badge">
+    <span class="ms-help__badge-k"><i18n-t data-k="tool.minesweeper.method_label">último usado</i18n-t></span>
+    <span class="ms-help__badge-v" id="ms-method">—</span>
+  </p>
+
+  <div class="ms-help__methods">
+    <section class="ms-help__method" data-input="touch">
+      <p class="ms-help__head">
+        <svg class="ms-help__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M9.4 11.6V5.9a1.8 1.8 0 0 1 3.6 0v5.1" />
+          <path d="M13 10.6a1.6 1.6 0 0 1 3.2 0v1.2" />
+          <path d="M16.2 11.4a1.6 1.6 0 0 1 3.2 0v3.2a6 6 0 0 1-6 6h-1.5a5 5 0 0 1-3.9-1.9l-3-3.8a1.7 1.7 0 0 1 2.6-2.1l1.8 2" />
+        </svg>
+        <span><i18n-t data-k="tool.minesweeper.help_touch">Toque</i18n-t></span>
+      </p>
+      <ul class="ms-help__rows">
+        <li><span class="kbd"><i18n-t data-k="tool.minesweeper.key_tap">toque</i18n-t></span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_reveal">revelar uma célula</i18n-t></span></li>
+        <li><span class="kbd"><i18n-t data-k="tool.minesweeper.key_hold">segure</i18n-t></span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_flag">marcar uma mina</i18n-t></span></li>
+        <li><span class="kbd"><i18n-t data-k="tool.minesweeper.key_tap">toque</i18n-t></span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_chord">limpar ao redor de um número</i18n-t></span></li>
+        <li><span class="kbd">⚑</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_flag_button">botão de modo bandeira para jogar com uma mão</i18n-t></span></li>
+      </ul>
+    </section>
+
+    <section class="ms-help__method" data-input="keyboard">
+      <p class="ms-help__head">
+        <svg class="ms-help__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <rect x="2.4" y="6" width="19.2" height="12" rx="2.2" />
+          <path d="M6.4 9.6h.01M9.6 9.6h.01M12.8 9.6h.01M16 9.6h.01M18.6 9.6h.01" />
+          <path d="M6.4 12.6h.01M9.6 12.6h.01M12.8 12.6h.01M16 12.6h.01M18.6 12.6h.01" />
+          <path d="M8.2 15.4h7.6" />
+        </svg>
+        <span><i18n-t data-k="tool.minesweeper.help_keyboard">Teclado</i18n-t></span>
+      </p>
+      <ul class="ms-help__rows">
+        <li><span><span class="kbd">←</span><span class="kbd">↑</span><span class="kbd">↓</span><span class="kbd">→</span></span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_move">mover o cursor</i18n-t></span></li>
+        <li><span><span class="kbd">ENTER</span><span class="kbd">SPACE</span></span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_reveal">revelar uma célula</i18n-t></span></li>
+        <li><span class="kbd">F</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_flag">marcar uma mina</i18n-t></span></li>
+        <li><span class="kbd">C</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_chord">limpar ao redor de um número</i18n-t></span></li>
+        <li><span class="kbd">P</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_pause">menu de pausa</i18n-t></span></li>
+        <li><span class="kbd">R</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_restart">reiniciar</i18n-t></span></li>
+      </ul>
+    </section>
+
+    <section class="ms-help__method" data-input="gamepad">
+      <p class="ms-help__head">
+        <svg class="ms-help__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M8.6 6.6h6.8a4.6 4.6 0 0 1 4.5 3.8l.9 4.9a3 3 0 0 1-5.2 2.5l-.9-1a2 2 0 0 0-1.5-.6h-2.4a2 2 0 0 0-1.5.6l-.9 1a3 3 0 0 1-5.2-2.5l.9-4.9a4.6 4.6 0 0 1 4.5-3.8Z" />
+          <path d="M7 11.2h3M8.5 9.7v3" />
+          <path d="M15.4 10.9h.01M17.7 13.1h.01" />
+        </svg>
+        <span><i18n-t data-k="tool.minesweeper.help_controller">Controle</i18n-t></span>
+      </p>
+      <ul class="ms-help__rows">
+        <li><span class="kbd">D-PAD</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_move">mover o cursor</i18n-t></span></li>
+        <li><span class="kbd">A</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_reveal">revelar uma célula</i18n-t></span></li>
+        <li><span class="kbd">B</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_flag">marcar uma mina</i18n-t></span></li>
+        <li><span class="kbd">X</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_chord">limpar ao redor de um número</i18n-t></span></li>
+        <li><span class="kbd">Y</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_flag_mode">alternar modo bandeira</i18n-t></span></li>
+        <li><span class="kbd">START</span><span class="game-help-label"><i18n-t data-k="tool.minesweeper.help_pause">menu de pausa</i18n-t></span></li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="ms-help__note"><i18n-t data-k="tool.minesweeper.help_note">A primeira escavação é sempre segura. Os números contam as minas ao redor da célula.</i18n-t></p>
+</div>
+
+<div class="ms-controls">
+  <span class="ctrl-label"><i18n-t data-k="tool.minesweeper.difficulty">Dificuldade</i18n-t></span>
+  <div class="m-seg" id="diff-seg">
+    <button data-d="easy" data-value="easy"><i18n-t data-k="tool.minesweeper.diff_easy">fácil · 9×9 · 10</i18n-t></button>
+    <button data-d="medium" data-value="medium" class="is-active"><i18n-t data-k="tool.minesweeper.diff_medium">médio · 14×14 · 32</i18n-t></button>
+    <button data-d="hard" data-value="hard"><i18n-t data-k="tool.minesweeper.diff_hard">difícil · 18×22 · 70</i18n-t></button>
+    <button data-d="extreme" data-value="extreme"><i18n-t data-k="tool.minesweeper.diff_extreme">extremo · 20×30 · 125</i18n-t></button>
+  </div>
+  <div class="stats-spread">
+    <div class="stat-item">
+      <span class="stat-key"><i18n-t data-k="tool.minesweeper.mines">Minas</i18n-t></span>
+      <span class="stat-val pink"><span id="stat-mines">32</span></span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-key"><i18n-t data-k="tool.minesweeper.time">Tempo</i18n-t></span>
+      <span class="stat-val cyan" id="stat-time">000</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-key"><i18n-t data-k="tool.minesweeper.best">Melhor</i18n-t></span>
+      <span class="stat-val amber" id="stat-best">—</span>
+    </div>
+  </div>
+</div>
+
+<div class="ms-toolbar">
+  <button type="button" class="mode-toggle" id="flag-toggle" aria-pressed="false">
+    <span class="indicator"></span>
+    <span id="flag-mode-label"><i18n-t data-k="tool.minesweeper.mode_dig">modo ESCAVAR · clique para revelar</i18n-t></span>
+  </button>
+  <button type="button" class="mode-toggle" id="pause-btn">
+    <span style="color: var(--syn-amber)">⏸</span>
+    <span><i18n-t data-k="tool.minesweeper.pause">pausar</i18n-t></span>
+  </button>
+  <button type="button" class="mode-toggle" id="restart-btn">
+    <span style="color: var(--syn-cyan)">↻</span>
+    <span><i18n-t data-k="tool.minesweeper.restart">reiniciar</i18n-t></span>
+  </button>
+  <span class="hint"><i18n-t data-k="tool.minesweeper.hint">clique-direito para bandeira · pressione longo no celular · clique num número para limpar</i18n-t></span>
+</div>
+
+<div class="board-wrap">
+  <div class="board" id="board"></div>
+
+  <div class="overlay hidden" id="overlay">
+    <div class="modal" id="modal"></div>
+  </div>
+</div>
+
+<div id="ms-live" class="sr-only" role="status" aria-live="polite"></div>
+
+<div class="footer-hints">
+  <div class="keys">
+    <span><span class="kbd"><i18n-t data-k="tool.minesweeper.key_click">clique</i18n-t></span> <i18n-t data-k="tool.minesweeper.footer_dig">escavar</i18n-t></span>
+    <span><span class="kbd"><i18n-t data-k="tool.minesweeper.key_right_click">clique-direito</i18n-t></span> <i18n-t data-k="tool.minesweeper.footer_flag">bandeira</i18n-t></span>
+    <span><span class="kbd">F</span> <i18n-t data-k="tool.minesweeper.footer_toggle_flag">alternar modo bandeira</i18n-t></span>
+    <span><span class="kbd">C</span> <i18n-t data-k="tool.minesweeper.footer_chord">limpar</i18n-t></span>
+    <span><span class="kbd">P</span> <i18n-t data-k="tool.minesweeper.footer_pause">pausar</i18n-t></span>
+    <span><span class="kbd">R</span> <i18n-t data-k="tool.minesweeper.footer_restart">reiniciar</i18n-t></span>
+  </div>
+  <div>
+    <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--syn-green); box-shadow:var(--glow-green); margin-right:6px"></span>
+    <i18n-t data-k="game.common.offline">local · pronto offline</i18n-t>
+  </div>
+</div>
+
+    </div>
+</div>
+<nav class="related-tools" aria-label="Mais ferramentas" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">Mais ferramentas</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/breakout/">
+        <span class="related-tools__name"><i18n-t data-k="tools.breakout.title">Breakout</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jogo</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/flappy/">
+        <span class="related-tools__name"><i18n-t data-k="tools.flappy.title">Flappy</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jogo</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/sudoku/">
+        <span class="related-tools__name"><i18n-t data-k="tools.sudoku.title">Sudoku</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jogo</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/pt-br/tools/ai-chat/">
+        <span class="related-tools__name"><i18n-t data-k="tools.ai-chat.title">Chat IA</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">IA</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/pt-br/tools/"><i18n-t data-k="tools_page.related_all">Todas as ferramentas</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Campo Minado",
+  "url": "https://webmcp.mentria.ai/pt-br/tools/minesweeper/",
+  "description": "Quebra-cabeça lógico clássico em traje de terminal. Clique para escavar, clique-direito (ou modo F) para marcar bandeira. Os números contam minas adjacentes. Não toque nas rosas.",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "pt-BR"
+}
+</script>
+
+
+
+
+<script>
+(() => {
+  'use strict';
+
+  const DIFFS = {
+    easy:    { rows: 9,  cols: 9,  mines: 10 },
+    medium:  { rows: 14, cols: 14, mines: 32 },
+    hard:    { rows: 18, cols: 22, mines: 70 },
+    extreme: { rows: 20, cols: 30, mines: 125 }
+  };
+
+  const COPY = {
+    boardLabel:    "Tabuleiro do campo minado",
+    aPos:          "linha {r}, coluna {c}",
+    aHidden:       "oculta",
+    aFlagged:      "marcada",
+    aUnflagged:    "desmarcada",
+    aQuestion:     "interrogação",
+    aMine:         "mina",
+    aEmpty:        "vazia",
+    aCount:        "{n} minas adjacentes",
+    aLost:         "mina atingida, fim de jogo",
+    aWon:          "campo limpo, você venceu",
+    aPaused:       "jogo pausado",
+    aResumed:      "jogo retomado",
+    aChordBlocked: "a contagem de bandeiras não confere",
+    modeDig:       "modo ESCAVAR · clique para revelar",
+    modeFlag:      "modo BANDEIRA · clique para marcar",
+    eyebrowWon:    "CAMPO LIMPO",
+    eyebrowLost:   "SEGFAULT — MINA DETONADA",
+    eyebrowPaused: "SIGINT — PAUSADO",
+    titleWon:      "vitória",
+    titleLost:     "fim de jogo",
+    titlePaused:   "pausado",
+    descWon:       "Você varreu o campo sem detonação.",
+    descLost:      "Processo terminado. {n} / {total} células reveladas.",
+    descPaused:    "Cronômetro parado. Continue exatamente de onde parou.",
+    statsDiff:     "Dificuldade",
+    statsGrid:     "Grade",
+    statsAvoided:  "Minas evitadas",
+    statsTime:     "Tempo",
+    statsBest:     "Melhor",
+    statsCells:    "Células reveladas",
+    newBest:       "novo recorde!",
+    btnNewGame:    "$ novo_jogo",
+    btnTryAgain:   "$ tentar_de_novo",
+    btnResume:     "$ retomar",
+    btnRestart:    "$ reiniciar",
+    methodTouch:   "toque",
+    methodMouse:   "mouse",
+    methodKeyboard:"teclado",
+    methodGamepad: "controle",
+    names: {
+      easy:    "fácil",
+      medium:  "médio",
+      hard:    "difícil",
+      extreme: "extremo"
+    }
+  };
+
+  const METHOD_LABELS = {
+    touch: COPY.methodTouch,
+    mouse: COPY.methodMouse,
+    keyboard: COPY.methodKeyboard,
+    gamepad: COPY.methodGamepad
+  };
+
+  const LONG_PRESS_MS = 350;
+  const HELP_NS = 'tools';
+  const HELP_KEY = 'minesweeper_help_seen';
+  const METHOD_KEY = 'minesweeper_last_method';
+
+  const State = {
+    diff: 'medium',
+    rows: 14, cols: 14, mines: 32,
+    grid: [],
+    started: false,
+    over: false,
+    won: false,
+    paused: false,
+    startedAt: 0,
+    pausedAt: 0,
+    endedAt: 0,
+    timer: null,
+    flagsPlaced: 0,
+    revealedCount: 0,
+    flagMode: false,
+    method: '',
+    pressTimers: new Map()
+  };
+
+  const boardEl = document.getElementById('board');
+  const boardWrap = document.querySelector('.board-wrap');
+  const overlay = document.getElementById('overlay');
+  const modal = document.getElementById('modal');
+  const liveEl = document.getElementById('ms-live');
+  const helpEl = document.getElementById('minesweeper-help');
+  const methodEl = document.getElementById('ms-method');
+  const minesEl = document.getElementById('stat-mines');
+  const timeEl = document.getElementById('stat-time');
+  const bestEl = document.getElementById('stat-best');
+  const flagBtn = document.getElementById('flag-toggle');
+  const flagLabel = document.getElementById('flag-mode-label');
+
+  let cellEls = [];
+  let cursorIdx = 0;
+  let longPressed = false;
+
+  function announce(msg) {
+    if (!liveEl) return;
+    liveEl.textContent = '';
+    liveEl.textContent = msg;
+  }
+
+  function make(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function fill(tpl, token, value) {
+    return String(tpl).split('{' + token + '}').join(String(value));
+  }
+
+  function storeGet(ns, key) {
+    if (window.MentriaStore) return window.MentriaStore.get(ns, key);
+    try {
+      const raw = localStorage.getItem('mentria_' + ns + '_' + key);
+      return raw == null ? null : JSON.parse(raw);
+    } catch (_) { return null; }
+  }
+  function storeSet(ns, key, value) {
+    if (window.MentriaStore) { window.MentriaStore.set(ns, key, value); return; }
+    try { localStorage.setItem('mentria_' + ns + '_' + key, JSON.stringify(value)); } catch (_) {}
+  }
+
+  function loadBest(d) {
+    let legacy = null;
+    try { legacy = localStorage.getItem('mentria_msw_best_' + d); } catch (_) {}
+    if (window.MentriaStore) {
+      const v = window.MentriaStore.get('games', 'msw_best_' + d);
+      if (v != null) return v;
+      if (legacy != null) {
+        const n = parseInt(legacy, 10);
+        if (!isNaN(n)) {
+          window.MentriaStore.set('games', 'msw_best_' + d, n);
+          try { localStorage.removeItem('mentria_msw_best_' + d); } catch (_) {}
+          return n;
+        }
+      }
+      return null;
+    }
+    return legacy ? parseInt(legacy, 10) : null;
+  }
+  function saveBest(d, t) {
+    const cur = loadBest(d);
+    if (cur === null || t < cur) {
+      if (window.MentriaStore) window.MentriaStore.set('games', 'msw_best_' + d, t);
+      else try { localStorage.setItem('mentria_msw_best_' + d, String(t)); } catch (_) {}
+    }
+  }
+
+  function cellEl(r, c) { return cellEls[r * State.cols + c]; }
+
+  function forEachNeighbor(r, c, fn) {
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let dc = -1; dc <= 1; dc++) {
+        if (dr === 0 && dc === 0) continue;
+        const rr = r + dr, cc = c + dc;
+        if (rr < 0 || rr >= State.rows || cc < 0 || cc >= State.cols) continue;
+        fn(rr, cc);
+      }
+    }
+  }
+
+  function cellStateText(r, c) {
+    const cell = State.grid[r][c];
+    if (!cell.revealed) {
+      if (cell.flag) return COPY.aFlagged;
+      if (cell.q) return COPY.aQuestion;
+      return COPY.aHidden;
+    }
+    if (cell.mine) return COPY.aMine;
+    if (cell.n === 0) return COPY.aEmpty;
+    return fill(COPY.aCount, 'n', cell.n);
+  }
+  function cellLabel(r, c) {
+    return fill(fill(COPY.aPos, 'r', r + 1), 'c', c + 1) + ', ' + cellStateText(r, c);
+  }
+  function setCellLabel(r, c) {
+    const el = cellEl(r, c);
+    if (el) el.setAttribute('aria-label', cellLabel(r, c));
+  }
+
+  function setCursor(idx, doFocus) {
+    if (idx < 0 || idx >= cellEls.length) return;
+    const prev = cellEls[cursorIdx];
+    if (prev) { prev.tabIndex = -1; prev.classList.remove('is-cursor'); }
+    cursorIdx = idx;
+    const el = cellEls[cursorIdx];
+    if (!el) return;
+    el.tabIndex = 0;
+    el.classList.add('is-cursor');
+    if (doFocus) el.focus();
+  }
+  function cursorRow() { return Math.floor(cursorIdx / State.cols); }
+  function cursorCol() { return cursorIdx % State.cols; }
+
+  function paintMethod(m) {
+    if (methodEl) methodEl.textContent = METHOD_LABELS[m] || '—';
+    boardEl.classList.toggle('is-cursor-on', m === 'keyboard' || m === 'gamepad');
+  }
+  function setMethod(m) {
+    if (!m || State.method === m) return;
+    State.method = m;
+    paintMethod(m);
+    storeSet(HELP_NS, METHOD_KEY, m);
+  }
+
+  function isHelpOpen() {
+    if (!helpEl) return false;
+    try { return helpEl.matches(':popover-open'); } catch (_) { return false; }
+  }
+  function openHelp() {
+    if (!helpEl || typeof helpEl.showPopover !== 'function') return;
+    try { if (!isHelpOpen()) helpEl.showPopover(); } catch (_) {}
+  }
+
+  function build() {
+    const cfg = DIFFS[State.diff] || DIFFS.medium;
+    State.rows = cfg.rows; State.cols = cfg.cols; State.mines = cfg.mines;
+    State.grid = [];
+    State.started = false; State.over = false; State.won = false; State.paused = false;
+    State.flagsPlaced = 0; State.revealedCount = 0;
+    State.startedAt = 0; State.pausedAt = 0; State.endedAt = 0;
+    stopTimer();
+    State.pressTimers.forEach((id) => clearTimeout(id));
+    State.pressTimers.clear();
+    longPressed = false;
+
+    for (let r = 0; r < State.rows; r++) {
+      const row = [];
+      for (let c = 0; c < State.cols; c++) {
+        row.push({ mine: false, revealed: false, flag: false, q: false, n: 0 });
+      }
+      State.grid.push(row);
+    }
+
+    boardEl.style.gridTemplateColumns = 'repeat(' + State.cols + ', auto)';
+    boardEl.style.setProperty('--ms-cols', State.cols);
+    boardEl.dataset.size = State.cols >= 20 ? 'big' : 'std';
+    boardEl.setAttribute('role', 'grid');
+    boardEl.setAttribute('aria-label', COPY.boardLabel);
+    boardEl.textContent = '';
+    cellEls = [];
+    for (let r = 0; r < State.rows; r++) {
+      const rowEl = make('div', 'ms-row');
+      rowEl.setAttribute('role', 'row');
+      for (let c = 0; c < State.cols; c++) {
+        const cell = make('div', 'cell');
+        cell.dataset.r = r; cell.dataset.c = c;
+        cell.setAttribute('role', 'gridcell');
+        cell.tabIndex = -1;
+        cell.setAttribute('aria-label', cellLabel(r, c));
+        rowEl.appendChild(cell);
+        cellEls.push(cell);
+      }
+      boardEl.appendChild(rowEl);
+    }
+    cursorIdx = 0;
+    if (cellEls[0]) { cellEls[0].tabIndex = 0; cellEls[0].classList.add('is-cursor'); }
+
+    hideOverlay(false);
+    updateHUD();
+    paintTime();
+    centerBoard();
+  }
+
+  function centerBoard() {
+    if (!boardWrap) return;
+    const extra = boardWrap.scrollWidth - boardWrap.clientWidth;
+    if (extra > 0) boardWrap.scrollLeft = Math.round(extra / 2);
+  }
+
+  function placeMines(safeR, safeC) {
+    const safeSet = new Set();
+    safeSet.add(safeR * State.cols + safeC);
+    forEachNeighbor(safeR, safeC, (rr, cc) => safeSet.add(rr * State.cols + cc));
+    const capacity = State.rows * State.cols - safeSet.size;
+    const target = Math.min(State.mines, capacity);
+    let placed = 0;
+    let guard = 0;
+    while (placed < target && guard < 500000) {
+      guard++;
+      const r = Math.floor(Math.random() * State.rows);
+      const c = Math.floor(Math.random() * State.cols);
+      if (State.grid[r][c].mine) continue;
+      if (safeSet.has(r * State.cols + c)) continue;
+      State.grid[r][c].mine = true;
+      placed++;
+    }
+    for (let r = 0; r < State.rows; r++) {
+      for (let c = 0; c < State.cols; c++) {
+        if (State.grid[r][c].mine) continue;
+        let n = 0;
+        forEachNeighbor(r, c, (rr, cc) => { if (State.grid[rr][cc].mine) n++; });
+        State.grid[r][c].n = n;
+      }
+    }
+  }
+
+  function elapsedSec() {
+    if (!State.started) return 0;
+    const end = State.over ? State.endedAt : (State.paused ? State.pausedAt : performance.now());
+    return Math.max(0, Math.floor((end - State.startedAt) / 1000));
+  }
+  function fmtTime(sec) { return String(Math.min(sec, 999)).padStart(3, '0'); }
+  function paintTime() { if (timeEl) timeEl.textContent = fmtTime(elapsedSec()); }
+  function startTimer() {
+    State.startedAt = performance.now();
+    stopTimer();
+    State.timer = setInterval(() => {
+      if (State.over || State.paused) return;
+      paintTime();
+    }, 250);
+  }
+  function stopTimer() {
+    if (State.timer) { clearInterval(State.timer); State.timer = null; }
+  }
+
+  function reveal(r, c) {
+    if (State.over) return;
+    if (r < 0 || r >= State.rows || c < 0 || c >= State.cols) return;
+    const cell = State.grid[r][c];
+    if (cell.revealed || cell.flag) return;
+    cell.revealed = true;
+    setCellLabel(r, c);
+
+    const el = cellEl(r, c);
+    el.classList.add('revealed');
+    if (cell.mine) {
+      el.classList.add('mine', 'exploded');
+      gameOver(false);
+      return;
+    }
+    State.revealedCount++;
+    if (cell.n > 0) {
+      el.textContent = String(cell.n);
+      el.classList.add('n' + cell.n);
+    } else {
+      el.classList.add('empty', 'pulse-cyan');
+      setTimeout(() => el.classList.remove('pulse-cyan'), 600);
+      forEachNeighbor(r, c, (rr, cc) => reveal(rr, cc));
+    }
+    checkWin();
+  }
+
+  function nudge(r, c) {
+    forEachNeighbor(r, c, (rr, cc) => {
+      const nb = State.grid[rr][cc];
+      if (nb.revealed || nb.flag) return;
+      const el = cellEl(rr, cc);
+      if (!el) return;
+      el.classList.remove('nudge');
+      void el.offsetWidth;
+      el.classList.add('nudge');
+      setTimeout(() => el.classList.remove('nudge'), 320);
+    });
+  }
+
+  function chordAt(r, c) {
+    if (State.over || State.paused || !State.started) return;
+    const cell = State.grid[r][c];
+    if (!cell.revealed || cell.n === 0) return;
+    let flags = 0;
+    forEachNeighbor(r, c, (rr, cc) => { if (State.grid[rr][cc].flag) flags++; });
+    if (flags !== cell.n) {
+      nudge(r, c);
+      announce(COPY.aChordBlocked);
+      return;
+    }
+    const targets = [];
+    forEachNeighbor(r, c, (rr, cc) => {
+      const nb = State.grid[rr][cc];
+      if (!nb.flag && !nb.revealed) targets.push([rr, cc]);
+    });
+    for (let i = 0; i < targets.length; i++) {
+      if (State.over) break;
+      reveal(targets[i][0], targets[i][1]);
+    }
+    if (!State.over) announce(cellStateText(r, c));
+  }
+
+  function flag(r, c) {
+    if (State.over || State.paused) return;
+    const cell = State.grid[r][c];
+    if (cell.revealed) return;
+    if (cell.flag) {
+      cell.flag = false; cell.q = true;
+      State.flagsPlaced--;
+    } else if (cell.q) {
+      cell.q = false;
+    } else {
+      cell.flag = true;
+      State.flagsPlaced++;
+    }
+    const el = cellEl(r, c);
+    el.classList.toggle('flag', cell.flag);
+    el.classList.toggle('q', cell.q);
+    setCellLabel(r, c);
+    announce(cell.flag ? COPY.aFlagged : (cell.q ? COPY.aQuestion : COPY.aUnflagged));
+    updateHUD();
+  }
+
+  function checkWin() {
+    if (State.over) return;
+    const total = State.rows * State.cols;
+    if (State.revealedCount >= total - State.mines) gameOver(true);
+  }
+
+  function gameOver(won) {
+    if (State.over) return;
+    State.endedAt = performance.now();
+    State.over = true;
+    State.won = won;
+    State.paused = false;
+    stopTimer();
+
+    for (let r = 0; r < State.rows; r++) {
+      for (let c = 0; c < State.cols; c++) {
+        const cell = State.grid[r][c];
+        const el = cellEl(r, c);
+        if (won && cell.mine && !cell.flag) {
+          cell.flag = true;
+          el.classList.add('flag');
+          setCellLabel(r, c);
+        }
+        if (won && cell.q) {
+          cell.q = false;
+          el.classList.remove('q');
+        }
+        if (!won && cell.mine && !cell.flag) {
+          cell.revealed = true;
+          el.classList.add('revealed', 'mine');
+          setCellLabel(r, c);
+        }
+        if (!won && cell.flag && !cell.mine) el.classList.add('wrong');
+      }
+    }
+
+    if (won) State.flagsPlaced = State.mines;
+
+    const elapsed = elapsedSec();
+    const prevBest = loadBest(State.diff);
+    if (won) saveBest(State.diff, elapsed);
+
+    announce(won ? COPY.aWon : COPY.aLost);
+    paintTime();
+    showResult(won, elapsed, prevBest);
+    updateHUD();
+  }
+
+  function renderModal(kind, opts) {
+    modal.className = 'modal ' + kind;
+    modal.textContent = '';
+    modal.appendChild(make('p', 'eyebrow', '> ' + opts.eyebrow));
+    modal.appendChild(make('h2', null, opts.title));
+    if (opts.desc) modal.appendChild(make('p', null, opts.desc));
+    if (opts.rows && opts.rows.length) {
+      const box = make('div', 'stats-mini');
+      opts.rows.forEach((row) => {
+        box.appendChild(make('span', 'k', row[0]));
+        box.appendChild(make('span', 'v', row[1]));
+      });
+      modal.appendChild(box);
+    }
+    const actions = make('div', 'ms-modal__actions');
+    opts.buttons.forEach((spec) => {
+      const btn = make('button', 'm-btn ms-modal__btn ' + (spec.primary ? 'm-btn--primary' : 'm-btn--ghost'), spec.label);
+      btn.type = 'button';
+      if (spec.id) btn.id = spec.id;
+      btn.addEventListener('click', spec.onClick);
+      actions.appendChild(btn);
+    });
+    modal.appendChild(actions);
+    overlay.classList.remove('hidden');
+    if (boardWrap) boardWrap.classList.add('is-veiled');
+    const first = actions.querySelector('button');
+    if (first) first.focus();
+  }
+
+  function hideOverlay(refocus) {
+    overlay.classList.add('hidden');
+    if (boardWrap) boardWrap.classList.remove('is-veiled');
+    if (refocus && (State.method === 'keyboard' || State.method === 'gamepad')) {
+      const el = cellEls[cursorIdx];
+      if (el) el.focus();
+    }
+  }
+
+  function showResult(won, elapsed, prevBest) {
+    const cfg = DIFFS[State.diff];
+    const name = COPY.names[State.diff] || State.diff;
+    const bestCell = won
+      ? ((prevBest !== null && prevBest <= elapsed) ? fmtTime(prevBest) + 's' : COPY.newBest)
+      : (prevBest !== null ? fmtTime(prevBest) + 's' : '—');
+    const rows = won
+      ? [
+          [COPY.statsDiff, name],
+          [COPY.statsGrid, cfg.rows + ' × ' + cfg.cols],
+          [COPY.statsAvoided, String(cfg.mines)],
+          [COPY.statsTime, fmtTime(elapsed) + 's'],
+          [COPY.statsBest, bestCell]
+        ]
+      : [
+          [COPY.statsDiff, name],
+          [COPY.statsTime, fmtTime(elapsed) + 's'],
+          [COPY.statsCells, String(State.revealedCount)],
+          [COPY.statsBest, bestCell]
+        ];
+    renderModal(won ? 'win' : 'lose', {
+      eyebrow: won ? COPY.eyebrowWon : COPY.eyebrowLost,
+      title: won ? COPY.titleWon : COPY.titleLost,
+      desc: won ? COPY.descWon : fill(fill(COPY.descLost, 'n', State.revealedCount), 'total', cfg.rows * cfg.cols - cfg.mines),
+      rows: rows,
+      buttons: [
+        { label: won ? COPY.btnNewGame : COPY.btnTryAgain, primary: true, id: 'play-again', onClick: () => build() }
+      ]
+    });
+  }
+
+  function showPauseMenu() {
+    renderModal('pause', {
+      eyebrow: COPY.eyebrowPaused,
+      title: COPY.titlePaused,
+      desc: COPY.descPaused,
+      rows: [
+        [COPY.statsDiff, COPY.names[State.diff] || State.diff],
+        [COPY.statsTime, fmtTime(elapsedSec()) + 's']
+      ],
+      buttons: [
+        { label: COPY.btnResume, primary: true, onClick: () => setPaused(false) },
+        { label: COPY.btnRestart, onClick: () => build() }
+      ]
+    });
+  }
+
+  function setPaused(on) {
+    if (!State.started || State.over) return;
+    if (on === State.paused) return;
+    if (on) {
+      State.paused = true;
+      State.pausedAt = performance.now();
+      showPauseMenu();
+      announce(COPY.aPaused);
+    } else {
+      State.startedAt += performance.now() - State.pausedAt;
+      State.paused = false;
+      hideOverlay(true);
+      announce(COPY.aResumed);
+    }
+    paintTime();
+  }
+
+  function togglePause() {
+    if (State.over) { build(); return; }
+    if (!State.started) { openHelp(); return; }
+    setPaused(!State.paused);
+  }
+
+  function updateHUD() {
+    const remaining = State.mines - State.flagsPlaced;
+    const width = Math.max(2, String(State.mines).length);
+    if (minesEl) {
+      minesEl.textContent = (remaining < 0 ? '-' : '') + String(Math.abs(remaining)).padStart(width, '0');
+      minesEl.classList.toggle('is-clear', remaining === 0);
+      minesEl.classList.toggle('is-over', remaining < 0);
+    }
+    const best = loadBest(State.diff);
+    if (bestEl) bestEl.textContent = best === null ? '—' : fmtTime(best) + 's';
+  }
+
+  function setFlagMode(on) {
+    State.flagMode = on;
+    if (flagBtn) {
+      flagBtn.classList.toggle('flag-mode', on);
+      flagBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    if (flagLabel) flagLabel.textContent = on ? COPY.modeFlag : COPY.modeDig;
+  }
+
+  function activate(r, c) {
+    if (State.over || State.paused) return;
+    if (State.flagMode) { flag(r, c); return; }
+    const cell = State.grid[r][c];
+    if (cell.flag) return;
+    if (!State.started) {
+      placeMines(r, c);
+      State.started = true;
+      startTimer();
+    }
+    if (cell.revealed) { chordAt(r, c); return; }
+    reveal(r, c);
+    if (!State.over) announce(cellStateText(r, c));
+  }
+
+  boardEl.addEventListener('pointerdown', (e) => {
+    setMethod(e.pointerType === 'touch' || e.pointerType === 'pen' ? 'touch' : 'mouse');
+  }, { passive: true });
+
+  boardEl.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    if (State.over || State.paused) return;
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    flag(+t.dataset.r, +t.dataset.c);
+  });
+
+  boardEl.addEventListener('click', (e) => {
+    if (State.over || State.paused) return;
+    if (longPressed) { longPressed = false; return; }
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    const idx = (+t.dataset.r) * State.cols + (+t.dataset.c);
+    setCursor(idx, false);
+    activate(+t.dataset.r, +t.dataset.c);
+  });
+
+  boardEl.addEventListener('touchstart', (e) => {
+    if (State.over || State.paused) return;
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    longPressed = false;
+    const r = +t.dataset.r, c = +t.dataset.c;
+    const id = setTimeout(() => {
+      State.pressTimers.delete(t);
+      if (State.over || State.paused) return;
+      flag(r, c);
+      longPressed = true;
+      try { if (navigator.vibrate) navigator.vibrate(18); } catch (_) {}
+    }, LONG_PRESS_MS);
+    State.pressTimers.set(t, id);
+  }, { passive: true });
+
+  function clearPress(t) {
+    const id = State.pressTimers.get(t);
+    if (id) { clearTimeout(id); State.pressTimers.delete(t); }
+  }
+  boardEl.addEventListener('touchend', (e) => {
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    clearPress(t);
+    if (longPressed) { e.preventDefault(); longPressed = false; }
+  });
+  boardEl.addEventListener('touchmove', (e) => {
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    clearPress(t);
+  }, { passive: true });
+  boardEl.addEventListener('touchcancel', (e) => {
+    const t = e.target && e.target.closest ? e.target.closest('.cell') : null;
+    if (t) clearPress(t);
+    longPressed = false;
+  }, { passive: true });
+
+  boardEl.addEventListener('focusin', (e) => {
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    const idx = (+t.dataset.r) * State.cols + (+t.dataset.c);
+    if (idx !== cursorIdx) setCursor(idx, false);
+  });
+
+  boardEl.addEventListener('keydown', (e) => {
+    const t = e.target.closest('.cell');
+    if (!t) return;
+    setMethod('keyboard');
+    const r = +t.dataset.r, c = +t.dataset.c;
+    const idx = r * State.cols + c;
+    const k = e.key;
+    if (k === 'ArrowUp') { e.preventDefault(); if (r > 0) setCursor(idx - State.cols, true); return; }
+    if (k === 'ArrowDown') { e.preventDefault(); if (r < State.rows - 1) setCursor(idx + State.cols, true); return; }
+    if (k === 'ArrowLeft') { e.preventDefault(); if (c > 0) setCursor(idx - 1, true); return; }
+    if (k === 'ArrowRight') { e.preventDefault(); if (c < State.cols - 1) setCursor(idx + 1, true); return; }
+    if (k === 'Home') { e.preventDefault(); setCursor(r * State.cols, true); return; }
+    if (k === 'End') { e.preventDefault(); setCursor(r * State.cols + State.cols - 1, true); return; }
+    if (k === 'Enter' || k === ' ' || k === 'Spacebar') { e.preventDefault(); activate(r, c); return; }
+    if (k === 'f' || k === 'F') { e.preventDefault(); e.stopPropagation(); flag(r, c); return; }
+    if (k === 'c' || k === 'C') { e.preventDefault(); e.stopPropagation(); chordAt(r, c); }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target && e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+    const k = e.key;
+    if (k === 'Escape') {
+      if (isHelpOpen()) return;
+      if (State.paused) setPaused(false);
+      return;
+    }
+    if (isHelpOpen()) return;
+    if (k === '?') { openHelp(); return; }
+    if (k === 'f' || k === 'F') { setMethod('keyboard'); setFlagMode(!State.flagMode); return; }
+    if (k === 'r' || k === 'R') { setMethod('keyboard'); build(); return; }
+    if (k === 'p' || k === 'P') { setMethod('keyboard'); togglePause(); return; }
+    if (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight') {
+      if (document.activeElement && document.activeElement !== document.body) return;
+      if (State.over || State.paused) return;
+      e.preventDefault();
+      setMethod('keyboard');
+      const el = cellEls[cursorIdx];
+      if (el) el.focus();
+    }
+  });
+
+  window.addEventListener('mentria:gamepad:direction', (e) => {
+    if (!e.detail) return;
+    setMethod('gamepad');
+    if (State.over || State.paused) return;
+    const d = e.detail.direction;
+    const r = cursorRow(), c = cursorCol();
+    if (d === 'up' && r > 0) setCursor(cursorIdx - State.cols, true);
+    else if (d === 'down' && r < State.rows - 1) setCursor(cursorIdx + State.cols, true);
+    else if (d === 'left' && c > 0) setCursor(cursorIdx - 1, true);
+    else if (d === 'right' && c < State.cols - 1) setCursor(cursorIdx + 1, true);
+  });
+
+  window.addEventListener('mentria:gamepad:button', (e) => {
+    if (!e.detail || !e.detail.pressed) return;
+    setMethod('gamepad');
+    const n = e.detail.name;
+    if (n === 'start') { togglePause(); return; }
+    if (State.over) { if (n === 'a' || n === 'b') build(); return; }
+    if (State.paused) { if (n === 'a' || n === 'b') setPaused(false); return; }
+    const r = cursorRow(), c = cursorCol();
+    if (n === 'a') activate(r, c);
+    else if (n === 'b') flag(r, c);
+    else if (n === 'x') chordAt(r, c);
+    else if (n === 'y') setFlagMode(!State.flagMode);
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && State.started && !State.over && !State.paused) setPaused(true);
+  });
+
+  if (window.MentriaUI && typeof window.MentriaUI.segmented === 'function') {
+    window.MentriaUI.segmented(document.getElementById('diff-seg'), (value) => {
+      if (!DIFFS[value]) return;
+      State.diff = value;
+      storeSet('games', 'msw_diff', value);
+      build();
+    });
+  }
+
+  if (flagBtn) flagBtn.addEventListener('click', () => setFlagMode(!State.flagMode));
+  const pauseBtn = document.getElementById('pause-btn');
+  if (pauseBtn) pauseBtn.addEventListener('click', () => togglePause());
+  const restartBtn = document.getElementById('restart-btn');
+  if (restartBtn) restartBtn.addEventListener('click', () => build());
+
+  if (helpEl) {
+    helpEl.addEventListener('toggle', (e) => {
+      if (e.newState === 'open' && methodEl) {
+        methodEl.textContent = METHOD_LABELS[State.method] || METHOD_LABELS[storeGet(HELP_NS, METHOD_KEY)] || '—';
+      }
+    });
+  }
+
+  window.addEventListener('resize', centerBoard);
+
+  const savedDiff = storeGet('games', 'msw_diff');
+  if (savedDiff && DIFFS[savedDiff]) {
+    State.diff = savedDiff;
+    const seg = document.getElementById('diff-seg');
+    if (seg) {
+      Array.prototype.forEach.call(seg.querySelectorAll('button'), (b) => {
+        b.classList.toggle('is-active', b.getAttribute('data-value') === savedDiff);
+      });
+    }
+  }
+
+  const lastMethod = storeGet(HELP_NS, METHOD_KEY);
+  if (methodEl && METHOD_LABELS[lastMethod]) methodEl.textContent = METHOD_LABELS[lastMethod];
+
+  setFlagMode(false);
+  build();
+
+  if (!storeGet(HELP_NS, HELP_KEY)) {
+    setTimeout(() => {
+      openHelp();
+      storeSet(HELP_NS, HELP_KEY, true);
+    }, 700);
+  }
+})();
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="Navegação do aplicativo" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/pt-br/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Início</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/pt-br/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Buscar</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Adicionar à tela inicial — funciona offline.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Instalar</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Fechar" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Fechar" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Instalar Mentria no iPhone",
+    macosTitle:  "Instalar Mentria no Mac",
+    chromeTitle: "Instalar Mentria",
+    iosStep1:    "Toque no botão <strong>Compartilhar</strong> na parte inferior da tela",
+    iosStep2:    "Escolha <strong>Adicionar à Tela de Início</strong>",
+    iosStep3:    "Toque em <strong>Adicionar</strong> no canto superior direito.",
+    macosStep1:  "Abra esta página no <strong>Safari 17+</strong>.",
+    macosStep2:  "Na barra de menus, escolha <strong>Arquivo → Adicionar ao Dock…</strong>",
+    macosStep3:  "Clique em <strong>Adicionar</strong>.",
+    chromeStep1: "Clique no ícone de <strong>instalação</strong> na barra de endereços do seu navegador.",
+    chromeStep2: "Ou abra o menu (⋮) e escolha <strong>Instalar Mentria</strong>.",
+    note:        "Depois de instalada, a Mentria funciona offline e seus dados locais permanecem no seu dispositivo."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Cancelar</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "Confirmar";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "Não foi possível salvar — o armazenamento do navegador está cheio. Libere espaço para manter suas alterações.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("Isso baixa um modelo de IA grande (490 MB ou mais, dependendo do modelo) e você parece estar em uma conexão lenta ou com economia de dados. Continuar?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Compartilhar";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "Sobre esta ferramenta");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Versão de teste (snapshot da submissão WebMCP), congelada para testes. Para uso geral, acesse <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

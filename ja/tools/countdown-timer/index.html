@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>カウントダウンタイマー | Mentria</title>
+    <meta name="description" content="時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/ja/tools/countdown-timer/">
+    <meta property="og:title" content="カウントダウンタイマー | Mentria">
+    <meta property="og:description" content="時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/ja/tools/countdown-timer/">
+    <meta name="twitter:title" content="カウントダウンタイマー | Mentria">
+    <meta name="twitter:description" content="時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/countdown-timer/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/countdown-timer/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/countdown-timer/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/countdown-timer/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/countdown-timer/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/countdown-timer/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "ツール、実験、ビジュアル・トランスミッションのクリエイティブスタジオ。職人技で構築。",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "ja"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://webmcp.mentria.ai/ja/" },
+        { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://webmcp.mentria.ai/ja/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "カウントダウンタイマー", "item": "https://webmcp.mentria.ai/ja/tools/countdown-timer/" }
+      ]
+    }
+    </script>
+<style>
+.countdown-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.ct-notif-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.85rem;
+  width: 100%;
+  background: var(--orange-8);
+  border: 1px solid var(--orange-15);
+  border-radius: var(--radius-lg);
+  font-size: 0.82rem;
+  color: var(--term-fg);
+  flex-wrap: wrap;
+}
+.ct-notif-bar.is-unsupported { display: none; }
+.ct-notif-bar.is-granted {
+  background: var(--green-8);
+  border-color: rgba(74, 222, 128, 0.22);
+}
+.ct-notif-bar.is-denied {
+  background: var(--pink-10);
+  border-color: rgba(244, 114, 182, 0.22);
+}
+.ct-notif-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255, 149, 0, 0.75);
+  box-shadow: 0 0 6px rgba(255, 149, 0, 0.5);
+  flex-shrink: 0;
+}
+.ct-notif-bar.is-granted .ct-notif-dot {
+  background: var(--syn-green);
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+}
+.ct-notif-bar.is-denied .ct-notif-dot {
+  background: var(--syn-pink);
+  box-shadow: 0 0 6px rgba(244, 114, 182, 0.5);
+}
+.ct-notif-text {
+  flex: 1 1 200px;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.85);
+}
+.ct-notif-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.ct-notif-actions .m-btn {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .ct-notif-bar { font-size: 0.78rem; gap: 0.5rem; padding: 0.5rem 0.7rem; }
+  .ct-notif-text { flex-basis: 100%; }
+  .ct-notif-actions { flex-basis: 100%; }
+}
+
+.ct-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.ct-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+  padding: var(--space-4);
+}
+.ct-add-btn__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.ct-widget {
+  position: relative;
+  background: var(--term-bg);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 1.5rem 1.25rem;
+  border: 1px solid rgba(255, 165, 0, 0.15);
+  box-shadow:
+    inset 0 2px 16px rgba(0,0,0,0.7),
+    0 8px 32px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.ct-widget:hover {
+  border-color: rgba(255, 165, 0, 0.3);
+}
+
+.ct-widget__close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-md);
+  transition: color 0.2s, background 0.2s;
+}
+.ct-widget__close:hover {
+  color: #ff5555;
+  background: rgba(255, 85, 85, 0.1);
+}
+
+.ct-widget__title {
+  font-size: 1rem;
+  color: var(--syn-orange);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  outline: none;
+  border-bottom: 1px dashed transparent;
+  padding: 0.1rem 0.5rem;
+  min-width: 60px;
+  transition: border-color 0.2s;
+  cursor: text;
+}
+.ct-widget__title:hover {
+  border-bottom-color: var(--orange-30);
+}
+.ct-widget__title:focus {
+  border-bottom-color: var(--syn-orange);
+}
+
+.ct-widget__display-wrap {
+  width: 100%;
+}
+.ct-widget__display {
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  color: var(--syn-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1em;
+  text-shadow:
+    0 0 20px rgba(255, 149, 0, 0.6),
+    0 0 40px var(--orange-30);
+  padding: 0.15em 0;
+  transition: all 0.3s ease;
+}
+.ct-widget__display--finished {
+  animation: ct-flash 0.5s ease-in-out infinite alternate;
+}
+@keyframes ct-flash {
+  from { opacity: 1; }
+  to { opacity: 0.4; }
+}
+.ct-widget__seg {
+  min-width: 2ch;
+  text-align: center;
+  display: inline-block;
+  background: linear-gradient(180deg, var(--syn-orange) 0%, #ff6b00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.ct-widget__colon {
+  color: var(--syn-orange);
+  animation: ct-blink 1s step-end infinite;
+}
+@keyframes ct-blink {
+  50% { opacity: 0.3; }
+}
+.ct-widget__status {
+  font-size: 0.85rem;
+  color: rgba(255, 149, 0, 0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.ct-widget__inputs {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.ct-widget__inputs--hidden {
+  display: none;
+}
+.ct-input-grp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.ct-input-grp--wide {
+  flex: 1;
+  min-width: 200px;
+}
+.ct-input-grp label {
+  font-size: 0.78rem;
+  color: var(--term-muted);
+  font-weight: 500;
+}
+.ct-input-grp .m-input {
+  text-align: center;
+  font-weight: 600;
+}
+.ct-input-grp input[type="number"] { width: 72px; }
+.ct-input-grp input[type="datetime-local"] {
+  width: 100%;
+  text-align: left;
+  color-scheme: dark;
+  font-size: 0.95rem;
+}
+.ct-input-grp input[type="number"]::-webkit-outer-spin-button,
+.ct-input-grp input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ct-widget__dt-error {
+  width: 100%;
+  font-size: 0.8rem;
+  color: #ff5555;
+  min-height: 1.2em;
+}
+
+.ct-widget__presets {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--term-muted);
+}
+.ct-preset-remove {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  font-size: var(--text-2xs);
+  margin-left: -4px;
+}
+.ct-preset-save {
+  min-width: 28px;
+}
+.ct-custom-presets {
+  display: contents;
+}
+
+.ct-preset {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+}
+
+.ct-widget__controls {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .ct-grid {
+    grid-template-columns: 1fr;
+  }
+  .ct-widget {
+    padding: 1.25rem 1rem 1rem;
+  }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.countdown-timer.title","suffix":" | Mentria"},"desc":{"key":"tools.countdown-timer.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "ja",
+        prefix: "/ja",
+        tools: [
+          { slug: "search", title: "検索", category: "AI", keywords: "ツールとフィード投稿を検索。キーワードでも自然言語でも入力可能。" },
+          { slug: "step-counter", title: "歩数カウンター", category: "健康", keywords: "ブラウザ内で散歩中の歩数をカウント。スマホのモーションセンサーを使用 — アップロードは一切なし。", requires: "motion" },
+          { slug: "qr-scanner", title: "QR・バーコード スキャナー＆ジェネレーター", category: "ユーティリティ", keywords: "QRコードやバーコードをスキャンしたり、リンクやテキストからQRコードを生成したり——すべて端末内で処理し、何もアップロードしません。" },
+          { slug: "decision-wheel", title: "決定の輪", category: "ユーティリティ", keywords: "決められない？ホイールを回して運命に任せましょう。オフラインでも動作。" },
+          { slug: "countdown-timer", title: "カウントダウンタイマー", category: "タイマー", keywords: "時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。" },
+          { slug: "coin-flip", title: "コインフリップ", category: "ユーティリティ", keywords: "表か裏 — 即座にコインを投げる。タイブレーカーには best-of-N シリーズ。オフラインでも動作。" },
+          { slug: "quick-notes", title: "クイックノート", category: "生産性", keywords: "ブラウザに住むミニマルなスクラッチパッド。複数のノートを作成、キー入力ごとに自動保存。" },
+          { slug: "base64-codec", title: "Base64コーデック", category: "開発", keywords: "テキストやファイルをBase64にエンコード・デコード。画像、ドキュメント、あらゆるファイルタイプに対応。すべてブラウザ内でローカル実行。" },
+          { slug: "totp", title: "TOTP", category: "セキュリティ", keywords: "ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。" },
+          { slug: "exif", title: "EXIFインスペクター", category: "セキュリティ", keywords: "写真にひそかに含まれる情報 — カメラ情報、日時、GPS位置 — を表示し、すべて削除したクリーンなコピーを保存。アップロードは一切ありません。" },
+          { slug: "color-picker", title: "カラーピッカー", category: "デザイン", keywords: "好きな色を選んで HEX / RGB / HSL の値を表示し、調和の取れたパレットを生成。オフラインでも動作。" },
+          { slug: "annotate-image", title: "画像を注釈", category: "AI", keywords: "画像をアップロードすると、AIによる説明・代替テキスト・文字起こし・タグを即座に取得 — テスト済みのワンタップ・プロンプト付き。ブラウザ内でローカル実行、アップロードは一切なし。" },
+          { slug: "ai-chat", title: "AIチャット", category: "AI", keywords: "Qwen3.5がブラウザ内でローカル実行。サーバーなし、APIキー不要。画像入力対応。" },
+          { slug: "console", title: "コンソール", category: "AI", keywords: "共有のスマホ画面でデバイス上のモデルがMentriaのアプリを操作するのを見ながらチャット。テストユーザーとして探索させ、見つけたことを報告させることもできます。" },
+          { slug: "model-mirror", title: "モデルミラー", category: "AI", keywords: "Mentria のオンデバイスモデルの P2P 配信に協力できます。このタブを開いたままにすると、ブラウザがミラーになります。" },
+          { slug: "quote", title: "モチベーション名言", category: "AI", keywords: "AIが生成するオリジナルの名言、ブラウザ内でローカル実行。データはデバイスから出ません。" },
+          { slug: "radio", title: "無限ラジオ", category: "AI", keywords: "AI生成の壮大なシネマティック音楽、無限ストリーミング。あなたの好みをローカルで学習 — データはデバイスから出ません。" },
+          { slug: "invoice", title: "請求書ジェネレーター", category: "ユーティリティ", keywords: "ブラウザでクリーンな1ページ請求書を作成。入力中に自動保存。A4印刷またはJSONエクスポート。" },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "ユーティリティ", keywords: "Markdownを書いて、ライブプレビューを見て、クリーンでプロフェッショナルなPDFをダウンロード。ブラウザに自動保存。データはデバイスから出ません。" },
+          { slug: "tetris", title: "テトリス", category: "ゲーム", keywords: "テトロミノを積み上げる。ラインを消す。10ライン毎にスピードアップ。シアン・パープル・ピンク・アンバー・グリーンのピース — Mentriaパレット。" },
+          { slug: "breakout", title: "Breakout", category: "ゲーム", keywords: "ブロック崩しとパドルゲームの融合。落ちてくるパワーアップをキャッチし、壁を崩し、ますます速く厳しくなるレベルを生き抜こう。ローカル動作 — データはデバイスから出ません。" },
+          { slug: "flappy", title: "Flappy", category: "ゲーム", keywords: "ターミナルプロンプトの山を縫って飛ぶ紙飛行機。タップ・クリック・SPACEキーで羽ばたき。プロンプトに墜落しないように。" },
+          { slug: "minesweeper", title: "マインスイーパー", category: "ゲーム", keywords: "ターミナル風の伝統的な論理パズル。クリックで掘る、右クリック(またはFモード)で旗を立てる。数字は隣接する地雷を示す。ピンクは押さないで。" },
+          { slug: "sudoku", title: "数独", category: "ゲーム", keywords: "ターミナル装いの論理パズル。唯一解ジェネレーター、4段階の難易度、鉛筆メモ。すべて端末内で動作 — データは外に出ません。" },
+          { slug: "ludo", title: "ルド", category: "ゲーム", keywords: "4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。" },
+          { slug: "chess", title: "チェス", category: "ゲーム", keywords: "ローカルエンジン、交代プレイ、オンライン対戦 — サーバー不要。キャスリング・アンパッサン・昇格まで完全ルール。4段階のアルファベータエンジン、評価バー、ヒント。" },
+          { slug: "phosphor", title: "PHOSPHOR", category: "ゲーム", keywords: "ブラウザで遊べる戦闘タイムトライアル。夕暮れの5コースをスプリント、スライディング、乗り越えで駆け抜け、フルオートのカービンで撃つ。メダル、ゴースト対戦、オフライン対応。" },
+          { slug: "extensions", title: "拡張機能", category: "ユーティリティ", keywords: "このデバイスにのみ存在するプライベートな単一ファイル拡張機能をインストール。ランチャーとターミナルに表示され、公開サイトには絶対に載りません。" },
+          { slug: "files", title: "ファイル", category: "ユーティリティ", keywords: "Mentria のツールがこの端末に保存したデータを閲覧・エクスポート・削除できます。すべて端末内にとどまります。" },
+          { slug: "comms", title: "Comms", category: "ソーシャル", keywords: "ピアツーピアのチャット、音声・ビデオ通話、ファイル送信。エンドツーエンド暗号化、アカウント不要、中間サーバーなし。", url: "/comms/" },
+          { slug: "bubble-level", title: "水平器", category: "ユーティリティ", keywords: "スマホがそのまま水平器に。アプリ不要のブラウザ版バブルレベルで、0.1°まで表示、オフラインでも使えます。", requires: "motion" },
+          { slug: "decibel-meter", title: "騒音計", category: "ユーティリティ", keywords: "ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。" },
+          { slug: "compass", title: "コンパス", category: "ユーティリティ", keywords: "アプリ不要のコンパス。ブラウザで開くだけで、スマートフォンのセンサーから磁方位をそのまま読み取れます。", requires: "motion" },
+          { slug: "speedometer", title: "GPS スピードメーター", category: "ユーティリティ", keywords: "アプリ不要のブラウザ版 GPS スピードメーター。km/h・mph・ノットでリアルタイムの速度と走行距離を、すべて端末内で計算して表示します。" },
+          { slug: "ruler", title: "オンライン定規", category: "ユーティリティ", keywords: "画面上で実寸のまま測れるオンライン定規。cm・mm・インチに対応し、銀行カードで校正すればミリ単位まで正確になります。" }
+        ],
+        nav: [
+          { id: "home", title: "ホーム", href: "/" },
+          { id: "tools", title: "ツール", href: "/tools/" },
+          { id: "feed", title: "フィード", href: "/feed/" },
+          { id: "about", title: "概要", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "ツールとページを検索…",
+          listLabel: "検索結果",
+          noResults: "一致するものがありません",
+          recents: "最近使ったもの",
+          extensions: "拡張機能",
+          actions: "アクション",
+          actNote: "メモを保存: 「{text}」",
+          actNoteDone: "メモを保存しました",
+          actNoteFail: "メモを保存できませんでした",
+          actTimer: "{dur}のタイマーを開始",
+          actFlip: "コインを投げる",
+          actHeads: "表",
+          actTails: "裏",
+          searchSite: "サイト内で「{q}」を検索"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">コンテンツへスキップ</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/ja/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/ja/feed/"  class="nav-link" title="フィード" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+            </a>
+            <a href="/ja/tools/" class="nav-link active" aria-current="page" title="ツール" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">ツール</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="コムズ" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/ja/about/" class="nav-link nav-link--about" title="概要" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">概要</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="コマンドパレットを開く（⌘K）" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="現在の言語: 日本語" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="ja">日本語</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/countdown-timer/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/countdown-timer/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/countdown-timer/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/countdown-timer/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/countdown-timer/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/ja/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/ja/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">countdown-timer</span></p>
+  <h1><i18n-t data-k="tools.countdown-timer.title">カウントダウンタイマー</i18n-t></h1>
+  <p><i18n-t data-k="tools.countdown-timer.lede">時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">これは何?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">詳細を隠す</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.countdown-timer.title">カウントダウンタイマーとは?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.countdown-timer.tldr">最大4本のカウントダウンタイマーを並行実行。タブが非表示でも、終了時に任意でシステム通知を表示。所要時間または目標日時を設定、各タイマーに名前を付け、プリセットを保存可能。音声アラームと通知はブラウザから発火 — 記録もサーバー送信もありません。</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-countdown-timer">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">countdown-timer.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="countdown-tool">
+  <div class="ct-notif-bar" id="ct-notif-bar" role="status" aria-live="polite">
+    <span class="ct-notif-dot" id="ct-notif-dot" aria-hidden="true"></span>
+    <span class="ct-notif-text" id="ct-notif-text"><i18n-t data-k="tool.countdown-timer.notif_check">通知サポートを確認中…</i18n-t></span>
+    <span class="ct-notif-actions">
+      <button class="m-btn m-btn--primary m-btn--pill" id="ct-notif-enable" hidden><i18n-t data-k="tool.countdown-timer.notif_enable_btn">通知を有効にする</i18n-t></button>
+      <button class="m-btn m-btn--ghost m-btn--pill" id="ct-notif-test" hidden><i18n-t data-k="tool.countdown-timer.notif_test_btn">テスト</i18n-t></button>
+    </span>
+  </div>
+
+  <div class="ct-grid" id="ct-grid"></div>
+  <button class="ct-add-btn m-btn m-btn--ghost" id="ct-add-btn" title="タイマーを追加" data-i18na="title=tool.countdown-timer.btn_add_timer">
+    <span class="ct-add-btn__icon">+</span>
+    <span><i18n-t data-k="tool.countdown-timer.btn_add_timer">タイマーを追加</i18n-t></span>
+  </button>
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="その他のツール" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">その他のツール</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/console/">
+        <span class="related-tools__name"><i18n-t data-k="tools.console.title">コンソール</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">AI</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/model-mirror/">
+        <span class="related-tools__name"><i18n-t data-k="tools.model-mirror.title">モデルミラー</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">AI</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/quote/">
+        <span class="related-tools__name"><i18n-t data-k="tools.quote.title">モチベーション名言</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">AI</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/radio/">
+        <span class="related-tools__name"><i18n-t data-k="tools.radio.title">無限ラジオ</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">AI</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/ja/tools/"><i18n-t data-k="tools_page.related_all">すべてのツール</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+<template id="ct-widget-tpl">
+  <div class="ct-widget" data-widget-id="">
+    <button class="ct-widget__close" title="タイマーを削除" data-i18na="title=tool.countdown-timer.btn_remove_timer">&times;</button>
+
+    <div class="ct-widget__title" contenteditable="true" spellcheck="false" data-placeholder="Timer"></div>
+
+    <div class="ct-widget__display-wrap">
+      <div class="ct-widget__display">
+        <span class="ct-widget__seg" data-role="hours">00</span>
+        <span class="ct-widget__colon">:</span>
+        <span class="ct-widget__seg" data-role="mins">00</span>
+        <span class="ct-widget__colon">:</span>
+        <span class="ct-widget__seg" data-role="secs">00</span>
+      </div>
+      <div class="ct-widget__status"><i18n-t data-k="tool.countdown-timer.status_ready">準備完了</i18n-t></div>
+    </div>
+
+    <div class="ct-widget__mode-toggle m-seg">
+      <button data-mode="duration" data-value="duration" class="is-active"><i18n-t data-k="tool.countdown-timer.mode_duration">所要時間</i18n-t></button>
+      <button data-mode="datetime" data-value="datetime"><i18n-t data-k="tool.countdown-timer.mode_datetime">日時</i18n-t></button>
+    </div>
+
+    <div class="ct-widget__inputs" data-panel="duration">
+      <div class="ct-input-grp">
+        <label><i18n-t data-k="tool.countdown-timer.input_hours">時</i18n-t></label>
+        <input class="m-input" type="number" data-input="hours" min="0" max="99" value="0" />
+      </div>
+      <div class="ct-input-grp">
+        <label><i18n-t data-k="tool.countdown-timer.input_minutes">分</i18n-t></label>
+        <input class="m-input" type="number" data-input="mins" min="0" max="59" value="0" />
+      </div>
+      <div class="ct-input-grp">
+        <label><i18n-t data-k="tool.countdown-timer.input_seconds">秒</i18n-t></label>
+        <input class="m-input" type="number" data-input="secs" min="0" max="59" value="0" />
+      </div>
+    </div>
+
+    <div class="ct-widget__inputs ct-widget__inputs--hidden" data-panel="datetime">
+      <div class="ct-input-grp ct-input-grp--wide">
+        <label><i18n-t data-k="tool.countdown-timer.input_until_label">次の時刻までカウントダウン</i18n-t></label>
+        <input class="m-input" type="datetime-local" data-input="datetime" />
+      </div>
+      <div class="ct-widget__dt-error" data-role="dt-error"></div>
+    </div>
+
+    <div class="ct-widget__presets">
+      <span><i18n-t data-k="tool.countdown-timer.presets_label">プリセット:</i18n-t></span>
+      <button class="ct-preset m-btn m-btn--ghost m-btn--pill" data-seconds="60"><i18n-t data-k="tool.countdown-timer.preset_1min">1分</i18n-t></button>
+      <button class="ct-preset m-btn m-btn--ghost m-btn--pill" data-seconds="300"><i18n-t data-k="tool.countdown-timer.preset_5min">5分</i18n-t></button>
+      <button class="ct-preset m-btn m-btn--ghost m-btn--pill" data-seconds="600"><i18n-t data-k="tool.countdown-timer.preset_10min">10分</i18n-t></button>
+      <button class="ct-preset m-btn m-btn--ghost m-btn--pill" data-seconds="1500"><i18n-t data-k="tool.countdown-timer.preset_25min">25分</i18n-t></button>
+      <button class="ct-preset m-btn m-btn--ghost m-btn--pill" data-seconds="3600"><i18n-t data-k="tool.countdown-timer.preset_1hr">1時間</i18n-t></button>
+      <span class="ct-custom-presets"></span>
+      <button class="ct-preset-save m-btn m-btn--ghost m-btn--pill" data-save-preset aria-label="現在の時間をプリセットとして保存" title="現在の時間をプリセットとして保存" data-i18na="aria-label=tool.countdown-timer.preset_save_aria;title=tool.countdown-timer.preset_save_aria">+</button>
+    </div>
+
+    <div class="ct-widget__controls">
+      <button class="m-btn m-btn--primary" data-action="start"><i18n-t data-k="tool.countdown-timer.btn_start">開始</i18n-t></button>
+      <button class="m-btn m-btn--ghost" data-action="reset" disabled><i18n-t data-k="tool.countdown-timer.btn_reset">リセット</i18n-t></button>
+    </div>
+  </div>
+</template>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "カウントダウンタイマー",
+  "url": "https://webmcp.mentria.ai/ja/tools/countdown-timer/",
+  "description": "時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "ja"
+}
+</script>
+
+
+<script>
+(() => {
+  const COPY = {
+    statusReady:    "準備完了",
+    statusRunning:  "実行中",
+    statusPaused:   "一時停止",
+    statusTimesUp:  "終了!",
+    btnStart:       "開始",
+    btnPause:       "一時停止",
+    btnResume:      "再開",
+    errPickDt:      "日時を選んでください。",
+    errPassed:      "この時刻はすでに過ぎています。",
+    errMax99:       "最大カウントダウンは99時間です。",
+    errSetTime:     "先に時間を設定してください!",
+    errMax99Brief:  "最大99時間!",
+    timerDefault:   "タイマー {n}",
+    titleAlarm:     "⏰ 終了!",
+    presetRemoveAria: "プリセット {label} を削除",
+    presetSaveInvalid: "先に時間を設定してから保存してください",
+    titleRunFmt:    "{time} - タイマー",
+    notifUnsup:     "ブラウザは通知に対応していません。",
+    notifDefault:   "タブが非表示のときにタイマーが終了したら通知を受けられます。",
+    notifGranted:   "通知が有効です — バックグラウンドでの終了時にアラートが表示されます。",
+    notifDenied:    "通知がブロックされています。ブラウザ設定で許可してください。",
+    notifOnTitle:   "通知オン",
+    notifOnBody:    "バックグラウンドでタイマーが終了するとアラートが届きます。",
+    notifTestTitle: "テスト通知",
+    notifTestBody:  "タイマー終了時の通知の見え方です。",
+    notifFinishFmt: "{label} — 終了",
+    notifBodyOpen:  "タップしてタイマーに戻りアラームを停止します。",
+    notifStopAlarm: "アラーム停止"
+  };
+  const fmtTimer = n => COPY.timerDefault.replace('{n}', n);
+
+  const MAX_WIDGETS = 4;
+  const MAX_SECONDS = 99 * 3600;
+  const grid = document.getElementById('ct-grid');
+  const addBtn = document.getElementById('ct-add-btn');
+  const tpl = document.getElementById('ct-widget-tpl');
+  const originalTitle = document.title;
+
+  let nextId = 1;
+  const widgets = new Map();
+  const widgetApi = new Map();
+
+  const NOTIF_ICON  = '/assets/img/icon-192x192.png';
+  const NOTIF_BADGE = '/assets/img/badge.svg';
+  const NOTIF_TAG_PREFIX = 'mentria-timer-';
+
+  const notifBar    = document.getElementById('ct-notif-bar');
+  const notifText   = document.getElementById('ct-notif-text');
+  const notifEnable = document.getElementById('ct-notif-enable');
+  const notifTest   = document.getElementById('ct-notif-test');
+
+  function notifSupported() {
+    return 'Notification' in window && 'serviceWorker' in navigator;
+  }
+  function notifState() {
+    if (!notifSupported()) return 'unsupported';
+    return Notification.permission;
+  }
+
+  function refreshNotifBar() {
+    const s = notifState();
+    notifBar.classList.toggle('is-unsupported', s === 'unsupported');
+    notifBar.classList.toggle('is-granted',     s === 'granted');
+    notifBar.classList.toggle('is-denied',      s === 'denied');
+    notifEnable.hidden = (s !== 'default');
+    notifTest.hidden   = (s !== 'granted');
+    if (s === 'unsupported')  notifText.textContent = COPY.notifUnsup;
+    else if (s === 'default') notifText.textContent = COPY.notifDefault;
+    else if (s === 'granted') notifText.textContent = COPY.notifGranted;
+    else if (s === 'denied')  notifText.textContent = COPY.notifDenied;
+  }
+
+  async function requestNotifPermission() {
+    if (!notifSupported()) return;
+    try {
+      const result = await Notification.requestPermission();
+      refreshNotifBar();
+      if (result === 'granted') {
+        if (window.MentriaPush) await MentriaPush.requestPermission();
+        await showRawNotification(COPY.notifOnTitle, {
+          body: COPY.notifOnBody,
+          tag: 'mentria-timer-welcome',
+          silent: true,
+        });
+      }
+    } catch (e) { console.error('Notification permission request failed:', e); }
+  }
+
+  async function showRawNotification(title, options = {}) {
+    if (notifState() !== 'granted') return;
+    if (!('serviceWorker' in navigator)) return;
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const payload = Object.assign({
+        icon:  NOTIF_ICON,
+        badge: NOTIF_BADGE,
+        vibrate: [200, 100, 200],
+      }, options);
+      return reg.showNotification(title, payload);
+    } catch (e) { console.error('showNotification failed:', e); }
+  }
+
+  async function notifyTimerFinished(state, label) {
+    if (notifState() !== 'granted') return;
+    if (!document.hidden) return;
+    await showRawNotification(COPY.notifFinishFmt.replace('{label}', label), {
+      body: COPY.notifBodyOpen,
+      tag:  NOTIF_TAG_PREFIX + state.id,
+      renotify: true,
+      requireInteraction: true,
+      data: { url: location.pathname, timerId: state.id },
+      actions: [
+        { action: 'stop-alarm', title: COPY.notifStopAlarm }
+      ],
+    });
+  }
+
+  async function testNotification() {
+    if (notifState() !== 'granted') return;
+    await showRawNotification(COPY.notifTestTitle, {
+      body: COPY.notifTestBody,
+      tag: 'mentria-timer-test',
+      data: { url: location.pathname },
+    });
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (!event.data) return;
+      if (event.data.type === 'STOP_ALARM') {
+        const id = event.data.timerId;
+        if (id != null) {
+          const state = widgets.get(id);
+          if (state) stopAlarmFor(state);
+        } else {
+          for (const [, s] of widgets) stopAlarmFor(s);
+        }
+        updatePageTitle();
+      }
+    });
+  }
+
+  notifEnable.addEventListener('click', requestNotifPermission);
+  notifTest.addEventListener('click', testNotification);
+  document.addEventListener('visibilitychange', refreshNotifBar);
+  refreshNotifBar();
+
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playBellOnce() {
+    const ctx = initAudio();
+    const dur = 0.15, gap = 0.08;
+    for (let i = 0; i < 4; i++) {
+      const t = ctx.currentTime + i * (dur + gap);
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, t);
+      osc.frequency.exponentialRampToValueAtTime(440, t + dur);
+      g.gain.setValueAtTime(0.4, t);
+      g.gain.exponentialRampToValueAtTime(0.01, t + dur);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + dur);
+
+      const osc2 = ctx.createOscillator();
+      const g2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(1760, t);
+      osc2.frequency.exponentialRampToValueAtTime(880, t + dur);
+      g2.gain.setValueAtTime(0.2, t);
+      g2.gain.exponentialRampToValueAtTime(0.01, t + dur);
+      osc2.connect(g2); g2.connect(ctx.destination);
+      osc2.start(t); osc2.stop(t + dur);
+    }
+  }
+
+  function startAlarmFor(state) {
+    if (state.isAlarming) return;
+    state.isAlarming = true;
+    playBellOnce();
+    state.alarmInterval = setInterval(() => { if (state.isAlarming) playBellOnce(); }, 1200);
+  }
+
+  function stopAlarmFor(state) {
+    state.isAlarming = false;
+    if (state.alarmInterval) { clearInterval(state.alarmInterval); state.alarmInterval = null; }
+  }
+
+  const pad = n => String(n).padStart(2, '0');
+
+  function updatePageTitle() {
+    for (const [, s] of widgets) {
+      if (s.isAlarming) { document.title = COPY.titleAlarm; return; }
+    }
+    for (const [, s] of widgets) {
+      if (s.countdown && s.totalSeconds > 0) {
+        const h = Math.floor(s.totalSeconds / 3600);
+        const m = Math.floor((s.totalSeconds % 3600) / 60);
+        const sc = s.totalSeconds % 60;
+        document.title = COPY.titleRunFmt.replace('{time}', `${pad(h)}:${pad(m)}:${pad(sc)}`);
+        return;
+      }
+    }
+    document.title = originalTitle;
+  }
+
+  let wakeLock = null;
+  function anyRunning() {
+    for (const [, s2] of widgets) { if (s2.countdown) return true; }
+    return false;
+  }
+  async function syncWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    if (anyRunning()) {
+      if (wakeLock) return;
+      try { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); }
+      catch (_) { wakeLock = null; }
+    } else if (wakeLock) {
+      try { wakeLock.release(); } catch (_) {}
+      wakeLock = null;
+    }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') syncWakeLock();
+  });
+
+  const PRESETS_KEY = 'countdown_presets';
+  function loadCustomPresets() {
+    try {
+      const v = window.MentriaStore && window.MentriaStore.get('tools', PRESETS_KEY);
+      if (Array.isArray(v)) return v.filter((n) => Number.isFinite(n) && n > 0 && n <= MAX_SECONDS).slice(0, 6);
+    } catch (_) {}
+    return [];
+  }
+  let customPresets = loadCustomPresets();
+  function persistCustomPresets() {
+    if (!window.MentriaStore) return;
+    if (customPresets.length) window.MentriaStore.set('tools', PRESETS_KEY, customPresets);
+    else window.MentriaStore.remove('tools', PRESETS_KEY);
+  }
+  function fmtPreset(secs) {
+    const h = Math.floor(secs / 3600), m = Math.floor((secs % 3600) / 60), sc = secs % 60;
+    if (h) return h + ':' + pad(m) + ':' + pad(sc);
+    return m + ':' + pad(sc);
+  }
+  function renderCustomPresets(root) {
+    const holders = root ? [root] : [...document.querySelectorAll('.ct-custom-presets')];
+    holders.forEach((holder) => {
+      holder.innerHTML = '';
+      customPresets.forEach((secs) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'ct-preset ct-preset--custom m-btn m-btn--ghost m-btn--pill';
+        b.dataset.seconds = String(secs);
+        b.textContent = fmtPreset(secs);
+        const x = document.createElement('button');
+        x.type = 'button';
+        x.className = 'ct-preset-remove m-btn m-btn--ghost m-btn--icon';
+        x.dataset.removePreset = String(secs);
+        x.textContent = '\u00d7';
+        x.setAttribute('aria-label', COPY.presetRemoveAria.replace('{label}', fmtPreset(secs)));
+        holder.append(b, x);
+      });
+    });
+  }
+
+  function persistActive() {
+    if (!window.MentriaStore) return;
+    const entries = [];
+    widgets.forEach((st) => {
+      if (!st.getSnapshot) return;
+      const snap = st.getSnapshot();
+      if (snap) entries.push(snap);
+    });
+    if (entries.length) window.MentriaStore.set('tools', 'countdown_active', entries);
+    else window.MentriaStore.remove('tools', 'countdown_active');
+  }
+
+  function refreshAddBtn() {
+    addBtn.style.display = widgets.size >= MAX_WIDGETS ? 'none' : '';
+  }
+
+  function addWidget() {
+    if (widgets.size >= MAX_WIDGETS) return;
+    const id = nextId++;
+    const el = tpl.content.firstElementChild.cloneNode(true);
+    el.dataset.widgetId = id;
+
+    const titleEl = el.querySelector('.ct-widget__title');
+    titleEl.textContent = fmtTimer(widgets.size + 1);
+    titleEl.dataset.isDefault = '1';
+
+    const $ = sel => el.querySelector(sel);
+    const $$ = sel => el.querySelectorAll(sel);
+
+    const displayH = $('[data-role="hours"]');
+    const displayM = $('[data-role="mins"]');
+    const displayS = $('[data-role="secs"]');
+    const statusEl = $('.ct-widget__status');
+    const displayWrap = $('.ct-widget__display');
+    const panelDuration = $('[data-panel="duration"]');
+    const panelDatetime = $('[data-panel="datetime"]');
+    const inputH = $('[data-input="hours"]');
+    const inputM = $('[data-input="mins"]');
+    const inputS = $('[data-input="secs"]');
+    const inputDT = $('[data-input="datetime"]');
+    const dtError = $('[data-role="dt-error"]');
+    [inputH, inputM, inputS, inputDT].forEach((inp) => {
+      const grp = inp.closest('.ct-input-grp');
+      const label = grp && grp.querySelector('label');
+      if (!label) return;
+      const fid = 'ct' + id + '-' + inp.dataset.input;
+      inp.id = fid;
+      label.htmlFor = fid;
+    });
+    const btnStart = $('[data-action="start"]');
+    const btnReset = $('[data-action="reset"]');
+    const btnClose = $('.ct-widget__close');
+    const modeToggle = $('.ct-widget__mode-toggle');
+    const presetButtons = $$('.ct-preset');
+
+    const state = {
+      id,
+      totalSeconds: 0,
+      countdown: null,
+      isPaused: false,
+      isAlarming: false,
+      alarmInterval: null,
+      mode: 'duration',
+    };
+
+    widgets.set(id, state);
+
+    function updateDisplay() {
+      const h = Math.floor(state.totalSeconds / 3600);
+      const m = Math.floor((state.totalSeconds % 3600) / 60);
+      const s = state.totalSeconds % 60;
+      displayH.textContent = pad(h);
+      displayM.textContent = pad(m);
+      displayS.textContent = pad(s);
+      updatePageTitle();
+    }
+
+    function tick() {
+      state.totalSeconds = Math.max(0, Math.round((state.endAt - Date.now()) / 1000));
+      if (state.totalSeconds > 0) {
+        updateDisplay();
+      } else {
+        clearInterval(state.countdown);
+        state.countdown = null;
+        statusEl.textContent = COPY.statusTimesUp;
+        syncWakeLock();
+        displayWrap.classList.add('ct-widget__display--finished');
+        startAlarmFor(state);
+        btnStart.textContent = COPY.btnStart;
+        btnStart.disabled = true;
+        btnReset.disabled = false;
+        updatePageTitle();
+        const label = (titleEl.textContent || '').trim() || fmtTimer(state.id);
+        notifyTimerFinished(state, label);
+        disarmServerPush(state);
+        persistActive();
+      }
+    }
+
+    function pushSpecFor(state) {
+      const label = (titleEl.textContent || '').trim() || fmtTimer(state.id);
+      return {
+        id: 'ct-' + state.id,
+        fireAt: Date.now() + state.totalSeconds * 1000,
+        title: COPY.notifFinishFmt.replace('{label}', label),
+        body: COPY.notifBodyOpen,
+        url: location.pathname,
+        tag: NOTIF_TAG_PREFIX + state.id
+      };
+    }
+    function armServerPush(state) {
+      if (window.MentriaPush && MentriaPush.permission() === 'granted' && state.totalSeconds > 0) {
+        MentriaPush.schedule(pushSpecFor(state));
+      }
+    }
+    function disarmServerPush(state) {
+      if (window.MentriaPush) MentriaPush.cancel('ct-' + state.id);
+    }
+
+    function getSecondsFromDatetime() {
+      const val = inputDT.value;
+      if (!val) { dtError.textContent = COPY.errPickDt; return -1; }
+      const target = new Date(val).getTime();
+      const diff = Math.floor((target - Date.now()) / 1000);
+      if (diff <= 0) { dtError.textContent = COPY.errPassed; return -1; }
+      if (diff > MAX_SECONDS) { dtError.textContent = COPY.errMax99; return -1; }
+      dtError.textContent = '';
+      return diff;
+    }
+
+    function startTimer() {
+      initAudio();
+
+      if (state.countdown) {
+        clearInterval(state.countdown);
+        state.countdown = null;
+        state.isPaused = true;
+        disarmServerPush(state);
+        syncWakeLock();
+        btnStart.textContent = COPY.btnResume;
+        statusEl.textContent = COPY.statusPaused;
+        persistActive();
+        return;
+      }
+
+      if (state.isPaused && state.totalSeconds > 0) {
+        state.isPaused = false;
+        state.endAt = Date.now() + state.totalSeconds * 1000;
+        state.countdown = setInterval(tick, 1000);
+        armServerPush(state);
+        syncWakeLock();
+        btnStart.textContent = COPY.btnPause;
+        statusEl.textContent = COPY.statusRunning;
+        persistActive();
+        return;
+      }
+
+      if (state.mode === 'datetime') {
+        const secs = getSecondsFromDatetime();
+        if (secs < 0) return;
+        state.totalSeconds = secs;
+      } else {
+        const h = parseInt(inputH.value) || 0;
+        const m = parseInt(inputM.value) || 0;
+        const s = parseInt(inputS.value) || 0;
+        state.totalSeconds = h * 3600 + m * 60 + s;
+      }
+
+      if (state.totalSeconds <= 0) {
+        statusEl.textContent = COPY.errSetTime;
+        setTimeout(() => { if (!state.countdown) statusEl.textContent = COPY.statusReady; }, 2000);
+        return;
+      }
+      if (state.totalSeconds > MAX_SECONDS) {
+        statusEl.textContent = COPY.errMax99Brief;
+        setTimeout(() => { if (!state.countdown) statusEl.textContent = COPY.statusReady; }, 2000);
+        return;
+      }
+
+      displayWrap.classList.remove('ct-widget__display--finished');
+      statusEl.textContent = COPY.statusRunning;
+      updateDisplay();
+      state.endAt = Date.now() + state.totalSeconds * 1000;
+      state.countdown = setInterval(tick, 1000);
+      armServerPush(state);
+      syncWakeLock();
+      btnStart.textContent = COPY.btnPause;
+      btnReset.disabled = false;
+      presetButtons.forEach(b => b.disabled = true);
+      panelDuration.classList.add('ct-widget__inputs--hidden');
+      panelDatetime.classList.add('ct-widget__inputs--hidden');
+      persistActive();
+    }
+
+    function resetTimer() {
+      stopAlarmFor(state);
+      if (state.countdown) { clearInterval(state.countdown); state.countdown = null; }
+      disarmServerPush(state);
+      syncWakeLock();
+      state.isPaused = false;
+      state.totalSeconds = 0;
+      updateDisplay();
+      statusEl.textContent = COPY.statusReady;
+      displayWrap.classList.remove('ct-widget__display--finished');
+      btnStart.textContent = COPY.btnStart;
+      btnStart.disabled = false;
+      btnReset.disabled = true;
+      presetButtons.forEach(b => b.disabled = false);
+      dtError.textContent = '';
+      if (state.mode === 'duration') {
+        panelDuration.classList.remove('ct-widget__inputs--hidden');
+      } else {
+        panelDatetime.classList.remove('ct-widget__inputs--hidden');
+      }
+      updatePageTitle();
+      persistActive();
+    }
+
+    function setPreset(seconds) {
+      resetTimer();
+      if (state.mode === 'datetime') {
+        state.mode = 'duration';
+        modeSeg.set('duration');
+        panelDuration.classList.remove('ct-widget__inputs--hidden');
+        panelDatetime.classList.add('ct-widget__inputs--hidden');
+      }
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      inputH.value = h;
+      inputM.value = m;
+      inputS.value = s;
+      state.totalSeconds = seconds;
+      updateDisplay();
+    }
+
+    state.getSnapshot = () => {
+      const title = titleEl.dataset.isDefault === '1' ? '' : (titleEl.textContent || '').trim().slice(0, 60);
+      if (state.countdown) return { mode: 'run', endAt: state.endAt, title };
+      if (state.isPaused && state.totalSeconds > 0) return { mode: 'pause', remaining: state.totalSeconds, title };
+      return null;
+    };
+
+    state.applyRestore = (entry) => {
+      if (entry.title) {
+        titleEl.textContent = entry.title.slice(0, 60);
+        titleEl.dataset.isDefault = '';
+      }
+      btnReset.disabled = false;
+      presetButtons.forEach(b => b.disabled = true);
+      panelDuration.classList.add('ct-widget__inputs--hidden');
+      panelDatetime.classList.add('ct-widget__inputs--hidden');
+      if (entry.mode === 'run') {
+        const remaining = Math.round((entry.endAt - Date.now()) / 1000);
+        if (remaining <= 0) {
+          state.totalSeconds = 0;
+          updateDisplay();
+          statusEl.textContent = COPY.statusTimesUp;
+          displayWrap.classList.add('ct-widget__display--finished');
+          btnStart.textContent = COPY.btnStart;
+          btnStart.disabled = true;
+          return;
+        }
+        state.totalSeconds = remaining;
+        state.endAt = entry.endAt;
+        updateDisplay();
+        statusEl.textContent = COPY.statusRunning;
+        state.countdown = setInterval(tick, 1000);
+        armServerPush(state);
+        syncWakeLock();
+        btnStart.textContent = COPY.btnPause;
+        return;
+      }
+      state.totalSeconds = Math.max(0, Math.floor(entry.remaining) || 0);
+      if (!state.totalSeconds) return;
+      state.isPaused = true;
+      updateDisplay();
+      statusEl.textContent = COPY.statusPaused;
+      btnStart.textContent = COPY.btnResume;
+    };
+
+    btnStart.addEventListener('click', startTimer);
+    widgetApi.set(id, {
+      setDuration(h, m, sec) {
+        inputH.value = String(h || 0); inputM.value = String(m || 0); inputS.value = String(sec || 0);
+        [inputH, inputM, inputS].forEach((inp) => inp.dispatchEvent(new Event('input', { bubbles: true })));
+      },
+      start: () => { if (!state.countdown) startTimer(); },
+      reset: resetTimer,
+      running: () => !!state.countdown,
+      remaining: () => state.totalSeconds
+    });
+    btnReset.addEventListener('click', resetTimer);
+
+    btnClose.addEventListener('click', () => removeWidget(id));
+
+    const modeSeg = MentriaUI.segmented(modeToggle, (mode) => {
+      if (state.countdown || state.isPaused) { modeSeg.set(state.mode); return; }
+      state.mode = mode;
+      panelDuration.classList.toggle('ct-widget__inputs--hidden', state.mode !== 'duration');
+      panelDatetime.classList.toggle('ct-widget__inputs--hidden', state.mode !== 'datetime');
+    });
+
+    [inputH, inputM, inputS].forEach(inp => {
+      inp.addEventListener('input', () => {
+        if (!state.countdown && !state.isPaused) {
+          const h = parseInt(inputH.value) || 0;
+          const m = parseInt(inputM.value) || 0;
+          const s = parseInt(inputS.value) || 0;
+          state.totalSeconds = h * 3600 + m * 60 + s;
+          updateDisplay();
+        }
+      });
+    });
+
+    inputDT.addEventListener('input', () => {
+      if (!state.countdown && !state.isPaused) {
+        const secs = getSecondsFromDatetime();
+        if (secs > 0) { state.totalSeconds = secs; updateDisplay(); }
+      }
+    });
+
+    const presetsRow = $('.ct-widget__presets');
+    renderCustomPresets($('.ct-custom-presets'));
+    presetsRow.addEventListener('click', (e) => {
+      const rm = e.target.closest('[data-remove-preset]');
+      if (rm) {
+        customPresets = customPresets.filter((n) => n !== parseInt(rm.dataset.removePreset));
+        persistCustomPresets();
+        renderCustomPresets();
+        return;
+      }
+      const save = e.target.closest('[data-save-preset]');
+      if (save) {
+        if (state.countdown || state.isPaused) return;
+        const secs = (parseInt(inputH.value) || 0) * 3600 + (parseInt(inputM.value) || 0) * 60 + (parseInt(inputS.value) || 0);
+        if (secs <= 0 || secs > MAX_SECONDS) {
+          if (window.MentriaUI) MentriaUI.toast(COPY.presetSaveInvalid);
+          return;
+        }
+        if (customPresets.indexOf(secs) === -1 && customPresets.length < 6) {
+          customPresets.push(secs);
+          persistCustomPresets();
+          renderCustomPresets();
+        }
+        return;
+      }
+      const btn = e.target.closest('.ct-preset[data-seconds]');
+      if (!btn) return;
+      if (state.countdown || state.isPaused) return;
+      setPreset(parseInt(btn.dataset.seconds));
+    });
+
+    titleEl.addEventListener('focus', () => {
+      if (titleEl.dataset.isDefault === '1') titleEl.textContent = '';
+    });
+    titleEl.addEventListener('input', () => { titleEl.dataset.isDefault = ''; });
+    titleEl.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text/plain').replace(/\s+/g, ' ').trim().slice(0, 60);
+      const sel = window.getSelection();
+      if (!sel.rangeCount) { titleEl.textContent = text; return; }
+      const range = sel.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(document.createTextNode(text));
+      sel.collapseToEnd();
+      titleEl.dataset.isDefault = '';
+    });
+    titleEl.addEventListener('drop', (e) => { e.preventDefault(); });
+    titleEl.addEventListener('keydown', (e) => {
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.key === 'Enter') { e.preventDefault(); titleEl.blur(); }
+    });
+    titleEl.addEventListener('blur', () => {
+      if (!titleEl.textContent.trim()) {
+        titleEl.textContent = fmtTimer(id);
+        titleEl.dataset.isDefault = '1';
+      }
+      persistActive();
+    });
+    titleEl.addEventListener('keydown', e => {
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.key === 'Enter') { e.preventDefault(); titleEl.blur(); }
+    });
+
+    const now = new Date(Date.now() + 5 * 60 * 1000);
+    const iso = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    inputDT.value = iso;
+
+    grid.appendChild(el);
+    refreshAddBtn();
+    updateDisplay();
+  }
+
+  function removeWidget(id) {
+    const state = widgets.get(id);
+    if (!state) return;
+    stopAlarmFor(state);
+    if (state.countdown) clearInterval(state.countdown);
+    if (window.MentriaPush) MentriaPush.cancel('ct-' + state.id);
+    widgets.delete(id);
+    const el = grid.querySelector(`[data-widget-id="${id}"]`);
+    if (el) el.remove();
+    refreshAddBtn();
+    updatePageTitle();
+    persistActive();
+  }
+
+  addBtn.addEventListener('click', addWidget);
+  import('/assets/js/mentria-bus.js').then(({ MentriaBus }) => {
+    MentriaBus.provide('timer.start', (args) => {
+      const o = args || {};
+      const h = Math.max(0, Math.floor(Number(o.hours) || 0)), m = Math.max(0, Math.floor(Number(o.minutes) || 0)), sec = Math.max(0, Math.floor(Number(o.seconds) || 0));
+      if (h + m + sec <= 0) throw new Error('duration must be positive');
+      let api = [...widgetApi.values()].find((w) => !w.running());
+      if (!api) { addWidget(); api = [...widgetApi.values()].pop(); }
+      api.reset();
+      api.setDuration(h, m, sec);
+      api.start();
+      return { ok: true, seconds: h * 3600 + m * 60 + sec };
+    }, { description: 'Start a countdown timer for the given duration.', ai: true, parameters: { type: 'object', properties: { hours: { type: 'number' }, minutes: { type: 'number' }, seconds: { type: 'number' } } } });
+    MentriaBus.provide('timer.status', () => [...widgetApi.values()].map((w) => ({ running: w.running(), remainingSeconds: w.remaining() })), { description: 'List the countdown timers and how many seconds remain.', ai: true, readonly: true });
+  }).catch(() => {});
+  addWidget();
+
+  let restoredActive = 0;
+  (function restoreActive() {
+    const saved = window.MentriaStore && window.MentriaStore.get('tools', 'countdown_active');
+    if (!Array.isArray(saved) || !saved.length) return;
+    saved.slice(0, MAX_WIDGETS).forEach((entry) => {
+      if (!entry || (entry.mode !== 'run' && entry.mode !== 'pause')) return;
+      const states = [...widgets.values()];
+      let target = states[restoredActive];
+      if (!target) {
+        addWidget();
+        const after = [...widgets.values()];
+        if (after.length === states.length) return;
+        target = after[after.length - 1];
+      }
+      if (target && target.applyRestore) {
+        target.applyRestore(entry);
+        restoredActive++;
+      }
+    });
+    persistActive();
+  })();
+
+  (function autoStart() {
+    const p = new URLSearchParams(location.search);
+    const secs = parseInt(p.get('start'), 10);
+    if (!secs || secs <= 0 || secs > MAX_SECONDS) return;
+    let w = document.querySelector('.ct-widget');
+    if (restoredActive > 0) {
+      const before = widgets.size;
+      addWidget();
+      if (widgets.size === before) return;
+      const all = document.querySelectorAll('.ct-widget');
+      w = all[all.length - 1];
+    }
+    if (!w) return;
+    const setInput = (name, v) => {
+      const el = w.querySelector('[data-input="' + name + '"]');
+      if (el) { el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); }
+    };
+    setInput('hours', Math.floor(secs / 3600));
+    setInput('mins', Math.floor((secs % 3600) / 60));
+    setInput('secs', secs % 60);
+    const btn = w.querySelector('[data-action="start"]');
+    if (btn) btn.click();
+    history.replaceState(null, '', location.pathname);
+  })();
+})();
+</script>
+
+
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="アプリナビゲーション" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/ja/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">ホーム</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/ja/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="コマンドパレットを開く（⌘K）" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">検索</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">ホーム画面に追加 — オフラインで動作します。</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">インストール</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="閉じる" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="閉じる" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "iPhoneにMentriaをインストール",
+    macosTitle:  "MacにMentriaをインストール",
+    chromeTitle: "Mentriaをインストール",
+    iosStep1:    "画面下部の<strong>共有</strong>ボタンをタップ",
+    iosStep2:    "<strong>ホーム画面に追加</strong>を選択",
+    iosStep3:    "右上の<strong>追加</strong>をタップ。",
+    macosStep1:  "このページを<strong>Safari 17+</strong>で開きます。",
+    macosStep2:  "メニューバーから<strong>ファイル → Dockに追加…</strong>を選択。",
+    macosStep3:  "<strong>追加</strong>をクリック。",
+    chromeStep1: "ブラウザのアドレスバーにある<strong>インストール</strong>アイコンをクリック。",
+    chromeStep2: "または、メニュー(⋮)を開いて<strong>Mentriaをインストール</strong>を選択。",
+    note:        "インストール後、Mentriaはオフラインで動作し、ローカルデータはお使いのデバイスに保存されます。"
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "確認";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "保存できませんでした。ブラウザのストレージがいっぱいです。空き容量を増やすと変更を保持できます。";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("大きなAIモデル（モデルにより490 MB以上）をダウンロードします。低速またはデータセーバー接続のようです。続行しますか？");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "共有";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "このツールについて");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">機能テスト用ビルド（WebMCP 応募スナップショット）。テストのため凍結中です。通常のご利用は <a href="https://mentria.ai/">mentria.ai</a> をお使いください。</div></body>
+</html>

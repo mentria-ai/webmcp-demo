@@ -1,0 +1,2 @@
+This is a frozen demo snapshot for the WebMCP Challenge judging period.
+The canonical site is https://mentria.ai - please use that instead.

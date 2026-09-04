@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>Contador de Pasos | Mentria</title>
+    <meta name="description" content="Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/es/tools/step-counter/">
+    <meta property="og:title" content="Contador de Pasos | Mentria">
+    <meta property="og:description" content="Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/es/tools/step-counter/">
+    <meta name="twitter:title" content="Contador de Pasos | Mentria">
+    <meta name="twitter:description" content="Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/step-counter/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/step-counter/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/step-counter/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/step-counter/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/step-counter/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/step-counter/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "Un estudio creativo de herramientas, experimentos y transmisiones visuales. Hecho con cuidado.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "es"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://webmcp.mentria.ai/es/" },
+        { "@type": "ListItem", "position": 2, "name": "Herramientas", "item": "https://webmcp.mentria.ai/es/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Contador de Pasos", "item": "https://webmcp.mentria.ai/es/tools/step-counter/" }
+      ]
+    }
+    </script>
+<style>
+.sc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  font-family: var(--font-mono);
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-2) 0 var(--space-4);
+}
+.sc__tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+}
+.sc__tracker[hidden] { display: none; }
+
+.sc__ring-wrap { position: relative; width: 240px; height: 240px; }
+.sc__ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.sc__ring-track {
+  fill: none;
+  stroke: rgba(255,255,255,0.06);
+  stroke-width: 14;
+}
+.sc__ring-fill {
+  fill: none;
+  stroke: var(--syn-cyan);
+  stroke-width: 14;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease, stroke 0.3s ease;
+  filter: drop-shadow(0 0 6px rgba(34,211,238,0.5));
+}
+.sc__ring-fill.is-complete { stroke: var(--syn-green); filter: drop-shadow(0 0 8px rgba(74,222,128,0.6)); }
+.sc__ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+}
+.sc__count {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--term-fg);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.sc__count-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--term-muted);
+}
+.sc__goal {
+  font-size: 0.72rem;
+  color: var(--syn-cyan);
+  margin-top: 0.2rem;
+}
+
+.sc__goal-reached {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--syn-green);
+  text-align: center;
+}
+.sc__goal-reached:empty { display: none; }
+
+.sc__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  width: 100%;
+}
+.sc__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.7rem 0.5rem;
+  border: 1px solid var(--term-border);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.015);
+}
+.sc__stat-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--term-muted);
+}
+.sc__stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--term-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.sc__hint {
+  font-size: 0.75rem;
+  color: var(--term-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.sc__controls { display: flex; gap: 0.6rem; }
+.sc__btn--danger { width: 100%; }
+
+.sc__history { width: 100%; }
+.sc__history-label {
+  display: block;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--term-muted);
+  margin-bottom: var(--space-2);
+}
+.sc__bars {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+  height: 90px;
+}
+.sc__bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.sc__bar-track {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.sc__bar-est {
+  width: 100%;
+  background: var(--syn-cyan);
+  opacity: 0.22;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+.sc__bar-fill {
+  width: 100%;
+  background: var(--syn-cyan);
+  opacity: 0.55;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: height 0.3s ease;
+}
+.sc__bar-fill.is-goal { opacity: 1; background: var(--syn-green); }
+.sc__bar-label {
+  font-size: 0.6rem;
+  color: var(--term-muted);
+}
+
+.sc__streaks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.sc__est {
+  font-size: 0.7rem;
+  color: rgba(110, 243, 197, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+.sc__est:empty { display: none; }
+
+.sc__ring-est {
+  fill: none;
+  stroke: var(--syn-cyan);
+  stroke-width: 14;
+  stroke-linecap: round;
+  opacity: 0.28;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.sc__pocket-note {
+  font-size: 0.72rem;
+  color: var(--term-muted);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 40ch;
+}
+.sc__pocket-note[hidden] { display: none; }
+
+.sc__pocket {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.sc__pocket[hidden] { display: none; }
+.sc__pocket-count {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: rgba(126, 231, 189, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+.sc__pocket-hint {
+  position: absolute;
+  bottom: 14%;
+  margin: 0;
+  font-size: 0.72rem;
+  color: rgba(126, 231, 189, 0.38);
+  transition: opacity 1.2s ease;
+  text-align: center;
+  padding: 0 2rem;
+}
+.sc__pocket-track {
+  position: absolute;
+  bottom: 22%;
+  left: 15%;
+  right: 15%;
+  height: 46px;
+  border: 1px solid rgba(110, 243, 197, 0.35);
+  border-radius: 999px;
+  padding: 2px;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+.sc__pocket.is-armed .sc__pocket-track { opacity: 1; }
+.sc__pocket-thumb {
+  width: 40px;
+  height: 40px;
+  background: rgba(31, 170, 128, 0.85);
+  border-radius: 50%;
+}
+
+html.sc-pocket-on .app-bar { display: none !important; }
+html.sc-pocket-on { overscroll-behavior: none; }
+
+.sc__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.015);
+  width: 100%;
+}
+.sc__panel[hidden] { display: none; }
+.sc__panel-title {
+  font-size: 1rem;
+  color: var(--syn-cyan);
+  margin: 0;
+}
+.sc__panel-title--warn { color: var(--syn-amber); }
+.sc__panel-body {
+  font-size: 0.85rem;
+  color: var(--term-muted);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 36ch;
+}
+
+.sc__settings {
+  margin: auto;
+  padding: 1.25rem;
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-lg);
+  background: var(--term-bg-raised, #111);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  font-family: var(--font-mono);
+  width: min(320px, calc(100vw - 2rem));
+  inset: 0;
+}
+.sc__settings:not(:popover-open) { display: none; }
+.sc__settings:popover-open {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.sc__settings::backdrop { background: rgba(0,0,0,0.4); }
+
+@media (max-width: 480px) {
+  .sc__ring-wrap { width: 200px; height: 200px; }
+  .sc__count { font-size: 2.5rem; }
+  .m-input { font-size: 16px; }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.step-counter.title","suffix":" | Mentria"},"desc":{"key":"tools.step-counter.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "es",
+        prefix: "/es",
+        tools: [
+          { slug: "search", title: "Búsqueda", category: "IA", keywords: "Encuentra herramientas y entradas del feed. Escribe cualquier consulta — palabra clave o lenguaje natural." },
+          { slug: "step-counter", title: "Contador de Pasos", category: "Salud", keywords: "Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.", requires: "motion" },
+          { slug: "qr-scanner", title: "Escáner y generador de QR y códigos de barras", category: "Utilidad", keywords: "Escanea códigos QR y de barras, o genera un código QR a partir de cualquier enlace o texto, todo en el dispositivo y sin subir nada." },
+          { slug: "decision-wheel", title: "Rueda de Decisiones", category: "Utilidad", keywords: "¿No puedes decidir? Gira la rueda y deja que el destino elija. Funciona sin conexión." },
+          { slug: "countdown-timer", title: "Temporizador", category: "Temporizador", keywords: "Establece una duración o elige una hora objetivo. Hasta 4 temporizadores independientes con sonido de alarma." },
+          { slug: "coin-flip", title: "Lanzar Moneda", category: "Utilidad", keywords: "Cara o cruz — lanza una moneda al instante. Ejecuta una serie al mejor de N para desempates. Funciona sin conexión." },
+          { slug: "quick-notes", title: "Notas Rápidas", category: "Productividad", keywords: "Una libreta mínima que vive en tu navegador. Crea múltiples notas, guardadas automáticamente en cada pulsación." },
+          { slug: "base64-codec", title: "Codificador Base64", category: "Desarrollo", keywords: "Codifica y decodifica texto o archivos en Base64. Compatible con imágenes, documentos y cualquier tipo de archivo. Todo se ejecuta localmente en tu navegador." },
+          { slug: "totp", title: "TOTP", category: "Seguridad", keywords: "Códigos de doble factor que viven en tu navegador, cifrados en reposo. Nada en un servidor." },
+          { slug: "exif", title: "Inspector EXIF", category: "Seguridad", keywords: "Descubre lo que una foto lleva oculto — datos de cámara, fechas, ubicación GPS — y descarga una copia limpia sin nada de eso. No se sube nada." },
+          { slug: "color-picker", title: "Selector de Color", category: "Diseño", keywords: "Elige cualquier color, ve sus valores HEX / RGB / HSL, y genera paletas armoniosas. Funciona sin conexión." },
+          { slug: "annotate-image", title: "Anotar imagen", category: "IA", keywords: "Sube una imagen y obtén al instante una descripción de IA, texto alternativo, transcripción o etiquetas — con prompts probados de un toque. Se ejecuta localmente en tu navegador, nada se sube." },
+          { slug: "ai-chat", title: "Chat IA", category: "IA", keywords: "Qwen3.5 ejecutándose localmente en tu navegador. Sin servidor, sin claves de API. Compatible con imágenes." },
+          { slug: "console", title: "Consola", category: "IA", keywords: "Chatea con el modelo local mientras usa las apps de Mentria en una pantalla de móvil compartida, o deja que actúe como usuario de prueba y te cuente lo que encuentra." },
+          { slug: "model-mirror", title: "Espejo de Modelos", category: "IA", keywords: "Ayuda a distribuir los modelos locales de Mentria entre pares. Mantén esta pestaña abierta y tu navegador se convierte en un espejo." },
+          { slug: "quote", title: "Cita Motivadora", category: "IA", keywords: "Citas originales generadas por IA, ejecutándose localmente en tu navegador. Tus datos no salen de tu dispositivo." },
+          { slug: "radio", title: "Radio Infinita", category: "IA", keywords: "Música cinematográfica épica generada por IA, transmitiendo infinitamente. Aprende tu gusto localmente — tus datos no salen de tu dispositivo." },
+          { slug: "invoice", title: "Generador de Facturas", category: "Utilidad", keywords: "Crea facturas limpias de una página en tu navegador. Se guardan mientras escribes. Imprime en A4 o exporta a JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utilidad", keywords: "Escribe markdown, ve una vista previa en vivo, y descarga un PDF profesional y limpio. Se guarda automáticamente en tu navegador. Tus datos no salen de tu dispositivo." },
+          { slug: "tetris", title: "Tetris", category: "Juego", keywords: "Apila tetrominós. Despeja líneas. La velocidad aumenta cada 10 líneas. Piezas en cian, púrpura, rosa, ámbar, verde — la paleta de Mentria." },
+          { slug: "breakout", title: "Breakout", category: "Juego", keywords: "Rompe-ladrillos con paleta. Atrapa los power-ups que caen, despeja el muro, sobrevive niveles cada vez más rápidos y duros. Se ejecuta localmente — tus datos no salen de tu dispositivo." },
+          { slug: "flappy", title: "Flappy", category: "Juego", keywords: "Un avión de papel sorteando una pila de prompts del terminal. Toca, haz clic o presiona ESPACIO para aletear. No choques con el prompt." },
+          { slug: "minesweeper", title: "Buscaminas", category: "Juego", keywords: "Clásico rompecabezas lógico con vestimenta de terminal. Haz clic para cavar, clic derecho (o modo F) para marcar bandera. Los números cuentan minas adyacentes. No pulses los rosas." },
+          { slug: "sudoku", title: "Sudoku", category: "Juego", keywords: "Rompecabezas lógico con estética de terminal. Generador de solución única, cuatro dificultades, anotaciones a lápiz. Funciona localmente: ningún dato sale de tu dispositivo." },
+          { slug: "ludo", title: "Ludo", category: "Juego", keywords: "Cuatro fichas a casa, ganas. Saca un seis para salir, captura al contacto, refúgiate en las estrellas seguras. Juega contra los bots o por turnos." },
+          { slug: "chess", title: "Ajedrez", category: "Juego", keywords: "Motor local, por turnos y juego en línea — sin servidores. Reglas completas con enroque, al paso y coronación; motor alfa-beta con cuatro niveles, barra de evaluación y pistas." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Juego", keywords: "Contrarreloj de combate en el navegador: esprinta, deslízate, escala y dispara una carabina automática en cinco recorridos al atardecer. Medallas, fantasmas rivales y juego sin conexión." },
+          { slug: "extensions", title: "Extensiones", category: "Utilidad", keywords: "Instala extensiones privadas de un solo archivo que viven únicamente en este dispositivo. Aparecen en tu lanzador y terminal, y nunca en el sitio público." },
+          { slug: "files", title: "Archivos", category: "Utilidad", keywords: "Explora, exporta y elimina los datos que las herramientas de Mentria guardan en este dispositivo. Todo se queda en local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Chat entre pares, llamadas de voz y video, y envío de archivos. Cifrado de extremo a extremo, sin cuentas y sin servidor de por medio.", url: "/comms/" },
+          { slug: "bubble-level", title: "Nivel de burbuja", category: "Utilidad", keywords: "Convierte tu móvil en un nivel de burbuja online: un nivel de albañil sin instalar ninguna app, con precisión de 0,1° y que funciona sin conexión.", requires: "motion" },
+          { slug: "decibel-meter", title: "Medidor de decibelios", category: "Utilidad", keywords: "Un medidor de sonido en el navegador: mide el ruido en dB con el micrófono del móvil o del portátil, sin instalar ninguna app." },
+          { slug: "compass", title: "Brújula", category: "Utilidad", keywords: "Una brújula online sin app que instalar: ábrela en el navegador y lee tu rumbo magnético directamente desde el sensor del móvil.", requires: "motion" },
+          { slug: "speedometer", title: "Velocímetro GPS", category: "Utilidad", keywords: "Un velocímetro online por GPS, sin instalar ninguna app. Velocidad en tiempo real en km/h, mph o nudos, con la distancia del trayecto, todo calculado en tu dispositivo." },
+          { slug: "ruler", title: "Regla Online", category: "Utilidad", keywords: "Una regla online a tamaño real: mide en cm, mm y pulgadas en la propia pantalla y calíbrala con una tarjeta bancaria para que los milímetros sean de verdad." }
+        ],
+        nav: [
+          { id: "home", title: "Inicio", href: "/" },
+          { id: "tools", title: "Herramientas", href: "/tools/" },
+          { id: "feed", title: "Feed", href: "/feed/" },
+          { id: "about", title: "Acerca de", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Buscar herramientas y páginas…",
+          listLabel: "Resultados de búsqueda",
+          noResults: "Sin resultados",
+          recents: "Recientes",
+          extensions: "Extensiones",
+          actions: "Acciones",
+          actNote: "Guardar nota: «{text}»",
+          actNoteDone: "Nota guardada",
+          actNoteFail: "No se pudo guardar la nota",
+          actTimer: "Iniciar un temporizador de {dur}",
+          actFlip: "Lanzar una moneda",
+          actHeads: "Cara",
+          actTails: "Cruz",
+          searchSite: "Buscar “{q}” en el sitio"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Saltar al contenido</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/es/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/es/feed/"  class="nav-link" title="Feed" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+            </a>
+            <a href="/es/tools/" class="nav-link active" aria-current="page" title="Herramientas" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Herramientas</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/es/about/" class="nav-link nav-link--about" title="Acerca de" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">Acerca de</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Idioma actual: Español" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="es">Español</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/step-counter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/step-counter/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/step-counter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/step-counter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/step-counter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/es/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/es/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">step-counter</span></p>
+  <h1><i18n-t data-k="tools.step-counter.title">Contador de Pasos</i18n-t></h1>
+  <p><i18n-t data-k="tools.step-counter.lede">Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">¿Qué es esto?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">Ocultar detalles</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.step-counter.title">¿Qué es Contador de Pasos?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.step-counter.tldr">Un podómetro por sesión que lee el acelerómetro de tu teléfono mediante la API DeviceMotion y cuenta pasos con detección de picos en el dispositivo. Inicia una sesión y camina con la pantalla encendida — registra pasos, distancia, ritmo y un anillo de meta diaria. Todo el procesamiento ocurre en el navegador: sin cuenta, sin subida, sin seguimiento en segundo plano. Los equipos sin sensor de movimiento muestran un estado desactivado. Los totales diarios se guardan en este dispositivo, con un gráfico de 7 días y rachas de objetivo. El modo bolsillo mantiene la pantalla encendida pero en negro puro (ideal en OLED) para seguir contando en el bolsillo; los huecos cortos con pantalla bloqueada se rellenan según tu ritmo y se marcan como estimaciones.</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-step-counter">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Alternar pantalla completa" title="Alternar pantalla completa" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">step-counter.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Alternar pantalla completa" title="Alternar pantalla completa" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="sc" id="sc">
+
+  <div class="sc__tracker" id="sc-tracker">
+    <div class="sc__ring-wrap">
+      <svg class="sc__ring" viewBox="0 0 200 200" aria-hidden="true">
+        <circle class="sc__ring-track" cx="100" cy="100" r="86"></circle>
+        <circle class="sc__ring-est" id="sc-ring-est" cx="100" cy="100" r="86"></circle>
+        <circle class="sc__ring-fill" id="sc-ring" cx="100" cy="100" r="86"></circle>
+      </svg>
+      <div class="sc__ring-center">
+        <span class="sc__count" id="sc-count">0</span>
+        <span class="sc__est" id="sc-est" title="Estimación según tu ritmo de marcha mientras la pantalla estaba bloqueada" data-i18na="title=tool.step-counter.est_explain"></span>
+        <span class="sc__count-label" id="sc-count-label"><i18n-t data-k="tool.step-counter.steps_today">pasos hoy</i18n-t></span>
+        <span class="sc__goal" id="sc-goal-text"></span>
+      </div>
+    </div>
+
+    <p class="sc__goal-reached" id="sc-goal-reached" role="status" aria-live="polite"></p>
+
+    <div class="sc__stats">
+      <div class="sc__stat">
+        <span class="sc__stat-label"><i18n-t data-k="tool.step-counter.stat_distance">Distancia</i18n-t></span>
+        <span class="sc__stat-value" id="sc-distance">0 m</span>
+      </div>
+      <div class="sc__stat">
+        <span class="sc__stat-label"><i18n-t data-k="tool.step-counter.stat_session">Sesión</i18n-t></span>
+        <span class="sc__stat-value" id="sc-session">0:00</span>
+      </div>
+      <div class="sc__stat">
+        <span class="sc__stat-label"><i18n-t data-k="tool.step-counter.stat_pace">Ritmo</i18n-t></span>
+        <span class="sc__stat-value" id="sc-pace">—</span>
+      </div>
+    </div>
+
+    <p class="sc__hint" id="sc-hint" hidden><i18n-t data-k="tool.step-counter.screen_hint">Mantén la pantalla encendida y esta pestaña abierta mientras caminas.</i18n-t></p>
+
+    <div class="sc__controls">
+      <button class="sc__btn m-btn m-btn--primary m-btn--pill" id="sc-toggle"><i18n-t data-k="tool.step-counter.btn_start">Iniciar caminata</i18n-t></button>
+      <button class="sc__btn m-btn m-btn--ghost m-btn--pill" id="sc-pocket-btn" title="El modo bolsillo mantiene la pantalla encendida pero en negro puro, y los pasos se siguen contando en el bolsillo. Ideal en pantallas OLED. Desliza el punto de abajo para salir." hidden data-i18na="title=tool.step-counter.pocket_note"><i18n-t data-k="tool.step-counter.btn_pocket">Modo bolsillo</i18n-t></button>
+      <button class="sc__btn m-btn m-btn--ghost m-btn--pill" id="sc-settings-btn" popovertarget="sc-settings"><i18n-t data-k="tool.step-counter.settings">Ajustes</i18n-t></button>
+    </div>
+    <p class="sc__pocket-note" id="sc-pocket-note" hidden><i18n-t data-k="tool.step-counter.pocket_note">El modo bolsillo mantiene la pantalla encendida pero en negro puro, y los pasos se siguen contando en el bolsillo. Ideal en pantallas OLED. Desliza el punto de abajo para salir.</i18n-t></p>
+
+    <div class="sc__history">
+      <span class="sc__history-label"><i18n-t data-k="tool.step-counter.history_label">Últimos 7 días</i18n-t></span>
+      <div class="sc__bars" id="sc-bars"></div>
+    </div>
+
+    <div class="sc__streaks">
+      <div class="sc__stat">
+        <span class="sc__stat-label"><i18n-t data-k="tool.step-counter.streak_current">Racha actual</i18n-t></span>
+        <span class="sc__stat-value" id="sc-streak-cur">—</span>
+      </div>
+      <div class="sc__stat">
+        <span class="sc__stat-label"><i18n-t data-k="tool.step-counter.streak_best">Mejor racha</i18n-t></span>
+        <span class="sc__stat-value" id="sc-streak-best">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sc__panel" id="sc-perm" hidden>
+    <h2 class="sc__panel-title"><i18n-t data-k="tool.step-counter.perm_title">Se necesita acceso al movimiento</i18n-t></h2>
+    <p class="sc__panel-body"><i18n-t data-k="tool.step-counter.perm_body">Este contador lee el sensor de movimiento de tu teléfono. Concede acceso para empezar.</i18n-t></p>
+    <button class="sc__btn m-btn m-btn--primary m-btn--pill" id="sc-perm-btn"><i18n-t data-k="tool.step-counter.perm_btn">Conceder acceso al movimiento</i18n-t></button>
+      <button type="button" class="sc__btn m-btn m-btn--ghost m-btn--pill" data-sc-back><i18n-t data-k="tool.step-counter.back_to_stats">Volver a las estadísticas</i18n-t></button>
+  </div>
+
+  <div class="sc__panel" id="sc-denied" hidden>
+    <h2 class="sc__panel-title sc__panel-title--warn"><i18n-t data-k="tool.step-counter.denied_title">Acceso al movimiento denegado</i18n-t></h2>
+    <p class="sc__panel-body"><i18n-t data-k="tool.step-counter.denied_body">Vuelve a habilitar el acceso al movimiento en los ajustes del navegador y recarga la página.</i18n-t></p>
+      <button type="button" class="sc__btn m-btn m-btn--ghost m-btn--pill" data-sc-back><i18n-t data-k="tool.step-counter.back_to_stats">Volver a las estadísticas</i18n-t></button>
+  </div>
+
+  <div class="sc__panel" id="sc-unsupported" hidden>
+    <h2 class="sc__panel-title sc__panel-title--warn"><i18n-t data-k="tool.step-counter.unsupported_title">Sin sensor de movimiento</i18n-t></h2>
+    <p class="sc__panel-body"><i18n-t data-k="tool.step-counter.unsupported_body">Contar pasos requiere un teléfono o tableta con acelerómetro. Este dispositivo no expone ninguno.</i18n-t></p>
+      <button type="button" class="sc__btn m-btn m-btn--ghost m-btn--pill" data-sc-back><i18n-t data-k="tool.step-counter.back_to_stats">Volver a las estadísticas</i18n-t></button>
+  </div>
+
+  <div class="sc__panel" id="sc-insecure" hidden>
+    <h2 class="sc__panel-title sc__panel-title--warn"><i18n-t data-k="tool.step-counter.insecure_title">Se necesita conexión segura</i18n-t></h2>
+    <p class="sc__panel-body"><i18n-t data-k="tool.step-counter.insecure_body">Los sensores de movimiento solo funcionan con HTTPS. Abre esta herramienta en el sitio publicado (https://webmcp.mentria.ai). Un servidor de desarrollo local accedido por IP de LAN sobre HTTP no puede exponer el sensor.</i18n-t></p>
+      <button type="button" class="sc__btn m-btn m-btn--ghost m-btn--pill" data-sc-back><i18n-t data-k="tool.step-counter.back_to_stats">Volver a las estadísticas</i18n-t></button>
+  </div>
+
+  <div class="sc__pocket" id="sc-pocket" hidden>
+    <span class="sc__pocket-count" id="sc-pocket-count">0</span>
+    <p class="sc__pocket-hint" id="sc-pocket-hint"><i18n-t data-k="tool.step-counter.pocket_exit">Desliza para salir</i18n-t></p>
+    <div class="sc__pocket-track" id="sc-pocket-track" aria-hidden="true">
+      <div class="sc__pocket-thumb" id="sc-pocket-thumb"></div>
+    </div>
+  </div>
+
+  <div id="sc-settings" popover class="sc__settings">
+    <div class="m-field">
+      <label for="sc-goal"><i18n-t data-k="tool.step-counter.goal_label">Meta diaria de pasos</i18n-t></label>
+      <input class="m-input" type="number" id="sc-goal" min="1000" max="100000" step="500" inputmode="numeric">
+    </div>
+    <div class="m-field">
+      <label for="sc-stride"><i18n-t data-k="tool.step-counter.stride_label">Longitud de zancada (cm)</i18n-t></label>
+      <input class="m-input" type="number" id="sc-stride" min="40" max="120" step="1" inputmode="numeric">
+    </div>
+    <div class="m-field">
+      <label><i18n-t data-k="tool.step-counter.sensitivity_label">Sensibilidad</i18n-t></label>
+      <div class="m-seg" id="sc-sens">
+        <button data-sens="low" data-value="low"><i18n-t data-k="tool.step-counter.sens_low">Baja</i18n-t></button>
+        <button data-sens="med" data-value="med"><i18n-t data-k="tool.step-counter.sens_med">Media</i18n-t></button>
+        <button data-sens="high" data-value="high"><i18n-t data-k="tool.step-counter.sens_high">Alta</i18n-t></button>
+      </div>
+    </div>
+    <button class="sc__btn m-btn m-btn--danger sc__btn--danger" id="sc-reset"><i18n-t data-k="tool.step-counter.reset_today">Reiniciar hoy</i18n-t></button>
+  </div>
+
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="Más herramientas" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">Más herramientas</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/es/tools/phosphor/">
+        <span class="related-tools__name"><i18n-t data-k="tools.phosphor.title">PHOSPHOR</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Juego</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/es/tools/extensions/">
+        <span class="related-tools__name"><i18n-t data-k="tools.extensions.title">Extensiones</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utilidad</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/es/tools/files/">
+        <span class="related-tools__name"><i18n-t data-k="tools.files.title">Archivos</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">Utilidad</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/comms/">
+        <span class="related-tools__name"><i18n-t data-k="tools.comms.title">Comms</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Social">Social</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/es/tools/"><i18n-t data-k="tools_page.related_all">Todas las herramientas</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Contador de Pasos",
+  "url": "https://webmcp.mentria.ai/es/tools/step-counter/",
+  "description": "Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "es"
+}
+</script>
+
+
+<script>
+(() => {
+  const LANG = document.documentElement.lang || undefined;
+  const COPY = {
+    btnStart:    "Iniciar caminata",
+    btnPause:    "Pausar",
+    btnResume:   "Reanudar",
+    goalOf:      "de {goal}",
+    paceUnit:    "ppm",
+    goalReached: "Meta diaria alcanzada",
+    confirmReset:"¿Reiniciar el conteo de pasos de hoy a cero?",
+    streakDay:   "{n} día",
+    streakDays:  "{n} días",
+    estLabel:    "est."
+  };
+
+  const LS = 'mentria-step-counter';
+  const RING_CIRC = 2 * Math.PI * 86;
+  const SENS = { low: 1.7, med: 1.1, high: 0.7 };
+  const STEP_MIN_MS = 300;
+
+  const $ = id => document.getElementById(id);
+  const tracker     = $('sc-tracker');
+  const panelPerm   = $('sc-perm');
+  const panelDenied = $('sc-denied');
+  const panelUnsup  = $('sc-unsupported');
+  const panelInsec  = $('sc-insecure');
+  const countEl     = $('sc-count');
+  const goalTextEl  = $('sc-goal-text');
+  const goalReachedEl = $('sc-goal-reached');
+  const ringEl      = $('sc-ring');
+  const distEl      = $('sc-distance');
+  const sessionEl   = $('sc-session');
+  const paceEl      = $('sc-pace');
+  const hintEl      = $('sc-hint');
+  const toggleBtn   = $('sc-toggle');
+  const barsEl      = $('sc-bars');
+  const streakCurEl = $('sc-streak-cur');
+  const streakBestEl = $('sc-streak-best');
+  const goalInput   = $('sc-goal');
+  const strideInput = $('sc-stride');
+  const sensSeg     = $('sc-sens');
+  const resetBtn    = $('sc-reset');
+  const permBtn     = $('sc-perm-btn');
+  const ringEstEl   = $('sc-ring-est');
+  const estEl       = $('sc-est');
+  const pocketBtn   = $('sc-pocket-btn');
+  const pocketNote  = $('sc-pocket-note');
+  const pocketEl    = $('sc-pocket');
+  const pocketCount = $('sc-pocket-count');
+  const pocketHint  = $('sc-pocket-hint');
+  const pocketTrack = $('sc-pocket-track');
+  const pocketThumb = $('sc-pocket-thumb');
+
+  ringEl.style.strokeDasharray = RING_CIRC;
+  ringEstEl.style.strokeDasharray = RING_CIRC;
+
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function loadState() {
+    let s = {};
+    if (window.MentriaStore) {
+      s = window.MentriaStore.get('tools', 'step_counter') || {};
+      if (!s.date && !s.steps) {
+        try {
+          const legacy = JSON.parse(localStorage.getItem(LS));
+          if (legacy && typeof legacy === 'object') {
+            s = legacy;
+            window.MentriaStore.set('tools', 'step_counter', s);
+            localStorage.removeItem(LS);
+          }
+        } catch (_) {}
+      }
+    } else {
+      try { s = JSON.parse(localStorage.getItem(LS)) || {}; } catch (_) {}
+    }
+    s.history = s.history || {};
+    s.estHistory = s.estHistory || {};
+    s.goal = s.goal || 10000;
+    s.stride = s.stride || 75;
+    s.sensitivity = SENS[s.sensitivity] ? s.sensitivity : 'med';
+    if (s.date && s.date !== todayKey()) {
+      if (s.steps > 0) s.history[s.date] = s.steps;
+      if (s.estSteps > 0) s.estHistory[s.date] = s.estSteps;
+      s.steps = 0;
+      s.estSteps = 0;
+    }
+    s.date = todayKey();
+    s.steps = s.steps || 0;
+    s.estSteps = s.estSteps || 0;
+    return s;
+  }
+
+  function persist() {
+    if (window.MentriaStore) window.MentriaStore.set('tools', 'step_counter', state);
+    else try { localStorage.setItem(LS, JSON.stringify(state)); } catch (_) {}
+  }
+
+  function rolloverIfNeeded() {
+    const key = todayKey();
+    if (state.date === key) return false;
+    if (state.steps > 0) state.history[state.date] = state.steps;
+    if (state.estSteps > 0) state.estHistory[state.date] = state.estSteps;
+    state.steps = 0;
+    state.estSteps = 0;
+    state.date = key;
+    persist();
+    renderCount();
+    renderHistory();
+    return true;
+  }
+
+  const state = loadState();
+
+  let running = false;
+  let sessionStart = 0;
+  let sessionElapsed = 0;
+  let sessionSteps = 0;
+  let wakeLock = null;
+  let watchdog = null;
+  let sawSensorData = false;
+  let tickTimer = null;
+
+  let gravityEMA = 9.81;
+  let acEMA = 0;
+  let waitingForPeak = true;
+  let peaked = false;
+  let lastPeakAt = 0;
+
+  let stepTimes = [];
+  let gapMark = null;
+  let gapConfirmTimer = null;
+  let pocketOn = false;
+
+  function cadencePerMin(windowMs, now) {
+    const cutoff = now - windowMs;
+    let n = 0;
+    for (let i = stepTimes.length - 1; i >= 0; i--) {
+      if (stepTimes[i] < cutoff) break;
+      n++;
+    }
+    return n / (windowMs / 60000);
+  }
+
+  function fmtDistance(steps) {
+    const m = steps * (state.stride / 100);
+    if (m < 1000) return Math.round(m).toLocaleString(LANG) + ' m';
+    return (m / 1000).toLocaleString(LANG, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' km';
+  }
+
+  function fmtClock(ms) {
+    const total = Math.floor(ms / 1000);
+    const mm = Math.floor(total / 60);
+    const ss = total % 60;
+    return mm + ':' + String(ss).padStart(2, '0');
+  }
+
+  function renderCount() {
+    countEl.textContent = state.steps.toLocaleString(LANG);
+    estEl.textContent = state.estSteps > 0 ? '+' + state.estSteps.toLocaleString(LANG) + ' ' + COPY.estLabel : '';
+    goalTextEl.textContent = COPY.goalOf.replace('{goal}', state.goal.toLocaleString(LANG));
+    const total = state.steps + state.estSteps;
+    const pct = Math.max(0, Math.min(1, state.steps / state.goal));
+    const pctTotal = Math.max(0, Math.min(1, total / state.goal));
+    ringEl.style.strokeDashoffset = RING_CIRC * (1 - pct);
+    ringEstEl.style.strokeDashoffset = RING_CIRC * (1 - pctTotal);
+    ringEl.classList.toggle('is-complete', pctTotal >= 1);
+    if (goalReachedEl) goalReachedEl.textContent = pctTotal >= 1 ? COPY.goalReached : '';
+    distEl.textContent = fmtDistance(total);
+  }
+
+  function renderHistory() {
+    const days = [];
+    const now = new Date();
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      const steps = key === state.date ? state.steps : (state.history[key] || 0);
+      const est = key === state.date ? state.estSteps : (state.estHistory[key] || 0);
+      days.push({ key, steps, est, label: d.toLocaleDateString(LANG, { weekday: 'short' }).slice(0, 2) });
+    }
+    const max = Math.max(state.goal, ...days.map(d => d.steps + d.est), 1);
+    barsEl.innerHTML = '';
+    for (const d of days) {
+      const col = document.createElement('div');
+      col.className = 'sc__bar-col';
+      const total = d.steps + d.est;
+      const h = Math.max(2, Math.round((d.steps / max) * 100));
+      const he = d.est > 0 ? Math.round((d.est / max) * 100) : 0;
+      col.innerHTML =
+        '<div class="sc__bar-track">' +
+        (he > 0 ? '<div class="sc__bar-est" style="height:' + he + '%"></div>' : '') +
+        '<div class="sc__bar-fill' +
+        (total >= state.goal ? ' is-goal' : '') + '" style="height:' + h + '%"></div></div>' +
+        '<span class="sc__bar-label">' + d.label + '</span>';
+      col.title = total.toLocaleString(LANG) + (d.est > 0 ? ' (+' + d.est.toLocaleString(LANG) + ' ' + COPY.estLabel + ')' : '');
+      barsEl.appendChild(col);
+    }
+    renderStreaks();
+  }
+
+  function keyDaysAgo(offset) {
+    const d = new Date();
+    d.setDate(d.getDate() - offset);
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function nextDayKey(key) {
+    const parts = key.split('-');
+    const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10) + 1);
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function computeStreaks() {
+    const met = key => key === state.date
+      ? state.steps + state.estSteps >= state.goal
+      : (state.history[key] || 0) + (state.estHistory[key] || 0) >= state.goal;
+    let current = 0;
+    const startOff = met(todayKey()) ? 0 : 1;
+    while (current < 4000 && met(keyDaysAgo(startOff + current))) current++;
+    let best = current;
+    const metDays = Object.keys(state.history)
+      .filter(k => (state.history[k] || 0) + (state.estHistory[k] || 0) >= state.goal).sort();
+    let run = 0, prev = null;
+    for (const k of metDays) {
+      run = prev !== null && nextDayKey(prev) === k ? run + 1 : 1;
+      if (run > best) best = run;
+      prev = k;
+    }
+    return { current, best };
+  }
+
+  function fmtStreak(n) {
+    const tpl = n === 1 ? COPY.streakDay : COPY.streakDays;
+    return tpl.replace('{n}', n.toLocaleString(LANG));
+  }
+
+  function renderStreaks() {
+    const s = computeStreaks();
+    streakCurEl.textContent = (s.current >= 2 ? '🔥 ' : '') + fmtStreak(s.current);
+    streakBestEl.textContent = fmtStreak(s.best);
+  }
+
+  function renderSettings() {
+    goalInput.value = state.goal;
+    strideInput.value = state.stride;
+    sensSegCtl.set(state.sensitivity);
+  }
+
+  function updateSession() {
+    rolloverIfNeeded();
+    const elapsed = sessionElapsed + (running ? Date.now() - sessionStart : 0);
+    sessionEl.textContent = fmtClock(elapsed);
+    if (sessionSteps > 0 && elapsed > 10000) {
+      const spm = Math.round(sessionSteps / (elapsed / 60000));
+      paceEl.textContent = spm + ' ' + COPY.paceUnit;
+    }
+  }
+
+  function registerStep() {
+    rolloverIfNeeded();
+    const wasUnderGoal = state.steps + state.estSteps < state.goal;
+    state.steps += 1;
+    sessionSteps += 1;
+    const now = Date.now();
+    stepTimes.push(now);
+    if (stepTimes.length > 240) stepTimes.shift();
+    renderCount();
+    renderHistory();
+    persist();
+    if (pocketOn) renderPocket();
+    if (wasUnderGoal && state.steps + state.estSteps >= state.goal && navigator.vibrate) {
+      navigator.vibrate([120, 60, 120, 60, 200]);
+    }
+  }
+
+  function onMotion(e) {
+    const a = e.accelerationIncludingGravity || e.acceleration;
+    if (!a || a.x == null || a.y == null || a.z == null) return;
+    sawSensorData = true;
+    const mag = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+    gravityEMA += (mag - gravityEMA) * 0.05;
+    const ac = mag - gravityEMA;
+    acEMA += (ac - acEMA) * 0.4;
+    const thr = SENS[state.sensitivity];
+    const now = performance.now();
+    if (waitingForPeak && acEMA > thr) {
+      peaked = true;
+      waitingForPeak = false;
+    } else if (peaked && acEMA < -thr * 0.4) {
+      const interval = now - lastPeakAt;
+      lastPeakAt = now;
+      if (interval >= STEP_MIN_MS) registerStep();
+      peaked = false;
+      waitingForPeak = true;
+    }
+  }
+
+  async function requestWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    }
+    catch (_) { wakeLock = null; }
+  }
+  function releaseWakeLock() {
+    if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
+  }
+
+  function showPanel(panel) {
+    tracker.hidden = panel !== null;
+    panelPerm.hidden = panel !== 'perm';
+    panelDenied.hidden = panel !== 'denied';
+    panelUnsup.hidden = panel !== 'unsupported';
+    panelInsec.hidden = panel !== 'insecure';
+  }
+
+  function beginTracking() {
+    running = true;
+    sessionStart = Date.now();
+    sawSensorData = false;
+    waitingForPeak = true;
+    peaked = false;
+    lastPeakAt = 0;
+    toggleBtn.textContent = COPY.btnPause;
+    hintEl.hidden = false;
+    pocketBtn.hidden = false;
+    pocketNote.hidden = false;
+    window.addEventListener('devicemotion', onMotion);
+    requestWakeLock();
+    tickTimer = setInterval(updateSession, 1000);
+    watchdog = setTimeout(() => {
+      if (!sawSensorData) {
+        stopTracking(true);
+        showPanel('unsupported');
+      }
+    }, 3500);
+  }
+
+  function stopTracking(silent) {
+    running = false;
+    sessionElapsed += sessionStart ? Date.now() - sessionStart : 0;
+    sessionStart = 0;
+    window.removeEventListener('devicemotion', onMotion);
+    releaseWakeLock();
+    if (tickTimer) { clearInterval(tickTimer); tickTimer = null; }
+    if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+    if (!silent) {
+      toggleBtn.textContent = COPY.btnResume;
+      hintEl.hidden = true;
+    }
+    pocketBtn.hidden = true;
+    pocketNote.hidden = true;
+    exitPocket();
+    gapMark = null;
+    if (gapConfirmTimer) { clearTimeout(gapConfirmTimer); gapConfirmTimer = null; }
+  }
+
+  async function start() {
+    if (!window.isSecureContext) {
+      showPanel('insecure');
+      return;
+    }
+    if (typeof DeviceMotionEvent === 'undefined') {
+      showPanel('unsupported');
+      return;
+    }
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      showPanel('perm');
+      return;
+    }
+    beginTracking();
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    if (running) stopTracking(false);
+    else if (sessionElapsed > 0) beginTracking();
+    else start();
+  });
+
+  document.querySelectorAll('[data-sc-back]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      showPanel(null);
+      toggleBtn.textContent = sessionElapsed > 0 ? COPY.btnResume : COPY.btnStart;
+      hintEl.hidden = true;
+    });
+  });
+
+  permBtn.addEventListener('click', async () => {
+    try {
+      const res = await DeviceMotionEvent.requestPermission();
+      if (res === 'granted') {
+        showPanel(null);
+        beginTracking();
+      } else {
+        showPanel('denied');
+      }
+    } catch (_) {
+      showPanel('denied');
+    }
+  });
+
+  goalInput.addEventListener('change', () => {
+    const v = parseInt(goalInput.value, 10);
+    if (v >= 1000 && v <= 100000) { state.goal = v; persist(); renderCount(); renderHistory(); }
+  });
+  strideInput.addEventListener('change', () => {
+    const v = parseInt(strideInput.value, 10);
+    if (v >= 40 && v <= 120) { state.stride = v; persist(); renderCount(); }
+  });
+  const sensSegCtl = MentriaUI.segmented(sensSeg, value => {
+    state.sensitivity = value;
+    persist();
+    renderSettings();
+  });
+  resetBtn.addEventListener('click', async () => {
+    if (!(await mentriaConfirm(COPY.confirmReset))) return;
+    state.steps = 0;
+    state.estSteps = 0;
+    stepTimes = [];
+    sessionSteps = 0;
+    sessionElapsed = 0;
+    sessionStart = running ? Date.now() : 0;
+    paceEl.textContent = '—';
+    persist();
+    renderCount();
+    renderHistory();
+    updateSession();
+  });
+
+  const GAP_MIN_MS = 15000;
+  const GAP_MAX_MS = 300000;
+  const CONFIRM_MS = 20000;
+  const MIN_CADENCE = 40;
+
+  function markGapStart() {
+    if (!running) return;
+    const now = Date.now();
+    const cadence = cadencePerMin(20000, now);
+    const walking = stepTimes.length > 0 && now - stepTimes[stepTimes.length - 1] < 8000;
+    gapMark = walking && cadence >= MIN_CADENCE ? { at: now, cadence } : null;
+  }
+
+  function settleGap() {
+    if (!gapMark) return;
+    const mark = gapMark;
+    gapMark = null;
+    const gapMs = Date.now() - mark.at;
+    if (gapMs < GAP_MIN_MS || gapMs > GAP_MAX_MS) return;
+    if (gapConfirmTimer) clearTimeout(gapConfirmTimer);
+    gapConfirmTimer = setTimeout(() => {
+      gapConfirmTimer = null;
+      if (!running) return;
+      const cadenceAfter = cadencePerMin(CONFIRM_MS, Date.now());
+      if (cadenceAfter < MIN_CADENCE) return;
+      const ratio = Math.abs(mark.cadence - cadenceAfter) / Math.max(mark.cadence, cadenceAfter);
+      if (ratio > 0.15) return;
+      const est = Math.round(Math.min(mark.cadence, cadenceAfter) * (gapMs / 60000));
+      if (est < 1) return;
+      state.estSteps += est;
+      persist();
+      renderCount();
+      renderHistory();
+    }, CONFIRM_MS);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') {
+      markGapStart();
+      return;
+    }
+    rolloverIfNeeded();
+    if (running && !wakeLock) requestWakeLock();
+    settleGap();
+  });
+
+  function renderPocket() {
+    pocketCount.textContent = (state.steps + state.estSteps).toLocaleString(LANG);
+  }
+
+  if (pocketEl.parentElement !== document.body) document.body.appendChild(pocketEl);
+
+  function enterPocket() {
+    if (pocketOn) return;
+    pocketOn = true;
+    pocketEl.hidden = false;
+    document.documentElement.classList.add('sc-pocket-on');
+    pocketHint.style.opacity = '1';
+    setTimeout(() => { pocketHint.style.opacity = '0'; }, 5000);
+    renderPocket();
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+    }
+  }
+
+  function exitPocket() {
+    if (!pocketOn) return;
+    pocketOn = false;
+    pocketEl.hidden = true;
+    document.documentElement.classList.remove('sc-pocket-on');
+    disarmPocket();
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
+  }
+
+  let slideActive = false;
+  let slideId = null;
+  let slideX0 = 0;
+  let slideMax = 0;
+
+  function disarmPocket() {
+    slideActive = false;
+    slideId = null;
+    pocketEl.classList.remove('is-armed');
+    pocketThumb.style.transition = 'transform 0.18s ease';
+    pocketThumb.style.transform = 'translateX(0)';
+  }
+
+  pocketBtn.addEventListener('click', enterPocket);
+
+  pocketEl.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    if (slideActive) { disarmPocket(); return; }
+    const tr = pocketTrack.getBoundingClientRect();
+    const th = pocketThumb.getBoundingClientRect();
+    if (e.clientY < tr.top - 12 || e.clientY > tr.bottom + 12) return;
+    if (e.clientX < tr.left - 8 || e.clientX > th.right + 20) return;
+    slideActive = true;
+    slideId = e.pointerId;
+    slideX0 = e.clientX;
+    slideMax = tr.width - th.width - 6;
+    pocketEl.classList.add('is-armed');
+    pocketHint.style.opacity = '1';
+    pocketThumb.style.transition = 'none';
+    if (navigator.vibrate) navigator.vibrate(15);
+  });
+  pocketEl.addEventListener('pointermove', e => {
+    e.preventDefault();
+    if (!slideActive || e.pointerId !== slideId) return;
+    const dx = Math.max(0, Math.min(e.clientX - slideX0, slideMax));
+    pocketThumb.style.transform = 'translateX(' + dx + 'px)';
+    if (dx >= slideMax * 0.92) {
+      disarmPocket();
+      exitPocket();
+    }
+  });
+  pocketEl.addEventListener('pointerup', e => { e.preventDefault(); if (slideActive) disarmPocket(); });
+  pocketEl.addEventListener('pointercancel', () => { if (slideActive) disarmPocket(); });
+  pocketEl.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+  pocketEl.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+  pocketEl.addEventListener('contextmenu', e => e.preventDefault());
+  pocketEl.addEventListener('selectstart', e => e.preventDefault());
+
+  renderCount();
+  renderHistory();
+  renderSettings();
+})();
+</script>
+
+
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="Navegación de la aplicación" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/es/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Inicio</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/es/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Buscar</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Añadir a la pantalla de inicio — funciona sin conexión.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Instalar</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Cerrar" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Cerrar" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Instalar Mentria en iPhone",
+    macosTitle:  "Instalar Mentria en Mac",
+    chromeTitle: "Instalar Mentria",
+    iosStep1:    "Toca el botón <strong>Compartir</strong> en la parte inferior de la pantalla",
+    iosStep2:    "Elige <strong>Añadir a Pantalla de Inicio</strong>",
+    iosStep3:    "Toca <strong>Añadir</strong> en la esquina superior derecha.",
+    macosStep1:  "Abre esta página en <strong>Safari 17+</strong>.",
+    macosStep2:  "En la barra de menú, elige <strong>Archivo → Añadir al Dock…</strong>",
+    macosStep3:  "Haz clic en <strong>Añadir</strong>.",
+    chromeStep1: "Haz clic en el icono de <strong>instalación</strong> en la barra de direcciones de tu navegador.",
+    chromeStep2: "O abre el menú (⋮) y elige <strong>Instalar Mentria</strong>.",
+    note:        "Una vez instalada, Mentria funciona sin conexión y tus datos locales permanecen en tu dispositivo."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Cancelar</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">Aceptar</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "Aceptar";
+        var confirmLabel = "Confirmar";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "No se pudo guardar — el almacenamiento del navegador está lleno. Libera espacio para conservar tus cambios.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("Esto descarga un modelo de IA grande (490 MB o más, según el modelo) y pareces estar en una conexión lenta o con ahorro de datos. ¿Continuar?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Compartir";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "Acerca de esta herramienta");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Versión de prueba (instantánea de la participación WebMCP), congelada para pruebas. Para uso general, visita <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

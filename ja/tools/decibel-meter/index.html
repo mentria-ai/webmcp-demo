@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>騒音計 | Mentria</title>
+    <meta name="description" content="ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/ja/tools/decibel-meter/">
+    <meta property="og:title" content="騒音計 | Mentria">
+    <meta property="og:description" content="ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/ja/tools/decibel-meter/">
+    <meta name="twitter:title" content="騒音計 | Mentria">
+    <meta name="twitter:description" content="ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/decibel-meter/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/decibel-meter/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/decibel-meter/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/decibel-meter/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/decibel-meter/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/decibel-meter/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "ツール、実験、ビジュアル・トランスミッションのクリエイティブスタジオ。職人技で構築。",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "ja"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://webmcp.mentria.ai/ja/" },
+        { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://webmcp.mentria.ai/ja/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "騒音計", "item": "https://webmcp.mentria.ai/ja/tools/decibel-meter/" }
+      ]
+    }
+    </script>
+<style>
+.db {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  font-family: var(--font-mono);
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-2) 0 var(--space-4);
+}
+
+.db__live {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+}
+.db__live[hidden] { display: none; }
+
+.db__gauge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.db__scale {
+  position: relative;
+  width: 2.1rem;
+  height: 240px;
+  flex: none;
+}
+.db__tick {
+  position: absolute;
+  right: 0;
+  transform: translateY(50%);
+  font-size: var(--text-2xs);
+  color: var(--term-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.db__track {
+  position: relative;
+  width: 30px;
+  flex: none;
+  height: 240px;
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.db__fill {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 90ms linear;
+  background: linear-gradient(
+    to top,
+    #34d399 0%,
+    #4ade80 40%,
+    #fbbf24 46%,
+    #fbbf24 58%,
+    #f87171 66%,
+    #ef4444 100%
+  );
+}
+
+.db__peak {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--term-fg-strong);
+  box-shadow: 0 0 8px rgba(248, 250, 252, 0.55);
+  transition: bottom 120ms linear;
+}
+
+.db__readout {
+  --db-color: var(--syn-green);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+}
+.db__readout[data-level="loud"] { --db-color: var(--syn-amber); }
+.db__readout[data-level="harmful"] { --db-color: #f87171; }
+
+.db__value {
+  font-size: clamp(3.2rem, 17vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--db-color);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--db-color) 40%, transparent);
+  transition: color 200ms var(--ease-out);
+}
+
+.db__unit {
+  font-size: var(--text-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--term-muted);
+  margin-top: 0.15rem;
+}
+
+.db__level {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--db-color);
+  margin-top: var(--space-2);
+  min-height: 1.2em;
+}
+
+.db__slow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: var(--space-2);
+  font-size: var(--text-2xs);
+  color: var(--term-muted);
+}
+.db__slow-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.db__slow-value {
+  font-size: var(--text-xs);
+  color: var(--term-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.db__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.db__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  width: 100%;
+}
+.db__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.7rem 0.5rem;
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.015);
+}
+.db__stat-label {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--term-muted);
+  text-align: center;
+}
+.db__stat-value {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--term-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.db__controls {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.db__cal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-lg);
+  background: var(--term-bg-raised);
+}
+.db__cal-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--term-muted);
+}
+.db__cal-value {
+  font-size: var(--text-sm);
+  color: var(--accent);
+  text-transform: none;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+.db__cal-range {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.db__cal-hint {
+  margin: 0;
+  font-size: var(--text-2xs);
+  line-height: 1.6;
+  color: var(--term-subtle);
+}
+
+.db__hint {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--term-muted);
+  text-align: center;
+}
+
+.db__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.015);
+  width: 100%;
+}
+.db__panel[hidden] { display: none; }
+.db__panel-title {
+  font-size: var(--text-base);
+  color: var(--accent);
+  margin: 0;
+}
+.db__panel-title--warn { color: var(--syn-amber); }
+.db__panel-body {
+  font-size: var(--text-sm);
+  color: var(--term-muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 40ch;
+}
+.db__panel-err {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--syn-pink);
+  line-height: 1.5;
+  max-width: 40ch;
+}
+.db__panel-err[hidden] { display: none; }
+
+.db__ref {
+  width: 100%;
+}
+.db__ref-title {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--term-muted);
+  margin: 0 0 var(--space-3);
+}
+.db__ref-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--term-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.db__ref-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0.5rem var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--term-muted);
+  border-bottom: 1px solid var(--term-divider);
+  transition: background 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+.db__ref-row:last-child { border-bottom: none; }
+.db__ref-db {
+  width: 3.2rem;
+  flex: none;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--term-fg);
+}
+.db__ref-label {
+  flex: 1;
+  min-width: 0;
+}
+.db__ref-now {
+  display: none;
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.db__ref-row.is-current {
+  background: rgba(110, 243, 197, 0.08);
+  color: var(--term-fg);
+}
+.db__ref-row.is-current .db__ref-db { color: var(--accent); }
+.db__ref-row.is-current .db__ref-now { display: inline; }
+
+.db__notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+.db__note {
+  margin: 0;
+  font-size: var(--text-2xs);
+  line-height: 1.7;
+  color: var(--term-subtle);
+}
+.db__note--honesty {
+  padding: var(--space-3);
+  border-left: 2px solid var(--syn-amber);
+  background: rgba(251, 191, 36, 0.05);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--term-muted);
+}
+
+@media (max-width: 420px) {
+  .db__track { height: 200px; }
+  .db__scale { width: 1.8rem; height: 200px; }
+  .db__ref-db { width: 2.6rem; }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.decibel-meter.title","suffix":" | Mentria"},"desc":{"key":"tools.decibel-meter.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "ja",
+        prefix: "/ja",
+        tools: [
+          { slug: "search", title: "検索", category: "AI", keywords: "ツールとフィード投稿を検索。キーワードでも自然言語でも入力可能。" },
+          { slug: "step-counter", title: "歩数カウンター", category: "健康", keywords: "ブラウザ内で散歩中の歩数をカウント。スマホのモーションセンサーを使用 — アップロードは一切なし。", requires: "motion" },
+          { slug: "qr-scanner", title: "QR・バーコード スキャナー＆ジェネレーター", category: "ユーティリティ", keywords: "QRコードやバーコードをスキャンしたり、リンクやテキストからQRコードを生成したり——すべて端末内で処理し、何もアップロードしません。" },
+          { slug: "decision-wheel", title: "決定の輪", category: "ユーティリティ", keywords: "決められない？ホイールを回して運命に任せましょう。オフラインでも動作。" },
+          { slug: "countdown-timer", title: "カウントダウンタイマー", category: "タイマー", keywords: "時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。" },
+          { slug: "coin-flip", title: "コインフリップ", category: "ユーティリティ", keywords: "表か裏 — 即座にコインを投げる。タイブレーカーには best-of-N シリーズ。オフラインでも動作。" },
+          { slug: "quick-notes", title: "クイックノート", category: "生産性", keywords: "ブラウザに住むミニマルなスクラッチパッド。複数のノートを作成、キー入力ごとに自動保存。" },
+          { slug: "base64-codec", title: "Base64コーデック", category: "開発", keywords: "テキストやファイルをBase64にエンコード・デコード。画像、ドキュメント、あらゆるファイルタイプに対応。すべてブラウザ内でローカル実行。" },
+          { slug: "totp", title: "TOTP", category: "セキュリティ", keywords: "ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。" },
+          { slug: "exif", title: "EXIFインスペクター", category: "セキュリティ", keywords: "写真にひそかに含まれる情報 — カメラ情報、日時、GPS位置 — を表示し、すべて削除したクリーンなコピーを保存。アップロードは一切ありません。" },
+          { slug: "color-picker", title: "カラーピッカー", category: "デザイン", keywords: "好きな色を選んで HEX / RGB / HSL の値を表示し、調和の取れたパレットを生成。オフラインでも動作。" },
+          { slug: "annotate-image", title: "画像を注釈", category: "AI", keywords: "画像をアップロードすると、AIによる説明・代替テキスト・文字起こし・タグを即座に取得 — テスト済みのワンタップ・プロンプト付き。ブラウザ内でローカル実行、アップロードは一切なし。" },
+          { slug: "ai-chat", title: "AIチャット", category: "AI", keywords: "Qwen3.5がブラウザ内でローカル実行。サーバーなし、APIキー不要。画像入力対応。" },
+          { slug: "console", title: "コンソール", category: "AI", keywords: "共有のスマホ画面でデバイス上のモデルがMentriaのアプリを操作するのを見ながらチャット。テストユーザーとして探索させ、見つけたことを報告させることもできます。" },
+          { slug: "model-mirror", title: "モデルミラー", category: "AI", keywords: "Mentria のオンデバイスモデルの P2P 配信に協力できます。このタブを開いたままにすると、ブラウザがミラーになります。" },
+          { slug: "quote", title: "モチベーション名言", category: "AI", keywords: "AIが生成するオリジナルの名言、ブラウザ内でローカル実行。データはデバイスから出ません。" },
+          { slug: "radio", title: "無限ラジオ", category: "AI", keywords: "AI生成の壮大なシネマティック音楽、無限ストリーミング。あなたの好みをローカルで学習 — データはデバイスから出ません。" },
+          { slug: "invoice", title: "請求書ジェネレーター", category: "ユーティリティ", keywords: "ブラウザでクリーンな1ページ請求書を作成。入力中に自動保存。A4印刷またはJSONエクスポート。" },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "ユーティリティ", keywords: "Markdownを書いて、ライブプレビューを見て、クリーンでプロフェッショナルなPDFをダウンロード。ブラウザに自動保存。データはデバイスから出ません。" },
+          { slug: "tetris", title: "テトリス", category: "ゲーム", keywords: "テトロミノを積み上げる。ラインを消す。10ライン毎にスピードアップ。シアン・パープル・ピンク・アンバー・グリーンのピース — Mentriaパレット。" },
+          { slug: "breakout", title: "Breakout", category: "ゲーム", keywords: "ブロック崩しとパドルゲームの融合。落ちてくるパワーアップをキャッチし、壁を崩し、ますます速く厳しくなるレベルを生き抜こう。ローカル動作 — データはデバイスから出ません。" },
+          { slug: "flappy", title: "Flappy", category: "ゲーム", keywords: "ターミナルプロンプトの山を縫って飛ぶ紙飛行機。タップ・クリック・SPACEキーで羽ばたき。プロンプトに墜落しないように。" },
+          { slug: "minesweeper", title: "マインスイーパー", category: "ゲーム", keywords: "ターミナル風の伝統的な論理パズル。クリックで掘る、右クリック(またはFモード)で旗を立てる。数字は隣接する地雷を示す。ピンクは押さないで。" },
+          { slug: "sudoku", title: "数独", category: "ゲーム", keywords: "ターミナル装いの論理パズル。唯一解ジェネレーター、4段階の難易度、鉛筆メモ。すべて端末内で動作 — データは外に出ません。" },
+          { slug: "ludo", title: "ルド", category: "ゲーム", keywords: "4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。" },
+          { slug: "chess", title: "チェス", category: "ゲーム", keywords: "ローカルエンジン、交代プレイ、オンライン対戦 — サーバー不要。キャスリング・アンパッサン・昇格まで完全ルール。4段階のアルファベータエンジン、評価バー、ヒント。" },
+          { slug: "phosphor", title: "PHOSPHOR", category: "ゲーム", keywords: "ブラウザで遊べる戦闘タイムトライアル。夕暮れの5コースをスプリント、スライディング、乗り越えで駆け抜け、フルオートのカービンで撃つ。メダル、ゴースト対戦、オフライン対応。" },
+          { slug: "extensions", title: "拡張機能", category: "ユーティリティ", keywords: "このデバイスにのみ存在するプライベートな単一ファイル拡張機能をインストール。ランチャーとターミナルに表示され、公開サイトには絶対に載りません。" },
+          { slug: "files", title: "ファイル", category: "ユーティリティ", keywords: "Mentria のツールがこの端末に保存したデータを閲覧・エクスポート・削除できます。すべて端末内にとどまります。" },
+          { slug: "comms", title: "Comms", category: "ソーシャル", keywords: "ピアツーピアのチャット、音声・ビデオ通話、ファイル送信。エンドツーエンド暗号化、アカウント不要、中間サーバーなし。", url: "/comms/" },
+          { slug: "bubble-level", title: "水平器", category: "ユーティリティ", keywords: "スマホがそのまま水平器に。アプリ不要のブラウザ版バブルレベルで、0.1°まで表示、オフラインでも使えます。", requires: "motion" },
+          { slug: "decibel-meter", title: "騒音計", category: "ユーティリティ", keywords: "ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。" },
+          { slug: "compass", title: "コンパス", category: "ユーティリティ", keywords: "アプリ不要のコンパス。ブラウザで開くだけで、スマートフォンのセンサーから磁方位をそのまま読み取れます。", requires: "motion" },
+          { slug: "speedometer", title: "GPS スピードメーター", category: "ユーティリティ", keywords: "アプリ不要のブラウザ版 GPS スピードメーター。km/h・mph・ノットでリアルタイムの速度と走行距離を、すべて端末内で計算して表示します。" },
+          { slug: "ruler", title: "オンライン定規", category: "ユーティリティ", keywords: "画面上で実寸のまま測れるオンライン定規。cm・mm・インチに対応し、銀行カードで校正すればミリ単位まで正確になります。" }
+        ],
+        nav: [
+          { id: "home", title: "ホーム", href: "/" },
+          { id: "tools", title: "ツール", href: "/tools/" },
+          { id: "feed", title: "フィード", href: "/feed/" },
+          { id: "about", title: "概要", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "ツールとページを検索…",
+          listLabel: "検索結果",
+          noResults: "一致するものがありません",
+          recents: "最近使ったもの",
+          extensions: "拡張機能",
+          actions: "アクション",
+          actNote: "メモを保存: 「{text}」",
+          actNoteDone: "メモを保存しました",
+          actNoteFail: "メモを保存できませんでした",
+          actTimer: "{dur}のタイマーを開始",
+          actFlip: "コインを投げる",
+          actHeads: "表",
+          actTails: "裏",
+          searchSite: "サイト内で「{q}」を検索"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">コンテンツへスキップ</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/ja/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/ja/feed/"  class="nav-link" title="フィード" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+            </a>
+            <a href="/ja/tools/" class="nav-link active" aria-current="page" title="ツール" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">ツール</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="コムズ" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/ja/about/" class="nav-link nav-link--about" title="概要" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">概要</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="コマンドパレットを開く（⌘K）" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="現在の言語: 日本語" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="ja">日本語</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/decibel-meter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/decibel-meter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/decibel-meter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/decibel-meter/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/decibel-meter/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/ja/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/ja/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">decibel-meter</span></p>
+  <h1><i18n-t data-k="tools.decibel-meter.title">騒音計</i18n-t></h1>
+  <p><i18n-t data-k="tools.decibel-meter.lede">ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">これは何?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">詳細を隠す</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.decibel-meter.title">騒音計とは?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.decibel-meter.tldr">音が出ているものにスマホやパソコンのマイクを向けるだけで、音の大きさをリアルタイムにデシベルで表示します。測定中の最小値・平均・ピークと、身近な音の目安一覧が並ぶので、いまの数値がどのくらいなのかがすぐ分かります。スマホのマイクは校正された計測器ではないので数値はあくまで目安ですが、録音は一切せず、音は端末の中だけで解析してそのつど破棄します。</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-decibel-meter">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">decibel-meter.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="全画面表示を切り替え" title="全画面表示を切り替え" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="db" id="db">
+
+  <div class="db__live" id="db-live" hidden>
+    <div class="db__gauge">
+      <div class="db__scale" aria-hidden="true">
+        <span class="db__tick" style="bottom:0%">30</span>
+        <span class="db__tick" style="bottom:22.2%">50</span>
+        <span class="db__tick" style="bottom:44.4%">70</span>
+        <span class="db__tick" style="bottom:66.7%">90</span>
+        <span class="db__tick" style="bottom:88.9%">110</span>
+      </div>
+      <div class="db__track" role="img" aria-label="騒音レベルメーター、30 から 120 デシベル" data-i18na="aria-label=tool.decibel-meter.meter_aria">
+        <div class="db__fill" id="db-fill"></div>
+        <div class="db__peak" id="db-peak"></div>
+      </div>
+      <div class="db__readout" id="db-readout" data-level="calm">
+        <div class="db__value" id="db-value" aria-hidden="true">—</div>
+        <div class="db__unit" aria-hidden="true"><i18n-t data-k="tool.decibel-meter.unit">dB</i18n-t></div>
+        <div class="db__level" id="db-level"></div>
+        <div class="db__slow">
+          <span class="db__slow-label"><i18n-t data-k="tool.decibel-meter.slow_label">1秒平均</i18n-t></span>
+          <span class="db__slow-value" id="db-slow">—</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="db__sr" id="db-sr" role="status" aria-live="polite"></p>
+
+    <div class="db__stats">
+      <div class="db__stat">
+        <span class="db__stat-label"><i18n-t data-k="tool.decibel-meter.stat_min">最小</i18n-t></span>
+        <span class="db__stat-value" id="db-stat-min">—</span>
+      </div>
+      <div class="db__stat">
+        <span class="db__stat-label"><i18n-t data-k="tool.decibel-meter.stat_avg">平均</i18n-t></span>
+        <span class="db__stat-value" id="db-stat-avg">—</span>
+      </div>
+      <div class="db__stat">
+        <span class="db__stat-label"><i18n-t data-k="tool.decibel-meter.stat_peak">ピーク</i18n-t></span>
+        <span class="db__stat-value" id="db-stat-peak">—</span>
+      </div>
+    </div>
+
+    <div class="db__controls">
+      <button type="button" class="m-btn m-btn--primary m-btn--pill" id="db-stop"><i18n-t data-k="tool.decibel-meter.btn_stop">停止</i18n-t></button>
+      <button type="button" class="m-btn m-btn--ghost m-btn--pill" id="db-reset"><i18n-t data-k="tool.decibel-meter.btn_reset_stats">統計をリセット</i18n-t></button>
+    </div>
+
+    <div class="db__cal">
+      <label class="db__cal-label" for="db-cal">
+        <span><i18n-t data-k="tool.decibel-meter.calibration_label">校正オフセット</i18n-t></span>
+        <span class="db__cal-value" id="db-cal-value">+90</span>
+      </label>
+      <input type="range" class="db__cal-range" id="db-cal" min="70" max="110" step="1" value="90">
+      <p class="db__cal-hint"><i18n-t data-k="tool.decibel-meter.calibration_hint">マイクが返すのは相対的なレベルで、実際のデシベル値ではありません。このオフセットがその差を埋めます。多くのスマホやノートパソコンでは 90 前後が目安です。手元に基準となる騒音計があれば、数値が合うまでスライダーを調整してください。</i18n-t></p>
+    </div>
+
+    <p class="db__hint"><i18n-t data-k="tool.decibel-meter.screen_hint">測定中は画面が消えないようにします。</i18n-t></p>
+  </div>
+
+  <div class="db__panel" id="db-start">
+    <h2 class="db__panel-title"><i18n-t data-k="tool.decibel-meter.start_title">まわりの音を測る</i18n-t></h2>
+    <p class="db__panel-body"><i18n-t data-k="tool.decibel-meter.start_body">マイクを使って音の大きさをリアルタイムに読み取ります。部屋の音をありのまま捉えるため、ノイズ抑制などのマイク処理はオフにしています。</i18n-t></p>
+    <p class="db__panel-err" id="db-start-err" hidden></p>
+    <button type="button" class="m-btn m-btn--primary m-btn--pill" id="db-start-btn"><i18n-t data-k="tool.decibel-meter.btn_start">測定を開始</i18n-t></button>
+  </div>
+
+  <div class="db__panel" id="db-denied" hidden>
+    <h2 class="db__panel-title db__panel-title--warn"><i18n-t data-k="tool.decibel-meter.denied_title">マイクへのアクセスがブロックされています</i18n-t></h2>
+    <p class="db__panel-body"><i18n-t data-k="tool.decibel-meter.denied_body">このサイトのマイク使用を許可してから、もう一度お試しください。iPhone・iPad ではアドレスバーの「AA」ボタンからマイクを許可するか、設定 › Safari › マイク を確認してください。パソコンではアドレス横の鍵アイコンをクリックしてマイクをオンにします。</i18n-t></p>
+    <button type="button" class="m-btn m-btn--ghost m-btn--pill" id="db-retry"><i18n-t data-k="tool.decibel-meter.btn_retry">もう一度試す</i18n-t></button>
+  </div>
+
+  <div class="db__panel" id="db-unsupported" hidden>
+    <h2 class="db__panel-title db__panel-title--warn"><i18n-t data-k="tool.decibel-meter.unsupported_title">マイクを利用できません</i18n-t></h2>
+    <p class="db__panel-body"><i18n-t data-k="tool.decibel-meter.unsupported_body">このブラウザは Web ページにマイク入力を提供していません。最新版の Chrome、Edge、Firefox、Safari をお試しください。</i18n-t></p>
+  </div>
+
+  <div class="db__panel" id="db-insecure" hidden>
+    <h2 class="db__panel-title db__panel-title--warn"><i18n-t data-k="tool.decibel-meter.insecure_title">安全な接続が必要です</i18n-t></h2>
+    <p class="db__panel-body"><i18n-t data-k="tool.decibel-meter.insecure_body">ブラウザは HTTPS 経由でしかマイクを渡しません。公開サイト（https://webmcp.mentria.ai）でこのツールを開いてください。LAN の IP アドレスに平文の HTTP で接続したローカル開発サーバーではマイクを開けません。</i18n-t></p>
+  </div>
+
+  <div class="db__ref">
+    <h2 class="db__ref-title"><i18n-t data-k="tool.decibel-meter.ladder_title">この音はどのくらい？</i18n-t></h2>
+    <ul class="db__ref-list" id="db-ref">
+      <li class="db__ref-row" data-db="20"><span class="db__ref-db">20</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_20">木の葉のざわめき</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="30"><span class="db__ref-db">30</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_30">ささやき声</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="40"><span class="db__ref-db">40</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_40">静かな図書館</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="50"><span class="db__ref-db">50</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_50">降り続く雨</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="60"><span class="db__ref-db">60</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_60">普通の会話</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="70"><span class="db__ref-db">70</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_70">掃除機</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="80"><span class="db__ref-db">80</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_80">街の交通</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="90"><span class="db__ref-db">90</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_90">芝刈り機</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="100"><span class="db__ref-db">100</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_100">ライブ会場</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+      <li class="db__ref-row" data-db="110"><span class="db__ref-db">110</span><span class="db__ref-label"><i18n-t data-k="tool.decibel-meter.ref_110">チェーンソー</i18n-t></span><span class="db__ref-now"><i18n-t data-k="tool.decibel-meter.ladder_now">現在</i18n-t></span></li>
+    </ul>
+  </div>
+
+  <div class="db__notes">
+    <p class="db__note db__note--honesty"><i18n-t data-k="tool.decibel-meter.honesty_note">スマホやノートパソコンのマイクは校正された計測器ではありません。ここでの数値はあくまで推定値です。部屋や機械、時間帯を比べる用途には十分役立ちますが、職場・法的・医療的な測定には使えません。</i18n-t></p>
+    <p class="db__note"><i18n-t data-k="tool.decibel-meter.privacy_note">音はお使いの端末上でリアルタイムに解析され、そのつど破棄されます。録音も保存も送信も一切行いません。</i18n-t></p>
+  </div>
+
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="その他のツール" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">その他のツール</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/invoice/">
+        <span class="related-tools__name"><i18n-t data-k="tools.invoice.title">請求書ジェネレーター</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/markdown-pdf/">
+        <span class="related-tools__name"><i18n-t data-k="tools.markdown-pdf.title">Markdown → PDF</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/extensions/">
+        <span class="related-tools__name"><i18n-t data-k="tools.extensions.title">拡張機能</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/ja/tools/phosphor/">
+        <span class="related-tools__name"><i18n-t data-k="tools.phosphor.title">PHOSPHOR</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/ja/tools/"><i18n-t data-k="tools_page.related_all">すべてのツール</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "騒音計",
+  "url": "https://webmcp.mentria.ai/ja/tools/decibel-meter/",
+  "description": "ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "ja"
+}
+</script>
+
+
+<script>
+(function () {
+  'use strict';
+
+  var LANG = document.documentElement.lang || undefined;
+
+  var COPY = {
+    errNoMic:     "この端末でマイクが見つかりませんでした。",
+    errGeneric:   "マイクを開けませんでした。マイクを使っている他のアプリやタブを閉じて、もう一度お試しください。",
+    levelCalm:    "快適",
+    levelLoud:    "うるさい",
+    levelHarmful: "難聴のおそれ",
+    liveAria:     "現在の音の大きさ: {db} デシベル"
+  };
+
+  var STORE_NS = 'tools';
+  var STORE_KEY = 'decibel_settings';
+  var DB_MIN = 30;
+  var DB_MAX = 120;
+  var FLOOR_DBFS = -100;
+  var EMA_ALPHA = 0.2;
+  var SLOW_WINDOW_MS = 1000;
+  var PEAK_HOLD_MS = 2000;
+  var PEAK_DECAY_PER_S = 20;
+  var SR_INTERVAL_MS = 2000;
+  var OFFSET_MIN = 70;
+  var OFFSET_MAX = 110;
+  var OFFSET_DEFAULT = 90;
+
+  function $(id) { return document.getElementById(id); }
+
+  var liveEl = $('db-live');
+  var startPanel = $('db-start');
+  var deniedPanel = $('db-denied');
+  var unsupPanel = $('db-unsupported');
+  var insecPanel = $('db-insecure');
+  var startBtn = $('db-start-btn');
+  var startErrEl = $('db-start-err');
+  var retryBtn = $('db-retry');
+  var stopBtn = $('db-stop');
+  var resetBtn = $('db-reset');
+  var valueEl = $('db-value');
+  var levelEl = $('db-level');
+  var slowEl = $('db-slow');
+  var fillEl = $('db-fill');
+  var peakEl = $('db-peak');
+  var readoutEl = $('db-readout');
+  var srEl = $('db-sr');
+  var statMinEl = $('db-stat-min');
+  var statAvgEl = $('db-stat-avg');
+  var statPeakEl = $('db-stat-peak');
+  var calInput = $('db-cal');
+  var calValueEl = $('db-cal-value');
+  var refRows = Array.prototype.slice.call(document.querySelectorAll('.db__ref-row'));
+
+  var offset = OFFSET_DEFAULT;
+
+  function loadSettings() {
+    try {
+      var s = window.MentriaStore ? window.MentriaStore.get(STORE_NS, STORE_KEY) : null;
+      if (s && typeof s.offset === 'number' && s.offset >= OFFSET_MIN && s.offset <= OFFSET_MAX) {
+        offset = Math.round(s.offset);
+      }
+    } catch (_) {}
+  }
+
+  function saveSettings() {
+    try {
+      if (window.MentriaStore) window.MentriaStore.set(STORE_NS, STORE_KEY, { offset: offset });
+    } catch (_) {}
+  }
+
+  var audioCtx = null;
+  var analyser = null;
+  var micSource = null;
+  var stream = null;
+  var buf = null;
+  var rafId = null;
+  var running = false;
+
+  var fastDbfs = null;
+  var slowTimes = [];
+  var slowPowers = [];
+  var statMinDbfs = null;
+  var statPeakDbfs = null;
+  var statPowerSum = 0;
+  var statFrames = 0;
+  var peakDbfs = null;
+  var peakAt = 0;
+  var lastFrameAt = 0;
+  var lastSrAt = 0;
+  var currentRefRow = null;
+  var currentLevel = '';
+
+  function toDisplay(dbfs) {
+    var v = dbfs + offset;
+    return v < 0 ? 0 : v;
+  }
+
+  function toPercent(v) {
+    var p = ((v - DB_MIN) / (DB_MAX - DB_MIN)) * 100;
+    if (p < 0) return 0;
+    if (p > 100) return 100;
+    return p;
+  }
+
+  function levelOf(v) {
+    if (v < 70) return 'calm';
+    if (v <= 85) return 'loud';
+    return 'harmful';
+  }
+
+  function fmt1(v) {
+    return v.toLocaleString(LANG, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  }
+
+  function powerToDbfs(power) {
+    if (!(power > 0)) return FLOOR_DBFS;
+    var d = 10 * Math.log10(power);
+    return d < FLOOR_DBFS ? FLOOR_DBFS : d;
+  }
+
+  function resetStats() {
+    statMinDbfs = null;
+    statPeakDbfs = null;
+    statPowerSum = 0;
+    statFrames = 0;
+    peakDbfs = fastDbfs;
+    peakAt = lastFrameAt;
+    renderStats();
+  }
+
+  function renderStats() {
+    statMinEl.textContent = statMinDbfs === null ? '—' : fmt1(toDisplay(statMinDbfs));
+    statPeakEl.textContent = statPeakDbfs === null ? '—' : fmt1(toDisplay(statPeakDbfs));
+    statAvgEl.textContent = statFrames === 0 ? '—' : fmt1(toDisplay(powerToDbfs(statPowerSum / statFrames)));
+  }
+
+  function highlightRef(v) {
+    var best = null;
+    var bestDist = Infinity;
+    for (var i = 0; i < refRows.length; i++) {
+      var d = Math.abs(parseFloat(refRows[i].getAttribute('data-db')) - v);
+      if (d < bestDist) { bestDist = d; best = refRows[i]; }
+    }
+    if (best === currentRefRow) return;
+    if (currentRefRow) currentRefRow.classList.remove('is-current');
+    if (best) best.classList.add('is-current');
+    currentRefRow = best;
+  }
+
+  function clearRefHighlight() {
+    if (currentRefRow) currentRefRow.classList.remove('is-current');
+    currentRefRow = null;
+  }
+
+  function render(now, fast, slow) {
+    var v = toDisplay(fast);
+    var sv = toDisplay(slow);
+    valueEl.textContent = Math.round(v).toLocaleString(LANG);
+    slowEl.textContent = fmt1(sv);
+    fillEl.style.clipPath = 'inset(' + (100 - toPercent(v)).toFixed(2) + '% 0 0 0)';
+    peakEl.style.bottom = toPercent(toDisplay(peakDbfs === null ? fast : peakDbfs)) + '%';
+
+    var lvl = levelOf(v);
+    if (lvl !== currentLevel) {
+      currentLevel = lvl;
+      readoutEl.setAttribute('data-level', lvl);
+      levelEl.textContent = lvl === 'calm' ? COPY.levelCalm : (lvl === 'loud' ? COPY.levelLoud : COPY.levelHarmful);
+    }
+
+    renderStats();
+    highlightRef(sv);
+
+    if (now - lastSrAt >= SR_INTERVAL_MS) {
+      lastSrAt = now;
+      srEl.textContent = COPY.liveAria.replace('{db}', Math.round(v).toLocaleString(LANG));
+    }
+  }
+
+  function frame(now) {
+    if (!running || !analyser || !buf) return;
+    rafId = requestAnimationFrame(frame);
+
+    analyser.getFloatTimeDomainData(buf);
+    var sum = 0;
+    for (var i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+    var power = sum / buf.length;
+    var dbfs = powerToDbfs(power);
+
+    fastDbfs = fastDbfs === null ? dbfs : fastDbfs + (dbfs - fastDbfs) * EMA_ALPHA;
+
+    slowTimes.push(now);
+    slowPowers.push(power);
+    while (slowTimes.length > 1 && now - slowTimes[0] > SLOW_WINDOW_MS) {
+      slowTimes.shift();
+      slowPowers.shift();
+    }
+    var slowSum = 0;
+    for (var j = 0; j < slowPowers.length; j++) slowSum += slowPowers[j];
+    var slowDbfs = powerToDbfs(slowSum / slowPowers.length);
+
+    statPowerSum += power;
+    statFrames += 1;
+    if (statMinDbfs === null || fastDbfs < statMinDbfs) statMinDbfs = fastDbfs;
+    if (statPeakDbfs === null || fastDbfs > statPeakDbfs) statPeakDbfs = fastDbfs;
+
+    var dt = lastFrameAt ? (now - lastFrameAt) / 1000 : 0;
+    lastFrameAt = now;
+    if (peakDbfs === null || fastDbfs >= peakDbfs) {
+      peakDbfs = fastDbfs;
+      peakAt = now;
+    } else if (now - peakAt > PEAK_HOLD_MS) {
+      var decayed = peakDbfs - PEAK_DECAY_PER_S * dt;
+      peakDbfs = decayed < fastDbfs ? fastDbfs : decayed;
+    }
+
+    render(now, fastDbfs, slowDbfs);
+  }
+
+  var wakeLock = null;
+  function syncWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    if (running) {
+      if (wakeLock) return;
+      navigator.wakeLock.request('screen').then(function (lock) {
+        wakeLock = lock;
+        lock.addEventListener('release', function () { wakeLock = null; });
+        if (!running) {
+          try { lock.release(); } catch (_) {}
+          wakeLock = null;
+        }
+      }).catch(function () { wakeLock = null; });
+    } else if (wakeLock) {
+      try { wakeLock.release(); } catch (_) {}
+      wakeLock = null;
+    }
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') syncWakeLock();
+  });
+
+  function showPanel(name) {
+    liveEl.hidden = name !== 'live';
+    startPanel.hidden = name !== 'start';
+    deniedPanel.hidden = name !== 'denied';
+    unsupPanel.hidden = name !== 'unsupported';
+    insecPanel.hidden = name !== 'insecure';
+  }
+
+  function setStartError(text) {
+    startErrEl.textContent = text || '';
+    startErrEl.hidden = !text;
+  }
+
+  function stop() {
+    running = false;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    if (stream) {
+      var tracks = stream.getTracks();
+      for (var i = 0; i < tracks.length; i++) {
+        try { tracks[i].stop(); } catch (_) {}
+      }
+      stream = null;
+    }
+    if (micSource) {
+      try { micSource.disconnect(); } catch (_) {}
+      micSource = null;
+    }
+    analyser = null;
+    buf = null;
+    if (audioCtx) {
+      var ctx = audioCtx;
+      audioCtx = null;
+      try {
+        var closing = ctx.close();
+        if (closing && closing.catch) closing.catch(function () {});
+      } catch (_) {}
+    }
+    syncWakeLock();
+    clearRefHighlight();
+    showPanel('start');
+  }
+
+  function startSession() {
+    if (!window.isSecureContext) { showPanel('insecure'); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { showPanel('unsupported'); return; }
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) { showPanel('unsupported'); return; }
+
+    setStartError('');
+    startBtn.disabled = true;
+
+    var ctx;
+    try {
+      ctx = new Ctx();
+    } catch (_) {
+      startBtn.disabled = false;
+      showPanel('unsupported');
+      return;
+    }
+
+    var acquired = null;
+    navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
+    }).then(function (mediaStream) {
+      acquired = mediaStream;
+      var resumed = ctx.state === 'suspended' ? ctx.resume() : null;
+      var settled = resumed && resumed.then ? resumed : Promise.resolve();
+      return settled.catch(function () {}).then(function () { return mediaStream; });
+    }).then(function (mediaStream) {
+      audioCtx = ctx;
+      stream = mediaStream;
+      analyser = ctx.createAnalyser();
+      analyser.fftSize = 2048;
+      analyser.smoothingTimeConstant = 0;
+      buf = new Float32Array(analyser.fftSize);
+      micSource = ctx.createMediaStreamSource(mediaStream);
+      micSource.connect(analyser);
+
+      fastDbfs = null;
+      slowTimes = [];
+      slowPowers = [];
+      statMinDbfs = null;
+      statPeakDbfs = null;
+      statPowerSum = 0;
+      statFrames = 0;
+      peakDbfs = null;
+      peakAt = 0;
+      lastFrameAt = 0;
+      lastSrAt = 0;
+      currentLevel = '';
+      renderStats();
+
+      acquired = null;
+      running = true;
+      startBtn.disabled = false;
+      showPanel('live');
+      syncWakeLock();
+      rafId = requestAnimationFrame(frame);
+    }).catch(function (err) {
+      startBtn.disabled = false;
+      if (acquired) {
+        var tracks = acquired.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+          try { tracks[i].stop(); } catch (_) {}
+        }
+        acquired = null;
+      }
+      stream = null;
+      micSource = null;
+      analyser = null;
+      buf = null;
+      try {
+        var closing = ctx.close();
+        if (closing && closing.catch) closing.catch(function () {});
+      } catch (_) {}
+      audioCtx = null;
+      var name = err && err.name;
+      if (name === 'NotAllowedError' || name === 'SecurityError') {
+        showPanel('denied');
+      } else if (name === 'NotFoundError' || name === 'OverconstrainedError' || name === 'NotReadableError') {
+        showPanel('start');
+        setStartError(COPY.errNoMic);
+      } else {
+        showPanel('start');
+        setStartError(COPY.errGeneric);
+      }
+    });
+  }
+
+  startBtn.addEventListener('click', startSession);
+  stopBtn.addEventListener('click', stop);
+  resetBtn.addEventListener('click', resetStats);
+  retryBtn.addEventListener('click', function () {
+    setStartError('');
+    showPanel('start');
+  });
+
+  calInput.addEventListener('input', function () {
+    var v = parseInt(calInput.value, 10);
+    if (!(v >= OFFSET_MIN && v <= OFFSET_MAX)) return;
+    offset = v;
+    calValueEl.textContent = '+' + v;
+    renderStats();
+  });
+  calInput.addEventListener('change', saveSettings);
+
+  window.addEventListener('pagehide', function () {
+    if (running) stop();
+  });
+
+  loadSettings();
+  calInput.value = String(offset);
+  calValueEl.textContent = '+' + offset;
+  renderStats();
+
+  if (!window.isSecureContext) showPanel('insecure');
+  else if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) showPanel('unsupported');
+  else showPanel('start');
+})();
+</script>
+
+
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="アプリナビゲーション" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/ja/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">ホーム</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/ja/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="コマンドパレットを開く（⌘K）" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">検索</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">ホーム画面に追加 — オフラインで動作します。</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">インストール</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="閉じる" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="閉じる" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "iPhoneにMentriaをインストール",
+    macosTitle:  "MacにMentriaをインストール",
+    chromeTitle: "Mentriaをインストール",
+    iosStep1:    "画面下部の<strong>共有</strong>ボタンをタップ",
+    iosStep2:    "<strong>ホーム画面に追加</strong>を選択",
+    iosStep3:    "右上の<strong>追加</strong>をタップ。",
+    macosStep1:  "このページを<strong>Safari 17+</strong>で開きます。",
+    macosStep2:  "メニューバーから<strong>ファイル → Dockに追加…</strong>を選択。",
+    macosStep3:  "<strong>追加</strong>をクリック。",
+    chromeStep1: "ブラウザのアドレスバーにある<strong>インストール</strong>アイコンをクリック。",
+    chromeStep2: "または、メニュー(⋮)を開いて<strong>Mentriaをインストール</strong>を選択。",
+    note:        "インストール後、Mentriaはオフラインで動作し、ローカルデータはお使いのデバイスに保存されます。"
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "確認";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "保存できませんでした。ブラウザのストレージがいっぱいです。空き容量を増やすと変更を保持できます。";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("大きなAIモデル（モデルにより490 MB以上）をダウンロードします。低速またはデータセーバー接続のようです。続行しますか？");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "共有";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "このツールについて");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">機能テスト用ビルド（WebMCP 応募スナップショット）。テストのため凍結中です。通常のご利用は <a href="https://mentria.ai/">mentria.ai</a> をお使いください。</div></body>
+</html>

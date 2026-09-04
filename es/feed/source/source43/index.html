@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="es" class="feed-layout">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>El único carril compartido en el que cada capa escribe y lee. · Source | Mentria</title>
+    <meta name="description" content="El único carril compartido en el que cada capa escribe y lee.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/es/feed/source/source43/">
+    <meta property="og:title" content="El único carril compartido en el que cada capa escribe y lee. · Source | Mentria">
+    <meta property="og:description" content="El único carril compartido en el que cada capa escribe y lee.">
+    <meta property="og:image" content="https://cdn.mentria.ai/source43/00_cover.webp">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/es/feed/source/source43/">
+    <meta name="twitter:title" content="El único carril compartido en el que cada capa escribe y lee. · Source | Mentria">
+    <meta name="twitter:description" content="El único carril compartido en el que cada capa escribe y lee.">
+    <meta name="twitter:image" content="https://cdn.mentria.ai/source43/00_cover.webp">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/feed/source/source43/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/feed/source/source43/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/feed/source/source43/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/feed/source/source43/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/feed/source/source43/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/feed/source/source43/">
+    <link rel="preconnect" href="https://cdn.mentria.ai" crossorigin>
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "Un estudio creativo de herramientas, experimentos y transmisiones visuales. Hecho con cuidado.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "es"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://webmcp.mentria.ai/" }
+      ]
+    }
+    </script>
+<script type="application/json" id="m-i18n-head">{}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "es",
+        prefix: "",
+        tools: [
+          { slug: "search", title: "Búsqueda", category: "IA", keywords: "Encuentra herramientas y entradas del feed. Escribe cualquier consulta — palabra clave o lenguaje natural." },
+          { slug: "step-counter", title: "Contador de Pasos", category: "Salud", keywords: "Cuenta tus pasos al caminar, directamente en el navegador. Usa el sensor de movimiento de tu teléfono — nada se sube.", requires: "motion" },
+          { slug: "qr-scanner", title: "Escáner y generador de QR y códigos de barras", category: "Utilidad", keywords: "Escanea códigos QR y de barras, o genera un código QR a partir de cualquier enlace o texto, todo en el dispositivo y sin subir nada." },
+          { slug: "decision-wheel", title: "Rueda de Decisiones", category: "Utilidad", keywords: "¿No puedes decidir? Gira la rueda y deja que el destino elija. Funciona sin conexión." },
+          { slug: "countdown-timer", title: "Temporizador", category: "Temporizador", keywords: "Establece una duración o elige una hora objetivo. Hasta 4 temporizadores independientes con sonido de alarma." },
+          { slug: "coin-flip", title: "Lanzar Moneda", category: "Utilidad", keywords: "Cara o cruz — lanza una moneda al instante. Ejecuta una serie al mejor de N para desempates. Funciona sin conexión." },
+          { slug: "quick-notes", title: "Notas Rápidas", category: "Productividad", keywords: "Una libreta mínima que vive en tu navegador. Crea múltiples notas, guardadas automáticamente en cada pulsación." },
+          { slug: "base64-codec", title: "Codificador Base64", category: "Desarrollo", keywords: "Codifica y decodifica texto o archivos en Base64. Compatible con imágenes, documentos y cualquier tipo de archivo. Todo se ejecuta localmente en tu navegador." },
+          { slug: "totp", title: "TOTP", category: "Seguridad", keywords: "Códigos de doble factor que viven en tu navegador, cifrados en reposo. Nada en un servidor." },
+          { slug: "exif", title: "Inspector EXIF", category: "Seguridad", keywords: "Descubre lo que una foto lleva oculto — datos de cámara, fechas, ubicación GPS — y descarga una copia limpia sin nada de eso. No se sube nada." },
+          { slug: "color-picker", title: "Selector de Color", category: "Diseño", keywords: "Elige cualquier color, ve sus valores HEX / RGB / HSL, y genera paletas armoniosas. Funciona sin conexión." },
+          { slug: "annotate-image", title: "Anotar imagen", category: "IA", keywords: "Sube una imagen y obtén al instante una descripción de IA, texto alternativo, transcripción o etiquetas — con prompts probados de un toque. Se ejecuta localmente en tu navegador, nada se sube." },
+          { slug: "ai-chat", title: "Chat IA", category: "IA", keywords: "Qwen3.5 ejecutándose localmente en tu navegador. Sin servidor, sin claves de API. Compatible con imágenes." },
+          { slug: "console", title: "Consola", category: "IA", keywords: "Chatea con el modelo local mientras usa las apps de Mentria en una pantalla de móvil compartida, o deja que actúe como usuario de prueba y te cuente lo que encuentra." },
+          { slug: "model-mirror", title: "Espejo de Modelos", category: "IA", keywords: "Ayuda a distribuir los modelos locales de Mentria entre pares. Mantén esta pestaña abierta y tu navegador se convierte en un espejo." },
+          { slug: "quote", title: "Cita Motivadora", category: "IA", keywords: "Citas originales generadas por IA, ejecutándose localmente en tu navegador. Tus datos no salen de tu dispositivo." },
+          { slug: "radio", title: "Radio Infinita", category: "IA", keywords: "Música cinematográfica épica generada por IA, transmitiendo infinitamente. Aprende tu gusto localmente — tus datos no salen de tu dispositivo." },
+          { slug: "invoice", title: "Generador de Facturas", category: "Utilidad", keywords: "Crea facturas limpias de una página en tu navegador. Se guardan mientras escribes. Imprime en A4 o exporta a JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utilidad", keywords: "Escribe markdown, ve una vista previa en vivo, y descarga un PDF profesional y limpio. Se guarda automáticamente en tu navegador. Tus datos no salen de tu dispositivo." },
+          { slug: "tetris", title: "Tetris", category: "Juego", keywords: "Apila tetrominós. Despeja líneas. La velocidad aumenta cada 10 líneas. Piezas en cian, púrpura, rosa, ámbar, verde — la paleta de Mentria." },
+          { slug: "breakout", title: "Breakout", category: "Juego", keywords: "Rompe-ladrillos con paleta. Atrapa los power-ups que caen, despeja el muro, sobrevive niveles cada vez más rápidos y duros. Se ejecuta localmente — tus datos no salen de tu dispositivo." },
+          { slug: "flappy", title: "Flappy", category: "Juego", keywords: "Un avión de papel sorteando una pila de prompts del terminal. Toca, haz clic o presiona ESPACIO para aletear. No choques con el prompt." },
+          { slug: "minesweeper", title: "Buscaminas", category: "Juego", keywords: "Clásico rompecabezas lógico con vestimenta de terminal. Haz clic para cavar, clic derecho (o modo F) para marcar bandera. Los números cuentan minas adyacentes. No pulses los rosas." },
+          { slug: "sudoku", title: "Sudoku", category: "Juego", keywords: "Rompecabezas lógico con estética de terminal. Generador de solución única, cuatro dificultades, anotaciones a lápiz. Funciona localmente: ningún dato sale de tu dispositivo." },
+          { slug: "ludo", title: "Ludo", category: "Juego", keywords: "Cuatro fichas a casa, ganas. Saca un seis para salir, captura al contacto, refúgiate en las estrellas seguras. Juega contra los bots o por turnos." },
+          { slug: "chess", title: "Ajedrez", category: "Juego", keywords: "Motor local, por turnos y juego en línea — sin servidores. Reglas completas con enroque, al paso y coronación; motor alfa-beta con cuatro niveles, barra de evaluación y pistas." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Juego", keywords: "Contrarreloj de combate en el navegador: esprinta, deslízate, escala y dispara una carabina automática en cinco recorridos al atardecer. Medallas, fantasmas rivales y juego sin conexión." },
+          { slug: "extensions", title: "Extensiones", category: "Utilidad", keywords: "Instala extensiones privadas de un solo archivo que viven únicamente en este dispositivo. Aparecen en tu lanzador y terminal, y nunca en el sitio público." },
+          { slug: "files", title: "Archivos", category: "Utilidad", keywords: "Explora, exporta y elimina los datos que las herramientas de Mentria guardan en este dispositivo. Todo se queda en local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Chat entre pares, llamadas de voz y video, y envío de archivos. Cifrado de extremo a extremo, sin cuentas y sin servidor de por medio.", url: "/comms/" },
+          { slug: "bubble-level", title: "Nivel de burbuja", category: "Utilidad", keywords: "Convierte tu móvil en un nivel de burbuja online: un nivel de albañil sin instalar ninguna app, con precisión de 0,1° y que funciona sin conexión.", requires: "motion" },
+          { slug: "decibel-meter", title: "Medidor de decibelios", category: "Utilidad", keywords: "Un medidor de sonido en el navegador: mide el ruido en dB con el micrófono del móvil o del portátil, sin instalar ninguna app." },
+          { slug: "compass", title: "Brújula", category: "Utilidad", keywords: "Una brújula online sin app que instalar: ábrela en el navegador y lee tu rumbo magnético directamente desde el sensor del móvil.", requires: "motion" },
+          { slug: "speedometer", title: "Velocímetro GPS", category: "Utilidad", keywords: "Un velocímetro online por GPS, sin instalar ninguna app. Velocidad en tiempo real en km/h, mph o nudos, con la distancia del trayecto, todo calculado en tu dispositivo." },
+          { slug: "ruler", title: "Regla Online", category: "Utilidad", keywords: "Una regla online a tamaño real: mide en cm, mm y pulgadas en la propia pantalla y calíbrala con una tarjeta bancaria para que los milímetros sean de verdad." }
+        ],
+        nav: [
+          { id: "home", title: "Inicio", href: "/" },
+          { id: "tools", title: "Herramientas", href: "/tools/" },
+          { id: "feed", title: "Feed", href: "/feed/" },
+          { id: "about", title: "Acerca de", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Buscar herramientas y páginas…",
+          listLabel: "Resultados de búsqueda",
+          noResults: "Sin resultados",
+          recents: "Recientes",
+          extensions: "Extensiones",
+          actions: "Acciones",
+          actNote: "Guardar nota: «{text}»",
+          actNoteDone: "Nota guardada",
+          actNoteFail: "No se pudo guardar la nota",
+          actTimer: "Iniciar un temporizador de {dur}",
+          actFlip: "Lanzar una moneda",
+          actHeads: "Cara",
+          actTails: "Cruz",
+          searchSite: "Buscar “{q}” en el sitio"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Saltar al contenido</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/es/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/es/feed/"  class="nav-link active" aria-current="page" title="Feed" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Feed</i18n-t></span>
+            </a>
+            <a href="/es/tools/" class="nav-link" title="Herramientas" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Herramientas</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/es/about/" class="nav-link nav-link--about" title="Acerca de" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">Acerca de</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Abrir paleta de comandos (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Idioma actual: Español" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="es">Español</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/feed/source/source43/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/feed/source/source43/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/feed/source/source43/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/feed/source/source43/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/feed/source/source43/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <link rel="stylesheet" href="/assets/css/feed-deck.css?v=ec54a8f-09040920">
+<link rel="stylesheet" href="/assets/css/source-deck.css?v=ec54a8f-09040920">
+
+<div class="deck deck--source"
+     id="deckRoot"
+     style="view-transition-name: deck-source43"
+     data-chapter-id="source43"
+     data-chapter-title="Source"
+     data-slide-count="8">
+  <h1 class="sr-only">El único carril compartido en el que cada capa escribe y lee.</h1>
+
+  <div class="deck__progress" role="progressbar" aria-label="Progreso del deck" aria-valuemin="1" aria-valuemax="8" aria-valuenow="1" data-announce="Diapositiva {n} de {total}" data-i18na="aria-label=feed_deck.progress_label;data-announce=feed_deck.slide_of">
+    
+    <div class="deck__progress-seg is-active" data-idx="0">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="1">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="2">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="3">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="4">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="5">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="6">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+    <div class="deck__progress-seg" data-idx="7">
+      <span class="deck__progress-fill"></span>
+    </div>
+    
+  </div>
+
+  <button class="deck__close" id="deckClose" aria-label="Salir" data-i18na="aria-label=feed_deck.exit">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+
+  <button class="deck__share" id="deckShare" aria-label="Compartir esta tarjeta como imagen" data-share-title="El único carril compartido en el que cada capa escribe y lee." data-i18na="aria-label=feed_deck.share_slide">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.7" x2="15.4" y2="6.3"/><line x1="8.6" y1="13.3" x2="15.4" y2="17.7"/></svg>
+  </button>
+
+  <div class="deck__chapter-meta">
+    <span class="deck__chapter-num">SRC·43</span>
+    <span class="deck__chapter-title">Source</span>
+  </div>
+
+  <button class="deck__tap deck__tap--prev" tabindex="-1" aria-label="Diapositiva anterior" data-i18na="aria-label=feed_deck.prev_slide"></button>
+  <button class="deck__tap deck__tap--next" tabindex="-1" aria-label="Siguiente diapositiva" data-i18na="aria-label=feed_deck.next_slide"></button>
+
+  
+  <article class="deck__slide is-active"
+           data-idx="0"
+           data-slide-id="src43-s01"
+           data-card-type="hook"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/01_one-shared-conveyor.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/01_one-shared-conveyor.webp" onerror="this.classList.add('is-broken')" alt="No es una torre de cajas. Es un solo carril donde todo escribe." loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">No es una torre de cajas. Es un solo carril donde todo escribe.</p>
+
+      
+
+      
+      <div class="deck__body">Imaginamos un modelo como una pila de capas, cada una pasando su trabajo a la siguiente. <em>No del todo.</em> Recorriendo toda la altura del modelo hay un único vector compartido: un <strong>carril</strong> de números, uno por token. Cada capa lee de este único carril y vuelve a escribir en él su respuesta. Nada se pasa de caja en caja. Todo se encuentra en el mismo lugar.</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="1"
+           data-slide-id="src43-s02"
+           data-card-type="beat"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/02_whisper-down-the-line.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/02_whisper-down-the-line.webp" onerror="this.classList.add('is-broken')" alt="¿Cómo usa la última capa lo que encontró la primera?" loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">¿Cómo usa la última capa lo que encontró la primera?</p>
+
+      
+
+      
+      <div class="deck__body">Si cada capa solo oyera a la inmediatamente anterior, un hallazgo temprano sobreviviría únicamente al copiarse hacia adelante, paso tras paso, y todo lo que se difumina en el camino se pierde. <strong>Como el juego del teléfono:</strong> una frase susurrada a lo largo de una fila larga sale deformada. La solución no es un susurro más nítido. Es dejar de susurrar y permitir que <em>cada</em> capa escriba en el mismo carril compartido.</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="2"
+           data-slide-id="src43-s03"
+           data-card-type="beat"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/03_wall-course-by-course.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/03_wall-course-by-course.webp" onerror="this.classList.add('is-broken')" alt="Cada capa lee el carril, le añade algo y no borra nada." loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">Cada capa lee el carril, le añade algo y no borra nada.</p>
+
+      
+      <div class="deck__eq" tabindex="0"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>x</mi><mrow><mi mathvariant="normal">ℓ</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>x</mi><mi mathvariant="normal">ℓ</mi></msub><mo>+</mo><msub><mi>F</mi><mi mathvariant="normal">ℓ</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mi mathvariant="normal">ℓ</mi></msub><mo stretchy="false">)</mo><mspace width="2em"/><msub><mi>x</mi><mi>L</mi></msub><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><munderover><mo>∑</mo><mrow><mi mathvariant="normal">ℓ</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>L</mi><mo>−</mo><mn>1</mn></mrow></munderover><msub><mi>F</mi><mi mathvariant="normal">ℓ</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mi mathvariant="normal">ℓ</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_{\ell+1} = x_\ell + F_\ell(x_\ell) \qquad x_L = x_0 + \sum_{\ell=0}^{L-1} F_\ell(x_\ell)</annotation></semantics></math></div>
+      
+
+      
+      <div class="deck__body">Aquí está la jugada. Una capa lee todo el carril acumulado, calcula una corrección y la <em>añade</em> encima: nunca sobrescribe lo que hay. <strong>Como un muro levantado hilada a hilada:</strong> cada capa coloca su hilera sobre la anterior, sin derribar nada, así que el muro terminado es simplemente <em>todas</em> las hiladas sumadas. En pocas palabras: el estado final del modelo es el vector inicial más la nota añadida por cada capa.</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="3"
+           data-slide-id="src43-s04"
+           data-card-type="beat"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/04_lights-on-one-screen.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/04_lights-on-one-screen.webp" onerror="this.classList.add('is-broken')" alt="En ese carril, un significado es una dirección." loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">En ese carril, un significado es una dirección.</p>
+
+      
+      <div class="deck__eq" tabindex="0"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>write: </mtext><mi>x</mi><mo>←</mo><mi>x</mi><mo>+</mo><mi>a</mi><mtext> </mtext><mi mathvariant="bold">u</mi><mspace width="2em"/><mtext>read: </mtext><mi>s</mi><mo>=</mo><msup><mi mathvariant="bold">u</mi><mi mathvariant="normal">⊤</mi></msup><mi>x</mi><mspace width="2em"/><mi>x</mi><mo>≈</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>a</mi><mi>i</mi></msub><mtext> </mtext><msub><mi mathvariant="bold">u</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\text{write: } x \leftarrow x + a\,\mathbf{u} \qquad \text{read: } s = \mathbf{u}^\top x \qquad x \approx \sum_i a_i\,\mathbf{u}_i</annotation></semantics></math></div>
+      
+
+      
+      <div class="deck__body">¿Cómo guardas una idea dentro de una sola lista de números que todos comparten? Como una <strong>dirección.</strong> Para escribir un rasgo, una capa añade una pequeña flecha que apunta en cierto sentido; para leerlo, una capa posterior mide cuánto se inclina el carril a lo largo de esa flecha. <strong>Como focos de colores sobre una sola pantalla:</strong> cada lámpara añade su tono a la misma pared, y para leer una lámpara compruebas cuánto de <em>su</em> color aparece. En pocas palabras: escribir añade una flecha, leer toma una sombra, y todo el carril es esas flechas sumadas.</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="4"
+           data-slide-id="src43-s05"
+           data-card-type="beat"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/05_birds-on-one-wire.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/05_birds-on-one-wire.webp" onerror="this.classList.add('is-broken')" alt="Un carril de ancho fijo y, aun así, lleva miles de ideas." loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">Un carril de ancho fijo y, aun así, lleva miles de ideas.</p>
+
+      
+      <div class="deck__eq" tabindex="0"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">⟨</mo><msub><mi mathvariant="bold">u</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi mathvariant="bold">u</mi><mi>j</mi></msub><mo stretchy="false">⟩</mo><mo>=</mo><mn>0</mn><mo>⇒</mo><mtext>at most </mtext><mi>d</mi><mtext> directions</mtext><mspace width="2em"/><mi mathvariant="normal">∣</mi><mo stretchy="false">⟨</mo><msub><mi mathvariant="bold">u</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi mathvariant="bold">u</mi><mi>j</mi></msub><mo stretchy="false">⟩</mo><mi mathvariant="normal">∣</mi><mo>≤</mo><mi>ε</mi><mo>⇒</mo><mi>N</mi><mo>∼</mo><msup><mi>e</mi><mrow><mtext> </mtext><mi>c</mi><mtext> </mtext><msup><mi>ε</mi><mn>2</mn></msup><mi>d</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\langle \mathbf{u}_i, \mathbf{u}_j \rangle = 0 \Rightarrow \text{at most } d \text{ directions} \qquad |\langle \mathbf{u}_i, \mathbf{u}_j \rangle| \le \varepsilon \Rightarrow N \sim e^{\,c\,\varepsilon^{2} d}</annotation></semantics></math></div>
+      
+
+      
+      <div class="deck__body">El carril tiene un ancho fijo: un número dado de ranuras, compartidas por cada capa y cada cabeza. Entonces, ¿cómo guarda muchísimas más ideas que ranuras? Las apiña <em>casi</em>, no del todo, separadas. <strong>Como pájaros apretados en un cable:</strong> unos pocos caben con espacio claro entre ellos, pero si se posan casi ala con ala el mismo cable sostiene muchos más, a costa de algún roce. En pocas palabras: solo unas pocas direcciones pueden estar exactamente separadas, pero un número enorme puede estar casi separado.</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="5"
+           data-slide-id="src43-s06"
+           data-card-type="beat"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/06_photo-in-the-tray.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/06_photo-in-the-tray.webp" onerror="this.classList.add('is-broken')" alt="Detente en cualquier capa y podrás leer su conjetura actual." loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">Detente en cualquier capa y podrás leer su conjetura actual.</p>
+
+      
+      <div class="deck__eq" tabindex="0"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>p</mi><mrow><mo stretchy="false">(</mo><mi mathvariant="normal">ℓ</mi><mo stretchy="false">)</mo></mrow></msup><mo>=</mo><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow><mtext> ⁣</mtext><mrow><mo fence="true">(</mo><msub><mi>W</mi><mi>U</mi></msub><mtext> </mtext><msub><mi>x</mi><mi mathvariant="normal">ℓ</mi></msub><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">p^{(\ell)} = \mathrm{softmax}\!\left( W_U\, x_\ell \right)</annotation></semantics></math></div>
+      
+
+      
+      <div class="deck__body">Como el carril es una única suma acumulada, puedes detenerte en cualquier capa, pasar ese vector a medio terminar por el mapa de salida del modelo y leer una respuesta <em>provisional</em>, una que se vuelve más nítida con la profundidad. <strong>Como una foto revelándose en la cubeta:</strong> la imagen es legible mucho antes de estar lista, solo que más tenue y más tosca. En pocas palabras: pasa el carril parcial por el mismo mapa que lee la conjetura final y sale la mejor respuesta del modelo hasta el momento (salvo un último reescalado).</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="6"
+           data-slide-id="src43-s07"
+           data-card-type="beat"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/07_arriving-complete.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/07_arriving-complete.webp" onerror="this.classList.add('is-broken')" alt="Así que el modelo no es una torre. Es un mensaje que se aclara poco a poco." loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">Así que el modelo no es una torre. Es un mensaje que se aclara poco a poco.</p>
+
+      
+
+      
+      <div class="deck__body">Júntalo todo. No hay un relevo de cajas selladas: hay <em>una sola corriente</em>, y el modelo entero es el primer vector más la nota de cada capa, leído al final. La atención y los bloques feed-forward nunca se hablan directamente; se hablan <em>dejando marcas en este carril compartido.</em> Esto es la <strong>corriente residual</strong>: no la tubería entre el pensamiento, sino el lugar donde el pensamiento realmente se guarda.</div>
+      
+
+      
+    </div>
+  </article>
+  
+  <article class="deck__slide"
+           data-idx="7"
+           data-slide-id="src43-s08"
+           data-card-type="seed"
+           style="--slide-bg: url('https://cdn.mentria.ai/source43/08_rings-never-erased.webp')">
+    
+    <img class="deck__slide-img" src="https://cdn.mentria.ai/source43/08_rings-never-erased.webp" onerror="this.classList.add('is-broken')" alt="Nada se borra, solo se escribe encima. ¿Eso es olvidar?" loading="lazy">
+    
+
+    <div class="deck__slide-overlay">
+      <p class="deck__caption">Nada se borra, solo se escribe encima. ¿Eso es olvidar?</p>
+
+      
+
+      
+      <div class="deck__body">Cada cambio que hace una capa se <em>añade</em> al carril, nunca se elimina. Para retirar un pensamiento, el modelo no puede meter la mano y sacarlo; solo puede escribir encima su opuesto exacto, de modo que ambos se cancelen. El original sigue ahí, enterrado dentro de la suma. 🌱 Si una mente solo puede añadir, nunca borrar, ¿algo que alguna vez pensó desaparece de verdad?</div>
+      
+
+      
+    </div>
+  </article>
+  
+
+  <div class="deck__hint" id="deckHint">
+    <span><i18n-t data-k="feed_deck.hint_tap">toca →</i18n-t></span><span><i18n-t data-k="feed_deck.hint_depth">desliza ↑ para más</i18n-t></span><span><i18n-t data-k="feed_deck.hint_exit">desliza ↓ para salir</i18n-t></span>
+  </div>
+  <div class="sr-only" id="deckLive" role="status" aria-live="polite"></div>
+
+
+</div>
+
+<script src="/assets/js/feed-deck.js?v=ec54a8f-09040920" defer></script>
+
+
+    </main>
+
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Añadir a la pantalla de inicio — funciona sin conexión.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Instalar</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Cerrar" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Cerrar" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Instalar Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Instalar Mentria en iPhone",
+    macosTitle:  "Instalar Mentria en Mac",
+    chromeTitle: "Instalar Mentria",
+    iosStep1:    "Toca el botón <strong>Compartir</strong> en la parte inferior de la pantalla",
+    iosStep2:    "Elige <strong>Añadir a Pantalla de Inicio</strong>",
+    iosStep3:    "Toca <strong>Añadir</strong> en la esquina superior derecha.",
+    macosStep1:  "Abre esta página en <strong>Safari 17+</strong>.",
+    macosStep2:  "En la barra de menú, elige <strong>Archivo → Añadir al Dock…</strong>",
+    macosStep3:  "Haz clic en <strong>Añadir</strong>.",
+    chromeStep1: "Haz clic en el icono de <strong>instalación</strong> en la barra de direcciones de tu navegador.",
+    chromeStep2: "O abre el menú (⋮) y elige <strong>Instalar Mentria</strong>.",
+    note:        "Una vez instalada, Mentria funciona sin conexión y tus datos locales permanecen en tu dispositivo."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Cancelar</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">Aceptar</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "Aceptar";
+        var confirmLabel = "Confirmar";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "No se pudo guardar — el almacenamiento del navegador está lleno. Libera espacio para conservar tus cambios.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("Esto descarga un modelo de IA grande (490 MB o más, según el modelo) y pareces estar en una conexión lenta o con ahorro de datos. ¿Continuar?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Compartir";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "Acerca de esta herramienta");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Versión de prueba (instantánea de la participación WebMCP), congelada para pruebas. Para uso general, visita <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

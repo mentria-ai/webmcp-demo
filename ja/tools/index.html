@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>ユーティリティツール | Mentria</title>
+    <meta name="description" content="シンプルでオフラインで動作する焦点を絞ったユーティリティ。各ツールは一つのことを上手にこなします。">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/ja/tools/">
+    <meta property="og:title" content="ユーティリティツール | Mentria">
+    <meta property="og:description" content="シンプルでオフラインで動作する焦点を絞ったユーティリティ。各ツールは一つのことを上手にこなします。">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/ja/tools/">
+    <meta name="twitter:title" content="ユーティリティツール | Mentria">
+    <meta name="twitter:description" content="シンプルでオフラインで動作する焦点を絞ったユーティリティ。各ツールは一つのことを上手にこなします。">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "ツール、実験、ビジュアル・トランスミッションのクリエイティブスタジオ。職人技で構築。",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "ja"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://webmcp.mentria.ai/ja/" },
+        { "@type": "ListItem", "position": 2, "name": "ツール", "item": "https://webmcp.mentria.ai/ja/tools/" }
+      ]
+    }
+    </script>
+<style>
+  .tools-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 2rem; }
+  .tools-filter { background: transparent; border: 1px solid var(--term-border); color: var(--term-muted); font-family: var(--font-mono); font-size: 0.8rem; padding: 5px 14px; border-radius: 999px; cursor: pointer; transition: all 120ms; }
+  .tools-filter:hover { color: var(--term-fg); border-color: var(--term-border-strong); }
+  .tools-filter.is-active { color: var(--syn-cyan); border-color: var(--syn-cyan); background: var(--cyan-8); }
+  .tools-filters + .tools-listing { margin-top: 0.75rem; }
+  .tools-listing__row[hidden] { display: none; }
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools_page.title","suffix":" | Mentria"},"desc":{"key":"tools_page.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "ja",
+        prefix: "/ja",
+        tools: [
+          { slug: "search", title: "検索", category: "AI", keywords: "ツールとフィード投稿を検索。キーワードでも自然言語でも入力可能。" },
+          { slug: "step-counter", title: "歩数カウンター", category: "健康", keywords: "ブラウザ内で散歩中の歩数をカウント。スマホのモーションセンサーを使用 — アップロードは一切なし。", requires: "motion" },
+          { slug: "qr-scanner", title: "QR・バーコード スキャナー＆ジェネレーター", category: "ユーティリティ", keywords: "QRコードやバーコードをスキャンしたり、リンクやテキストからQRコードを生成したり——すべて端末内で処理し、何もアップロードしません。" },
+          { slug: "decision-wheel", title: "決定の輪", category: "ユーティリティ", keywords: "決められない？ホイールを回して運命に任せましょう。オフラインでも動作。" },
+          { slug: "countdown-timer", title: "カウントダウンタイマー", category: "タイマー", keywords: "時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。" },
+          { slug: "coin-flip", title: "コインフリップ", category: "ユーティリティ", keywords: "表か裏 — 即座にコインを投げる。タイブレーカーには best-of-N シリーズ。オフラインでも動作。" },
+          { slug: "quick-notes", title: "クイックノート", category: "生産性", keywords: "ブラウザに住むミニマルなスクラッチパッド。複数のノートを作成、キー入力ごとに自動保存。" },
+          { slug: "base64-codec", title: "Base64コーデック", category: "開発", keywords: "テキストやファイルをBase64にエンコード・デコード。画像、ドキュメント、あらゆるファイルタイプに対応。すべてブラウザ内でローカル実行。" },
+          { slug: "totp", title: "TOTP", category: "セキュリティ", keywords: "ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。" },
+          { slug: "exif", title: "EXIFインスペクター", category: "セキュリティ", keywords: "写真にひそかに含まれる情報 — カメラ情報、日時、GPS位置 — を表示し、すべて削除したクリーンなコピーを保存。アップロードは一切ありません。" },
+          { slug: "color-picker", title: "カラーピッカー", category: "デザイン", keywords: "好きな色を選んで HEX / RGB / HSL の値を表示し、調和の取れたパレットを生成。オフラインでも動作。" },
+          { slug: "annotate-image", title: "画像を注釈", category: "AI", keywords: "画像をアップロードすると、AIによる説明・代替テキスト・文字起こし・タグを即座に取得 — テスト済みのワンタップ・プロンプト付き。ブラウザ内でローカル実行、アップロードは一切なし。" },
+          { slug: "ai-chat", title: "AIチャット", category: "AI", keywords: "Qwen3.5がブラウザ内でローカル実行。サーバーなし、APIキー不要。画像入力対応。" },
+          { slug: "console", title: "コンソール", category: "AI", keywords: "共有のスマホ画面でデバイス上のモデルがMentriaのアプリを操作するのを見ながらチャット。テストユーザーとして探索させ、見つけたことを報告させることもできます。" },
+          { slug: "model-mirror", title: "モデルミラー", category: "AI", keywords: "Mentria のオンデバイスモデルの P2P 配信に協力できます。このタブを開いたままにすると、ブラウザがミラーになります。" },
+          { slug: "quote", title: "モチベーション名言", category: "AI", keywords: "AIが生成するオリジナルの名言、ブラウザ内でローカル実行。データはデバイスから出ません。" },
+          { slug: "radio", title: "無限ラジオ", category: "AI", keywords: "AI生成の壮大なシネマティック音楽、無限ストリーミング。あなたの好みをローカルで学習 — データはデバイスから出ません。" },
+          { slug: "invoice", title: "請求書ジェネレーター", category: "ユーティリティ", keywords: "ブラウザでクリーンな1ページ請求書を作成。入力中に自動保存。A4印刷またはJSONエクスポート。" },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "ユーティリティ", keywords: "Markdownを書いて、ライブプレビューを見て、クリーンでプロフェッショナルなPDFをダウンロード。ブラウザに自動保存。データはデバイスから出ません。" },
+          { slug: "tetris", title: "テトリス", category: "ゲーム", keywords: "テトロミノを積み上げる。ラインを消す。10ライン毎にスピードアップ。シアン・パープル・ピンク・アンバー・グリーンのピース — Mentriaパレット。" },
+          { slug: "breakout", title: "Breakout", category: "ゲーム", keywords: "ブロック崩しとパドルゲームの融合。落ちてくるパワーアップをキャッチし、壁を崩し、ますます速く厳しくなるレベルを生き抜こう。ローカル動作 — データはデバイスから出ません。" },
+          { slug: "flappy", title: "Flappy", category: "ゲーム", keywords: "ターミナルプロンプトの山を縫って飛ぶ紙飛行機。タップ・クリック・SPACEキーで羽ばたき。プロンプトに墜落しないように。" },
+          { slug: "minesweeper", title: "マインスイーパー", category: "ゲーム", keywords: "ターミナル風の伝統的な論理パズル。クリックで掘る、右クリック(またはFモード)で旗を立てる。数字は隣接する地雷を示す。ピンクは押さないで。" },
+          { slug: "sudoku", title: "数独", category: "ゲーム", keywords: "ターミナル装いの論理パズル。唯一解ジェネレーター、4段階の難易度、鉛筆メモ。すべて端末内で動作 — データは外に出ません。" },
+          { slug: "ludo", title: "ルド", category: "ゲーム", keywords: "4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。" },
+          { slug: "chess", title: "チェス", category: "ゲーム", keywords: "ローカルエンジン、交代プレイ、オンライン対戦 — サーバー不要。キャスリング・アンパッサン・昇格まで完全ルール。4段階のアルファベータエンジン、評価バー、ヒント。" },
+          { slug: "phosphor", title: "PHOSPHOR", category: "ゲーム", keywords: "ブラウザで遊べる戦闘タイムトライアル。夕暮れの5コースをスプリント、スライディング、乗り越えで駆け抜け、フルオートのカービンで撃つ。メダル、ゴースト対戦、オフライン対応。" },
+          { slug: "extensions", title: "拡張機能", category: "ユーティリティ", keywords: "このデバイスにのみ存在するプライベートな単一ファイル拡張機能をインストール。ランチャーとターミナルに表示され、公開サイトには絶対に載りません。" },
+          { slug: "files", title: "ファイル", category: "ユーティリティ", keywords: "Mentria のツールがこの端末に保存したデータを閲覧・エクスポート・削除できます。すべて端末内にとどまります。" },
+          { slug: "comms", title: "Comms", category: "ソーシャル", keywords: "ピアツーピアのチャット、音声・ビデオ通話、ファイル送信。エンドツーエンド暗号化、アカウント不要、中間サーバーなし。", url: "/comms/" },
+          { slug: "bubble-level", title: "水平器", category: "ユーティリティ", keywords: "スマホがそのまま水平器に。アプリ不要のブラウザ版バブルレベルで、0.1°まで表示、オフラインでも使えます。", requires: "motion" },
+          { slug: "decibel-meter", title: "騒音計", category: "ユーティリティ", keywords: "ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。" },
+          { slug: "compass", title: "コンパス", category: "ユーティリティ", keywords: "アプリ不要のコンパス。ブラウザで開くだけで、スマートフォンのセンサーから磁方位をそのまま読み取れます。", requires: "motion" },
+          { slug: "speedometer", title: "GPS スピードメーター", category: "ユーティリティ", keywords: "アプリ不要のブラウザ版 GPS スピードメーター。km/h・mph・ノットでリアルタイムの速度と走行距離を、すべて端末内で計算して表示します。" },
+          { slug: "ruler", title: "オンライン定規", category: "ユーティリティ", keywords: "画面上で実寸のまま測れるオンライン定規。cm・mm・インチに対応し、銀行カードで校正すればミリ単位まで正確になります。" }
+        ],
+        nav: [
+          { id: "home", title: "ホーム", href: "/" },
+          { id: "tools", title: "ツール", href: "/tools/" },
+          { id: "feed", title: "フィード", href: "/feed/" },
+          { id: "about", title: "概要", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "ツールとページを検索…",
+          listLabel: "検索結果",
+          noResults: "一致するものがありません",
+          recents: "最近使ったもの",
+          extensions: "拡張機能",
+          actions: "アクション",
+          actNote: "メモを保存: 「{text}」",
+          actNoteDone: "メモを保存しました",
+          actNoteFail: "メモを保存できませんでした",
+          actTimer: "{dur}のタイマーを開始",
+          actFlip: "コインを投げる",
+          actHeads: "表",
+          actTails: "裏",
+          searchSite: "サイト内で「{q}」を検索"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">コンテンツへスキップ</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/ja/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/ja/feed/"  class="nav-link" title="フィード" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+            </a>
+            <a href="/ja/tools/" class="nav-link active" aria-current="page" title="ツール" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">ツール</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="コムズ" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/ja/about/" class="nav-link nav-link--about" title="概要" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">概要</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="コマンドパレットを開く（⌘K）" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="現在の言語: 日本語" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="ja">日本語</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+    <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/ja/">~</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">tools</span></p>
+    <h1><i18n-t data-k="tools_page.title">ユーティリティツール</i18n-t></h1>
+    <p><i18n-t data-k="tools_page.lede">シンプルでオフラインで動作する焦点を絞ったユーティリティ。各ツールは一つのことを上手にこなします。</i18n-t></p>
+</section>
+
+
+
+<div class="tools-filters" id="tools-filters">
+    <button class="tools-filter is-active" type="button" data-shelf="all"><i18n-t data-k="tool.search.type_all">すべて</i18n-t></button>
+    <button class="tools-filter" type="button" data-shelf="tools"><i18n-t data-k="about.shelf_tools">ツール</i18n-t></button>
+    <button class="tools-filter" type="button" data-shelf="games"><i18n-t data-k="about.shelf_games">ゲーム</i18n-t></button>
+    <button class="tools-filter" type="button" data-shelf="ai"><i18n-t data-k="about.shelf_ai">AI</i18n-t></button>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+<symbol id="tool-search" viewBox="0 0 48 48"><defs>
+<linearGradient id="cysearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pusearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pksearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosssearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbsearch" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dksearch" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shsearch" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softsearch" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shsearch)">
+   <path d="M27 27 L40 40" fill="none" stroke="url(#pusearch)" stroke-width="9" stroke-linecap="round"></path>
+   <path d="M28.4 28.4 L38 38" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".22"></path>
+   <circle cx="20" cy="20" r="13" fill="url(#cysearch)"></circle>
+   <circle cx="20" cy="20" r="13" fill="url(#glosssearch)" opacity=".5"></circle>
+   <circle cx="20" cy="20" r="9.2" fill="#0d2b33" opacity=".30"></circle>
+   <circle cx="20" cy="20" r="9.2" fill="url(#cysearch)" opacity=".9"></circle>
+   <ellipse cx="16.4" cy="15.8" rx="4.2" ry="2.8" transform="rotate(-38 16.4 15.8)" fill="#fff" opacity=".55"></ellipse>
+ </g></symbol>
+<symbol id="tool-ai-chat" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbaichat" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkaichat" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shaichat" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softaichat" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shaichat)">
+   <path d="M10 9h28a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H25l-8.4 6.4a1 1 0 0 1-1.6-.9V33H10a5 5 0 0 1-5-5V14a5 5 0 0 1 5-5Z" fill="url(#puaichat)"></path>
+   <path d="M10 9h28a5 5 0 0 1 5 5v3.5a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3V14a5 5 0 0 1 5-5Z" fill="#fff" opacity=".22"></path>
+   <path d="M22.4 13.2l2.5 6.1 6.1 2.5-6.1 2.5-2.5 6.1-2.5-6.1-6.1-2.5 6.1-2.5Z" fill="#fff"></path>
+   <circle cx="33.2" cy="26.4" r="2.6" fill="url(#cyaichat)"></circle>
+ </g></symbol>
+<symbol id="tool-quote" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbquote" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkquote" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shquote" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softquote" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shquote)">
+   <rect x="6" y="9" width="36" height="30" rx="8" fill="url(#puquote)"></rect>
+   <path d="M6 17a8 8 0 0 1 8-8h20a8 8 0 0 1 8 8v-3a5 5 0 0 0-5-5H11a5 5 0 0 0-5 5Z" fill="#fff" opacity=".2"></path>
+   <g fill="#fff">
+     <path d="M14 17h6.4v6c0 4-2.4 6.6-6 7.2l-1.2-3c1.8-.5 2.8-1.5 2.9-3.2H14Z"></path>
+     <path d="M25.6 17H32v6c0 4-2.4 6.6-6 7.2l-1.2-3c1.8-.5 2.8-1.5 2.9-3.2h-2.1Z"></path>
+   </g>
+ </g></symbol>
+<symbol id="tool-radio" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbradio" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkradio" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shradio" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softradio" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><defs><linearGradient id="rcradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#22D3EE"></stop></linearGradient><linearGradient id="rpradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F472B6"></stop></linearGradient></defs>
+   <g filter="url(#shradio)">
+   <path d="M16.5 18.5a13 13 0 0 0 0 19" fill="none" stroke="url(#rcradio)" stroke-width="3.6" stroke-linecap="round"></path>
+   <path d="M10.5 12.5a21 21 0 0 0 0 31" fill="none" stroke="url(#rcradio)" stroke-width="3.6" stroke-linecap="round" opacity=".5"></path>
+   <path d="M31.5 18.5a13 13 0 0 1 0 19" fill="none" stroke="url(#rpradio)" stroke-width="3.6" stroke-linecap="round"></path>
+   <path d="M37.5 12.5a21 21 0 0 1 0 31" fill="none" stroke="url(#rpradio)" stroke-width="3.6" stroke-linecap="round" opacity=".5"></path>
+   <circle cx="24" cy="28" r="6" fill="url(#orbradio)"></circle>
+   <ellipse cx="22" cy="25.6" rx="2.4" ry="1.6" transform="rotate(-30 22 25.6)" fill="#fff" opacity=".5"></ellipse>
+ </g></symbol>
+<symbol id="tool-tetris" viewBox="0 0 48 48"><defs>
+<linearGradient id="cytetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="putetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pktetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amtetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<filter id="shtetris" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shtetris)">
+<g><rect x="7" y="12.5" width="11" height="11" rx="2.4" fill="url(#pktetris)"></rect><rect x="8.4" y="13.9" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+<g><rect x="18.5" y="12.5" width="11" height="11" rx="2.4" fill="url(#amtetris)"></rect><rect x="19.9" y="13.9" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+<g><rect x="18.5" y="24" width="11" height="11" rx="2.4" fill="url(#cytetris)"></rect><rect x="19.9" y="25.4" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+<g><rect x="30" y="24" width="11" height="11" rx="2.4" fill="url(#putetris)"></rect><rect x="31.4" y="25.4" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+</g></symbol>
+<symbol id="tool-breakout" viewBox="0 0 48 48"><defs>
+<linearGradient id="cybreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pubreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkbreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="ambreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<radialGradient id="orbbreakout" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<filter id="shbreakout" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shbreakout)">
+<g>
+<rect x="6" y="7" width="11" height="5.4" rx="1.8" fill="url(#pkbreakout)"></rect>
+<rect x="18.5" y="7" width="11" height="5.4" rx="1.8" fill="url(#ambreakout)"></rect>
+<rect x="31" y="7" width="11" height="5.4" rx="1.8" fill="url(#cybreakout)"></rect>
+<rect x="6" y="14" width="11" height="5.4" rx="1.8" fill="url(#pubreakout)"></rect>
+<rect x="18.5" y="14" width="11" height="5.4" rx="1.8" fill="url(#pkbreakout)"></rect>
+<rect x="31" y="14" width="11" height="5.4" rx="1.8" fill="url(#ambreakout)"></rect>
+</g>
+<circle cx="24" cy="28" r="3.4" fill="url(#orbbreakout)"></circle>
+<ellipse cx="22.8" cy="26.8" rx="1.2" ry=".8" fill="#fff" opacity=".55"></ellipse>
+<rect x="15" y="37" width="18" height="5" rx="2.5" fill="url(#cybreakout)"></rect>
+<rect x="16.4" y="38" width="9" height="1.6" rx=".8" fill="#fff" opacity=".4"></rect>
+</g></symbol>
+<symbol id="tool-flappy" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyflappy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A5F3FC"></stop><stop offset="1" stop-color="#67E8F9"></stop></linearGradient>
+<linearGradient id="cyflappyD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22D3EE"></stop><stop offset="1" stop-color="#0E9CBE"></stop></linearGradient>
+<linearGradient id="gnflappy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<filter id="shflappy" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shflappy)">
+<rect x="35.5" y="6" width="8.5" height="36" rx="2.5" fill="url(#gnflappy)"></rect>
+<rect x="34" y="19.5" width="11.5" height="7" rx="2.5" fill="url(#gnflappy)"></rect>
+<rect x="36.7" y="7.5" width="1.8" height="32" rx="1" fill="#fff" opacity=".25"></rect>
+
+<rect x="3" y="21" width="7" height="2" rx="1" fill="#67E8F9" opacity=".4"></rect>
+<rect x="5" y="26.5" width="5" height="2" rx="1" fill="#67E8F9" opacity=".25"></rect>
+
+<path d="M31 23.5 L13 17.5 L17.5 23.5 Z" fill="url(#cyflappy)"></path>
+<path d="M31 23.5 L13 30.5 L17.5 23.5 Z" fill="url(#cyflappyD)"></path>
+<path d="M17.5 23.5 L22 25 L18.5 29.5 Z" fill="#0E7490"></path>
+<path d="M31 23.5 L17.5 23.5" stroke="#083344" stroke-width="0.9" opacity=".6"></path>
+</g></symbol>
+<symbol id="tool-minesweeper" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbminesweeper" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkminesweeper" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shminesweeper" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softminesweeper" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shminesweeper)">
+   <g stroke="url(#dkminesweeper)" stroke-width="3.4" stroke-linecap="round"><path d="M24 11v26M11 24h26M14.5 14.5l19 19M33.5 14.5l-19 19"></path></g>
+   <circle cx="24" cy="24" r="10" fill="url(#dkminesweeper)"></circle>
+   <ellipse cx="20.5" cy="20.5" rx="3.4" ry="2.4" transform="rotate(-32 20.5 20.5)" fill="#fff" opacity=".4"></ellipse>
+   <path d="M30 14l2.4 2.4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".5"></path>
+   <path d="M31.5 11.5l1.3 3.1 3.1 1.3-3.1 1.3-1.3 3.1-1.3-3.1-3.1-1.3 3.1-1.3Z" fill="url(#amminesweeper)"></path>
+ </g></symbol>
+<symbol id="tool-color-picker" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pucolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gncolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosscolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbcolorpicker" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkcolorpicker" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcolorpicker" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softcolorpicker" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shcolorpicker)">
+   <path d="M24 7C13.5 7 5 14.6 5 24c0 7 5.6 9.2 9.4 9.2 2.7 0 3.6 1.6 3.6 3.2 0 .9-.4 1.7-.4 2.8 0 1.7 1.4 2.8 3.4 2.8C34 42 43 34.4 43 24 43 14.6 34.5 7 24 7Z" fill="url(#amcolorpicker)"></path>
+   <path d="M24 7C13.5 7 5 14.6 5 24c0 1 .1 1.9.3 2.8C6 18.4 14 12 24 12s18 6.4 18.7 14.8c.2-.9.3-1.8.3-2.8C43 14.6 34.5 7 24 7Z" fill="#fff" opacity=".25"></path>
+   <circle cx="14.5" cy="20" r="2.6" fill="url(#cycolorpicker)"></circle>
+   <circle cx="22" cy="15" r="2.6" fill="url(#pkcolorpicker)"></circle>
+   <circle cx="31" cy="16.5" r="2.6" fill="url(#pucolorpicker)"></circle>
+   <circle cx="35.5" cy="24" r="2.6" fill="url(#gncolorpicker)"></circle>
+ </g></symbol>
+<symbol id="tool-markdown-pdf" viewBox="0 0 48 48"><defs>
+<linearGradient id="cymarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pumarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="ammarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbmarkdownpdf" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkmarkdownpdf" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shmarkdownpdf" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softmarkdownpdf" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shmarkdownpdf)">
+   <path d="M12 5h16l8 8v26a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="url(#cymarkdownpdf)"></path>
+   <path d="M28 5l8 8h-6a2 2 0 0 1-2-2Z" fill="#0c5566" opacity=".55"></path>
+   <path d="M12 5h16v2H12a2 2 0 0 0-2 2V7a2 2 0 0 1 2-2Z" fill="#fff" opacity=".3"></path>
+   <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".85"><path d="M17 19v8M17 19l3 3 3-3v8"></path></g>
+   <circle cx="32" cy="33" r="7.5" fill="url(#pkmarkdownpdf)"></circle>
+   <path d="M32 29v7M28.8 32.8 32 36l3.2-3.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+ </g></symbol>
+<symbol id="tool-invoice" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="aminvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gninvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbinvoice" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkinvoice" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shinvoice" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softinvoice" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shinvoice)">
+   <path d="M11 6a2 2 0 0 1 2-2h22a2 2 0 0 1 2 2v34l-3.5-2.4L30 40l-3.5-2.4L23 40l-3.5-2.4L16 40l-3.5-2.4L11 40Z" fill="url(#puinvoice)"></path>
+   <path d="M13 4h22a2 2 0 0 1 2 2v2a2 2 0 0 0-2-2H13a2 2 0 0 0-2 2V6a2 2 0 0 1 2-2Z" fill="#fff" opacity=".25"></path>
+   <g stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".9"><path d="M16 14h16M16 20h16M16 26h10"></path></g>
+   <circle cx="30.5" cy="27" r="5" fill="url(#aminvoice)"></circle>
+   <path d="M28.2 27l1.7 1.7 3-3.2" fill="none" stroke="#7a4d08" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+ </g></symbol>
+<symbol id="tool-files" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyfiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="cyEfiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22B8D4"></stop><stop offset="1" stop-color="#0E7C93"></stop></linearGradient>
+<linearGradient id="pufiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkfiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<filter id="shfiles" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shfiles)">
+   <path d="M7 13a2 2 0 0 1 2-2h9l3 3h18a2 2 0 0 1 2 2v3H7Z" fill="url(#cyEfiles)"></path>
+   <rect x="13" y="9" width="9" height="12" rx="1" fill="url(#pufiles)" transform="rotate(-8 17.5 15)"></rect>
+   <rect x="24" y="8" width="9" height="12" rx="1" fill="url(#pkfiles)" transform="rotate(6 28.5 14)"></rect>
+   <g stroke="#fff" stroke-width="1.1" opacity=".5" stroke-linecap="round"><path d="M15.5 12.5l5-.7M16 15.5l5-.7" transform="rotate(-8 17.5 15)"></path><path d="M26 11.5l5 .5M26 14.5l5 .5" transform="rotate(6 28.5 14)"></path></g>
+   <path d="M5.5 19.5a2 2 0 0 1 2-2.4h33a2 2 0 0 1 2 2.4l-2.6 17a2 2 0 0 1-2 1.7H10.1a2 2 0 0 1-2-1.7Z" fill="url(#cyfiles)"></path>
+   <path d="M5.7 18.9a2 2 0 0 1 1.8-1.8h33a2 2 0 0 1 1.8 1.8l-.2 1.3H5.9Z" fill="#fff" opacity=".28"></path>
+   <path d="M8.1 36.5l-2.4-15.6h36.6l-2.4 15.6a2 2 0 0 1-2 1.7H10.1a2 2 0 0 1-2-1.7Z" fill="#0d7f97" opacity=".18"></path>
+ </g></symbol>
+<symbol id="tool-quick-notes" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbquicknotes" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkquicknotes" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shquicknotes" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softquicknotes" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shquicknotes)">
+   <path d="M8 9a2 2 0 0 1 2-2h20l8 8v18a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2Z" fill="url(#amquicknotes)"></path>
+   <path d="M30 7l8 8h-6a2 2 0 0 1-2-2Z" fill="#b87f10" opacity=".5"></path>
+   <path d="M8 9a2 2 0 0 1 2-2h20v2H10a2 2 0 0 0-2 2V9Z" fill="#fff" opacity=".3"></path>
+   <g stroke="#9a6a08" stroke-width="2.2" stroke-linecap="round" opacity=".55"><path d="M14 20h12M14 26h9"></path></g>
+   <g transform="rotate(40 30 30)"><rect x="27.5" y="20" width="5" height="17" rx="1" fill="url(#puquicknotes)"></rect><rect x="27.5" y="20" width="5" height="4" fill="url(#pkquicknotes)"></rect><path d="M27.5 37h5l-2.5 4Z" fill="url(#amquicknotes)"></path><path d="M29 38.5h2l-1 1.6Z" fill="#3a2a08"></path></g>
+ </g></symbol>
+<symbol id="tool-base64-codec" viewBox="0 0 48 48"><defs>
+<linearGradient id="cybase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pubase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="ambase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbbase64codec" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkbase64codec" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shbase64codec" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softbase64codec" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shbase64codec)">
+   <path d="M16 13 7 24l9 11" fill="none" stroke="url(#cybase64codec)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+   <path d="M32 13l9 11-9 11" fill="none" stroke="url(#pkbase64codec)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+   <g fill="url(#ambase64codec)"><rect x="20" y="17" width="3.4" height="3.4" rx=".8"></rect><rect x="24.6" y="17" width="3.4" height="3.4" rx=".8"></rect><rect x="20" y="27.6" width="3.4" height="3.4" rx=".8"></rect><rect x="24.6" y="27.6" width="3.4" height="3.4" rx=".8"></rect></g>
+   <rect x="22.4" y="22.3" width="3.4" height="3.4" rx=".8" fill="url(#pubase64codec)"></rect>
+ </g></symbol>
+<symbol id="tool-qr-scanner" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbqrscanner" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkqrscanner" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shqrscanner" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softqrscanner" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shqrscanner)">
+   <g fill="none" stroke="url(#cyqrscanner)" stroke-width="3.6" stroke-linecap="round">
+     <path d="M7 17V10a3 3 0 0 1 3-3h7"></path><path d="M31 7h7a3 3 0 0 1 3 3v7"></path><path d="M41 31v7a3 3 0 0 1-3 3h-7"></path><path d="M17 41h-7a3 3 0 0 1-3-3v-7"></path>
+   </g>
+   <rect x="17.4" y="17.4" width="6.6" height="6.6" rx="1.6" fill="url(#puqrscanner)"></rect>
+   <rect x="26" y="17.6" width="4.6" height="4.6" rx="1.1" fill="#fff" opacity=".92"></rect>
+   <rect x="17.6" y="26" width="4.6" height="4.6" rx="1.1" fill="#fff" opacity=".92"></rect>
+   <rect x="26" y="26" width="6.6" height="6.6" rx="1.6" fill="url(#puEqrscanner)"></rect>
+   <rect x="8" y="22.6" width="32" height="3" rx="1.5" fill="url(#pkqrscanner)" filter="url(#softqrscanner)" opacity=".7"></rect>
+   <rect x="9" y="23" width="30" height="2.2" rx="1.1" fill="#FBA6D2"></rect>
+ </g></symbol>
+<symbol id="tool-step-counter" viewBox="0 0 48 48"><defs>
+<linearGradient id="ringst" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#67E8F9"></stop><stop offset=".55" stop-color="#A78BFA"></stop><stop offset="1" stop-color="#F472B6"></stop></linearGradient>
+<linearGradient id="footst" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8FAFC"></stop><stop offset="1" stop-color="#CBD5E1"></stop></linearGradient>
+<filter id="shst" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.1" flood-color="#000" flood-opacity="0.3"></feDropShadow></filter>
+</defs>
+<g filter="url(#shst)">
+  
+  <circle cx="24" cy="24" r="15" stroke="#2a2a35" stroke-width="5"></circle>
+  
+  <path d="M24 9 A15 15 0 1 1 9.9 18.87" stroke="url(#ringst)" stroke-width="5" stroke-linecap="round" fill="none"></path>
+  <circle cx="24" cy="9" r="2.5" fill="#67E8F9"></circle>
+  
+  <g fill="url(#footst)">
+    <path d="M21.6 21.5C21 24.4 21.2 27.2 22.6 29.2C23.4 30.4 25.2 30.4 26 29.1C27.3 27 27.2 24.2 26.6 21.4C26.2 19.5 25 18.6 24.1 18.6C23 18.6 22 19.6 21.6 21.5Z"></path>
+    <circle cx="21.3" cy="18.4" r="1.15"></circle>
+    <circle cx="23.9" cy="17.2" r="1.25"></circle>
+    <circle cx="26.2" cy="18" r="1.1"></circle>
+    <circle cx="27.6" cy="20" r=".9"></circle>
+  </g>
+</g></symbol>
+<symbol id="tool-countdown-timer" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pucountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gncountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosscountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbcountdowntimer" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkcountdowntimer" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcountdowntimer" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softcountdowntimer" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shcountdowntimer)">
+   <rect x="19.5" y="3.5" width="9" height="6.2" rx="3.1" fill="url(#pkcountdowntimer)"></rect>
+   <rect x="22.5" y="8" width="3" height="5.5" fill="url(#pkcountdowntimer)"></rect>
+   <circle cx="24" cy="28.5" r="15" fill="url(#cycountdowntimer)"></circle>
+   <path d="M24 28.5V13.5A15 15 0 0 1 38.4 22Z" fill="url(#puEcountdowntimer)" opacity=".92"></path>
+   <circle cx="24" cy="28.5" r="15" fill="url(#glosscountdowntimer)" opacity=".34"></circle>
+   <ellipse cx="18" cy="20" rx="5.5" ry="3.6" transform="rotate(-32 18 20)" fill="#fff" opacity=".30"></ellipse>
+   <path d="M24 28.5V18.6" stroke="#fff" stroke-width="2.9" stroke-linecap="round"></path>
+   <circle cx="24" cy="28.5" r="2.5" fill="#fff"></circle>
+ </g></symbol>
+<symbol id="tool-coin-flip" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pucoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gncoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosscoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbcoinflip" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkcoinflip" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcoinflip" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softcoinflip" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shcoinflip)">
+   <path d="M11 25c0 5.2 5.8 8 13 8s13-2.8 13-8v4.6c0 5.2-5.8 8-13 8s-13-2.8-13-8Z" fill="url(#amEcoinflip)"></path>
+   <ellipse cx="24" cy="25" rx="13" ry="9.6" fill="url(#amcoinflip)"></ellipse>
+   <ellipse cx="24" cy="25" rx="13" ry="9.6" fill="url(#glosscoinflip)" opacity=".4"></ellipse>
+   <path d="M23.5 19.7 24.68 22.88 28.06 23.02 25.4 25.12 26.32 28.38 23.5 26.5 20.68 28.38 21.6 25.12 18.94 23.02 22.32 22.88Z" transform="translate(0.5 0.6)" fill="#FDE08A" opacity=".7"></path>
+   <path d="M23.5 19.7 24.68 22.88 28.06 23.02 25.4 25.12 26.32 28.38 23.5 26.5 20.68 28.38 21.6 25.12 18.94 23.02 22.32 22.88Z" fill="#B4730D"></path>
+   <path d="M9 16.5a17.5 17.5 0 0 1 30 0" fill="none" stroke="url(#cycoinflip)" stroke-width="3.2" stroke-linecap="round"></path>
+   <path d="M37.5 9 40 16.8l-7.8-1Z" fill="#22D3EE"></path>
+ </g></symbol>
+<symbol id="tool-decision-wheel" viewBox="0 0 48 48"><defs>
+<linearGradient id="cydecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pudecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gndecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbdecisionwheel" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkdecisionwheel" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shdecisionwheel" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softdecisionwheel" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shdecisionwheel)">
+   <g transform="translate(24 26)">
+     <path d="M0 0 V-14 A14 14 0 0 1 14 0 Z" fill="url(#cydecisionwheel)"></path>
+     <path d="M0 0 H14 A14 14 0 0 1 0 14 Z" fill="url(#pkdecisionwheel)"></path>
+     <path d="M0 0 V14 A14 14 0 0 1 -14 0 Z" fill="url(#amdecisionwheel)"></path>
+     <path d="M0 0 H-14 A14 14 0 0 1 0 -14 Z" fill="url(#pudecisionwheel)"></path>
+   </g>
+   <circle cx="24" cy="26" r="14" fill="url(#glossdecisionwheel)" opacity=".28"></circle>
+   <circle cx="24" cy="26" r="3.4" fill="#fff"></circle>
+   <path d="M20 4h8l-4 7Z" fill="url(#pkdecisionwheel)"></path>
+   <path d="M21 4.6h4.5l-2.2 3.8Z" fill="#fff" opacity=".3"></path>
+ </g></symbol>
+<symbol id="tool-annotate-image" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="amannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<radialGradient id="dkannimg" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glossannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shannimg" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shannimg)">
+   <rect x="7" y="9" width="34" height="30" rx="6" fill="url(#dkannimg)"></rect>
+   <rect x="7" y="9" width="34" height="30" rx="6" fill="none" stroke="url(#cyannimg)" stroke-width="2.2"></rect>
+   <circle cx="16.5" cy="18" r="3" fill="url(#amannimg)"></circle>
+   <path d="M11 35l8.5-10 6 6.5 4.5-5L37 35Z" fill="url(#gnannimg)"></path>
+   <path d="M25.5 31.5l4.5-5L37 35H22Z" fill="url(#cyannimg)" opacity=".85"></path>
+   <rect x="7" y="9" width="34" height="15" rx="6" fill="url(#glossannimg)" opacity=".45"></rect>
+   <path d="M34 8.5l1.5 3.6 3.6 1.5-3.6 1.5L34 18.7l-1.5-3.6L28.9 13.6l3.6-1.5Z" fill="url(#puannimg)"></path>
+   <path d="M34 10.4l0.7 1.7 1.7 0.7-1.7 0.7-0.7 1.7-0.7-1.7-1.7-0.7 1.7-0.7Z" fill="#fff" opacity=".5"></path>
+ </g></symbol>
+<symbol id="tool-chess" viewBox="0 0 48 48"><defs>
+<linearGradient id="cychess" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amchess" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<radialGradient id="dkchess" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glosschess" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shchess" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shchess)">
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="url(#dkchess)"></rect>
+   <g fill="url(#cychess)" opacity=".22"><rect x="6" y="6" width="9" height="9"></rect><rect x="24" y="6" width="9" height="9"></rect><rect x="15" y="15" width="9" height="9"></rect><rect x="33" y="15" width="9" height="9"></rect><rect x="6" y="24" width="9" height="9"></rect><rect x="24" y="24" width="9" height="9"></rect><rect x="15" y="33" width="9" height="9"></rect><rect x="33" y="33" width="9" height="9"></rect></g>
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="none" stroke="url(#cychess)" stroke-width="2.2"></rect>
+   <rect x="16.5" y="31.4" width="15" height="3.4" rx="1.5" fill="url(#amchess)"></rect>
+   <path d="M19.4 31.4C19.4 27.2 21.8 25.4 21.8 22.6L26.2 22.6C26.2 25.4 28.6 27.2 28.6 31.4Z" fill="url(#amchess)"></path>
+   <rect x="20.8" y="20.2" width="6.4" height="2.6" rx="1.3" fill="url(#amchess)"></rect>
+   <circle cx="24" cy="16.2" r="4" fill="url(#amchess)"></circle>
+   <rect x="6" y="6" width="36" height="17" rx="7" fill="url(#glosschess)" opacity=".4"></rect>
+ </g></symbol>
+<symbol id="tool-ludo" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="pkludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="gnludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<radialGradient id="dkludo" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glossludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shludo" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shludo)">
+   <rect x="6" y="6" width="36" height="36" rx="8" fill="url(#dkludo)"></rect>
+   <rect x="6" y="6" width="36" height="36" rx="8" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.4"></rect>
+   <path d="M9 9h11v11H9Z" rx="2" fill="url(#cyludo)" opacity=".85"></path>
+   <path d="M28 9h11v11H28Z" fill="url(#amludo)" opacity=".85"></path>
+   <path d="M28 28h11v11H28Z" fill="url(#pkludo)" opacity=".85"></path>
+   <path d="M9 28h11v11H9Z" fill="url(#gnludo)" opacity=".85"></path>
+   <g fill="#0f0d16"><circle cx="14.5" cy="14.5" r="2.4"></circle><circle cx="33.5" cy="14.5" r="2.4"></circle><circle cx="33.5" cy="33.5" r="2.4"></circle><circle cx="14.5" cy="33.5" r="2.4"></circle></g>
+   <path d="M20 24h8M24 20v8" stroke="url(#cyludo)" stroke-width="2.4" stroke-linecap="round"></path>
+   <path d="M24 19l3 5h-6Z" fill="#fff" opacity=".9"></path>
+   <rect x="6" y="6" width="36" height="17" rx="8" fill="url(#glossludo)" opacity=".4"></rect>
+ </g></symbol>
+<symbol id="tool-sudoku" viewBox="0 0 48 48"><defs>
+<linearGradient id="cysudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amsudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="pksudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<radialGradient id="dksudoku" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glosssudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".40"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shsudoku" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shsudoku)">
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="url(#dksudoku)"></rect>
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="none" stroke="url(#cysudoku)" stroke-width="2.4"></rect>
+   <g stroke="url(#cysudoku)" stroke-width="2.2" opacity=".85" stroke-linecap="round"><path d="M18 8v32M30 8v32M8 18h32M8 30h32"></path></g>
+   <rect x="9.5" y="9.5" width="5" height="5" rx="1.2" fill="url(#amsudoku)"></rect>
+   <rect x="21.5" y="21.5" width="5" height="5" rx="1.2" fill="url(#cysudoku)"></rect>
+   <rect x="33.5" y="9.5" width="5" height="5" rx="1.2" fill="url(#pksudoku)"></rect>
+   <rect x="9.5" y="33.5" width="5" height="5" rx="1.2" fill="url(#cysudoku)"></rect>
+   <rect x="33.5" y="33.5" width="5" height="5" rx="1.2" fill="url(#amsudoku)"></rect>
+   <rect x="6" y="6" width="36" height="18" rx="7" fill="url(#glosssudoku)" opacity=".5"></rect>
+ </g></symbol>
+<symbol id="tool-totp" viewBox="0 0 48 48"><defs>
+<linearGradient id="cytotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amtotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gntotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<radialGradient id="dktotp" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glosstotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".40"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shtotp" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shtotp)">
+   <circle cx="24" cy="24" r="20" fill="url(#dktotp)"></circle>
+   <circle cx="24" cy="24" r="20" fill="none" stroke="#1d2030" stroke-width="3.6"></circle>
+   <circle cx="24" cy="24" r="20" fill="none" stroke="url(#amtotp)" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="91 35" transform="rotate(-90 24 24)"></circle>
+   <circle cx="24" cy="24" r="20" fill="url(#glosstotp)" opacity=".22"></circle>
+   <g fill="url(#cytotp)">
+     <circle cx="12" cy="24" r="2.2"></circle>
+     <circle cx="17" cy="24" r="2.2"></circle>
+     <circle cx="22" cy="24" r="2.2"></circle>
+     <circle cx="28" cy="24" r="2.2"></circle>
+     <circle cx="33" cy="24" r="2.2"></circle>
+     <circle cx="38" cy="24" r="2.2" opacity=".35"></circle>
+   </g>
+ </g></symbol>
+<symbol id="tool-extensions" viewBox="0 0 48 48"><defs>
+<linearGradient id="gnextensions" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="cyextensions" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="glossextensions" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shextensions" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shextensions)">
+   <path d="M16 18h5a4 4 0 1 1 8 0h5a2.5 2.5 0 0 1 2.5 2.5v4.5a4 4 0 1 1 0 8v4.5a2.5 2.5 0 0 1-2.5 2.5h-18a2.5 2.5 0 0 1-2.5-2.5v-17a2.5 2.5 0 0 1 2.5-2.5z" fill="url(#gnextensions)"></path>
+   <rect x="16" y="21" width="18" height="7" rx="3.5" fill="url(#glossextensions)" opacity=".45"></rect>
+   <circle cx="19.5" cy="34" r="2.1" fill="url(#cyextensions)"></circle>
+   <circle cx="25.5" cy="34" r="2.1" fill="url(#cyextensions)" opacity=".7"></circle>
+   <circle cx="31.5" cy="34" r="2.1" fill="url(#cyextensions)" opacity=".4"></circle>
+ </g></symbol>
+<symbol id="tool-comms" viewBox="0 0 48 48"><defs>
+<linearGradient id="gncomms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="pucomms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="glosscomms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shcomms" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shcomms)">
+   <path d="M21 7h16a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-2.4l1.5 5.2-6.8-5.2H21a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4Z" fill="url(#pucomms)"></path>
+   <path d="M21 7h16a4 4 0 0 1 4 4v4H17v-4a4 4 0 0 1 4-4Z" fill="url(#glosscomms)" opacity=".45"></path>
+   <rect x="22" y="13" width="14" height="2.6" rx="1.3" fill="#2b1d5e" opacity=".75"></rect>
+   <rect x="22" y="17.6" width="9" height="2.6" rx="1.3" fill="#2b1d5e" opacity=".55"></rect>
+   <path d="M11 19h16a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4H15l-6.8 5.4 1.7-5.4H11a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4Z" fill="url(#gncomms)"></path>
+   <path d="M11 19h16a4 4 0 0 1 4 4v4H7v-4a4 4 0 0 1 4-4Z" fill="url(#glosscomms)" opacity=".4"></path>
+   <circle cx="14" cy="27.5" r="2" fill="#0d3a22"></circle>
+   <circle cx="19.5" cy="27.5" r="2" fill="#0d3a22"></circle>
+   <circle cx="25" cy="27.5" r="2" fill="#0d3a22"></circle>
+ </g></symbol>
+<symbol id="tool-exif" viewBox="0 0 48 48"><defs>
+<linearGradient id="frexif" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="mtexif" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="pnexif" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<filter id="shexif" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.1" flood-color="#000" flood-opacity="0.3"></feDropShadow></filter>
+</defs>
+<g filter="url(#shexif)">
+  <rect x="5" y="9" width="29" height="25" rx="4" fill="#12121a" stroke="url(#frexif)" stroke-width="2.4"></rect>
+  <circle cx="13.5" cy="17" r="2.6" fill="#FCD661"></circle>
+  <path d="M7.5 29.5 L16 21 L21 26 L26.5 20.5 L32.5 26.5 V29.5 A2.6 2.6 0 0 1 29.9 32.1 H10.1 A2.6 2.6 0 0 1 7.5 29.5 Z" fill="url(#mtexif)" opacity=".92"></path>
+  <path d="M36 17.5 c-4.2 0-7.2 3.1-7.2 7.1 0 5 5.8 10.8 7.2 12.1 1.4-1.3 7.2-7.1 7.2-12.1 0-4-3-7.1-7.2-7.1Z" fill="url(#pnexif)"></path>
+  <circle cx="36" cy="24.8" r="2.7" fill="#12121a"></circle>
+  <path d="M28.2 35.8 L43.8 20.2" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round"></path>
+</g></symbol>
+<symbol id="tool-bubble-level" viewBox="0 0 48 48"><defs>
+<linearGradient id="ambl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="amEbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="gnbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="cybl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="glossbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shbl" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shbl)">
+   <rect x="3" y="14.5" width="42" height="19" rx="5.5" fill="url(#ambl)"></rect>
+   <rect x="3" y="14.5" width="42" height="10" rx="5" fill="url(#glossbl)" opacity=".45"></rect>
+   <rect x="5.6" y="17.1" width="36.8" height="13.8" rx="4" fill="none" stroke="url(#amEbl)" stroke-opacity=".35" stroke-width="1"></rect>
+   <circle cx="9" cy="24" r="2.1" fill="url(#amEbl)" opacity=".5"></circle>
+   <circle cx="39" cy="24" r="2.1" fill="url(#amEbl)" opacity=".5"></circle>
+   <rect x="13" y="18.6" width="22" height="10.8" rx="5.4" fill="#0d2b33"></rect>
+   <rect x="13" y="18.6" width="22" height="10.8" rx="5.4" fill="url(#cybl)" opacity=".18"></rect>
+   <path d="M20 20.4 V27.6" stroke="#fff" stroke-opacity=".4" stroke-width="1.1" stroke-linecap="round"></path>
+   <path d="M28 20.4 V27.6" stroke="#fff" stroke-opacity=".4" stroke-width="1.1" stroke-linecap="round"></path>
+   <circle cx="25.4" cy="24" r="3.7" fill="url(#gnbl)"></circle>
+   <ellipse cx="24.1" cy="22.6" rx="1.6" ry="1.05" transform="rotate(-38 24.1 22.6)" fill="#fff" opacity=".55"></ellipse>
+ </g></symbol>
+<symbol id="tool-decibel-meter" viewBox="0 0 48 48"><defs>
+<linearGradient id="gndbm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#34C46A"></stop><stop offset="1" stop-color="#86EFAC"></stop></linearGradient>
+<linearGradient id="amdbm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F7B015"></stop><stop offset="1" stop-color="#FCD661"></stop></linearGradient>
+<linearGradient id="rddbm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#DC3F3F"></stop><stop offset="1" stop-color="#FCA5A5"></stop></linearGradient>
+<linearGradient id="cydbm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="glossdbm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="dkdbm" cx="34%" cy="24%" r="86%"><stop offset="0" stop-color="#332F45"></stop><stop offset="1" stop-color="#14131D"></stop></radialGradient>
+<filter id="shdbm" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.3" stdDeviation="1.2" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shdbm)">
+  <rect x="5" y="6" width="38" height="36" rx="9" fill="url(#dkdbm)"></rect>
+  <path d="M14 6h20a9 9 0 0 1 9 9v3.5a9 9 0 0 0-9-9H14a9 9 0 0 0-9 9V15a9 9 0 0 1 9-9Z" fill="url(#glossdbm)" opacity=".5"></path>
+  <rect x="9.5" y="27" width="5.6" height="10" rx="2.8" fill="url(#gndbm)"></rect>
+  <rect x="17.3" y="21" width="5.6" height="16" rx="2.8" fill="url(#gndbm)"></rect>
+  <rect x="25.1" y="16" width="5.6" height="21" rx="2.8" fill="url(#amdbm)"></rect>
+  <rect x="32.9" y="11" width="5.6" height="26" rx="2.8" fill="url(#rddbm)"></rect>
+  <rect x="32" y="9.4" width="7.4" height="2.2" rx="1.1" fill="#F8FAFC"></rect>
+  <rect x="9.5" y="38.4" width="29" height="1.8" rx=".9" fill="url(#cydbm)" opacity=".6"></rect>
+</g></symbol>
+<symbol id="tool-compass" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pkcmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="gncmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="glosscmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="dialcmp" cx="36%" cy="30%" r="82%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcmp" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shcmp)">
+   <circle cx="24" cy="24" r="19" fill="url(#gncmp)"></circle>
+   <circle cx="24" cy="24" r="19" fill="url(#glosscmp)" opacity=".5"></circle>
+   <circle cx="24" cy="24" r="15.6" fill="url(#dialcmp)"></circle>
+   <g stroke="#fff" stroke-linecap="round" opacity=".45">
+     <path d="M24 9 V10.8" stroke-width="1.8"></path>
+     <path d="M39 24 H37.2" stroke-width="1.2"></path>
+     <path d="M24 39 V37.2" stroke-width="1.2"></path>
+     <path d="M9 24 H10.8" stroke-width="1.2"></path>
+   </g>
+   <path d="M24 11.6 L28.6 24 L24 24 Z" fill="url(#pkcmp)"></path>
+   <path d="M24 11.6 L19.4 24 L24 24 Z" fill="#F25FA8" opacity=".7"></path>
+   <path d="M24 36.4 L19.4 24 L24 24 Z" fill="url(#cycmp)"></path>
+   <path d="M24 36.4 L28.6 24 L24 24 Z" fill="#1FBFDB" opacity=".7"></path>
+   <circle cx="24" cy="24" r="2.4" fill="#fff" opacity=".92"></circle>
+   <circle cx="24" cy="24" r="1" fill="#171522" opacity=".5"></circle>
+   <ellipse cx="18.8" cy="15.6" rx="4.4" ry="2.6" transform="rotate(-38 18.8 15.6)" fill="#fff" opacity=".26"></ellipse>
+ </g></symbol>
+<symbol id="tool-speedometer" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="arcspdo" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#34C46A"></stop><stop offset="0.5" stop-color="#6EF3C5"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="glossspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbspdo" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkspdo" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shspdo" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softspdo" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shspdo)">
+   <circle cx="24" cy="24" r="19" fill="url(#puspdo)"></circle>
+   <circle cx="24" cy="24" r="19" fill="url(#glossspdo)" opacity=".45"></circle>
+   <circle cx="24" cy="24" r="15.2" fill="url(#dkspdo)"></circle>
+   <path d="M12.74 30.5A13 13 0 1 1 35.26 30.5" fill="none" stroke="url(#arcspdo)" stroke-width="3.4" stroke-linecap="round"></path>
+   <circle cx="15.77" cy="19.25" r="1" fill="#fff" opacity=".45"></circle>
+   <circle cx="24" cy="14.5" r="1" fill="#fff" opacity=".45"></circle>
+   <circle cx="32.23" cy="19.25" r="1" fill="#fff" opacity=".45"></circle>
+   <path d="M24 24L28.9 15.5" fill="none" stroke="url(#amspdo)" stroke-width="2.8" stroke-linecap="round"></path>
+   <circle cx="24" cy="24" r="3.2" fill="url(#cyspdo)"></circle>
+   <circle cx="24" cy="24" r="1.3" fill="#0d2b33" opacity=".45"></circle>
+   <ellipse cx="18.4" cy="11.4" rx="6.2" ry="3.1" transform="rotate(-26 18.4 11.4)" fill="#fff" opacity=".36"></ellipse>
+ </g></symbol>
+<symbol id="tool-ruler" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="amErlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="gnrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="glossrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shrlr" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shrlr)">
+   <rect x="3" y="11" width="42" height="19" rx="4.5" fill="url(#amrlr)"></rect>
+   <rect x="4.4" y="12.4" width="39.2" height="5.6" rx="2.4" fill="url(#glossrlr)" opacity=".6"></rect>
+   <g fill="url(#amErlr)">
+     <rect x="8" y="11" width="1.8" height="9" rx=".9"></rect>
+     <rect x="13" y="11" width="1.8" height="6" rx=".9"></rect>
+     <rect x="18" y="11" width="1.8" height="9" rx=".9"></rect>
+     <rect x="23" y="11" width="1.8" height="6" rx=".9"></rect>
+     <rect x="28" y="11" width="1.8" height="9" rx=".9"></rect>
+     <rect x="33" y="11" width="1.8" height="6" rx=".9"></rect>
+     <rect x="38" y="11" width="1.8" height="9" rx=".9"></rect>
+   </g>
+   <rect x="3" y="34" width="42" height="3" rx="1.5" fill="url(#cyrlr)" opacity=".55"></rect>
+   <circle cx="11" cy="35.5" r="3.2" fill="url(#gnrlr)"></circle>
+   <circle cx="33" cy="35.5" r="3.2" fill="url(#gnrlr)"></circle>
+   <ellipse cx="10" cy="34.4" rx="1.3" ry=".9" transform="rotate(-30 10 34.4)" fill="#fff" opacity=".55"></ellipse>
+   <ellipse cx="32" cy="34.4" rx="1.3" ry=".9" transform="rotate(-30 32 34.4)" fill="#fff" opacity=".55"></ellipse>
+ </g></symbol>
+<symbol id="tool-phosphor" viewBox="0 0 48 48"><defs><linearGradient id="mnphos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6EF3C5"></stop><stop offset="1" stop-color="#2BD59E"></stop></linearGradient><linearGradient id="amphos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient><linearGradient id="grphos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3340"></stop><stop offset="1" stop-color="#141A23"></stop></linearGradient></defs><rect x="4" y="6" width="40" height="31" rx="4.5" fill="url(#grphos)" stroke="url(#mnphos)" stroke-width="2"></rect><path d="M7 12.5h34M7 18.5h34M7 24.5h34M7 30.5h34" stroke="#6EF3C5" stroke-opacity="0.09" stroke-width="1.4"></path><circle cx="24" cy="21.5" r="6.2" fill="none" stroke="url(#mnphos)" stroke-width="2"></circle><circle cx="24" cy="21.5" r="2.3" fill="url(#amphos)"></circle><path d="M24 10.5v4M24 28.5v4M12.5 21.5h4M31.5 21.5h4" stroke="url(#mnphos)" stroke-width="2.2" stroke-linecap="round"></path><path d="M19 41.5h10" stroke="url(#mnphos)" stroke-width="2.2" stroke-linecap="round"></path><path d="M22 37h4v2.5h-4z" fill="#2A3340"></path></symbol>
+<symbol id="tool-console" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyconsole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="mtconsole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FF7DC"></stop><stop offset="1" stop-color="#4ADCAE"></stop></linearGradient>
+<filter id="shconsole" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shconsole)">
+   <rect x="12" y="5" width="24" height="38" rx="5.5" fill="url(#cyconsole)"></rect>
+   <path d="M17.5 5h13a5.5 5.5 0 0 1 5.5 5.5V13a3 3 0 0 0-3-3H15a3 3 0 0 0-3 3v-2.5A5.5 5.5 0 0 1 17.5 5Z" fill="#fff" opacity=".25"></path>
+   <path d="M17 15.5l3.4 3-3.4 3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+   <path d="M23.5 21.5h7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path>
+   <circle cx="27.5" cy="32.5" r="5.2" fill="none" stroke="url(#mtconsole)" stroke-width="2.6"></circle>
+   <circle cx="27.5" cy="32.5" r="1.9" fill="#fff"></circle>
+ </g></symbol>
+<symbol id="tool-model-mirror" viewBox="0 0 48 48"><defs>
+<linearGradient id="gnmirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="cymirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="ammirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<filter id="shmirror" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shmirror)">
+   <path d="M24 15L13.5 31M24 15l10.5 16M13.5 31h21" stroke="url(#gnmirror)" stroke-width="3" stroke-linecap="round"></path>
+   <circle cx="24" cy="13.5" r="7" fill="url(#gnmirror)"></circle>
+   <path d="M24 6.5a7 7 0 0 1 7 7h-3a4 4 0 0 0-4-4Z" fill="#fff" opacity=".3"></path>
+   <path d="M21.5 13.8l2.5-2.6 2.5 2.6M24 11.6v4.6" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+   <circle cx="12.5" cy="33.5" r="5.8" fill="url(#cymirror)"></circle>
+   <circle cx="35.5" cy="33.5" r="5.8" fill="url(#ammirror)"></circle>
+   <path d="M10 32.2l2 2 2.8-2.9M33 32.2l2 2 2.8-2.9" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+ </g></symbol>
+</svg>
+
+<div class="tools-listing">
+    <div class="tools-listing__header">
+        <span><i18n-t data-k="tools_page.header.category">カテゴリ</i18n-t></span>
+        <span><i18n-t data-k="tools_page.header.name">名前</i18n-t></span>
+        <span><i18n-t data-k="tools_page.header.summary">概要</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 0">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-search"></use></svg><a href="/ja/tools/search/"><i18n-t data-k="tools.search.title">検索</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.search.lede">ツールとフィード投稿を検索。キーワードでも自然言語でも入力可能。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 1" data-requires="motion">
+        <span class="tools-listing__category"><i18n-t data-k="category.Health">健康</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-step-counter"></use></svg><a href="/ja/tools/step-counter/"><i18n-t data-k="tools.step-counter.title">歩数カウンター</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.step-counter.lede">ブラウザ内で散歩中の歩数をカウント。スマホのモーションセンサーを使用 — アップロードは一切なし。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 2">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-qr-scanner"></use></svg><a href="/ja/tools/qr-scanner/"><i18n-t data-k="tools.qr-scanner.title">QR・バーコード スキャナー＆ジェネレーター</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.qr-scanner.lede">QRコードやバーコードをスキャンしたり、リンクやテキストからQRコードを生成したり——すべて端末内で処理し、何もアップロードしません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 3">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-decision-wheel"></use></svg><a href="/ja/tools/decision-wheel/"><i18n-t data-k="tools.decision-wheel.title">決定の輪</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.decision-wheel.lede">決められない？ホイールを回して運命に任せましょう。オフラインでも動作。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 4">
+        <span class="tools-listing__category"><i18n-t data-k="category.Timer">タイマー</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-countdown-timer"></use></svg><a href="/ja/tools/countdown-timer/"><i18n-t data-k="tools.countdown-timer.title">カウントダウンタイマー</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.countdown-timer.lede">時間を設定するか目標時刻を選択。最大4つの独立したタイマーとアラーム音。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 5">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-coin-flip"></use></svg><a href="/ja/tools/coin-flip/"><i18n-t data-k="tools.coin-flip.title">コインフリップ</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.coin-flip.lede">表か裏 — 即座にコインを投げる。タイブレーカーには best-of-N シリーズ。オフラインでも動作。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 6">
+        <span class="tools-listing__category"><i18n-t data-k="category.Productivity">生産性</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-quick-notes"></use></svg><a href="/ja/tools/quick-notes/"><i18n-t data-k="tools.quick-notes.title">クイックノート</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.quick-notes.lede">ブラウザに住むミニマルなスクラッチパッド。複数のノートを作成、キー入力ごとに自動保存。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 7">
+        <span class="tools-listing__category"><i18n-t data-k="category.Developer">開発</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-base64-codec"></use></svg><a href="/ja/tools/base64-codec/"><i18n-t data-k="tools.base64-codec.title">Base64コーデック</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.base64-codec.lede">テキストやファイルをBase64にエンコード・デコード。画像、ドキュメント、あらゆるファイルタイプに対応。すべてブラウザ内でローカル実行。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 8">
+        <span class="tools-listing__category"><i18n-t data-k="category.Security">セキュリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-totp"></use></svg><a href="/ja/tools/totp/"><i18n-t data-k="tools.totp.title">TOTP</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.totp.lede">ブラウザ内に保存される二要素認証コード。保存時に暗号化。サーバには何もありません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 9">
+        <span class="tools-listing__category"><i18n-t data-k="category.Security">セキュリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-exif"></use></svg><a href="/ja/tools/exif/"><i18n-t data-k="tools.exif.title">EXIFインスペクター</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.exif.lede">写真にひそかに含まれる情報 — カメラ情報、日時、GPS位置 — を表示し、すべて削除したクリーンなコピーを保存。アップロードは一切ありません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 10">
+        <span class="tools-listing__category"><i18n-t data-k="category.Design">デザイン</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-color-picker"></use></svg><a href="/ja/tools/color-picker/"><i18n-t data-k="tools.color-picker.title">カラーピッカー</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.color-picker.lede">好きな色を選んで HEX / RGB / HSL の値を表示し、調和の取れたパレットを生成。オフラインでも動作。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 11">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-annotate-image"></use></svg><a href="/ja/tools/annotate-image/"><i18n-t data-k="tools.annotate-image.title">画像を注釈</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.annotate-image.lede">画像をアップロードすると、AIによる説明・代替テキスト・文字起こし・タグを即座に取得 — テスト済みのワンタップ・プロンプト付き。ブラウザ内でローカル実行、アップロードは一切なし。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 12">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-ai-chat"></use></svg><a href="/ja/tools/ai-chat/"><i18n-t data-k="tools.ai-chat.title">AIチャット</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.ai-chat.lede">Qwen3.5がブラウザ内でローカル実行。サーバーなし、APIキー不要。画像入力対応。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 13">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-console"></use></svg><a href="/ja/tools/console/"><i18n-t data-k="tools.console.title">コンソール</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.console.lede">共有のスマホ画面でデバイス上のモデルがMentriaのアプリを操作するのを見ながらチャット。テストユーザーとして探索させ、見つけたことを報告させることもできます。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 14">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-model-mirror"></use></svg><a href="/ja/tools/model-mirror/"><i18n-t data-k="tools.model-mirror.title">モデルミラー</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.model-mirror.lede">Mentria のオンデバイスモデルの P2P 配信に協力できます。このタブを開いたままにすると、ブラウザがミラーになります。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 15">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-quote"></use></svg><a href="/ja/tools/quote/"><i18n-t data-k="tools.quote.title">モチベーション名言</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.quote.lede">AIが生成するオリジナルの名言、ブラウザ内でローカル実行。データはデバイスから出ません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="ai" style="--i: 16">
+        <span class="tools-listing__category"><i18n-t data-k="category.AI">AI</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-radio"></use></svg><a href="/ja/tools/radio/"><i18n-t data-k="tools.radio.title">無限ラジオ</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.radio.lede">AI生成の壮大なシネマティック音楽、無限ストリーミング。あなたの好みをローカルで学習 — データはデバイスから出ません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 17">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-invoice"></use></svg><a href="/ja/tools/invoice/"><i18n-t data-k="tools.invoice.title">請求書ジェネレーター</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.invoice.lede">ブラウザでクリーンな1ページ請求書を作成。入力中に自動保存。A4印刷またはJSONエクスポート。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 18">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-markdown-pdf"></use></svg><a href="/ja/tools/markdown-pdf/"><i18n-t data-k="tools.markdown-pdf.title">Markdown → PDF</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.markdown-pdf.lede">Markdownを書いて、ライブプレビューを見て、クリーンでプロフェッショナルなPDFをダウンロード。ブラウザに自動保存。データはデバイスから出ません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 19">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-tetris"></use></svg><a href="/ja/tools/tetris/"><i18n-t data-k="tools.tetris.title">テトリス</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.tetris.lede">テトロミノを積み上げる。ラインを消す。10ライン毎にスピードアップ。シアン・パープル・ピンク・アンバー・グリーンのピース — Mentriaパレット。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 20">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-breakout"></use></svg><a href="/ja/tools/breakout/"><i18n-t data-k="tools.breakout.title">Breakout</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.breakout.lede">ブロック崩しとパドルゲームの融合。落ちてくるパワーアップをキャッチし、壁を崩し、ますます速く厳しくなるレベルを生き抜こう。ローカル動作 — データはデバイスから出ません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 21">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-flappy"></use></svg><a href="/ja/tools/flappy/"><i18n-t data-k="tools.flappy.title">Flappy</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.flappy.lede">ターミナルプロンプトの山を縫って飛ぶ紙飛行機。タップ・クリック・SPACEキーで羽ばたき。プロンプトに墜落しないように。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 22">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-minesweeper"></use></svg><a href="/ja/tools/minesweeper/"><i18n-t data-k="tools.minesweeper.title">マインスイーパー</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.minesweeper.lede">ターミナル風の伝統的な論理パズル。クリックで掘る、右クリック(またはFモード)で旗を立てる。数字は隣接する地雷を示す。ピンクは押さないで。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 23">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-sudoku"></use></svg><a href="/ja/tools/sudoku/"><i18n-t data-k="tools.sudoku.title">数独</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.sudoku.lede">ターミナル装いの論理パズル。唯一解ジェネレーター、4段階の難易度、鉛筆メモ。すべて端末内で動作 — データは外に出ません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 24">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-ludo"></use></svg><a href="/ja/tools/ludo/"><i18n-t data-k="tools.ludo.title">ルド</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.ludo.lede">4つのコマを全部ゴールさせたら勝ち。6を出して出発、接触で捕獲、安全な星マスへ逃げ込もう。ボット相手でも、交代プレイでも。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 25">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-chess"></use></svg><a href="/ja/tools/chess/"><i18n-t data-k="tools.chess.title">チェス</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.chess.lede">ローカルエンジン、交代プレイ、オンライン対戦 — サーバー不要。キャスリング・アンパッサン・昇格まで完全ルール。4段階のアルファベータエンジン、評価バー、ヒント。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="games" style="--i: 26">
+        <span class="tools-listing__category"><i18n-t data-k="category.Game">ゲーム</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-phosphor"></use></svg><a href="/ja/tools/phosphor/"><i18n-t data-k="tools.phosphor.title">PHOSPHOR</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.phosphor.lede">ブラウザで遊べる戦闘タイムトライアル。夕暮れの5コースをスプリント、スライディング、乗り越えで駆け抜け、フルオートのカービンで撃つ。メダル、ゴースト対戦、オフライン対応。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 27">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-extensions"></use></svg><a href="/ja/tools/extensions/"><i18n-t data-k="tools.extensions.title">拡張機能</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.extensions.lede">このデバイスにのみ存在するプライベートな単一ファイル拡張機能をインストール。ランチャーとターミナルに表示され、公開サイトには絶対に載りません。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 28">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-files"></use></svg><a href="/ja/tools/files/"><i18n-t data-k="tools.files.title">ファイル</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.files.lede">Mentria のツールがこの端末に保存したデータを閲覧・エクスポート・削除できます。すべて端末内にとどまります。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 29">
+        <span class="tools-listing__category"><i18n-t data-k="category.Social">ソーシャル</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-comms"></use></svg><a href="/comms/"><i18n-t data-k="tools.comms.title">Comms</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.comms.lede">ピアツーピアのチャット、音声・ビデオ通話、ファイル送信。エンドツーエンド暗号化、アカウント不要、中間サーバーなし。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 30" data-requires="motion">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-bubble-level"></use></svg><a href="/ja/tools/bubble-level/"><i18n-t data-k="tools.bubble-level.title">水平器</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.bubble-level.lede">スマホがそのまま水平器に。アプリ不要のブラウザ版バブルレベルで、0.1°まで表示、オフラインでも使えます。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 31">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-decibel-meter"></use></svg><a href="/ja/tools/decibel-meter/"><i18n-t data-k="tools.decibel-meter.title">騒音計</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.decibel-meter.lede">ブラウザで使える騒音計。アプリなしで、スマホやパソコンのマイクを使って音の大きさをデシベル（dB）で測定できます。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 32" data-requires="motion">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-compass"></use></svg><a href="/ja/tools/compass/"><i18n-t data-k="tools.compass.title">コンパス</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.compass.lede">アプリ不要のコンパス。ブラウザで開くだけで、スマートフォンのセンサーから磁方位をそのまま読み取れます。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 33">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-speedometer"></use></svg><a href="/ja/tools/speedometer/"><i18n-t data-k="tools.speedometer.title">GPS スピードメーター</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.speedometer.lede">アプリ不要のブラウザ版 GPS スピードメーター。km/h・mph・ノットでリアルタイムの速度と走行距離を、すべて端末内で計算して表示します。</i18n-t></span>
+    </div>
+    
+    
+    <div class="tools-listing__row" data-shelf="tools" style="--i: 34">
+        <span class="tools-listing__category"><i18n-t data-k="category.Utility">ユーティリティ</i18n-t></span>
+        <span class="tools-listing__name"><svg class="tools-listing__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#tool-ruler"></use></svg><a href="/ja/tools/ruler/"><i18n-t data-k="tools.ruler.title">オンライン定規</i18n-t></a></span>
+        <span class="tools-listing__summary"><i18n-t data-k="tools.ruler.lede">画面上で実寸のまま測れるオンライン定規。cm・mm・インチに対応し、銀行カードで校正すればミリ単位まで正確になります。</i18n-t></span>
+    </div>
+    
+</div>
+
+
+
+
+<script>
+(function () {
+  var filters = document.getElementById('tools-filters');
+  if (!filters) return;
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.tools-listing__row'));
+  var valid = { all: 1, tools: 1, games: 1, ai: 1 };
+  function apply(shelf) {
+    if (!valid[shelf]) shelf = 'all';
+    rows.forEach(function (r) {
+      r.hidden = !(shelf === 'all' || r.getAttribute('data-shelf') === shelf);
+    });
+    Array.prototype.forEach.call(filters.querySelectorAll('[data-shelf]'), function (b) {
+      var on = b.getAttribute('data-shelf') === shelf;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    var url = new URL(location.href);
+    if (shelf !== 'all') url.searchParams.set('shelf', shelf); else url.searchParams.delete('shelf');
+    history.replaceState(null, '', url);
+  }
+  filters.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-shelf]');
+    if (b) apply(b.getAttribute('data-shelf'));
+  });
+  apply(new URLSearchParams(location.search).get('shelf') || 'all');
+})();
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="アプリナビゲーション" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/ja/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">ホーム</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/ja/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">フィード</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">コムズ</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="コマンドパレットを開く（⌘K）" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">検索</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">ホーム画面に追加 — オフラインで動作します。</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">インストール</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="閉じる" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="閉じる" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Mentriaをインストール</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "iPhoneにMentriaをインストール",
+    macosTitle:  "MacにMentriaをインストール",
+    chromeTitle: "Mentriaをインストール",
+    iosStep1:    "画面下部の<strong>共有</strong>ボタンをタップ",
+    iosStep2:    "<strong>ホーム画面に追加</strong>を選択",
+    iosStep3:    "右上の<strong>追加</strong>をタップ。",
+    macosStep1:  "このページを<strong>Safari 17+</strong>で開きます。",
+    macosStep2:  "メニューバーから<strong>ファイル → Dockに追加…</strong>を選択。",
+    macosStep3:  "<strong>追加</strong>をクリック。",
+    chromeStep1: "ブラウザのアドレスバーにある<strong>インストール</strong>アイコンをクリック。",
+    chromeStep2: "または、メニュー(⋮)を開いて<strong>Mentriaをインストール</strong>を選択。",
+    note:        "インストール後、Mentriaはオフラインで動作し、ローカルデータはお使いのデバイスに保存されます。"
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">キャンセル</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "確認";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "保存できませんでした。ブラウザのストレージがいっぱいです。空き容量を増やすと変更を保持できます。";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("大きなAIモデル（モデルにより490 MB以上）をダウンロードします。低速またはデータセーバー接続のようです。続行しますか？");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "共有";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "このツールについて");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">機能テスト用ビルド（WebMCP 応募スナップショット）。テストのため凍結中です。通常のご利用は <a href="https://mentria.ai/">mentria.ai</a> をお使いください。</div></body>
+</html>

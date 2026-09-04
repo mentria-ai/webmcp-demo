@@ -1,0 +1,420 @@
+importScripts('/assets/js/mentria-push-db.js?v=ec54a8f-09040920');
+const CACHE_NAME = 'mentria-cache-ec54a8f-09040920';
+const MODELS_CACHE = 'mentria-models';
+const MODELS_MARKER = 'mentria-models-684af011f413';
+const DECKS_CACHE = 'mentria-decks-ec54a8f-09040920';
+const ART_CACHE = 'mentria-deck-art';
+const DECKS_LIMIT = 40;
+const ART_LIMIT = 200;
+const FEED_PAGE = /^\/((es|fr|ja|pt-br)\/)?feed\//;
+const ASSETS = [
+  '/',
+  '/assets/css/style.css',
+  '/assets/css/mentria-ui.css',
+  '/assets/css/mentria-palette.css',
+  '/assets/css/terminal.css',
+  '/assets/js/mentria-cli.js',
+  '/assets/js/mentria-i18n.js',
+  '/assets/js/mentria-local-ask.js',
+  '/assets/js/mentria-webmcp.js',
+  '/assets/js/qrcode.js',
+  '/assets/js/tool-launcher.js',
+  '/assets/img/tool-icons.svg',
+  '/assets/i18n/en.json',
+  '/assets/i18n/es.json',
+  '/assets/i18n/fr.json',
+  '/assets/i18n/ja.json',
+  '/assets/i18n/pt-BR.json',
+  '/manifest.json',
+  '/feed/',
+  '/assets/css/feed-deck.css',
+  '/assets/css/source-deck.css',
+  '/assets/js/feed-deck.js',
+  '/tools/',
+  '/about/',
+  '/tools/decision-wheel/',
+  '/tools/countdown-timer/',
+  '/tools/coin-flip/',
+  '/tools/quick-notes/',
+  '/tools/base64-codec/',
+  '/tools/color-picker/',
+  '/tools/ai-chat/',
+  '/tools/console/',
+  '/tools/model-mirror/',
+  '/tools/annotate-image/',
+  '/tools/quote/',
+  '/offline/',
+  '/tools/radio/',
+  '/assets/radio/radio.js',
+  '/assets/radio/player.js',
+  '/assets/radio/catalog-loader.js',
+  '/assets/radio/selector.js',
+  '/assets/radio/preferences.js',
+  '/tools/invoice/',
+  '/tools/markdown-pdf/',
+  '/tools/tetris/',
+  '/tools/breakout/',
+  '/tools/flappy/',
+  '/tools/minesweeper/',
+  '/tools/sudoku/',
+  '/tools/ludo/',
+  '/tools/chess/',
+  '/assets/js/chess-engine.js',
+  '/assets/js/chess-app.js',
+  '/tools/search/',
+  '/tools/step-counter/',
+  '/tools/bubble-level/',
+  '/tools/decibel-meter/',
+  '/tools/compass/',
+  '/tools/speedometer/',
+  '/tools/ruler/',
+  '/tools/phosphor/',
+  '/assets/phosphor/game.js',
+  '/assets/phosphor/renderer.js',
+  '/assets/phosphor/sim.js',
+  '/assets/phosphor/input.js',
+  '/assets/phosphor/audio.js',
+  '/assets/phosphor/ghost.js',
+  '/assets/phosphor/courses.js',
+  '/assets/phosphor/courses/c01.js',
+  '/assets/phosphor/courses/c02.js',
+  '/assets/phosphor/courses/c03.js',
+  '/assets/phosphor/courses/c04.js',
+  '/assets/phosphor/courses/c05.js',
+  '/tools/qr-scanner/',
+  '/assets/js/jsqr.js',
+  '/tools/totp/',
+  '/tools/exif/',
+  '/tools/files/',
+  '/search-index.json',
+  '/assets/img/badge.svg',
+  '/assets/img/icon-192x192.png',
+  '/assets/img/favicon-96x96.png',
+  '/assets/img/shortcuts/ai-chat.png',
+  '/assets/img/shortcuts/qr-scanner.png',
+  '/assets/img/shortcuts/quick-notes.png',
+  '/assets/videos/mentria-install.mp4',
+  '/assets/videos/mentria-install.webm',
+  '/assets/videos/mentria-install-poster.jpg',
+  '/assets/fonts/inter-latin.woff2',
+  '/assets/fonts/inter-latin-ext.woff2',
+  '/assets/fonts/jbm-latin.woff2',
+  '/assets/fonts/jbm-latin-ext.woff2',
+  '/assets/fonts/mentrialogofont.woff2',
+  '/assets/js/marked.esm.js',
+  '/assets/js/markdown.js',
+  '/assets/js/mentria-store.js',
+  '/assets/js/mentria-caps.js',
+  '/assets/js/mentria-ui.js',
+  '/assets/js/mentria-palette.js',
+  '/assets/js/mentria-widgets.js',
+  '/assets/js/mentria-tiers.js',
+  '/assets/js/mentria-model.js',
+  '/assets/js/mentria-extensions.js',
+  '/assets/js/mentria-bus.js',
+  '/assets/js/mentria-ext-install-ui.js',
+  '/assets/js/mentria-ext-launch.js',
+  '/tools/extensions/',
+  '/tools/extensions/sdk/',
+  '/tools/extensions/run/',
+  '/assets/extensions/unit-converter.html',
+  '/assets/extensions/pomodoro-timer.html',
+  '/assets/extensions/dice-roller.html',
+  '/assets/extensions/image-gen.html',
+  '/assets/extensions/story-studio.html',
+  '/assets/extensions/hello-world.html',
+  '/assets/js/mentria-backup.js',
+  '/assets/js/mentria-sync.js',
+  '/assets/js/mentria-identity.js',
+  '/assets/js/mentria-comms-id.js',
+  '/assets/js/mentria-gamepad.js',
+  '/assets/js/mentria-push-db.js',
+  '/assets/js/mentria-push.js',
+  '/assets/js/mentria-comms-nav.js',
+  '/assets/js/mentria-input-help.js',
+  '/assets/img/shortcuts/comms.png',
+  '/comms/',
+  '/assets/vendor/trystero-nostr.js'
+];
+
+self.addEventListener('install', event => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    const hadOldModels = keys.some(k => k.startsWith('mentria-models-') && k !== MODELS_MARKER);
+    await Promise.all(keys.map(key => {
+      if (key === CACHE_NAME || key === MODELS_CACHE || key === MODELS_MARKER || key === DECKS_CACHE || key === ART_CACHE) return;
+      if (key.startsWith('mentria-cache-') || key.startsWith('mentria-models-') || key.startsWith('mentria-decks-')) return caches.delete(key);
+      if (key.startsWith('mentria-locale-') && !key.endsWith('-ec54a8f-09040920')) return caches.delete(key);
+    }));
+    if (!keys.includes(MODELS_MARKER)) {
+      if (hadOldModels) {
+        const mc = await caches.open(MODELS_CACHE);
+        for (const req of await mc.keys()) {
+          try { if (new URL(req.url).pathname.startsWith('/assets/mentria/dist/')) await mc.delete(req); } catch (_) {}
+        }
+      }
+      await caches.open(MODELS_MARKER);
+    }
+    await self.clients.claim();
+  })());
+});
+
+const NOTIF_STRINGS = {
+  en:      { one: 'New message',  many: (n) => n + ' new messages',     ring: 'Someone is trying to reach you.' },
+  es:      { one: 'Nuevo mensaje', many: (n) => n + ' mensajes nuevos', ring: 'Alguien intenta comunicarse contigo.' },
+  fr:      { one: 'Nouveau message', many: (n) => n + ' nouveaux messages', ring: 'Quelqu\'un essaie de vous joindre.' },
+  ja:      { one: '新着メッセージ', many: (n) => '新着メッセージ ' + n + ' 件', ring: '誰かがあなたに連絡しようとしています。' },
+  'pt-BR': { one: 'Nova mensagem', many: (n) => n + ' novas mensagens', ring: 'Alguém está tentando falar com você.' }
+};
+
+async function notifStrings() {
+  let loc = 'en';
+  try {
+    const stored = await self.MentriaPushDB.kvGet('locale');
+    if (typeof stored === 'string' && NOTIF_STRINGS[stored]) loc = stored;
+  } catch (_) {}
+  return NOTIF_STRINGS[loc] || NOTIF_STRINGS.en;
+}
+
+self.addEventListener('push', event => {
+  event.waitUntil((async () => {
+    let data = {};
+    try { data = event.data ? event.data.json() : {}; } catch (_) {}
+    if (data.kind === 'comms-ring') {
+      const S = await notifStrings();
+      try { if (self.navigator && self.navigator.setAppBadge) self.navigator.setAppBadge(1); } catch (_) {}
+      await self.registration.showNotification('comms', {
+        body: S.ring,
+        tag: 'comms-ring',
+        icon: '/assets/img/icon-192x192.png',
+        badge: '/assets/img/badge.svg',
+        data: { url: '/comms/' },
+        renotify: true
+      });
+      return;
+    }
+    if (data.kind === 'comms-msg') {
+      let n = 1;
+      try { await self.MentriaPushDB.kvSet('last-push-at', Date.now()); } catch (_) {}
+      try {
+        const prev = await self.MentriaPushDB.kvGet('comms-msg-count');
+        n = (typeof prev === 'number' && prev >= 0 ? prev : 0) + 1;
+        await self.MentriaPushDB.kvSet('comms-msg-count', n);
+      } catch (_) {}
+      try { if (self.navigator && self.navigator.setAppBadge) self.navigator.setAppBadge(n); } catch (_) {}
+      try {
+        const cs = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        cs.forEach((c) => { try { c.postMessage({ type: 'comms-unread', n }); } catch (_) {} });
+      } catch (_) {}
+      const S = await notifStrings();
+      await self.registration.showNotification('comms', {
+        body: n > 1 ? S.many(n) : S.one,
+        tag: 'comms-msg',
+        icon: '/assets/img/icon-192x192.png',
+        badge: '/assets/img/badge.svg',
+        data: { url: '/comms/' },
+        renotify: true
+      });
+      return;
+    }
+    const scheduleId = data.scheduleId;
+    const fallback = data.fallbackTitle || 'Mentria';
+    let spec = null;
+    if (scheduleId && self.MentriaPushDB) {
+      try { spec = await self.MentriaPushDB.getPending(scheduleId); } catch (_) {}
+    }
+    if (spec) {
+      await self.registration.showNotification(spec.title, {
+        body: spec.body || '',
+        tag: spec.tag || scheduleId,
+        icon: spec.icon || '/assets/img/icon-192x192.png',
+        badge: '/assets/img/badge.svg',
+        data: { url: spec.url || '/' },
+        requireInteraction: true,
+        renotify: true,
+        actions: spec.actions || []
+      });
+      try { await self.MentriaPushDB.deletePending(scheduleId); } catch (_) {}
+    } else {
+      await self.registration.showNotification(fallback, {
+        body: 'You have a reminder.',
+        icon: '/assets/img/icon-192x192.png',
+        badge: '/assets/img/badge.svg',
+        data: { url: '/' }
+      });
+    }
+  })());
+});
+
+self.addEventListener('pushsubscriptionchange', event => {
+  event.waitUntil((async () => {
+    try {
+      const r = await fetch('https://relay.mentria.ai/push/vapid-public', { cache: 'no-store' });
+      const { publicKey } = await r.json();
+      const pad = '='.repeat((4 - publicKey.length % 4) % 4);
+      const b64 = (publicKey + pad).replace(/-/g, '+').replace(/_/g, '/');
+      const raw = atob(b64), key = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) key[i] = raw.charCodeAt(i);
+      await self.registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
+      const cs = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      cs.forEach((c) => { try { c.postMessage({ type: 'push-resubscribed' }); } catch (_) {} });
+    } catch (_) {}
+  })());
+});
+
+let wtCancelled = false;
+
+async function wtRelay(request) {
+  const { url, method, headers, destination } = request;
+  const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  const [response, port] = await new Promise(resolve => {
+    for (const client of clientList) {
+      const { port1, port2 } = new MessageChannel();
+      port1.onmessage = ({ data }) => resolve([data, port1]);
+      client.postMessage({
+        url, method,
+        headers: Object.fromEntries(headers.entries()),
+        scope: self.registration.scope,
+        destination, type: 'webtorrent'
+      }, [port2]);
+    }
+  });
+  let timer = null;
+  const done = () => { port.postMessage(false); clearTimeout(timer); port.onmessage = null; };
+  if (response.body !== 'STREAM') { done(); return new Response(response.body, response); }
+  return new Response(new ReadableStream({
+    pull: ctrl => new Promise(resolve => {
+      port.onmessage = ({ data }) => { if (data) ctrl.enqueue(data); else { done(); ctrl.close(); } resolve(); };
+      if (!wtCancelled) {
+        clearTimeout(timer);
+        if (destination !== 'document') timer = setTimeout(() => { done(); resolve(); }, 5000);
+      }
+      port.postMessage(true);
+    }),
+    cancel() { done(); }
+  }), response);
+}
+
+async function stashCapped(cacheName, key, response, limit) {
+  const cache = await caches.open(cacheName);
+  await cache.delete(key);
+  await cache.put(key, response);
+  const keys = await cache.keys();
+  if (keys.length > limit) await Promise.all(keys.slice(0, keys.length - limit).map(k => cache.delete(k)));
+}
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
+  const url = new URL(event.request.url);
+
+  if (url.origin === 'https://mentria-ai.github.io' && url.pathname === '/radio-catalog/catalog.json') {
+    event.respondWith((async () => {
+      const cache = await caches.open('mentria-radio');
+      const cached = await cache.match(event.request);
+      const network = fetch(event.request).then(resp => {
+        if (resp && resp.ok) cache.put(event.request, resp.clone());
+        return resp;
+      }).catch(() => cached || Response.error());
+      return cached || network;
+    })());
+    return;
+  }
+
+  if (url.origin === 'https://cdn.mentria.ai' && event.request.destination === 'image') {
+    event.respondWith((async () => {
+      const cache = await caches.open(ART_CACHE);
+      const cached = await cache.match(event.request.url, { ignoreVary: true });
+      const network = fetch(event.request.url, { mode: 'cors' }).then(resp => {
+        if (resp && resp.ok) stashCapped(ART_CACHE, event.request.url, resp.clone(), ART_LIMIT);
+        return resp;
+      }).catch(() => cached || fetch(event.request));
+      return cached || network;
+    })());
+    return;
+  }
+
+  if (url.origin !== self.location.origin) return;
+
+  const wtBase = self.registration.scope + 'webtorrent/';
+  if (event.request.url.startsWith(wtBase)) {
+    if (event.request.url.startsWith(wtBase + 'keepalive/')) { event.respondWith(new Response()); return; }
+    if (event.request.url.startsWith(wtBase + 'cancel/')) { event.respondWith(new Response(new ReadableStream({ cancel() { wtCancelled = true; } }))); return; }
+    event.respondWith(wtRelay(event.request));
+    return;
+  }
+
+  event.respondWith((async () => {
+    if (url.pathname.startsWith('/assets/mentria/dist/')) {
+      const hit = await caches.match(event.request, { ignoreSearch: true });
+      if (hit) return hit;
+      const resp = await fetch(event.request);
+      if (resp && resp.ok) { const copy = resp.clone(); caches.open(MODELS_CACHE).then(c => c.put(event.request, copy)); }
+      return resp;
+    }
+    const precache = await caches.open(CACHE_NAME);
+    const cached = await precache.match(event.request, { ignoreSearch: true });
+    if (cached) return cached;
+    try {
+      const resp = await fetch(event.request);
+      if (resp && resp.ok && event.request.mode === 'navigate' && FEED_PAGE.test(url.pathname)) {
+        stashCapped(DECKS_CACHE, event.request.url, resp.clone(), DECKS_LIMIT);
+      }
+      return resp;
+    } catch (err) {
+      if (event.request.mode === 'navigate') {
+        const localized = await caches.match(event.request, { ignoreSearch: true });
+        if (localized) return localized;
+        const stripped = url.pathname.replace(/^\/(es|fr|ja|pt-br)(\/|$)/, '/');
+        if (stripped !== url.pathname) {
+          const alt = await caches.match(stripped, { ignoreSearch: true });
+          if (alt) return alt;
+        }
+        const offline = await precache.match('/offline/', { ignoreSearch: true });
+        if (offline) return offline;
+      }
+      throw err;
+    }
+  })());
+});
+
+// Notification click → focus the originating tool tab. Action buttons
+// post a typed message back to the page so it can react (e.g. stop alarm).
+self.addEventListener('notificationclick', event => {
+  const action  = event.action;
+  const data    = event.notification.data || {};
+  const target  = data.url || '/';
+  const timerId = data.timerId;
+
+  event.notification.close();
+
+  event.waitUntil((async () => {
+    const all = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    // Prefer a client already on the same path; fall back to any open client
+    let client = all.find(c => {
+      try { return new URL(c.url).pathname === target; } catch { return false; }
+    }) || all[0];
+
+    if (action === 'stop-alarm') {
+      if (client) {
+        client.postMessage({ type: 'STOP_ALARM', timerId });
+        try { await client.focus(); } catch (_) {}
+      }
+      return;
+    }
+
+    // Default click: focus existing tab or open the tool fresh.
+    if (client) {
+      try { await client.focus(); } catch (_) {}
+    } else if (self.clients.openWindow) {
+      await self.clients.openWindow(target);
+    }
+  })());
+});

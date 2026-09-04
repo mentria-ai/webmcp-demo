@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>Notes Rapides | Mentria</title>
+    <meta name="description" content="Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/fr/tools/quick-notes/">
+    <meta property="og:title" content="Notes Rapides | Mentria">
+    <meta property="og:description" content="Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/fr/tools/quick-notes/">
+    <meta name="twitter:title" content="Notes Rapides | Mentria">
+    <meta name="twitter:description" content="Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/quick-notes/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/quick-notes/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/quick-notes/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/quick-notes/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/quick-notes/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/quick-notes/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "Un studio créatif d&#39;outils, d&#39;expériences et de transmissions visuelles. Conçu avec soin.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "fr"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://webmcp.mentria.ai/fr/" },
+        { "@type": "ListItem", "position": 2, "name": "Outils", "item": "https://webmcp.mentria.ai/fr/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Notes Rapides", "item": "https://webmcp.mentria.ai/fr/tools/quick-notes/" }
+      ]
+    }
+    </script>
+<style>
+.qn-tool {
+  display: flex;
+  min-height: 520px;
+  max-height: 80vh;
+  background: var(--term-bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qn-sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: var(--term-bg-raised);
+  border-right: 1px solid var(--term-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.qn-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid var(--term-border);
+}
+
+.qn-sidebar__label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--syn-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.qn-sidebar__toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  position: relative;
+}
+.qn-sidebar__toggle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+}
+
+.qn-sidebar__toggle-icon {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--term-muted);
+  position: relative;
+  transition: background 0.2s;
+}
+.qn-sidebar__toggle-icon::before,
+.qn-sidebar__toggle-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--term-muted);
+  transition: transform 0.2s;
+}
+.qn-sidebar__toggle-icon::before { top: -6px; }
+.qn-sidebar__toggle-icon::after  { top: 6px; }
+
+.qn-sidebar__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+
+.qn-note-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-left: 2px solid transparent;
+}
+.qn-note-tab:hover {
+  background: rgba(255,255,255,0.03);
+}
+.qn-note-tab--active {
+  background: rgba(34, 211, 238, 0.06);
+  border-left-color: var(--syn-cyan);
+}
+
+.qn-note-tab__title {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--term-fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.qn-note-tab--active .qn-note-tab__title {
+  color: var(--syn-cyan);
+}
+
+.qn-note-tab__preview {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  color: var(--term-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qn-sidebar__new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem;
+  margin: 0.5rem 0.6rem;
+  border: 1px dashed var(--syn-purple);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--syn-purple);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.qn-sidebar__new:hover {
+  background: var(--purple-8);
+  border-color: rgba(167, 139, 250, 0.6);
+  box-shadow: 0 0 12px rgba(167, 139, 250, 0.15);
+}
+
+.qn-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.qn-editor__titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--term-border);
+}
+
+.qn-editor__title {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--term-fg);
+  padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.qn-editor__title::placeholder {
+  color: var(--term-muted);
+}
+.qn-editor__title:focus {
+  border-bottom-color: var(--syn-cyan);
+}
+
+.qn-editor__actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.qn-action-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.72rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.qn-editor__textarea {
+  flex: 1;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: var(--term-bg);
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--term-fg);
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+.qn-editor__textarea::placeholder {
+  color: var(--term-muted);
+  opacity: 0.6;
+}
+.qn-editor__textarea:focus {
+  background: rgba(10, 10, 10, 0.95);
+}
+.qn-editor__textarea[hidden] { display: none; }
+.qn-action-btn[hidden] { display: none; }
+
+.qn-locked {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: var(--term-bg);
+}
+.qn-locked[hidden] { display: none; }
+.qn-locked__icon {
+  width: 40px;
+  height: 40px;
+  color: var(--syn-cyan);
+}
+.qn-locked__heading {
+  margin: 0;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.95rem;
+  color: var(--term-fg);
+}
+.qn-locked__body {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--term-muted);
+}
+.qn-unlock-btn {
+  margin-top: 0.3rem;
+  padding: 0.55rem 1.6rem;
+}
+
+.qn-editor__statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 1rem;
+  border-top: 1px solid var(--term-border);
+  background: var(--term-bg-raised);
+}
+
+.qn-status__counts {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.7rem;
+  color: var(--term-muted);
+}
+
+.qn-status__saved {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.7rem;
+  color: var(--syn-green);
+  opacity: 0.8;
+}
+
+.qn-sidebar__list::-webkit-scrollbar,
+.qn-editor__textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.qn-sidebar__list::-webkit-scrollbar-track,
+.qn-editor__textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.qn-sidebar__list::-webkit-scrollbar-thumb,
+.qn-editor__textarea::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+}
+.qn-sidebar__list::-webkit-scrollbar-thumb:hover,
+.qn-editor__textarea::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+@media (max-width: 640px) {
+  .qn-tool {
+    flex-direction: column;
+    min-height: 460px;
+  }
+
+  .qn-sidebar {
+    width: 100%;
+    min-width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: 1px solid var(--term-border);
+    transition: max-height 0.3s ease;
+  }
+  .qn-sidebar--open {
+    max-height: 260px;
+  }
+
+  .qn-sidebar__header {
+    cursor: pointer;
+  }
+
+  .qn-sidebar__toggle {
+    display: block;
+  }
+
+  .qn-sidebar {
+    max-height: 42px;
+  }
+  .qn-sidebar--open {
+    max-height: 300px;
+  }
+
+  .qn-editor__titlebar {
+    flex-wrap: wrap;
+  }
+
+  .qn-editor__actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .qn-action-btn {
+    flex-shrink: 0;
+  }
+}
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.quick-notes.title","suffix":" | Mentria"},"desc":{"key":"tools.quick-notes.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "fr",
+        prefix: "/fr",
+        tools: [
+          { slug: "search", title: "Recherche", category: "IA", keywords: "Trouve des outils et des publications du fil. Tape n'importe quelle requête — mot-clé ou langage naturel." },
+          { slug: "step-counter", title: "Compteur de Pas", category: "Santé", keywords: "Compte tes pas en marchant, directement dans le navigateur. Utilise le capteur de mouvement de ton téléphone — rien n'est envoyé.", requires: "motion" },
+          { slug: "qr-scanner", title: "Scanner et générateur de QR codes et codes-barres", category: "Utilitaire", keywords: "Scannez des QR codes et des codes-barres, ou générez un QR code à partir de n'importe quel lien ou texte — tout en local, rien n'est envoyé." },
+          { slug: "decision-wheel", title: "Roue de Décision", category: "Utilitaire", keywords: "Indécis ? Faites tourner la roue et laissez le destin choisir. Fonctionne hors ligne." },
+          { slug: "countdown-timer", title: "Compte à Rebours", category: "Minuteur", keywords: "Définissez une durée ou choisissez une heure cible. Jusqu'à 4 minuteries indépendantes avec son d'alarme." },
+          { slug: "coin-flip", title: "Pile ou Face", category: "Utilitaire", keywords: "Pile ou face — lancez une pièce instantanément. Lancez une série au meilleur des N pour départager. Fonctionne hors ligne." },
+          { slug: "quick-notes", title: "Notes Rapides", category: "Productivité", keywords: "Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe." },
+          { slug: "base64-codec", title: "Codec Base64", category: "Développement", keywords: "Encodez et décodez du texte ou des fichiers en Base64. Prend en charge les images, les documents et tout type de fichier. Tout fonctionne localement dans votre navigateur." },
+          { slug: "totp", title: "TOTP", category: "Sécurité", keywords: "Codes de double authentification qui restent dans votre navigateur, chiffrés au repos. Rien sur un serveur." },
+          { slug: "exif", title: "Inspecteur EXIF", category: "Sécurité", keywords: "Découvrez ce qu'une photo transporte en secret — détails de l'appareil, horodatages, position GPS — et téléchargez une copie propre, tout retiré. Rien n'est envoyé." },
+          { slug: "color-picker", title: "Sélecteur de Couleurs", category: "Design", keywords: "Choisissez n'importe quelle couleur, voyez ses valeurs HEX / RGB / HSL, et générez des palettes harmonieuses. Fonctionne hors ligne." },
+          { slug: "annotate-image", title: "Annoter une image", category: "IA", keywords: "Importez une image et obtenez instantanément une description IA, un texte alternatif, une transcription ou des étiquettes — avec des prompts testés en un toucher. S'exécute localement dans votre navigateur, rien n'est envoyé." },
+          { slug: "ai-chat", title: "Chat IA", category: "IA", keywords: "Qwen3.5 fonctionnant localement dans votre navigateur. Pas de serveur, pas de clés API. Prend en charge la vision." },
+          { slug: "console", title: "Console", category: "IA", keywords: "Discutez avec le modèle local pendant qu'il utilise les apps Mentria sur un écran de téléphone partagé — ou laissez-le jouer un utilisateur test et rapporter ce qu'il trouve." },
+          { slug: "model-mirror", title: "Miroir de Modèles", category: "IA", keywords: "Aidez à distribuer les modèles locaux de Mentria en pair-à-pair. Gardez cet onglet ouvert et votre navigateur devient un miroir." },
+          { slug: "quote", title: "Citation Motivante", category: "IA", keywords: "Citations originales générées par IA, fonctionnant localement dans votre navigateur. Vos données restent sur votre appareil." },
+          { slug: "radio", title: "Radio Infinie", category: "IA", keywords: "Musique cinématographique épique générée par IA, en streaming infini. Apprend vos goûts localement — vos données restent sur votre appareil." },
+          { slug: "invoice", title: "Générateur de Factures", category: "Utilitaire", keywords: "Créez des factures épurées d'une page dans votre navigateur. Auto-enregistrement pendant la saisie. Imprimez en A4 ou exportez en JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utilitaire", keywords: "Écrivez du markdown, voyez un aperçu en direct, et téléchargez un PDF professionnel et propre. Sauvegarde automatique dans votre navigateur. Vos données restent sur votre appareil." },
+          { slug: "tetris", title: "Tetris", category: "Jeu", keywords: "Empilez des tétrominos. Effacez des lignes. La vitesse augmente toutes les 10 lignes. Pièces en cyan, violet, rose, ambre, vert — la palette Mentria." },
+          { slug: "breakout", title: "Breakout", category: "Jeu", keywords: "Casse-briques rencontre raquette. Attrapez les power-ups qui tombent, dégagez le mur, survivez à des niveaux de plus en plus rapides et exigeants. Fonctionne localement — vos données restent sur votre appareil." },
+          { slug: "flappy", title: "Flappy", category: "Jeu", keywords: "Un avion en papier traversant une pile de prompts terminal. Touchez, cliquez ou appuyez sur ESPACE pour battre des ailes. Ne crashez pas le prompt." },
+          { slug: "minesweeper", title: "Démineur", category: "Jeu", keywords: "Casse-tête logique classique en tenue de terminal. Cliquez pour creuser, clic droit (ou mode F) pour marquer un drapeau. Les chiffres comptent les mines adjacentes. Ne touchez pas aux roses." },
+          { slug: "sudoku", title: "Sudoku", category: "Jeu", keywords: "Casse-tête logique en habit de terminal. Générateur à solution unique, quatre difficultés, annotations au crayon. Fonctionne localement — aucune donnée ne quitte votre appareil." },
+          { slug: "ludo", title: "Ludo", category: "Jeu", keywords: "Quatre pions à la maison, vous gagnez. Faites un six pour sortir, capturez au contact, abritez-vous sur les étoiles sûres. Affrontez les bots ou jouez chacun son tour." },
+          { slug: "chess", title: "Échecs", category: "Jeu", keywords: "Moteur local, chacun son tour et jeu en ligne — sans serveurs. Règles complètes avec roque, prise en passant et promotion ; moteur alpha-bêta à quatre niveaux, barre d'évaluation et indices." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Jeu", keywords: "Contre-la-montre de combat dans le navigateur : sprint, glissade, escalade et carabine automatique sur cinq parcours au crépuscule. Médailles, course aux fantômes, jeu hors ligne." },
+          { slug: "extensions", title: "Extensions", category: "Utilitaire", keywords: "Installe des extensions privées en un seul fichier qui vivent uniquement sur cet appareil. Elles apparaissent dans ton lanceur et ton terminal — jamais sur le site public." },
+          { slug: "files", title: "Fichiers", category: "Utilitaire", keywords: "Parcourez, exportez et supprimez les données que les outils Mentria stockent sur cet appareil. Tout reste en local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Chat pair-à-pair, appels audio et vidéo, et partage de fichiers. Chiffré de bout en bout, sans compte et sans serveur au milieu.", url: "/comms/" },
+          { slug: "bubble-level", title: "Niveau à bulle", category: "Utilitaire", keywords: "Transformez votre téléphone en niveau à bulle en ligne : un vrai niveau sans installer d'application, précis à 0,1° et utilisable hors ligne.", requires: "motion" },
+          { slug: "decibel-meter", title: "Sonomètre", category: "Utilitaire", keywords: "Un sonomètre en ligne dans votre navigateur : mesurez le bruit en dB avec le micro de votre téléphone ou de votre ordinateur, sans installer d'application." },
+          { slug: "compass", title: "Boussole", category: "Utilitaire", keywords: "Une boussole en ligne sans application à installer : ouvrez-la dans le navigateur et lisez votre cap magnétique directement depuis le capteur du téléphone.", requires: "motion" },
+          { slug: "speedometer", title: "Compteur de vitesse GPS", category: "Utilitaire", keywords: "Un compteur de vitesse en ligne par GPS, sans installer d'application. Votre vitesse en direct en km/h, mph ou nœuds, avec la distance du trajet, calculée sur votre appareil." },
+          { slug: "ruler", title: "Règle en ligne", category: "Utilitaire", keywords: "Une règle en ligne à taille réelle : mesurez en cm, mm et pouces directement à l'écran, et calibrez-la avec une carte bancaire pour que les millimètres soient justes." }
+        ],
+        nav: [
+          { id: "home", title: "Accueil", href: "/" },
+          { id: "tools", title: "Outils", href: "/tools/" },
+          { id: "feed", title: "Fil", href: "/feed/" },
+          { id: "about", title: "À propos", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Rechercher outils et pages…",
+          listLabel: "Résultats de recherche",
+          noResults: "Aucun résultat",
+          recents: "Récents",
+          extensions: "Extensions",
+          actions: "Actions",
+          actNote: "Enregistrer la note : « {text} »",
+          actNoteDone: "Note enregistrée",
+          actNoteFail: "Impossible d'enregistrer la note",
+          actTimer: "Lancer un minuteur de {dur}",
+          actFlip: "Lancer une pièce",
+          actHeads: "Pile",
+          actTails: "Face",
+          searchSite: "Rechercher « {q} » sur le site"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Aller au contenu</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/fr/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/fr/feed/"  class="nav-link" title="Fil" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Fil</i18n-t></span>
+            </a>
+            <a href="/fr/tools/" class="nav-link active" aria-current="page" title="Outils" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Outils</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/fr/about/" class="nav-link nav-link--about" title="À propos" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">À propos</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Ouvrir la palette de commandes (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Langue actuelle: Français" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="fr">Français</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/quick-notes/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/quick-notes/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/quick-notes/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/quick-notes/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/quick-notes/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/fr/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/fr/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">quick-notes</span></p>
+  <h1><i18n-t data-k="tools.quick-notes.title">Notes Rapides</i18n-t></h1>
+  <p><i18n-t data-k="tools.quick-notes.lede">Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe.</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">Qu&#39;est-ce que c&#39;est ?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">Masquer les détails</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.quick-notes.title">Qu'est-ce que Notes Rapides ?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.quick-notes.tldr">Un bloc-notes pensé clavier qui auto-enregistre chaque frappe dans le localStorage du navigateur. Notes multiples, esthétique synthwave sombre. Tes notes ne quittent jamais ton appareil — pas de synchro, pas de comptes, pas de serveur. À utiliser comme brouillon pour tâches, snippets ou pensées à reprendre dans un onglet.</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-quick-notes">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Basculer en plein écran" title="Basculer en plein écran" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">quick-notes.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Basculer en plein écran" title="Basculer en plein écran" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="qn-tool" id="qn-tool">
+  <aside class="qn-sidebar" id="qn-sidebar">
+    <div class="qn-sidebar__header">
+      <span class="qn-sidebar__label"><i18n-t data-k="tool.quick-notes.notes_label">Notes</i18n-t></span>
+      <button class="qn-sidebar__toggle" id="qn-sidebar-toggle" title="Basculer la barre latérale" aria-label="Basculer la barre latérale" data-i18na="title=tool.quick-notes.toggle_sidebar;aria-label=tool.quick-notes.toggle_sidebar">
+        <span class="qn-sidebar__toggle-icon"></span>
+      </button>
+    </div>
+    <div class="qn-sidebar__list" id="qn-note-list">
+    </div>
+    <button class="qn-sidebar__new" id="qn-new-btn" title="Nouvelle note" data-i18na="title=tool.quick-notes.new_note_title">
+      <span>+</span> <i18n-t data-k="tool.quick-notes.new_note_btn">Nouvelle Note</i18n-t>
+    </button>
+  </aside>
+
+  <div class="qn-editor" id="qn-editor">
+    <div class="qn-editor__titlebar">
+      <input
+        type="text"
+        class="qn-editor__title"
+        id="qn-title-input"
+        placeholder="Note sans titre"
+        spellcheck="false"
+        autocomplete="off"
+       data-i18na="placeholder=tool.quick-notes.untitled" />
+      <div class="qn-editor__actions">
+        <button class="qn-action-btn m-btn m-btn--ghost" id="qn-export-btn" title="Exporter comme .txt" data-i18na="title=tool.quick-notes.export_title"><i18n-t data-k="tool.quick-notes.export_btn">Exporter</i18n-t></button>
+        <button class="qn-action-btn m-btn m-btn--ghost" id="qn-share-btn" title="Partager" data-i18na="title=common.share"><i18n-t data-k="common.share">Partager</i18n-t></button>
+        <button class="qn-action-btn m-btn m-btn--ghost" id="qn-mdpdf-btn" title="Ouvrir cette note dans Markdown → PDF" data-i18na="title=tool.quick-notes.to_mdpdf_title"><i18n-t data-k="tool.quick-notes.to_mdpdf_btn">→ PDF</i18n-t></button>
+        <button class="qn-action-btn m-btn m-btn--ghost" id="qn-lock-btn" title="Chiffrer cette note avec la clé d&#39;accès de ton appareil" data-i18na="title=tool.quick-notes.lock_title"><i18n-t data-k="tool.quick-notes.lock_btn">Verrouiller</i18n-t></button>
+        <button class="qn-action-btn m-btn m-btn--danger" id="qn-delete-btn" title="Supprimer la note" data-i18na="title=tool.quick-notes.delete_title"><i18n-t data-k="tool.quick-notes.delete_btn">Supprimer</i18n-t></button>
+      </div>
+    </div>
+    <textarea
+      class="qn-editor__textarea"
+      id="qn-textarea"
+      placeholder="Commencez à taper..."
+      spellcheck="false"
+     data-i18na="placeholder=tool.quick-notes.start_typing"></textarea>
+    <div class="qn-locked" id="qn-locked" hidden>
+      <svg class="qn-locked__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="4" y="11" width="16" height="10" rx="2"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+      </svg>
+      <h2 class="qn-locked__heading"><i18n-t data-k="tool.quick-notes.locked_heading">Cette note est verrouillée</i18n-t></h2>
+      <p class="qn-locked__body"><i18n-t data-k="tool.quick-notes.locked_body">Son contenu est chiffré, mais pas le titre. Déverrouille-la avec la clé d&#39;accès de ton appareil pour la voir et la modifier.</i18n-t></p>
+      <button class="qn-unlock-btn m-btn m-btn--primary m-btn--pill" id="qn-unlock-btn"><i18n-t data-k="tool.quick-notes.unlock_btn">Déverrouiller</i18n-t></button>
+    </div>
+    <div class="qn-editor__statusbar">
+      <span class="qn-status__counts" id="qn-counts"><i18n-t data-k="tool.quick-notes.count_summary">0 mots · 0 caractères</i18n-t></span>
+      <span class="qn-status__saved" id="qn-saved"></span>
+    </div>
+  </div>
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="Plus d&#39;outils" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">Plus d&#39;outils</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/sudoku/">
+        <span class="related-tools__name"><i18n-t data-k="tools.sudoku.title">Sudoku</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jeu</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/ludo/">
+        <span class="related-tools__name"><i18n-t data-k="tools.ludo.title">Ludo</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jeu</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/chess/">
+        <span class="related-tools__name"><i18n-t data-k="tools.chess.title">Échecs</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jeu</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/phosphor/">
+        <span class="related-tools__name"><i18n-t data-k="tools.phosphor.title">PHOSPHOR</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Game">Jeu</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/fr/tools/"><i18n-t data-k="tools_page.related_all">Tous les outils</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Notes Rapides",
+  "url": "https://webmcp.mentria.ai/fr/tools/quick-notes/",
+  "description": "Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any (modern web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "softwareVersion": "ec54a8f-09040920",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Runs entirely in your browser",
+    "No data leaves your device",
+    "No API key required",
+    "Works offline once cached"
+  ],
+  "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+  "inLanguage": "fr"
+}
+</script>
+
+
+<script>
+(() => {
+  const COPY = {
+    untitled:          "Note sans titre",
+    savedPrefix:       "Enregistré",
+    emptyPreview:      "Vide",
+    confirmDelete:     "Supprimer « {name} » ? Cela ne peut pas être annulé.",
+    lockBtn:           "Verrouiller",
+    removeLockBtn:     "Retirer le verrou",
+    lockedTag:         "Verrouillée",
+    confirmLock:       "Le verrouillage chiffre cette note avec la clé d'accès de ton appareil. Si tu perds cette clé ou effaces les données de ce navigateur, la note sera irrécupérable. Le titre de la note reste visible et n'est PAS chiffré — ne mets pas de secrets dans le titre. La verrouiller ?",
+    confirmRemoveLock: "Retirer le chiffrement de cette note ? Elle sera de nouveau enregistrée en texte clair.",
+    lockFailed:        "Impossible de verrouiller la note — la clé d'accès de l'appareil n'était pas disponible.",
+    unlockFailed:      "Impossible de déverrouiller la note — la clé d'accès ne correspondait pas ou n'était pas disponible.",
+    prfUnsupported:    "Ce navigateur ou cet appareil ne peut pas utiliser de clé d'accès pour le chiffrement. Essaie une version récente de Chrome, Edge ou Safari.",
+    countSummary:      "{words} mots · {chars} caractères"
+  };
+
+  const STORAGE_KEY = 'mentria-quick-notes';
+  const DEBOUNCE_MS = 500;
+
+  const noteList    = document.getElementById('qn-note-list');
+  const newBtn      = document.getElementById('qn-new-btn');
+  const titleInput  = document.getElementById('qn-title-input');
+  const textarea    = document.getElementById('qn-textarea');
+  const countsEl    = document.getElementById('qn-counts');
+  const savedEl     = document.getElementById('qn-saved');
+  const exportBtn   = document.getElementById('qn-export-btn');
+  const shareBtn    = document.getElementById('qn-share-btn');
+  const MDPDF_URL = "/fr/tools/markdown-pdf/";
+  const mdpdfBtn    = document.getElementById('qn-mdpdf-btn');
+  const lockBtn     = document.getElementById('qn-lock-btn');
+  const deleteBtn   = document.getElementById('qn-delete-btn');
+  const lockedPanel = document.getElementById('qn-locked');
+  const unlockBtn   = document.getElementById('qn-unlock-btn');
+  const sidebar     = document.getElementById('qn-sidebar');
+  const sidebarToggle = document.getElementById('qn-sidebar-toggle');
+
+  let notes = [];
+  let activeId = null;
+
+  const CRED_KEY = 'mentria-qn-cred';
+  const SALT_KEY = 'mentria-qn-salt';
+  let sessionKey = null;
+  const cryptoOK = !!(window.PublicKeyCredential && window.isSecureContext && window.crypto && crypto.subtle);
+
+  function load() {
+    const v = MentriaUI.migrateStore('quick_notes', 'blob', STORAGE_KEY, null);
+    if (Array.isArray(v)) notes = v;
+    if (!Array.isArray(notes) || notes.length === 0) {
+      notes = [];
+      createNote();
+    }
+  }
+
+  let persistingSelf = false;
+
+  function persist() {
+    persistingSelf = true;
+    try {
+      if (window.MentriaStore) return window.MentriaStore.set('quick_notes', 'blob', notes);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(notes)); return true; } catch (_) { return false; }
+    } finally {
+      persistingSelf = false;
+    }
+  }
+
+  function reconcileExternal() {
+    const S = window.MentriaStore;
+    if (!S) return;
+    const ext = S.get('quick_notes', 'blob');
+    if (!Array.isArray(ext)) return;
+    const del = S.get('quick_notes', 'deleted');
+    const deleted = (del && typeof del === 'object') ? del : {};
+    const byId = new Map(notes.map(n => [n.id, n]));
+    let changed = false;
+    for (const e of ext) {
+      if (!e || !e.id || typeof e.body !== 'string') continue;
+      if (deleted[String(e.id)] && e.id !== activeId) continue;
+      const l = byId.get(e.id);
+      if (!l) { byId.set(e.id, e); changed = true; }
+      else if ((e.updatedAt || 0) > (l.updatedAt || 0) && e.id !== activeId) { byId.set(e.id, e); changed = true; }
+    }
+    for (const n of [...byId.values()]) {
+      if (deleted[String(n.id)] && n.id !== activeId) { byId.delete(n.id); changed = true; }
+    }
+    if (!changed) return;
+    notes = [...byId.values()].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+    if (activeId && !notes.some(n => n.id === activeId)) {
+      if (notes.length) selectNote(notes[0].id);
+      else createNote();
+    }
+    renderList();
+  }
+
+  function acceptExternalDelete() {
+    notes = [];
+    activeId = null;
+    createNote();
+  }
+
+  function b64enc(buf) {
+    const bytes = new Uint8Array(buf);
+    let s = '';
+    for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+    return btoa(s);
+  }
+  function b64dec(str) {
+    const bin = atob(str);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+
+  function prfSalt() {
+    let s = window.MentriaStore ? window.MentriaStore.get('quick_notes', 'salt') : null;
+    if (!s) {
+      const legacy = localStorage.getItem(SALT_KEY);
+      if (legacy) {
+        s = legacy;
+        if (window.MentriaStore) { window.MentriaStore.set('quick_notes', 'salt', s); localStorage.removeItem(SALT_KEY); }
+      } else {
+        s = b64enc(crypto.getRandomValues(new Uint8Array(32)));
+        if (window.MentriaStore) window.MentriaStore.set('quick_notes', 'salt', s);
+        else localStorage.setItem(SALT_KEY, s);
+      }
+    }
+    return b64dec(s);
+  }
+
+  async function ensureKey() {
+    if (sessionKey) return sessionKey;
+    if (!cryptoOK) throw new Error('prf-unsupported');
+    const salt = prfSalt();
+    let credId = window.MentriaStore ? window.MentriaStore.get('quick_notes', 'cred_id') : null;
+    if (!credId) {
+      const legacy = localStorage.getItem(CRED_KEY);
+      if (legacy) {
+        credId = legacy;
+        if (window.MentriaStore) { window.MentriaStore.set('quick_notes', 'cred_id', credId); localStorage.removeItem(CRED_KEY); }
+      }
+    }
+    let prfResult = null;
+    if (!credId) {
+      const cred = await navigator.credentials.create({
+        publicKey: {
+          challenge: crypto.getRandomValues(new Uint8Array(32)),
+          rp: { name: 'Mentria Quick Notes' },
+          user: {
+            id: crypto.getRandomValues(new Uint8Array(16)),
+            name: 'quick-notes',
+            displayName: 'Quick Notes'
+          },
+          pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+          authenticatorSelection: { residentKey: 'required', userVerification: 'required' },
+          extensions: { prf: { eval: { first: salt } } }
+        }
+      });
+      if (!cred) throw new Error('cancelled');
+      const prf = cred.getClientExtensionResults().prf;
+      if (!prf || prf.enabled === false) throw new Error('prf-unsupported');
+      credId = b64enc(cred.rawId);
+      if (window.MentriaStore) window.MentriaStore.set('quick_notes', 'cred_id', credId);
+      else localStorage.setItem(CRED_KEY, credId);
+      if (prf.results && prf.results.first) prfResult = prf.results.first;
+    }
+    if (!prfResult) {
+      const assertion = await navigator.credentials.get({
+        publicKey: {
+          challenge: crypto.getRandomValues(new Uint8Array(32)),
+          allowCredentials: [{ type: 'public-key', id: b64dec(credId) }],
+          userVerification: 'required',
+          extensions: { prf: { eval: { first: salt } } }
+        }
+      });
+      if (!assertion) throw new Error('cancelled');
+      const prf = assertion.getClientExtensionResults().prf;
+      if (!prf || !prf.results || !prf.results.first) throw new Error('prf-unsupported');
+      prfResult = prf.results.first;
+    }
+    sessionKey = await crypto.subtle.importKey(
+      'raw', new Uint8Array(prfResult), { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']
+    );
+    return sessionKey;
+  }
+
+  async function encryptText(text) {
+    const key = await ensureKey();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(text)
+    );
+    return { body: b64enc(ct), iv: b64enc(iv) };
+  }
+
+  async function decryptNote(note) {
+    const key = await ensureKey();
+    const pt = await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: b64dec(note.iv) }, key, b64dec(note.body)
+    );
+    return new TextDecoder().decode(pt);
+  }
+
+  function handleCryptoError(err, fallbackMsg) {
+    if (err && err.name === 'NotAllowedError') return;
+    if (err && err.message === 'prf-unsupported') { mentriaAlert(COPY.prfUnsupported); return; }
+    if (err && err.message === 'cancelled') return;
+    mentriaAlert(fallbackMsg);
+  }
+
+  function genId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  function createNote() {
+    const note = {
+      id: genId(),
+      title: '',
+      body: '',
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
+    notes.unshift(note);
+    persist();
+    selectNote(note.id);
+    renderList();
+    titleInput.focus();
+    return note;
+  }
+
+  function recordNoteDeletion(id) {
+    if (!window.MentriaStore) return;
+    let del = window.MentriaStore.get('quick_notes', 'deleted');
+    if (!del || typeof del !== 'object') del = {};
+    del[String(id)] = Date.now();
+    const keys = Object.keys(del);
+    if (keys.length > 200) {
+      keys.sort((a, b) => (Number(del[a]) || 0) - (Number(del[b]) || 0));
+      keys.slice(0, keys.length - 200).forEach(k => { delete del[k]; });
+    }
+    window.MentriaStore.set('quick_notes', 'deleted', del);
+  }
+
+  function deleteNote(id) {
+    const idx = notes.findIndex(n => n.id === id);
+    if (idx === -1) return;
+    notes.splice(idx, 1);
+    recordNoteDeletion(id);
+    if (notes.length === 0) {
+      createNote();
+      return;
+    }
+    if (activeId === id) {
+      selectNote(notes[0].id);
+    }
+    persist();
+    renderList();
+  }
+
+  function getNote(id) {
+    return notes.find(n => n.id === id) || null;
+  }
+
+  function selectNote(id) {
+    if (id !== activeId) saver.flush();
+    activeId = id;
+    const note = getNote(id);
+    if (!note) return;
+    renderEditor();
+    renderList();
+    if (window.innerWidth <= 640) {
+      sidebar.classList.remove('qn-sidebar--open');
+    }
+  }
+
+  async function renderEditor() {
+    const note = getNote(activeId);
+    if (!note) return;
+    titleInput.value = note.title || '';
+    let mode;
+    if (!note.enc) {
+      mode = 'plain';
+      textarea.value = note.body || '';
+    } else if (sessionKey) {
+      mode = 'unlocked';
+      try {
+        const text = await decryptNote(note);
+        if (activeId !== note.id) return;
+        textarea.value = text;
+      } catch (_) {
+        mode = 'locked';
+      }
+    } else {
+      mode = 'locked';
+    }
+    if (mode === 'locked') textarea.value = '';
+    applyEditorMode(mode);
+    updateCounts();
+    updateSavedLabel(note.updatedAt);
+  }
+
+  function applyEditorMode(mode) {
+    const locked = mode === 'locked';
+    if (!locked) drainInbox();
+    textarea.hidden = locked;
+    lockedPanel.hidden = !locked;
+    exportBtn.hidden = locked;
+    shareBtn.hidden = locked || !navigator.share;
+    if (!cryptoOK) {
+      lockBtn.hidden = true;
+    } else {
+      lockBtn.hidden = locked;
+      lockBtn.textContent = mode === 'unlocked' ? COPY.removeLockBtn : COPY.lockBtn;
+    }
+  }
+
+  function renderList() {
+    noteList.innerHTML = '';
+    notes.forEach(note => {
+      const btn = document.createElement('button');
+      btn.className = 'qn-note-tab' + (note.id === activeId ? ' qn-note-tab--active' : '');
+      btn.dataset.id = note.id;
+      const title = note.title || COPY.untitled;
+      let preview;
+      if (note.enc) preview = '🔒 ' + COPY.lockedTag;
+      else preview = note.body ? note.body.slice(0, 50).replace(/\n/g, ' ') : COPY.emptyPreview;
+      btn.innerHTML =
+        '<span class="qn-note-tab__title">' + escHtml(title) + '</span>' +
+        '<span class="qn-note-tab__preview">' + escHtml(preview) + '</span>';
+      btn.addEventListener('click', () => selectNote(note.id));
+      noteList.appendChild(btn);
+    });
+  }
+
+  function escHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  const saver = MentriaUI.debouncedSaver(saveActive, DEBOUNCE_MS);
+
+  async function saveActive() {
+    const note = getNote(activeId);
+    if (!note) return;
+    note.title = titleInput.value;
+    if (note.enc) {
+      if (!sessionKey) return;
+      try {
+        const enc = await encryptText(textarea.value);
+        note.body = enc.body;
+        note.iv = enc.iv;
+      } catch (_) { return; }
+    } else {
+      note.body = textarea.value;
+    }
+    note.updatedAt = Date.now();
+    const ok = persist();
+    if (ok && note.id === activeId) updateSavedLabel(note.updatedAt);
+    renderList();
+  }
+
+  const wordSegmenter = (() => {
+    try { return new Intl.Segmenter(document.documentElement.lang || undefined, { granularity: 'word' }); }
+    catch (_) { return null; }
+  })();
+
+  function countWords(text) {
+    const t = text.trim();
+    if (t === '') return 0;
+    if (wordSegmenter) {
+      let n = 0;
+      for (const seg of wordSegmenter.segment(t)) if (seg.isWordLike) n++;
+      return n;
+    }
+    return t.split(/\s+/).length;
+  }
+
+  function updateCounts() {
+    const text = textarea.value;
+    const chars = text.length;
+    const words = countWords(text);
+    const lang = document.documentElement.lang || 'en';
+    countsEl.textContent = COPY.countSummary.replace('{words}', words.toLocaleString(lang)).replace('{chars}', chars.toLocaleString(lang));
+  }
+
+  function updateSavedLabel(ts) {
+    if (!ts) { savedEl.textContent = ''; return; }
+    const d = new Date(ts);
+    const now = new Date();
+    const lang = document.documentElement.lang || 'en';
+    const sameDay = d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
+    let stamp;
+    try {
+      stamp = sameDay
+        ? new Intl.DateTimeFormat(lang, { timeStyle: 'medium' }).format(d)
+        : new Intl.DateTimeFormat(lang, { dateStyle: 'medium', timeStyle: 'short' }).format(d);
+    } catch (_) {
+      stamp = d.toLocaleString();
+    }
+    savedEl.textContent = COPY.savedPrefix + ' ' + stamp;
+  }
+
+  function exportNote() {
+    const note = getNote(activeId);
+    if (!note) return;
+    const title = titleInput.value.trim() || COPY.untitled;
+    const filename = title.replace(/[\/\\:*?"<>|\s]/g, '_') + '.txt';
+    const blob = new Blob([textarea.value], { type: 'text/plain;charset=utf-8' });
+    MentriaUI.downloadFile(filename, blob);
+  }
+
+  async function shareNote() {
+    const note = getNote(activeId);
+    if (!note || !textarea.value) return;
+    try {
+      await navigator.share({ title: titleInput.value.trim() || COPY.untitled, text: textarea.value });
+    } catch (_) {}
+  }
+
+  function handleLockClick() {
+    const note = getNote(activeId);
+    if (!note) return;
+    if (note.enc) removeLock();
+    else lockNote();
+  }
+
+  async function lockNote() {
+    const note = getNote(activeId);
+    if (!note || note.enc) return;
+    if (!cryptoOK) { mentriaAlert(COPY.prfUnsupported); return; }
+    if (!(await mentriaConfirm(COPY.confirmLock))) return;
+    let enc;
+    try {
+      enc = await encryptText(textarea.value);
+    } catch (err) {
+      handleCryptoError(err, COPY.lockFailed);
+      return;
+    }
+    note.title = titleInput.value;
+    note.enc = true;
+    note.body = enc.body;
+    note.iv = enc.iv;
+    note.updatedAt = Date.now();
+    persist();
+    renderEditor();
+    renderList();
+  }
+
+  async function unlockNote() {
+    const note = getNote(activeId);
+    if (!note || !note.enc) return;
+    try {
+      await ensureKey();
+    } catch (err) {
+      handleCryptoError(err, COPY.unlockFailed);
+      return;
+    }
+    renderEditor();
+  }
+
+  async function removeLock() {
+    const note = getNote(activeId);
+    if (!note || !note.enc) return;
+    if (!(await mentriaConfirm(COPY.confirmRemoveLock))) return;
+    note.enc = false;
+    note.body = textarea.value;
+    delete note.iv;
+    note.updatedAt = Date.now();
+    persist();
+    renderEditor();
+    renderList();
+  }
+
+  async function confirmDelete() {
+    const note = getNote(activeId);
+    if (!note) return;
+    const name = note.title || COPY.untitled;
+    if (await mentriaConfirm(COPY.confirmDelete.replace('{name}', name))) {
+      deleteNote(activeId);
+    }
+  }
+
+  function toggleSidebar() {
+    sidebar.classList.toggle('qn-sidebar--open');
+  }
+
+  textarea.addEventListener('input', () => {
+    updateCounts();
+    saver.schedule();
+  });
+
+  titleInput.addEventListener('input', () => {
+    saver.schedule();
+  });
+
+  newBtn.addEventListener('click', createNote);
+  import('/assets/js/mentria-bus.js').then(({ MentriaBus }) => {
+    MentriaBus.provide('notes.create', (args) => {
+      const o = args || {};
+      const note = createNote();
+      titleInput.value = String(o.title || '').slice(0, 200);
+      textarea.value = String(o.body || o.text || '');
+      titleInput.dispatchEvent(new Event('input', { bubbles: true }));
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+      if (saver && saver.flush) saver.flush();
+      return { ok: true, id: note.id };
+    }, { description: 'Create a new note with an optional title and body text.', ai: true, parameters: { type: 'object', properties: { title: { type: 'string' }, body: { type: 'string' } } } });
+    MentriaBus.provide('notes.count', () => ({ count: notes.length }), { description: 'How many notes exist.', ai: true, readonly: true });
+    MentriaBus.provide('notes.readAll', () => notes.map((n) => ({ title: n.title || '', body: String(n.body || n.text || '') })), { description: 'Full note contents for on-device processing only.', parameters: { type: 'object', properties: {} }, ai: false });
+    MentriaBus.provide('notes.list', () => notes.map((n) => ({ title: n.title || '', preview: String(n.body || n.text || '').replace(/\s+/g, ' ').slice(0, 80), updatedAt: n.updatedAt || 0 })), { description: 'List saved notes: title, a short preview, and last-updated time.', parameters: { type: 'object', properties: {} }, ai: true, readonly: true });
+  }).catch(() => {});
+  exportBtn.addEventListener('click', exportNote);
+  if (navigator.share) shareBtn.addEventListener('click', shareNote);
+  else shareBtn.hidden = true;
+  mdpdfBtn.addEventListener('click', () => {
+    const body = textarea.value;
+    const title = titleInput.value.trim();
+    const text = title ? '# ' + title + '\n\n' + body : body;
+    if (!text.trim()) return;
+    if (window.MentriaStore) window.MentriaStore.set('handoff', 'md', { text, ts: Date.now() });
+    location.href = MDPDF_URL;
+  });
+  lockBtn.addEventListener('click', handleLockClick);
+  unlockBtn.addEventListener('click', unlockNote);
+  deleteBtn.addEventListener('click', confirmDelete);
+  sidebarToggle.addEventListener('click', toggleSidebar);
+
+  function ingestSharedContent() {
+    let p;
+    try { p = new URLSearchParams(location.search); } catch (_) { return false; }
+    const title = (p.get('title') || '').trim();
+    const text  = (p.get('text')  || '').trim();
+    const url   = (p.get('url')   || '').trim();
+    if (!title && !text && !url) return false;
+    const note = {
+      id: genId(),
+      title: title,
+      body: [text, url].filter(Boolean).join('\n\n'),
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
+    notes.unshift(note);
+    persist();
+    history.replaceState(null, '', location.pathname);
+    activeId = note.id;
+    return true;
+  }
+
+  function drainInbox() {
+    const S = window.MentriaStore;
+    if (!S) return;
+    if (lockedPanel && !lockedPanel.hidden) return;
+    const inbox = S.get('quick_notes', 'inbox');
+    if (!Array.isArray(inbox) || !inbox.length) return;
+    let added = false;
+    for (const n of inbox) {
+      if (n && n.id && typeof n.body === 'string' && !notes.some(x => x.id === n.id)) {
+        notes.unshift(n);
+        added = true;
+      }
+    }
+    S.remove('quick_notes', 'inbox');
+    if (added) {
+      persist();
+      renderList();
+    }
+  }
+
+  window.addEventListener('mentria:write', (e) => {
+    const d = e.detail || {};
+    if (d.ns !== 'quick_notes') return;
+    if (d.key === 'inbox' && d.op === 'set') drainInbox();
+    if (d.key === 'blob' && d.op === 'set' && !persistingSelf) reconcileExternal();
+    if (d.key === 'blob' && d.op === 'remove' && !persistingSelf) acceptExternalDelete();
+  });
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'mentria.store.quick_notes.inbox' && e.newValue) drainInbox();
+    if (e.key === 'mentria.store.quick_notes.blob' && e.newValue) reconcileExternal();
+    if (e.key === 'mentria.store.quick_notes.blob' && !e.newValue) acceptExternalDelete();
+  });
+
+  load();
+  drainInbox();
+  if (ingestSharedContent()) {
+    selectNote(activeId);
+  } else if (activeId === null && notes.length > 0) {
+    selectNote(notes[0].id);
+  }
+  renderList();
+})();
+</script>
+
+
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="Navigation de l&#39;application" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/fr/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Accueil</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/fr/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Fil</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Ouvrir la palette de commandes (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Recherche</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Installer Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Ajouter à l&#39;écran d&#39;accueil — fonctionne hors ligne.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Installer</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Fermer" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Fermer" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Installer Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Installer Mentria sur iPhone",
+    macosTitle:  "Installer Mentria sur Mac",
+    chromeTitle: "Installer Mentria",
+    iosStep1:    "Appuyez sur le bouton <strong>Partager</strong> en bas de l'écran",
+    iosStep2:    "Choisissez <strong>Sur l'écran d'accueil</strong>",
+    iosStep3:    "Appuyez sur <strong>Ajouter</strong> en haut à droite.",
+    macosStep1:  "Ouvrez cette page dans <strong>Safari 17+</strong>.",
+    macosStep2:  "Dans la barre de menus, choisissez <strong>Fichier → Ajouter au Dock…</strong>",
+    macosStep3:  "Cliquez sur <strong>Ajouter</strong>.",
+    chromeStep1: "Cliquez sur l'icône d'<strong>installation</strong> dans la barre d'adresse de votre navigateur.",
+    chromeStep2: "Ou ouvrez le menu (⋮) et choisissez <strong>Installer Mentria</strong>.",
+    note:        "Une fois installée, Mentria fonctionne hors ligne et vos données locales restent sur votre appareil."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Annuler</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "Confirmer";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "Échec de l'enregistrement — le stockage du navigateur est plein. Libérez de l'espace pour conserver vos modifications.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("Cela télécharge un grand modèle d'IA (490 Mo ou plus selon le modèle) et vous semblez être sur une connexion lente ou en économie de données. Continuer ?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Partager";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "À propos de cet outil");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Version de test (instantané de la candidature WebMCP), figée pour les tests. Pour un usage courant, rendez-vous sur <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>

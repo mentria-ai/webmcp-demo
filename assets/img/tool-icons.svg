@@ -1,0 +1,664 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="tool-search" viewBox="0 0 48 48"><defs>
+<linearGradient id="cysearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pusearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pksearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEsearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosssearch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbsearch" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dksearch" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shsearch" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softsearch" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shsearch)">
+   <path d="M27 27 L40 40" fill="none" stroke="url(#pusearch)" stroke-width="9" stroke-linecap="round"></path>
+   <path d="M28.4 28.4 L38 38" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".22"></path>
+   <circle cx="20" cy="20" r="13" fill="url(#cysearch)"></circle>
+   <circle cx="20" cy="20" r="13" fill="url(#glosssearch)" opacity=".5"></circle>
+   <circle cx="20" cy="20" r="9.2" fill="#0d2b33" opacity=".30"></circle>
+   <circle cx="20" cy="20" r="9.2" fill="url(#cysearch)" opacity=".9"></circle>
+   <ellipse cx="16.4" cy="15.8" rx="4.2" ry="2.8" transform="rotate(-38 16.4 15.8)" fill="#fff" opacity=".55"></ellipse>
+ </g></symbol>
+<symbol id="tool-ai-chat" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossaichat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbaichat" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkaichat" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shaichat" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softaichat" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shaichat)">
+   <path d="M10 9h28a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H25l-8.4 6.4a1 1 0 0 1-1.6-.9V33H10a5 5 0 0 1-5-5V14a5 5 0 0 1 5-5Z" fill="url(#puaichat)"></path>
+   <path d="M10 9h28a5 5 0 0 1 5 5v3.5a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3V14a5 5 0 0 1 5-5Z" fill="#fff" opacity=".22"></path>
+   <path d="M22.4 13.2l2.5 6.1 6.1 2.5-6.1 2.5-2.5 6.1-2.5-6.1-6.1-2.5 6.1-2.5Z" fill="#fff"></path>
+   <circle cx="33.2" cy="26.4" r="2.6" fill="url(#cyaichat)"></circle>
+ </g></symbol>
+<symbol id="tool-quote" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossquote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbquote" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkquote" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shquote" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softquote" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shquote)">
+   <rect x="6" y="9" width="36" height="30" rx="8" fill="url(#puquote)"></rect>
+   <path d="M6 17a8 8 0 0 1 8-8h20a8 8 0 0 1 8 8v-3a5 5 0 0 0-5-5H11a5 5 0 0 0-5 5Z" fill="#fff" opacity=".2"></path>
+   <g fill="#fff">
+     <path d="M14 17h6.4v6c0 4-2.4 6.6-6 7.2l-1.2-3c1.8-.5 2.8-1.5 2.9-3.2H14Z"></path>
+     <path d="M25.6 17H32v6c0 4-2.4 6.6-6 7.2l-1.2-3c1.8-.5 2.8-1.5 2.9-3.2h-2.1Z"></path>
+   </g>
+ </g></symbol>
+<symbol id="tool-radio" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbradio" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkradio" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shradio" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softradio" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><defs><linearGradient id="rcradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#22D3EE"></stop></linearGradient><linearGradient id="rpradio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F472B6"></stop></linearGradient></defs>
+   <g filter="url(#shradio)">
+   <path d="M16.5 18.5a13 13 0 0 0 0 19" fill="none" stroke="url(#rcradio)" stroke-width="3.6" stroke-linecap="round"></path>
+   <path d="M10.5 12.5a21 21 0 0 0 0 31" fill="none" stroke="url(#rcradio)" stroke-width="3.6" stroke-linecap="round" opacity=".5"></path>
+   <path d="M31.5 18.5a13 13 0 0 1 0 19" fill="none" stroke="url(#rpradio)" stroke-width="3.6" stroke-linecap="round"></path>
+   <path d="M37.5 12.5a21 21 0 0 1 0 31" fill="none" stroke="url(#rpradio)" stroke-width="3.6" stroke-linecap="round" opacity=".5"></path>
+   <circle cx="24" cy="28" r="6" fill="url(#orbradio)"></circle>
+   <ellipse cx="22" cy="25.6" rx="2.4" ry="1.6" transform="rotate(-30 22 25.6)" fill="#fff" opacity=".5"></ellipse>
+ </g></symbol>
+<symbol id="tool-tetris" viewBox="0 0 48 48"><defs>
+<linearGradient id="cytetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="putetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pktetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amtetris" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<filter id="shtetris" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shtetris)">
+<g><rect x="7" y="12.5" width="11" height="11" rx="2.4" fill="url(#pktetris)"></rect><rect x="8.4" y="13.9" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+<g><rect x="18.5" y="12.5" width="11" height="11" rx="2.4" fill="url(#amtetris)"></rect><rect x="19.9" y="13.9" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+<g><rect x="18.5" y="24" width="11" height="11" rx="2.4" fill="url(#cytetris)"></rect><rect x="19.9" y="25.4" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+<g><rect x="30" y="24" width="11" height="11" rx="2.4" fill="url(#putetris)"></rect><rect x="31.4" y="25.4" width="8.2" height="3.2" rx="1.4" fill="#fff" opacity=".28"></rect></g>
+</g></symbol>
+<symbol id="tool-breakout" viewBox="0 0 48 48"><defs>
+<linearGradient id="cybreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pubreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkbreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="ambreakout" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<radialGradient id="orbbreakout" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<filter id="shbreakout" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shbreakout)">
+<g>
+<rect x="6" y="7" width="11" height="5.4" rx="1.8" fill="url(#pkbreakout)"></rect>
+<rect x="18.5" y="7" width="11" height="5.4" rx="1.8" fill="url(#ambreakout)"></rect>
+<rect x="31" y="7" width="11" height="5.4" rx="1.8" fill="url(#cybreakout)"></rect>
+<rect x="6" y="14" width="11" height="5.4" rx="1.8" fill="url(#pubreakout)"></rect>
+<rect x="18.5" y="14" width="11" height="5.4" rx="1.8" fill="url(#pkbreakout)"></rect>
+<rect x="31" y="14" width="11" height="5.4" rx="1.8" fill="url(#ambreakout)"></rect>
+</g>
+<circle cx="24" cy="28" r="3.4" fill="url(#orbbreakout)"></circle>
+<ellipse cx="22.8" cy="26.8" rx="1.2" ry=".8" fill="#fff" opacity=".55"></ellipse>
+<rect x="15" y="37" width="18" height="5" rx="2.5" fill="url(#cybreakout)"></rect>
+<rect x="16.4" y="38" width="9" height="1.6" rx=".8" fill="#fff" opacity=".4"></rect>
+</g></symbol>
+<symbol id="tool-flappy" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyflappy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A5F3FC"></stop><stop offset="1" stop-color="#67E8F9"></stop></linearGradient>
+<linearGradient id="cyflappyD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22D3EE"></stop><stop offset="1" stop-color="#0E9CBE"></stop></linearGradient>
+<linearGradient id="gnflappy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<filter id="shflappy" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shflappy)">
+<rect x="35.5" y="6" width="8.5" height="36" rx="2.5" fill="url(#gnflappy)"></rect>
+<rect x="34" y="19.5" width="11.5" height="7" rx="2.5" fill="url(#gnflappy)"></rect>
+<rect x="36.7" y="7.5" width="1.8" height="32" rx="1" fill="#fff" opacity=".25"></rect>
+
+<rect x="3" y="21" width="7" height="2" rx="1" fill="#67E8F9" opacity=".4"></rect>
+<rect x="5" y="26.5" width="5" height="2" rx="1" fill="#67E8F9" opacity=".25"></rect>
+
+<path d="M31 23.5 L13 17.5 L17.5 23.5 Z" fill="url(#cyflappy)"></path>
+<path d="M31 23.5 L13 30.5 L17.5 23.5 Z" fill="url(#cyflappyD)"></path>
+<path d="M17.5 23.5 L22 25 L18.5 29.5 Z" fill="#0E7490"></path>
+<path d="M31 23.5 L17.5 23.5" stroke="#083344" stroke-width="0.9" opacity=".6"></path>
+</g></symbol>
+<symbol id="tool-minesweeper" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossminesweeper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbminesweeper" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkminesweeper" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shminesweeper" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softminesweeper" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shminesweeper)">
+   <g stroke="url(#dkminesweeper)" stroke-width="3.4" stroke-linecap="round"><path d="M24 11v26M11 24h26M14.5 14.5l19 19M33.5 14.5l-19 19"></path></g>
+   <circle cx="24" cy="24" r="10" fill="url(#dkminesweeper)"></circle>
+   <ellipse cx="20.5" cy="20.5" rx="3.4" ry="2.4" transform="rotate(-32 20.5 20.5)" fill="#fff" opacity=".4"></ellipse>
+   <path d="M30 14l2.4 2.4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".5"></path>
+   <path d="M31.5 11.5l1.3 3.1 3.1 1.3-3.1 1.3-1.3 3.1-1.3-3.1-3.1-1.3 3.1-1.3Z" fill="url(#amminesweeper)"></path>
+ </g></symbol>
+<symbol id="tool-color-picker" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pucolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gncolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEcolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosscolorpicker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbcolorpicker" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkcolorpicker" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcolorpicker" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softcolorpicker" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shcolorpicker)">
+   <path d="M24 7C13.5 7 5 14.6 5 24c0 7 5.6 9.2 9.4 9.2 2.7 0 3.6 1.6 3.6 3.2 0 .9-.4 1.7-.4 2.8 0 1.7 1.4 2.8 3.4 2.8C34 42 43 34.4 43 24 43 14.6 34.5 7 24 7Z" fill="url(#amcolorpicker)"></path>
+   <path d="M24 7C13.5 7 5 14.6 5 24c0 1 .1 1.9.3 2.8C6 18.4 14 12 24 12s18 6.4 18.7 14.8c.2-.9.3-1.8.3-2.8C43 14.6 34.5 7 24 7Z" fill="#fff" opacity=".25"></path>
+   <circle cx="14.5" cy="20" r="2.6" fill="url(#cycolorpicker)"></circle>
+   <circle cx="22" cy="15" r="2.6" fill="url(#pkcolorpicker)"></circle>
+   <circle cx="31" cy="16.5" r="2.6" fill="url(#pucolorpicker)"></circle>
+   <circle cx="35.5" cy="24" r="2.6" fill="url(#gncolorpicker)"></circle>
+ </g></symbol>
+<symbol id="tool-markdown-pdf" viewBox="0 0 48 48"><defs>
+<linearGradient id="cymarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pumarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="ammarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossmarkdownpdf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbmarkdownpdf" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkmarkdownpdf" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shmarkdownpdf" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softmarkdownpdf" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shmarkdownpdf)">
+   <path d="M12 5h16l8 8v26a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="url(#cymarkdownpdf)"></path>
+   <path d="M28 5l8 8h-6a2 2 0 0 1-2-2Z" fill="#0c5566" opacity=".55"></path>
+   <path d="M12 5h16v2H12a2 2 0 0 0-2 2V7a2 2 0 0 1 2-2Z" fill="#fff" opacity=".3"></path>
+   <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".85"><path d="M17 19v8M17 19l3 3 3-3v8"></path></g>
+   <circle cx="32" cy="33" r="7.5" fill="url(#pkmarkdownpdf)"></circle>
+   <path d="M32 29v7M28.8 32.8 32 36l3.2-3.2" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+ </g></symbol>
+<symbol id="tool-invoice" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="aminvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gninvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossinvoice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbinvoice" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkinvoice" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shinvoice" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softinvoice" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shinvoice)">
+   <path d="M11 6a2 2 0 0 1 2-2h22a2 2 0 0 1 2 2v34l-3.5-2.4L30 40l-3.5-2.4L23 40l-3.5-2.4L16 40l-3.5-2.4L11 40Z" fill="url(#puinvoice)"></path>
+   <path d="M13 4h22a2 2 0 0 1 2 2v2a2 2 0 0 0-2-2H13a2 2 0 0 0-2 2V6a2 2 0 0 1 2-2Z" fill="#fff" opacity=".25"></path>
+   <g stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".9"><path d="M16 14h16M16 20h16M16 26h10"></path></g>
+   <circle cx="30.5" cy="27" r="5" fill="url(#aminvoice)"></circle>
+   <path d="M28.2 27l1.7 1.7 3-3.2" fill="none" stroke="#7a4d08" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+ </g></symbol>
+<symbol id="tool-files" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyfiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="cyEfiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22B8D4"></stop><stop offset="1" stop-color="#0E7C93"></stop></linearGradient>
+<linearGradient id="pufiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkfiles" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<filter id="shfiles" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shfiles)">
+   <path d="M7 13a2 2 0 0 1 2-2h9l3 3h18a2 2 0 0 1 2 2v3H7Z" fill="url(#cyEfiles)"></path>
+   <rect x="13" y="9" width="9" height="12" rx="1" fill="url(#pufiles)" transform="rotate(-8 17.5 15)"></rect>
+   <rect x="24" y="8" width="9" height="12" rx="1" fill="url(#pkfiles)" transform="rotate(6 28.5 14)"></rect>
+   <g stroke="#fff" stroke-width="1.1" opacity=".5" stroke-linecap="round"><path d="M15.5 12.5l5-.7M16 15.5l5-.7" transform="rotate(-8 17.5 15)"></path><path d="M26 11.5l5 .5M26 14.5l5 .5" transform="rotate(6 28.5 14)"></path></g>
+   <path d="M5.5 19.5a2 2 0 0 1 2-2.4h33a2 2 0 0 1 2 2.4l-2.6 17a2 2 0 0 1-2 1.7H10.1a2 2 0 0 1-2-1.7Z" fill="url(#cyfiles)"></path>
+   <path d="M5.7 18.9a2 2 0 0 1 1.8-1.8h33a2 2 0 0 1 1.8 1.8l-.2 1.3H5.9Z" fill="#fff" opacity=".28"></path>
+   <path d="M8.1 36.5l-2.4-15.6h36.6l-2.4 15.6a2 2 0 0 1-2 1.7H10.1a2 2 0 0 1-2-1.7Z" fill="#0d7f97" opacity=".18"></path>
+ </g></symbol>
+<symbol id="tool-quick-notes" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossquicknotes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbquicknotes" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkquicknotes" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shquicknotes" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softquicknotes" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shquicknotes)">
+   <path d="M8 9a2 2 0 0 1 2-2h20l8 8v18a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2Z" fill="url(#amquicknotes)"></path>
+   <path d="M30 7l8 8h-6a2 2 0 0 1-2-2Z" fill="#b87f10" opacity=".5"></path>
+   <path d="M8 9a2 2 0 0 1 2-2h20v2H10a2 2 0 0 0-2 2V9Z" fill="#fff" opacity=".3"></path>
+   <g stroke="#9a6a08" stroke-width="2.2" stroke-linecap="round" opacity=".55"><path d="M14 20h12M14 26h9"></path></g>
+   <g transform="rotate(40 30 30)"><rect x="27.5" y="20" width="5" height="17" rx="1" fill="url(#puquicknotes)"></rect><rect x="27.5" y="20" width="5" height="4" fill="url(#pkquicknotes)"></rect><path d="M27.5 37h5l-2.5 4Z" fill="url(#amquicknotes)"></path><path d="M29 38.5h2l-1 1.6Z" fill="#3a2a08"></path></g>
+ </g></symbol>
+<symbol id="tool-base64-codec" viewBox="0 0 48 48"><defs>
+<linearGradient id="cybase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pubase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="ambase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossbase64codec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbbase64codec" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkbase64codec" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shbase64codec" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softbase64codec" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shbase64codec)">
+   <path d="M16 13 7 24l9 11" fill="none" stroke="url(#cybase64codec)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+   <path d="M32 13l9 11-9 11" fill="none" stroke="url(#pkbase64codec)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+   <g fill="url(#ambase64codec)"><rect x="20" y="17" width="3.4" height="3.4" rx=".8"></rect><rect x="24.6" y="17" width="3.4" height="3.4" rx=".8"></rect><rect x="20" y="27.6" width="3.4" height="3.4" rx=".8"></rect><rect x="24.6" y="27.6" width="3.4" height="3.4" rx=".8"></rect></g>
+   <rect x="22.4" y="22.3" width="3.4" height="3.4" rx=".8" fill="url(#pubase64codec)"></rect>
+ </g></symbol>
+<symbol id="tool-qr-scanner" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossqrscanner" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbqrscanner" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkqrscanner" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shqrscanner" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softqrscanner" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shqrscanner)">
+   <g fill="none" stroke="url(#cyqrscanner)" stroke-width="3.6" stroke-linecap="round">
+     <path d="M7 17V10a3 3 0 0 1 3-3h7"></path><path d="M31 7h7a3 3 0 0 1 3 3v7"></path><path d="M41 31v7a3 3 0 0 1-3 3h-7"></path><path d="M17 41h-7a3 3 0 0 1-3-3v-7"></path>
+   </g>
+   <rect x="17.4" y="17.4" width="6.6" height="6.6" rx="1.6" fill="url(#puqrscanner)"></rect>
+   <rect x="26" y="17.6" width="4.6" height="4.6" rx="1.1" fill="#fff" opacity=".92"></rect>
+   <rect x="17.6" y="26" width="4.6" height="4.6" rx="1.1" fill="#fff" opacity=".92"></rect>
+   <rect x="26" y="26" width="6.6" height="6.6" rx="1.6" fill="url(#puEqrscanner)"></rect>
+   <rect x="8" y="22.6" width="32" height="3" rx="1.5" fill="url(#pkqrscanner)" filter="url(#softqrscanner)" opacity=".7"></rect>
+   <rect x="9" y="23" width="30" height="2.2" rx="1.1" fill="#FBA6D2"></rect>
+ </g></symbol>
+<symbol id="tool-step-counter" viewBox="0 0 48 48"><defs>
+<linearGradient id="ringst" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#67E8F9"></stop><stop offset=".55" stop-color="#A78BFA"></stop><stop offset="1" stop-color="#F472B6"></stop></linearGradient>
+<linearGradient id="footst" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8FAFC"></stop><stop offset="1" stop-color="#CBD5E1"></stop></linearGradient>
+<filter id="shst" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.1" flood-color="#000" flood-opacity="0.3"></feDropShadow></filter>
+</defs>
+<g filter="url(#shst)">
+  
+  <circle cx="24" cy="24" r="15" stroke="#2a2a35" stroke-width="5"></circle>
+  
+  <path d="M24 9 A15 15 0 1 1 9.9 18.87" stroke="url(#ringst)" stroke-width="5" stroke-linecap="round" fill="none"></path>
+  <circle cx="24" cy="9" r="2.5" fill="#67E8F9"></circle>
+  
+  <g fill="url(#footst)">
+    <path d="M21.6 21.5C21 24.4 21.2 27.2 22.6 29.2C23.4 30.4 25.2 30.4 26 29.1C27.3 27 27.2 24.2 26.6 21.4C26.2 19.5 25 18.6 24.1 18.6C23 18.6 22 19.6 21.6 21.5Z"></path>
+    <circle cx="21.3" cy="18.4" r="1.15"></circle>
+    <circle cx="23.9" cy="17.2" r="1.25"></circle>
+    <circle cx="26.2" cy="18" r="1.1"></circle>
+    <circle cx="27.6" cy="20" r=".9"></circle>
+  </g>
+</g></symbol>
+<symbol id="tool-countdown-timer" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pucountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gncountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEcountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosscountdowntimer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbcountdowntimer" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkcountdowntimer" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcountdowntimer" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softcountdowntimer" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shcountdowntimer)">
+   <rect x="19.5" y="3.5" width="9" height="6.2" rx="3.1" fill="url(#pkcountdowntimer)"></rect>
+   <rect x="22.5" y="8" width="3" height="5.5" fill="url(#pkcountdowntimer)"></rect>
+   <circle cx="24" cy="28.5" r="15" fill="url(#cycountdowntimer)"></circle>
+   <path d="M24 28.5V13.5A15 15 0 0 1 38.4 22Z" fill="url(#puEcountdowntimer)" opacity=".92"></path>
+   <circle cx="24" cy="28.5" r="15" fill="url(#glosscountdowntimer)" opacity=".34"></circle>
+   <ellipse cx="18" cy="20" rx="5.5" ry="3.6" transform="rotate(-32 18 20)" fill="#fff" opacity=".30"></ellipse>
+   <path d="M24 28.5V18.6" stroke="#fff" stroke-width="2.9" stroke-linecap="round"></path>
+   <circle cx="24" cy="28.5" r="2.5" fill="#fff"></circle>
+ </g></symbol>
+<symbol id="tool-coin-flip" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pucoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gncoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEcoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glosscoinflip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbcoinflip" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkcoinflip" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcoinflip" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softcoinflip" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shcoinflip)">
+   <path d="M11 25c0 5.2 5.8 8 13 8s13-2.8 13-8v4.6c0 5.2-5.8 8-13 8s-13-2.8-13-8Z" fill="url(#amEcoinflip)"></path>
+   <ellipse cx="24" cy="25" rx="13" ry="9.6" fill="url(#amcoinflip)"></ellipse>
+   <ellipse cx="24" cy="25" rx="13" ry="9.6" fill="url(#glosscoinflip)" opacity=".4"></ellipse>
+   <path d="M23.5 19.7 24.68 22.88 28.06 23.02 25.4 25.12 26.32 28.38 23.5 26.5 20.68 28.38 21.6 25.12 18.94 23.02 22.32 22.88Z" transform="translate(0.5 0.6)" fill="#FDE08A" opacity=".7"></path>
+   <path d="M23.5 19.7 24.68 22.88 28.06 23.02 25.4 25.12 26.32 28.38 23.5 26.5 20.68 28.38 21.6 25.12 18.94 23.02 22.32 22.88Z" fill="#B4730D"></path>
+   <path d="M9 16.5a17.5 17.5 0 0 1 30 0" fill="none" stroke="url(#cycoinflip)" stroke-width="3.2" stroke-linecap="round"></path>
+   <path d="M37.5 9 40 16.8l-7.8-1Z" fill="#22D3EE"></path>
+ </g></symbol>
+<symbol id="tool-decision-wheel" viewBox="0 0 48 48"><defs>
+<linearGradient id="cydecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pudecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gndecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="glossdecisionwheel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbdecisionwheel" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkdecisionwheel" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shdecisionwheel" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softdecisionwheel" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shdecisionwheel)">
+   <g transform="translate(24 26)">
+     <path d="M0 0 V-14 A14 14 0 0 1 14 0 Z" fill="url(#cydecisionwheel)"></path>
+     <path d="M0 0 H14 A14 14 0 0 1 0 14 Z" fill="url(#pkdecisionwheel)"></path>
+     <path d="M0 0 V14 A14 14 0 0 1 -14 0 Z" fill="url(#amdecisionwheel)"></path>
+     <path d="M0 0 H-14 A14 14 0 0 1 0 -14 Z" fill="url(#pudecisionwheel)"></path>
+   </g>
+   <circle cx="24" cy="26" r="14" fill="url(#glossdecisionwheel)" opacity=".28"></circle>
+   <circle cx="24" cy="26" r="3.4" fill="#fff"></circle>
+   <path d="M20 4h8l-4 7Z" fill="url(#pkdecisionwheel)"></path>
+   <path d="M21 4.6h4.5l-2.2 3.8Z" fill="#fff" opacity=".3"></path>
+ </g></symbol>
+<symbol id="tool-annotate-image" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="amannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<radialGradient id="dkannimg" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glossannimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shannimg" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shannimg)">
+   <rect x="7" y="9" width="34" height="30" rx="6" fill="url(#dkannimg)"></rect>
+   <rect x="7" y="9" width="34" height="30" rx="6" fill="none" stroke="url(#cyannimg)" stroke-width="2.2"></rect>
+   <circle cx="16.5" cy="18" r="3" fill="url(#amannimg)"></circle>
+   <path d="M11 35l8.5-10 6 6.5 4.5-5L37 35Z" fill="url(#gnannimg)"></path>
+   <path d="M25.5 31.5l4.5-5L37 35H22Z" fill="url(#cyannimg)" opacity=".85"></path>
+   <rect x="7" y="9" width="34" height="15" rx="6" fill="url(#glossannimg)" opacity=".45"></rect>
+   <path d="M34 8.5l1.5 3.6 3.6 1.5-3.6 1.5L34 18.7l-1.5-3.6L28.9 13.6l3.6-1.5Z" fill="url(#puannimg)"></path>
+   <path d="M34 10.4l0.7 1.7 1.7 0.7-1.7 0.7-0.7 1.7-0.7-1.7-1.7-0.7 1.7-0.7Z" fill="#fff" opacity=".5"></path>
+ </g></symbol>
+<symbol id="tool-chess" viewBox="0 0 48 48"><defs>
+<linearGradient id="cychess" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amchess" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<radialGradient id="dkchess" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glosschess" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shchess" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shchess)">
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="url(#dkchess)"></rect>
+   <g fill="url(#cychess)" opacity=".22"><rect x="6" y="6" width="9" height="9"></rect><rect x="24" y="6" width="9" height="9"></rect><rect x="15" y="15" width="9" height="9"></rect><rect x="33" y="15" width="9" height="9"></rect><rect x="6" y="24" width="9" height="9"></rect><rect x="24" y="24" width="9" height="9"></rect><rect x="15" y="33" width="9" height="9"></rect><rect x="33" y="33" width="9" height="9"></rect></g>
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="none" stroke="url(#cychess)" stroke-width="2.2"></rect>
+   <rect x="16.5" y="31.4" width="15" height="3.4" rx="1.5" fill="url(#amchess)"></rect>
+   <path d="M19.4 31.4C19.4 27.2 21.8 25.4 21.8 22.6L26.2 22.6C26.2 25.4 28.6 27.2 28.6 31.4Z" fill="url(#amchess)"></path>
+   <rect x="20.8" y="20.2" width="6.4" height="2.6" rx="1.3" fill="url(#amchess)"></rect>
+   <circle cx="24" cy="16.2" r="4" fill="url(#amchess)"></circle>
+   <rect x="6" y="6" width="36" height="17" rx="7" fill="url(#glosschess)" opacity=".4"></rect>
+ </g></symbol>
+<symbol id="tool-ludo" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="pkludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="gnludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<radialGradient id="dkludo" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glossludo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".4"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shludo" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shludo)">
+   <rect x="6" y="6" width="36" height="36" rx="8" fill="url(#dkludo)"></rect>
+   <rect x="6" y="6" width="36" height="36" rx="8" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.4"></rect>
+   <path d="M9 9h11v11H9Z" rx="2" fill="url(#cyludo)" opacity=".85"></path>
+   <path d="M28 9h11v11H28Z" fill="url(#amludo)" opacity=".85"></path>
+   <path d="M28 28h11v11H28Z" fill="url(#pkludo)" opacity=".85"></path>
+   <path d="M9 28h11v11H9Z" fill="url(#gnludo)" opacity=".85"></path>
+   <g fill="#0f0d16"><circle cx="14.5" cy="14.5" r="2.4"></circle><circle cx="33.5" cy="14.5" r="2.4"></circle><circle cx="33.5" cy="33.5" r="2.4"></circle><circle cx="14.5" cy="33.5" r="2.4"></circle></g>
+   <path d="M20 24h8M24 20v8" stroke="url(#cyludo)" stroke-width="2.4" stroke-linecap="round"></path>
+   <path d="M24 19l3 5h-6Z" fill="#fff" opacity=".9"></path>
+   <rect x="6" y="6" width="36" height="17" rx="8" fill="url(#glossludo)" opacity=".4"></rect>
+ </g></symbol>
+<symbol id="tool-sudoku" viewBox="0 0 48 48"><defs>
+<linearGradient id="cysudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amsudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="pksudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<radialGradient id="dksudoku" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glosssudoku" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".40"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shsudoku" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shsudoku)">
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="url(#dksudoku)"></rect>
+   <rect x="6" y="6" width="36" height="36" rx="7" fill="none" stroke="url(#cysudoku)" stroke-width="2.4"></rect>
+   <g stroke="url(#cysudoku)" stroke-width="2.2" opacity=".85" stroke-linecap="round"><path d="M18 8v32M30 8v32M8 18h32M8 30h32"></path></g>
+   <rect x="9.5" y="9.5" width="5" height="5" rx="1.2" fill="url(#amsudoku)"></rect>
+   <rect x="21.5" y="21.5" width="5" height="5" rx="1.2" fill="url(#cysudoku)"></rect>
+   <rect x="33.5" y="9.5" width="5" height="5" rx="1.2" fill="url(#pksudoku)"></rect>
+   <rect x="9.5" y="33.5" width="5" height="5" rx="1.2" fill="url(#cysudoku)"></rect>
+   <rect x="33.5" y="33.5" width="5" height="5" rx="1.2" fill="url(#amsudoku)"></rect>
+   <rect x="6" y="6" width="36" height="18" rx="7" fill="url(#glosssudoku)" opacity=".5"></rect>
+ </g></symbol>
+<symbol id="tool-totp" viewBox="0 0 48 48"><defs>
+<linearGradient id="cytotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amtotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gntotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<radialGradient id="dktotp" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#2a2438"></stop><stop offset="1" stop-color="#100e14"></stop></radialGradient>
+<linearGradient id="glosstotp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".40"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shtotp" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shtotp)">
+   <circle cx="24" cy="24" r="20" fill="url(#dktotp)"></circle>
+   <circle cx="24" cy="24" r="20" fill="none" stroke="#1d2030" stroke-width="3.6"></circle>
+   <circle cx="24" cy="24" r="20" fill="none" stroke="url(#amtotp)" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="91 35" transform="rotate(-90 24 24)"></circle>
+   <circle cx="24" cy="24" r="20" fill="url(#glosstotp)" opacity=".22"></circle>
+   <g fill="url(#cytotp)">
+     <circle cx="12" cy="24" r="2.2"></circle>
+     <circle cx="17" cy="24" r="2.2"></circle>
+     <circle cx="22" cy="24" r="2.2"></circle>
+     <circle cx="28" cy="24" r="2.2"></circle>
+     <circle cx="33" cy="24" r="2.2"></circle>
+     <circle cx="38" cy="24" r="2.2" opacity=".35"></circle>
+   </g>
+ </g></symbol>
+<symbol id="tool-extensions" viewBox="0 0 48 48"><defs>
+<linearGradient id="gnextensions" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="cyextensions" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="glossextensions" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shextensions" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shextensions)">
+   <path d="M16 18h5a4 4 0 1 1 8 0h5a2.5 2.5 0 0 1 2.5 2.5v4.5a4 4 0 1 1 0 8v4.5a2.5 2.5 0 0 1-2.5 2.5h-18a2.5 2.5 0 0 1-2.5-2.5v-17a2.5 2.5 0 0 1 2.5-2.5z" fill="url(#gnextensions)"></path>
+   <rect x="16" y="21" width="18" height="7" rx="3.5" fill="url(#glossextensions)" opacity=".45"></rect>
+   <circle cx="19.5" cy="34" r="2.1" fill="url(#cyextensions)"></circle>
+   <circle cx="25.5" cy="34" r="2.1" fill="url(#cyextensions)" opacity=".7"></circle>
+   <circle cx="31.5" cy="34" r="2.1" fill="url(#cyextensions)" opacity=".4"></circle>
+ </g></symbol>
+<symbol id="tool-comms" viewBox="0 0 48 48"><defs>
+<linearGradient id="gncomms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="pucomms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="glosscomms" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shcomms" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shcomms)">
+   <path d="M21 7h16a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-2.4l1.5 5.2-6.8-5.2H21a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4Z" fill="url(#pucomms)"></path>
+   <path d="M21 7h16a4 4 0 0 1 4 4v4H17v-4a4 4 0 0 1 4-4Z" fill="url(#glosscomms)" opacity=".45"></path>
+   <rect x="22" y="13" width="14" height="2.6" rx="1.3" fill="#2b1d5e" opacity=".75"></rect>
+   <rect x="22" y="17.6" width="9" height="2.6" rx="1.3" fill="#2b1d5e" opacity=".55"></rect>
+   <path d="M11 19h16a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4H15l-6.8 5.4 1.7-5.4H11a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4Z" fill="url(#gncomms)"></path>
+   <path d="M11 19h16a4 4 0 0 1 4 4v4H7v-4a4 4 0 0 1 4-4Z" fill="url(#glosscomms)" opacity=".4"></path>
+   <circle cx="14" cy="27.5" r="2" fill="#0d3a22"></circle>
+   <circle cx="19.5" cy="27.5" r="2" fill="#0d3a22"></circle>
+   <circle cx="25" cy="27.5" r="2" fill="#0d3a22"></circle>
+ </g></symbol>
+<symbol id="tool-exif" viewBox="0 0 48 48"><defs>
+<linearGradient id="frexif" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="mtexif" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="pnexif" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<filter id="shexif" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.1" flood-color="#000" flood-opacity="0.3"></feDropShadow></filter>
+</defs>
+<g filter="url(#shexif)">
+  <rect x="5" y="9" width="29" height="25" rx="4" fill="#12121a" stroke="url(#frexif)" stroke-width="2.4"></rect>
+  <circle cx="13.5" cy="17" r="2.6" fill="#FCD661"></circle>
+  <path d="M7.5 29.5 L16 21 L21 26 L26.5 20.5 L32.5 26.5 V29.5 A2.6 2.6 0 0 1 29.9 32.1 H10.1 A2.6 2.6 0 0 1 7.5 29.5 Z" fill="url(#mtexif)" opacity=".92"></path>
+  <path d="M36 17.5 c-4.2 0-7.2 3.1-7.2 7.1 0 5 5.8 10.8 7.2 12.1 1.4-1.3 7.2-7.1 7.2-12.1 0-4-3-7.1-7.2-7.1Z" fill="url(#pnexif)"></path>
+  <circle cx="36" cy="24.8" r="2.7" fill="#12121a"></circle>
+  <path d="M28.2 35.8 L43.8 20.2" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round"></path>
+</g></symbol>
+<symbol id="tool-bubble-level" viewBox="0 0 48 48"><defs>
+<linearGradient id="ambl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="amEbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="gnbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="cybl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="glossbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shbl" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shbl)">
+   <rect x="3" y="14.5" width="42" height="19" rx="5.5" fill="url(#ambl)"></rect>
+   <rect x="3" y="14.5" width="42" height="10" rx="5" fill="url(#glossbl)" opacity=".45"></rect>
+   <rect x="5.6" y="17.1" width="36.8" height="13.8" rx="4" fill="none" stroke="url(#amEbl)" stroke-opacity=".35" stroke-width="1"></rect>
+   <circle cx="9" cy="24" r="2.1" fill="url(#amEbl)" opacity=".5"></circle>
+   <circle cx="39" cy="24" r="2.1" fill="url(#amEbl)" opacity=".5"></circle>
+   <rect x="13" y="18.6" width="22" height="10.8" rx="5.4" fill="#0d2b33"></rect>
+   <rect x="13" y="18.6" width="22" height="10.8" rx="5.4" fill="url(#cybl)" opacity=".18"></rect>
+   <path d="M20 20.4 V27.6" stroke="#fff" stroke-opacity=".4" stroke-width="1.1" stroke-linecap="round"></path>
+   <path d="M28 20.4 V27.6" stroke="#fff" stroke-opacity=".4" stroke-width="1.1" stroke-linecap="round"></path>
+   <circle cx="25.4" cy="24" r="3.7" fill="url(#gnbl)"></circle>
+   <ellipse cx="24.1" cy="22.6" rx="1.6" ry="1.05" transform="rotate(-38 24.1 22.6)" fill="#fff" opacity=".55"></ellipse>
+ </g></symbol>
+<symbol id="tool-decibel-meter" viewBox="0 0 48 48"><defs>
+<linearGradient id="gndbm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#34C46A"></stop><stop offset="1" stop-color="#86EFAC"></stop></linearGradient>
+<linearGradient id="amdbm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F7B015"></stop><stop offset="1" stop-color="#FCD661"></stop></linearGradient>
+<linearGradient id="rddbm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#DC3F3F"></stop><stop offset="1" stop-color="#FCA5A5"></stop></linearGradient>
+<linearGradient id="cydbm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="glossdbm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="dkdbm" cx="34%" cy="24%" r="86%"><stop offset="0" stop-color="#332F45"></stop><stop offset="1" stop-color="#14131D"></stop></radialGradient>
+<filter id="shdbm" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.3" stdDeviation="1.2" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shdbm)">
+  <rect x="5" y="6" width="38" height="36" rx="9" fill="url(#dkdbm)"></rect>
+  <path d="M14 6h20a9 9 0 0 1 9 9v3.5a9 9 0 0 0-9-9H14a9 9 0 0 0-9 9V15a9 9 0 0 1 9-9Z" fill="url(#glossdbm)" opacity=".5"></path>
+  <rect x="9.5" y="27" width="5.6" height="10" rx="2.8" fill="url(#gndbm)"></rect>
+  <rect x="17.3" y="21" width="5.6" height="16" rx="2.8" fill="url(#gndbm)"></rect>
+  <rect x="25.1" y="16" width="5.6" height="21" rx="2.8" fill="url(#amdbm)"></rect>
+  <rect x="32.9" y="11" width="5.6" height="26" rx="2.8" fill="url(#rddbm)"></rect>
+  <rect x="32" y="9.4" width="7.4" height="2.2" rx="1.1" fill="#F8FAFC"></rect>
+  <rect x="9.5" y="38.4" width="29" height="1.8" rx=".9" fill="url(#cydbm)" opacity=".6"></rect>
+</g></symbol>
+<symbol id="tool-compass" viewBox="0 0 48 48"><defs>
+<linearGradient id="cycmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="pkcmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="gncmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="glosscmp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="dialcmp" cx="36%" cy="30%" r="82%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shcmp" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shcmp)">
+   <circle cx="24" cy="24" r="19" fill="url(#gncmp)"></circle>
+   <circle cx="24" cy="24" r="19" fill="url(#glosscmp)" opacity=".5"></circle>
+   <circle cx="24" cy="24" r="15.6" fill="url(#dialcmp)"></circle>
+   <g stroke="#fff" stroke-linecap="round" opacity=".45">
+     <path d="M24 9 V10.8" stroke-width="1.8"></path>
+     <path d="M39 24 H37.2" stroke-width="1.2"></path>
+     <path d="M24 39 V37.2" stroke-width="1.2"></path>
+     <path d="M9 24 H10.8" stroke-width="1.2"></path>
+   </g>
+   <path d="M24 11.6 L28.6 24 L24 24 Z" fill="url(#pkcmp)"></path>
+   <path d="M24 11.6 L19.4 24 L24 24 Z" fill="#F25FA8" opacity=".7"></path>
+   <path d="M24 36.4 L19.4 24 L24 24 Z" fill="url(#cycmp)"></path>
+   <path d="M24 36.4 L28.6 24 L24 24 Z" fill="#1FBFDB" opacity=".7"></path>
+   <circle cx="24" cy="24" r="2.4" fill="#fff" opacity=".92"></circle>
+   <circle cx="24" cy="24" r="1" fill="#171522" opacity=".5"></circle>
+   <ellipse cx="18.8" cy="15.6" rx="4.4" ry="2.6" transform="rotate(-38 18.8 15.6)" fill="#fff" opacity=".26"></ellipse>
+ </g></symbol>
+<symbol id="tool-speedometer" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="puspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C4B5FD"></stop><stop offset="1" stop-color="#9B7DF7"></stop></linearGradient>
+<linearGradient id="pkspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBA6D2"></stop><stop offset="1" stop-color="#F25FA8"></stop></linearGradient>
+<linearGradient id="amspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="gnspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="amEspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="puEspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C5BE0"></stop><stop offset="1" stop-color="#5B36C4"></stop></linearGradient>
+<linearGradient id="arcspdo" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#34C46A"></stop><stop offset="0.5" stop-color="#6EF3C5"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="glossspdo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="orbspdo" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#FDE08A"></stop><stop offset="55%" stop-color="#FBBF24"></stop><stop offset="1" stop-color="#E89A0C"></stop></radialGradient>
+<radialGradient id="dkspdo" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#3a3550"></stop><stop offset="1" stop-color="#171522"></stop></radialGradient>
+<filter id="shspdo" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+<filter id="softspdo" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"></feGaussianBlur></filter>
+</defs><g filter="url(#shspdo)">
+   <circle cx="24" cy="24" r="19" fill="url(#puspdo)"></circle>
+   <circle cx="24" cy="24" r="19" fill="url(#glossspdo)" opacity=".45"></circle>
+   <circle cx="24" cy="24" r="15.2" fill="url(#dkspdo)"></circle>
+   <path d="M12.74 30.5A13 13 0 1 1 35.26 30.5" fill="none" stroke="url(#arcspdo)" stroke-width="3.4" stroke-linecap="round"></path>
+   <circle cx="15.77" cy="19.25" r="1" fill="#fff" opacity=".45"></circle>
+   <circle cx="24" cy="14.5" r="1" fill="#fff" opacity=".45"></circle>
+   <circle cx="32.23" cy="19.25" r="1" fill="#fff" opacity=".45"></circle>
+   <path d="M24 24L28.9 15.5" fill="none" stroke="url(#amspdo)" stroke-width="2.8" stroke-linecap="round"></path>
+   <circle cx="24" cy="24" r="3.2" fill="url(#cyspdo)"></circle>
+   <circle cx="24" cy="24" r="1.3" fill="#0d2b33" opacity=".45"></circle>
+   <ellipse cx="18.4" cy="11.4" rx="6.2" ry="3.1" transform="rotate(-26 18.4 11.4)" fill="#fff" opacity=".36"></ellipse>
+ </g></symbol>
+<symbol id="tool-ruler" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="amrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<linearGradient id="amErlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2790F"></stop><stop offset="1" stop-color="#9A5B08"></stop></linearGradient>
+<linearGradient id="gnrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="glossrlr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<filter id="shrlr" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shrlr)">
+   <rect x="3" y="11" width="42" height="19" rx="4.5" fill="url(#amrlr)"></rect>
+   <rect x="4.4" y="12.4" width="39.2" height="5.6" rx="2.4" fill="url(#glossrlr)" opacity=".6"></rect>
+   <g fill="url(#amErlr)">
+     <rect x="8" y="11" width="1.8" height="9" rx=".9"></rect>
+     <rect x="13" y="11" width="1.8" height="6" rx=".9"></rect>
+     <rect x="18" y="11" width="1.8" height="9" rx=".9"></rect>
+     <rect x="23" y="11" width="1.8" height="6" rx=".9"></rect>
+     <rect x="28" y="11" width="1.8" height="9" rx=".9"></rect>
+     <rect x="33" y="11" width="1.8" height="6" rx=".9"></rect>
+     <rect x="38" y="11" width="1.8" height="9" rx=".9"></rect>
+   </g>
+   <rect x="3" y="34" width="42" height="3" rx="1.5" fill="url(#cyrlr)" opacity=".55"></rect>
+   <circle cx="11" cy="35.5" r="3.2" fill="url(#gnrlr)"></circle>
+   <circle cx="33" cy="35.5" r="3.2" fill="url(#gnrlr)"></circle>
+   <ellipse cx="10" cy="34.4" rx="1.3" ry=".9" transform="rotate(-30 10 34.4)" fill="#fff" opacity=".55"></ellipse>
+   <ellipse cx="32" cy="34.4" rx="1.3" ry=".9" transform="rotate(-30 32 34.4)" fill="#fff" opacity=".55"></ellipse>
+ </g></symbol>
+<symbol id="tool-phosphor" viewBox="0 0 48 48"><defs><linearGradient id="mnphos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6EF3C5"></stop><stop offset="1" stop-color="#2BD59E"></stop></linearGradient><linearGradient id="amphos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient><linearGradient id="grphos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3340"></stop><stop offset="1" stop-color="#141A23"></stop></linearGradient></defs><rect x="4" y="6" width="40" height="31" rx="4.5" fill="url(#grphos)" stroke="url(#mnphos)" stroke-width="2"></rect><path d="M7 12.5h34M7 18.5h34M7 24.5h34M7 30.5h34" stroke="#6EF3C5" stroke-opacity="0.09" stroke-width="1.4"></path><circle cx="24" cy="21.5" r="6.2" fill="none" stroke="url(#mnphos)" stroke-width="2"></circle><circle cx="24" cy="21.5" r="2.3" fill="url(#amphos)"></circle><path d="M24 10.5v4M24 28.5v4M12.5 21.5h4M31.5 21.5h4" stroke="url(#mnphos)" stroke-width="2.2" stroke-linecap="round"></path><path d="M19 41.5h10" stroke="url(#mnphos)" stroke-width="2.2" stroke-linecap="round"></path><path d="M22 37h4v2.5h-4z" fill="#2A3340"></path></symbol>
+<symbol id="tool-console" viewBox="0 0 48 48"><defs>
+<linearGradient id="cyconsole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="mtconsole" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FF7DC"></stop><stop offset="1" stop-color="#4ADCAE"></stop></linearGradient>
+<filter id="shconsole" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shconsole)">
+   <rect x="12" y="5" width="24" height="38" rx="5.5" fill="url(#cyconsole)"></rect>
+   <path d="M17.5 5h13a5.5 5.5 0 0 1 5.5 5.5V13a3 3 0 0 0-3-3H15a3 3 0 0 0-3 3v-2.5A5.5 5.5 0 0 1 17.5 5Z" fill="#fff" opacity=".25"></path>
+   <path d="M17 15.5l3.4 3-3.4 3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+   <path d="M23.5 21.5h7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path>
+   <circle cx="27.5" cy="32.5" r="5.2" fill="none" stroke="url(#mtconsole)" stroke-width="2.6"></circle>
+   <circle cx="27.5" cy="32.5" r="1.9" fill="#fff"></circle>
+ </g></symbol>
+<symbol id="tool-model-mirror" viewBox="0 0 48 48"><defs>
+<linearGradient id="gnmirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86EFAC"></stop><stop offset="1" stop-color="#34C46A"></stop></linearGradient>
+<linearGradient id="cymirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67E8F9"></stop><stop offset="1" stop-color="#1FBFDB"></stop></linearGradient>
+<linearGradient id="ammirror" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD661"></stop><stop offset="1" stop-color="#F7B015"></stop></linearGradient>
+<filter id="shmirror" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.3" flood-color="#000" flood-opacity="0.32"></feDropShadow></filter>
+</defs><g filter="url(#shmirror)">
+   <path d="M24 15L13.5 31M24 15l10.5 16M13.5 31h21" stroke="url(#gnmirror)" stroke-width="3" stroke-linecap="round"></path>
+   <circle cx="24" cy="13.5" r="7" fill="url(#gnmirror)"></circle>
+   <path d="M24 6.5a7 7 0 0 1 7 7h-3a4 4 0 0 0-4-4Z" fill="#fff" opacity=".3"></path>
+   <path d="M21.5 13.8l2.5-2.6 2.5 2.6M24 11.6v4.6" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+   <circle cx="12.5" cy="33.5" r="5.8" fill="url(#cymirror)"></circle>
+   <circle cx="35.5" cy="33.5" r="5.8" fill="url(#ammirror)"></circle>
+   <path d="M10 32.2l2 2 2.8-2.9M33 32.2l2 2 2.8-2.9" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+ </g></symbol>
+</svg>

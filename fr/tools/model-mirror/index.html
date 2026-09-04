@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="origin-trial" content="AvrrtV9qfu43567NDhfTp/wlKgPoCTk66lxx5aB8pgWBholGgP+VKLTWt/60cXLHNH9JlbDBJsUgEHTXF1OE/A0AAABKeyJvcmlnaW4iOiJodHRwczovL21lbnRyaWEuYWk6NDQzIiwiZmVhdHVyZSI6IldlYk1DUCIsImV4cGlyeSI6MTc5NDg3MzYwMH0="><meta http-equiv="origin-trial" content="AtF5Ie0xv9rdR3rQKQybaPzyFj8LBD+DOq0XnbzqMHUDOUbyJCt3uPVTcWcMq2tbsWqsqfN+OTv4Wjk/mifAgQoAAABReyJvcmlnaW4iOiJodHRwczovL3dlYm1jcC5tZW50cmlhLmFpOjQ0MyIsImZlYXR1cmUiOiJXZWJNQ1AiLCJleHBpcnkiOjE3OTQ4NzM2MDB9">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' 'inline-speculation-rules'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.mentria.ai https://mentria-ai.github.io; media-src 'self' blob: https://cdn.mentria.ai https://mentria-ai.github.io; font-src 'self'; connect-src 'self' blob: data: http://localhost:* http://127.0.0.1:* https://cdn.mentria.ai https://mentria-ai.github.io https://huggingface.co https://*.huggingface.co https://*.hf.co https://relay.mentria.ai wss://relay.mentria.ai; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <script type="speculationrules">
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
+    <script>
+      window.MENTRIA_PAGE_LOCALIZED = true;
+      window.MENTRIA_LOCALES = [{ code: "en", prefix: "", name: "English", isDefault: true },{ code: "es", prefix: "/es", name: "Español", isDefault: false },{ code: "pt-BR", prefix: "/pt-br", name: "Português (BR)", isDefault: false },{ code: "fr", prefix: "/fr", name: "Français", isDefault: false },{ code: "ja", prefix: "/ja", name: "日本語", isDefault: false }];
+    </script>
+    <script>
+      window.addEventListener('dragover', function (e) { e.preventDefault(); });
+      window.addEventListener('drop', function (e) { e.preventDefault(); });
+    </script>
+    <script>
+      (function () {
+        var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+        if (standalone) document.documentElement.classList.add('is-standalone');
+        var seen = null;
+        try { seen = localStorage.getItem('mentria_seen'); } catch (e) {}
+        if (seen || standalone) document.documentElement.classList.add('app-chrome');
+        try { localStorage.setItem('mentria_seen', '1'); } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var locales = window.MENTRIA_LOCALES || [];
+          var path = location.pathname || '/';
+          var rest = (location.search || '') + (location.hash || '');
+          function localeOfPath(p) {
+            for (var i = 0; i < locales.length; i++) {
+              var pre = locales[i].prefix;
+              if (pre && (p === pre || p.indexOf(pre + '/') === 0)) return locales[i];
+            }
+            return null;
+          }
+          function localeOfCode(c) {
+            for (var i = 0; i < locales.length; i++) { if (locales[i].code === c) return locales[i]; }
+            return null;
+          }
+          function go(loc) { location.replace(loc.prefix + (path === '/' ? '/' : path) + rest); }
+          var current = localeOfPath(path);
+          if (!window.MENTRIA_PAGE_LOCALIZED && !current) return;
+
+          var pref = null;
+          try { pref = localStorage.getItem('mentria_lang'); } catch (_) {}
+          if (pref) {
+            var target = localeOfCode(pref);
+            if (target && target.prefix && !current) go(target);
+            return;
+          }
+
+          var FLAG = 'mentria_lang_redirected_at';
+          if (localStorage.getItem(FLAG) || current) return;
+          var bl = (navigator.language || 'en').toLowerCase();
+          for (var j = 0; j < locales.length; j++) {
+            if (!locales[j].prefix) continue;
+            var code = locales[j].code.toLowerCase();
+            var base = code.split('-')[0];
+            if (bl === code || bl === base || bl.indexOf(base + '-') === 0) {
+              try {
+                localStorage.setItem(FLAG, String(Date.now()));
+                localStorage.setItem('mentria_lang', locales[j].code);
+              } catch (_) {}
+              go(locales[j]);
+              return;
+            }
+          }
+        } catch (_) { /* ignore */ }
+      })();
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    <title>Miroir de Modèles | Mentria</title>
+    <meta name="description" content="Aidez à distribuer les modèles locaux de Mentria en pair-à-pair. Gardez cet onglet ouvert et votre navigateur devient un miroir.">
+    <meta name="keywords" content="creative studio, web tools, experiments, mentria">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="author" content="Mentria">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webmcp.mentria.ai/fr/tools/model-mirror/">
+    <meta property="og:title" content="Miroir de Modèles | Mentria">
+    <meta property="og:description" content="Aidez à distribuer les modèles locaux de Mentria en pair-à-pair. Gardez cet onglet ouvert et votre navigateur devient un miroir.">
+    <meta property="og:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mentria — tools, games and AI that run entirely in your browser">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="pt_BR">
+    <meta property="og:locale:alternate" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://webmcp.mentria.ai/fr/tools/model-mirror/">
+    <meta name="twitter:title" content="Miroir de Modèles | Mentria">
+    <meta name="twitter:description" content="Aidez à distribuer les modèles locaux de Mentria en pair-à-pair. Gardez cet onglet ouvert et votre navigateur devient un miroir.">
+    <meta name="twitter:image" content="https://webmcp.mentria.ai/assets/img/social-card.png">
+    
+    <link rel="icon" href="/assets/img/favicon-96x96.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192x192.png">
+    <link rel="alternate" hreflang="en" href="https://webmcp.mentria.ai/tools/model-mirror/">
+    <link rel="alternate" hreflang="es" href="https://webmcp.mentria.ai/es/tools/model-mirror/">
+    <link rel="alternate" hreflang="pt-BR" href="https://webmcp.mentria.ai/pt-br/tools/model-mirror/">
+    <link rel="alternate" hreflang="fr" href="https://webmcp.mentria.ai/fr/tools/model-mirror/">
+    <link rel="alternate" hreflang="ja" href="https://webmcp.mentria.ai/ja/tools/model-mirror/">
+    <link rel="alternate" hreflang="x-default" href="https://webmcp.mentria.ai/tools/model-mirror/">
+    <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/jbm-latin.woff2"   as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mentria-ui.css">
+    <link rel="stylesheet" href="/assets/css/mentria-palette.css">
+    <link rel="stylesheet" href="/assets/css/terminal.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://webmcp.mentria.ai/#organization",
+          "name": "Mentria",
+          "url": "https://webmcp.mentria.ai",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://webmcp.mentria.ai/assets/img/icon-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://github.com/mentria-ai",
+            "https://huggingface.co/mentriaai",
+            "https://x.com/mentria_ai"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://webmcp.mentria.ai/#website",
+          "url": "https://webmcp.mentria.ai",
+          "name": "Mentria",
+          "description": "Un studio créatif d&#39;outils, d&#39;expériences et de transmissions visuelles. Conçu avec soin.",
+          "publisher": { "@id": "https://webmcp.mentria.ai/#organization" },
+          "inLanguage": "fr"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://webmcp.mentria.ai/fr/" },
+        { "@type": "ListItem", "position": 2, "name": "Outils", "item": "https://webmcp.mentria.ai/fr/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Miroir de Modèles", "item": "https://webmcp.mentria.ai/fr/tools/model-mirror/" }
+      ]
+    }
+    </script>
+<style>
+  .mm { display: flex; justify-content: center; padding: 1.5rem 1rem 2rem; }
+  .mm__card { width: 100%; max-width: 540px; background: var(--panel, #11161b); border: 1px solid var(--line, #22303a); border-radius: 12px; padding: 1.2rem 1.4rem; }
+  .mm__row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .mm__name { font-family: var(--mono, monospace); font-size: .95rem; }
+  .mm__state-unused { font-family: var(--mono, monospace); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted, #8b97a3); }
+  .mm__row2[data-state="seeding"] { color: var(--accent, #6ef3c5); }
+  .mm__bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,.07); margin: .9rem 0 .7rem; overflow: hidden; }
+  .mm__fill { height: 100%; width: 0%; border-radius: 4px; background: linear-gradient(90deg, #6ef3c5, #2fb894); transition: width .5s; }
+  .mm__stats { display: flex; gap: 1.1rem; flex-wrap: wrap; font-size: .82rem; color: var(--muted, #8b97a3); }
+  .mm__stats b { color: var(--text, #e6edf0); font-family: var(--mono, monospace); font-weight: 600; }
+  .mm__btn { margin-top: 1rem; width: 100%; padding: .65rem 1rem; border-radius: 8px; border: 1px solid var(--accent, #6ef3c5); background: transparent; color: var(--accent, #6ef3c5); font-family: var(--mono, monospace); font-size: .9rem; cursor: pointer; }
+  .mm__btn:hover { background: rgba(110,243,197,.08); }
+  .mm__btn[disabled] { opacity: .45; cursor: default; }
+  .mm__note { margin: .9rem 0 0; font-size: .8rem; color: var(--muted, #8b97a3); }
+  .mm { flex-direction: column; align-items: center; gap: .9rem; }
+  .mm__card--boost { padding: .9rem 1.4rem; }
+  .mm__state-unused { display: inline-flex; align-items: center; gap: .45rem; }
+  .mm__stateicon { color: var(--muted, #8b97a3); }
+  .mm__row2[data-state="seeding"] .mm__stateicon { color: var(--accent, #6ef3c5); }
+  .mm__arrow { opacity: 0; transition: opacity .3s; }
+  .mm__row2[data-state="fetching"] .mm__arrow--down { opacity: 1; }
+  .mm__row2[data-state="seeding"] .mm__arrow--up { opacity: 1; }
+  .mm__row2[data-state="fetching"] .mm__ring { animation: mm-spin 1.6s linear infinite; transform-origin: 12px 12px; }
+  .mm__row2[data-state="seeding"] .mm__ring { animation: mm-pulse 2.2s ease-in-out infinite; transform-origin: 12px 12px; }
+  @keyframes mm-spin { to { transform: rotate(360deg); } }
+  @keyframes mm-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.18); opacity: .45; } }
+  .mm__switch { display: flex; align-items: center; gap: .6rem; width: 100%; background: none; border: 0; padding: 0; color: var(--text, #e6edf0); font: inherit; cursor: pointer; }
+  .mm__boosticon { flex: 0 0 auto; color: var(--muted, #8b97a3); transition: opacity .25s, transform .25s; }
+  .mm__boosticon--on { display: none; color: var(--accent, #6ef3c5); }
+  .mm__switch[aria-checked="true"] .mm__boosticon--off { display: none; }
+  .mm__switch[aria-checked="true"] .mm__boosticon--on { display: block; }
+  .mm__switchlabel { flex: 1 1 auto; text-align: left; font-family: var(--mono, monospace); font-size: .9rem; }
+  .mm__track { flex: 0 0 auto; width: 38px; height: 22px; border-radius: 11px; background: rgba(255,255,255,.12); position: relative; transition: background .25s; }
+  .mm__thumb { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--muted, #8b97a3); transition: transform .25s, background .25s; }
+  .mm__switch[aria-checked="true"] .mm__track { background: rgba(110,243,197,.25); }
+  .mm__switch[aria-checked="true"] .mm__thumb { transform: translateX(16px); background: var(--accent, #6ef3c5); }
+  .mm__boostdesc { margin: .55rem 0 0; font-size: .78rem; color: var(--muted, #8b97a3); }
+  .mm__boostip { margin: .45rem 0 0; font-size: .78rem; color: var(--accent, #6ef3c5); }
+  .mm__list { display: flex; flex-direction: column; }
+  .mm__item { border-top: 1px solid rgba(255,255,255,.06); padding: .7rem 0; }
+  .mm__item:first-child { border-top: 0; }
+  .mm__row2 { display: flex; align-items: center; gap: .6rem; }
+  .mm__mname { flex: 1 1 auto; min-width: 0; font-family: var(--mono, monospace); font-size: .84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mm__msize { font-family: var(--mono, monospace); font-size: .75rem; color: var(--muted, #8b97a3); }
+  .mm__have { color: var(--accent, #6ef3c5); opacity: 0; transition: opacity .3s; }
+  .mm__have.is-on { opacity: 1; }
+  .mm__seed { background: none; border: 0; padding: .2rem; color: var(--muted, #8b97a3); cursor: pointer; display: inline-flex; }
+  .mm__seed[aria-pressed="true"] { color: var(--accent, #6ef3c5); }
+  .mm__seed:hover { color: var(--text, #e6edf0); }
+  .mm__seed[aria-pressed="true"]:hover { color: var(--accent, #6ef3c5); }
+  .mm__rowbar { height: 4px; border-radius: 2px; background: rgba(255,255,255,.06); margin-top: .5rem; overflow: hidden; display: none; }
+  .mm__item.is-active .mm__rowbar { display: block; }
+  .mm__rowfill { height: 100%; width: 0%; background: linear-gradient(90deg, #6ef3c5, #2fb894); transition: width .5s; }
+  .mm__rowstats { display: none; gap: 1rem; font-size: .72rem; color: var(--muted, #8b97a3); font-family: var(--mono, monospace); margin-top: .4rem; }
+  .mm__item.is-active .mm__rowstats { display: flex; }
+  .mm__rowstats b { color: var(--text, #e6edf0); font-weight: 600; }
+  .mm__stateicon--row { flex: 0 0 auto; }
+  @media (prefers-reduced-motion: reduce) { .mm__ring, .mm__thumb, .mm__boosticon { animation: none !important; transition: none !important; } }
+</style><script type="application/json" id="m-i18n-head">{"title":{"prefix":"","key":"tools.model-mirror.title","suffix":" | Mentria"},"desc":{"key":"tools.model-mirror.lede"}}</script></head>
+<body class="scanlines">
+    <script src="/assets/js/mentria-store.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-caps.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-ui.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-backup.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-gamepad.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-push-db.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-push.js?v=ec54a8f-09040920"></script>
+    <script src="/assets/js/mentria-comms-nav.js?v=ec54a8f-09040920" defer></script>
+    <script src="/assets/js/mentria-input-help.js?v=ec54a8f-09040920" defer></script>
+    <script>if (document.modelContext && document.modelContext.registerTool) { import('/assets/js/mentria-webmcp.js?v=ec54a8f-09040920'); }</script>
+    <script>
+      window.MENTRIA_PALETTE_DATA = {
+        locale: "fr",
+        prefix: "/fr",
+        tools: [
+          { slug: "search", title: "Recherche", category: "IA", keywords: "Trouve des outils et des publications du fil. Tape n'importe quelle requête — mot-clé ou langage naturel." },
+          { slug: "step-counter", title: "Compteur de Pas", category: "Santé", keywords: "Compte tes pas en marchant, directement dans le navigateur. Utilise le capteur de mouvement de ton téléphone — rien n'est envoyé.", requires: "motion" },
+          { slug: "qr-scanner", title: "Scanner et générateur de QR codes et codes-barres", category: "Utilitaire", keywords: "Scannez des QR codes et des codes-barres, ou générez un QR code à partir de n'importe quel lien ou texte — tout en local, rien n'est envoyé." },
+          { slug: "decision-wheel", title: "Roue de Décision", category: "Utilitaire", keywords: "Indécis ? Faites tourner la roue et laissez le destin choisir. Fonctionne hors ligne." },
+          { slug: "countdown-timer", title: "Compte à Rebours", category: "Minuteur", keywords: "Définissez une durée ou choisissez une heure cible. Jusqu'à 4 minuteries indépendantes avec son d'alarme." },
+          { slug: "coin-flip", title: "Pile ou Face", category: "Utilitaire", keywords: "Pile ou face — lancez une pièce instantanément. Lancez une série au meilleur des N pour départager. Fonctionne hors ligne." },
+          { slug: "quick-notes", title: "Notes Rapides", category: "Productivité", keywords: "Un bloc-notes minimaliste qui vit dans votre navigateur. Créez plusieurs notes, sauvegardées à chaque frappe." },
+          { slug: "base64-codec", title: "Codec Base64", category: "Développement", keywords: "Encodez et décodez du texte ou des fichiers en Base64. Prend en charge les images, les documents et tout type de fichier. Tout fonctionne localement dans votre navigateur." },
+          { slug: "totp", title: "TOTP", category: "Sécurité", keywords: "Codes de double authentification qui restent dans votre navigateur, chiffrés au repos. Rien sur un serveur." },
+          { slug: "exif", title: "Inspecteur EXIF", category: "Sécurité", keywords: "Découvrez ce qu'une photo transporte en secret — détails de l'appareil, horodatages, position GPS — et téléchargez une copie propre, tout retiré. Rien n'est envoyé." },
+          { slug: "color-picker", title: "Sélecteur de Couleurs", category: "Design", keywords: "Choisissez n'importe quelle couleur, voyez ses valeurs HEX / RGB / HSL, et générez des palettes harmonieuses. Fonctionne hors ligne." },
+          { slug: "annotate-image", title: "Annoter une image", category: "IA", keywords: "Importez une image et obtenez instantanément une description IA, un texte alternatif, une transcription ou des étiquettes — avec des prompts testés en un toucher. S'exécute localement dans votre navigateur, rien n'est envoyé." },
+          { slug: "ai-chat", title: "Chat IA", category: "IA", keywords: "Qwen3.5 fonctionnant localement dans votre navigateur. Pas de serveur, pas de clés API. Prend en charge la vision." },
+          { slug: "console", title: "Console", category: "IA", keywords: "Discutez avec le modèle local pendant qu'il utilise les apps Mentria sur un écran de téléphone partagé — ou laissez-le jouer un utilisateur test et rapporter ce qu'il trouve." },
+          { slug: "model-mirror", title: "Miroir de Modèles", category: "IA", keywords: "Aidez à distribuer les modèles locaux de Mentria en pair-à-pair. Gardez cet onglet ouvert et votre navigateur devient un miroir." },
+          { slug: "quote", title: "Citation Motivante", category: "IA", keywords: "Citations originales générées par IA, fonctionnant localement dans votre navigateur. Vos données restent sur votre appareil." },
+          { slug: "radio", title: "Radio Infinie", category: "IA", keywords: "Musique cinématographique épique générée par IA, en streaming infini. Apprend vos goûts localement — vos données restent sur votre appareil." },
+          { slug: "invoice", title: "Générateur de Factures", category: "Utilitaire", keywords: "Créez des factures épurées d'une page dans votre navigateur. Auto-enregistrement pendant la saisie. Imprimez en A4 ou exportez en JSON." },
+          { slug: "markdown-pdf", title: "Markdown → PDF", category: "Utilitaire", keywords: "Écrivez du markdown, voyez un aperçu en direct, et téléchargez un PDF professionnel et propre. Sauvegarde automatique dans votre navigateur. Vos données restent sur votre appareil." },
+          { slug: "tetris", title: "Tetris", category: "Jeu", keywords: "Empilez des tétrominos. Effacez des lignes. La vitesse augmente toutes les 10 lignes. Pièces en cyan, violet, rose, ambre, vert — la palette Mentria." },
+          { slug: "breakout", title: "Breakout", category: "Jeu", keywords: "Casse-briques rencontre raquette. Attrapez les power-ups qui tombent, dégagez le mur, survivez à des niveaux de plus en plus rapides et exigeants. Fonctionne localement — vos données restent sur votre appareil." },
+          { slug: "flappy", title: "Flappy", category: "Jeu", keywords: "Un avion en papier traversant une pile de prompts terminal. Touchez, cliquez ou appuyez sur ESPACE pour battre des ailes. Ne crashez pas le prompt." },
+          { slug: "minesweeper", title: "Démineur", category: "Jeu", keywords: "Casse-tête logique classique en tenue de terminal. Cliquez pour creuser, clic droit (ou mode F) pour marquer un drapeau. Les chiffres comptent les mines adjacentes. Ne touchez pas aux roses." },
+          { slug: "sudoku", title: "Sudoku", category: "Jeu", keywords: "Casse-tête logique en habit de terminal. Générateur à solution unique, quatre difficultés, annotations au crayon. Fonctionne localement — aucune donnée ne quitte votre appareil." },
+          { slug: "ludo", title: "Ludo", category: "Jeu", keywords: "Quatre pions à la maison, vous gagnez. Faites un six pour sortir, capturez au contact, abritez-vous sur les étoiles sûres. Affrontez les bots ou jouez chacun son tour." },
+          { slug: "chess", title: "Échecs", category: "Jeu", keywords: "Moteur local, chacun son tour et jeu en ligne — sans serveurs. Règles complètes avec roque, prise en passant et promotion ; moteur alpha-bêta à quatre niveaux, barre d'évaluation et indices." },
+          { slug: "phosphor", title: "PHOSPHOR", category: "Jeu", keywords: "Contre-la-montre de combat dans le navigateur : sprint, glissade, escalade et carabine automatique sur cinq parcours au crépuscule. Médailles, course aux fantômes, jeu hors ligne." },
+          { slug: "extensions", title: "Extensions", category: "Utilitaire", keywords: "Installe des extensions privées en un seul fichier qui vivent uniquement sur cet appareil. Elles apparaissent dans ton lanceur et ton terminal — jamais sur le site public." },
+          { slug: "files", title: "Fichiers", category: "Utilitaire", keywords: "Parcourez, exportez et supprimez les données que les outils Mentria stockent sur cet appareil. Tout reste en local." },
+          { slug: "comms", title: "Comms", category: "Social", keywords: "Chat pair-à-pair, appels audio et vidéo, et partage de fichiers. Chiffré de bout en bout, sans compte et sans serveur au milieu.", url: "/comms/" },
+          { slug: "bubble-level", title: "Niveau à bulle", category: "Utilitaire", keywords: "Transformez votre téléphone en niveau à bulle en ligne : un vrai niveau sans installer d'application, précis à 0,1° et utilisable hors ligne.", requires: "motion" },
+          { slug: "decibel-meter", title: "Sonomètre", category: "Utilitaire", keywords: "Un sonomètre en ligne dans votre navigateur : mesurez le bruit en dB avec le micro de votre téléphone ou de votre ordinateur, sans installer d'application." },
+          { slug: "compass", title: "Boussole", category: "Utilitaire", keywords: "Une boussole en ligne sans application à installer : ouvrez-la dans le navigateur et lisez votre cap magnétique directement depuis le capteur du téléphone.", requires: "motion" },
+          { slug: "speedometer", title: "Compteur de vitesse GPS", category: "Utilitaire", keywords: "Un compteur de vitesse en ligne par GPS, sans installer d'application. Votre vitesse en direct en km/h, mph ou nœuds, avec la distance du trajet, calculée sur votre appareil." },
+          { slug: "ruler", title: "Règle en ligne", category: "Utilitaire", keywords: "Une règle en ligne à taille réelle : mesurez en cm, mm et pouces directement à l'écran, et calibrez-la avec une carte bancaire pour que les millimètres soient justes." }
+        ],
+        nav: [
+          { id: "home", title: "Accueil", href: "/" },
+          { id: "tools", title: "Outils", href: "/tools/" },
+          { id: "feed", title: "Fil", href: "/feed/" },
+          { id: "about", title: "À propos", href: "/about/" }
+        ],
+        labels: {
+          placeholder: "Rechercher outils et pages…",
+          listLabel: "Résultats de recherche",
+          noResults: "Aucun résultat",
+          recents: "Récents",
+          extensions: "Extensions",
+          actions: "Actions",
+          actNote: "Enregistrer la note : « {text} »",
+          actNoteDone: "Note enregistrée",
+          actNoteFail: "Impossible d'enregistrer la note",
+          actTimer: "Lancer un minuteur de {dur}",
+          actFlip: "Lancer une pièce",
+          actHeads: "Pile",
+          actTails: "Face",
+          searchSite: "Rechercher « {q} » sur le site"
+        }
+      };
+    </script>
+    <script src="/assets/js/mentria-palette.js?v=ec54a8f-09040920" defer></script>
+    <a class="skip-link" href="#main-content"><i18n-t data-k="common.skip_to_content">Aller au contenu</i18n-t></a>
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand" href="/fr/" aria-label="Mentria home">MENTRIA<span class="brand__ai" aria-hidden="true"><span class="brand__ai-text"><span class="brand__ai-a">A</span><span class="brand__ai-i">I</span></span><svg class="brand__star" viewBox="0 0 48 48" aria-hidden="true"><path class="brand__spark" d="M24 1c1.8 16.5 4.7 19.2 23 23-18.3 3.8-21.2 6.5-23 23-1.8-16.5-4.7-19.2-23-23 18.3-3.8 21.2-6.5 23-23z" fill="currentColor"/></svg></span><span class="brand__cursor">_</span></a>
+        <nav class="site-nav">
+            
+            
+            <a href="/fr/feed/"  class="nav-link" title="Fil" data-i18na="title=nav.feed">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.feed">Fil</i18n-t></span>
+            </a>
+            <a href="/fr/tools/" class="nav-link active" aria-current="page" title="Outils" data-i18na="title=nav.tools">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.8 3.6a5.2 5.2 0 0 0-5.8 7l-5.4 5.4a1.6 1.6 0 0 0 0 2.3l1.1 1.1a1.6 1.6 0 0 0 2.3 0l5.4-5.4a5.2 5.2 0 0 0 7-5.8l-3 3-2.6-.7-.7-2.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.tools">Outils</i18n-t></span>
+            </a>
+            <a href="/comms/" class="nav-link nav-link--comms" title="Comms" data-comms-link data-i18na="title=nav.comms">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+                <span class="nav-badge" data-comms-badge hidden>0</span>
+            </a>
+            
+            <a href="/fr/about/" class="nav-link nav-link--about" title="À propos" data-i18na="title=nav.about">
+                <svg class="nav-link__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="nav-link__t"><i18n-t data-k="nav.about">À propos</i18n-t></span>
+            </a><button type="button" class="nav-cmdk" data-palette-open aria-label="Ouvrir la palette de commandes (⌘K)" aria-keyshortcuts="Meta+K Control+K" data-i18na="aria-label=palette.open">⌘K</button>
+            <details class="lang-switcher">
+                <summary aria-label="Langue actuelle: Français" data-i18na="aria-label=lang_switcher.current_label">
+                    <span aria-hidden="true">🌐</span>
+                    <span class="lang-switcher__current" lang="fr">Français</span>
+                    <span class="lang-switcher__chevron" aria-hidden="true">▾</span>
+                </summary>
+                <ul class="lang-switcher__menu">
+                    <li>
+                        <a hreflang="en"
+                           href="/tools/model-mirror/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="en">English</span>
+                            <span class="lang-switcher__code">en</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="es"
+                           href="/es/tools/model-mirror/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="es">Español</span>
+                            <span class="lang-switcher__code">es</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="pt-BR"
+                           href="/pt-br/tools/model-mirror/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="pt-BR">Português (BR)</span>
+                            <span class="lang-switcher__code">pt-BR</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="fr"
+                           href="/fr/tools/model-mirror/"
+                           class="lang-switcher__item is-active">
+                            <span class="lang-switcher__name" lang="fr">Français</span>
+                            <span class="lang-switcher__code">fr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a hreflang="ja"
+                           href="/ja/tools/model-mirror/"
+                           class="lang-switcher__item">
+                            <span class="lang-switcher__name" lang="ja">日本語</span>
+                            <span class="lang-switcher__code">ja</span>
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </nav>
+    </div>
+</header>
+
+
+    <main id="main-content" tabindex="-1">
+        <section class="hero" style="padding-top:1rem;">
+  <p class="eyebrow eyebrow--crumbs"><a class="eyebrow__link" href="/fr/">~</a><span class="eyebrow__sep">/</span><a class="eyebrow__link" href="/fr/tools/">tools</a><span class="eyebrow__sep">/</span><span class="eyebrow__current">model-mirror</span></p>
+  <h1><i18n-t data-k="tools.model-mirror.title">Miroir de Modèles</i18n-t></h1>
+  <p><i18n-t data-k="tools.model-mirror.lede">Aidez à distribuer les modèles locaux de Mentria en pair-à-pair. Gardez cet onglet ouvert et votre navigateur devient un miroir.</i18n-t></p>
+  <details class="tldr">
+  <summary class="tldr__summary">
+    <span class="tldr__cta-more"><i18n-t data-k="common.tldr.read_more">Qu&#39;est-ce que c&#39;est ?</i18n-t></span>
+    <span class="tldr__cta-less"><i18n-t data-k="common.tldr.read_less">Masquer les détails</i18n-t></span>
+    <span class="tldr__caret" aria-hidden="true">▾</span>
+  </summary>
+  <div class="tldr__panel">
+    <h2 class="tldr__heading"><i18n-t data-k="common.tldr.what_is" data-vars="name=tools.model-mirror.title">Qu'est-ce que Miroir de Modèles ?</i18n-t></h2>
+    <p class="tldr__body"><i18n-t data-k="tools.model-mirror.tldr">Votre navigateur partage le modèle 0.8B avec les autres visiteurs en P2P, avec le téléchargement officiel en secours automatique. Sans compte ni installation.</i18n-t></p>
+  </div>
+</details>
+
+</section>
+
+
+<div class="terminal-frame" style="view-transition-name: tool-model-mirror">
+    <div class="terminal-frame__titlebar">
+        <div class="terminal-frame__dots">
+            
+            <span class="terminal-frame__dot terminal-frame__dot--red"></span>
+            
+            <span class="terminal-frame__dot terminal-frame__dot--yellow"></span>
+            <button type="button" class="terminal-frame__dot terminal-frame__dot--green" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Basculer en plein écran" title="Basculer en plein écran" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen"></button>
+        </div>
+        
+        <span class="terminal-frame__filename">model-mirror.js</span>
+        
+        
+        <button type="button" class="terminal-frame__expand" data-action="toggle-fullscreen" aria-pressed="false" aria-label="Basculer en plein écran" title="Basculer en plein écran" data-i18na="aria-label=common.toggle_fullscreen;title=common.toggle_fullscreen">⤢</button>
+    </div>
+    <div class="terminal-frame__body">
+
+
+<section class="mm">
+  <div class="mm__card">
+    <div class="mm__list" id="mm-list" aria-busy="true"></div>
+  </div>
+  <div class="mm__card mm__card--boost">
+    <button type="button" class="mm__switch" id="mm-boost" role="switch" aria-checked="false" aria-label="Boost par les pairs" data-i18na="aria-label=tool.model-mirror.peer_boost">
+      <svg class="mm__boosticon mm__boosticon--off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3.5 5 6v5c0 4.4 3 7.9 7 9 4-1.1 7-4.6 7-9V6Z"></path>
+      </svg>
+      <svg class="mm__boosticon mm__boosticon--on" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="5.5" r="2.3"></circle><circle cx="5.5" cy="17.5" r="2.3"></circle><circle cx="18.5" cy="17.5" r="2.3"></circle>
+        <path d="M10.9 7.6 6.8 15.4M13.1 7.6l4.1 7.8M7.8 17.5h8.4"></path>
+      </svg>
+      <span class="mm__switchlabel"><i18n-t data-k="tool.model-mirror.peer_boost">Boost par les pairs</i18n-t></span>
+      <span class="mm__track" aria-hidden="true"><span class="mm__thumb"></span></span>
+    </button>
+    <p class="mm__boostdesc"><i18n-t data-k="tool.model-mirror.peer_boost_desc">Désactivé : les téléchargements viennent uniquement des miroirs officiels. Activé : les autres visiteurs aident aussi — souvent plus rapide.</i18n-t></p>
+    <p class="mm__boostip" id="mm-boost-ip" hidden><i18n-t data-k="tool.model-mirror.peer_boost_ip">Tant que c&#39;est activé, les pairs peuvent voir votre adresse IP.</i18n-t></p>
+  </div>
+  <p class="mm__note"><i18n-t data-k="tool.model-mirror.note">Le modèle se télécharge une fois — depuis des pairs si disponibles, sinon depuis la source officielle — puis cet onglet le sert aux autres visiteurs. Fermez l&#39;onglet pour arrêter. Les pairs voient les adresses IP des autres, comme dans tout réseau P2P ; chaque bloc est vérifié par empreinte avant usage.</i18n-t></p>
+</section>
+    </div>
+</div>
+<nav class="related-tools" aria-label="Plus d&#39;outils" data-i18na="aria-label=tools_page.related_heading">
+  <span class="related-tools__label"><i18n-t data-k="tools_page.related_heading">Plus d&#39;outils</i18n-t></span>
+  <ul class="related-tools__list">
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/annotate-image/">
+        <span class="related-tools__name"><i18n-t data-k="tools.annotate-image.title">Annoter une image</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">IA</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/ai-chat/">
+        <span class="related-tools__name"><i18n-t data-k="tools.ai-chat.title">Chat IA</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">IA</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/console/">
+        <span class="related-tools__name"><i18n-t data-k="tools.console.title">Console</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.AI">IA</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip" href="/fr/tools/color-picker/">
+        <span class="related-tools__name"><i18n-t data-k="tools.color-picker.title">Sélecteur de Couleurs</i18n-t></span>
+        <span class="related-tools__cat"><i18n-t data-k="category.Design">Design</i18n-t></span>
+      </a>
+    </li>
+    <li>
+      <a class="related-tools__chip related-tools__chip--all" href="/fr/tools/"><i18n-t data-k="tools_page.related_all">Tous les outils</i18n-t> →</a>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+<script>
+(function () {
+  const COPY = {
+    stateIdle: "inactif",
+    stateFetching: "récupération du modèle…",
+    stateSeeding: "partage en cours — gardez cet onglet ouvert",
+    onDevice: "sur cet appareil",
+    seedTitle: "partager {name} avec les autres visiteurs",
+    errPrefix: "erreur : "
+  };
+  const listEl = document.getElementById('mm-list');
+  const boostBtn = document.getElementById('mm-boost');
+  const boostIp = document.getElementById('mm-boost-ip');
+  const mb = (n) => (n / 1048576).toFixed(1);
+  const gb = (n) => n >= 1e9 ? (n / 1073741824).toFixed(1) + ' GB' : Math.round(n / 1048576) + ' MB';
+  const seeds = new Map();
+
+  const STATE_ICON = '<svg class="mm__stateicon mm__stateicon--row" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle class="mm__ring" cx="12" cy="12" r="9" stroke-dasharray="3.5 4.2"></circle><path class="mm__arrow mm__arrow--down" d="M12 8v7M8.8 11.8 12 15l3.2-3.2"></path><path class="mm__arrow mm__arrow--up" d="M12 16V9M8.8 12.2 12 9l3.2 3.2"></path></svg>';
+  const HAVE_ICON = '<svg class="mm__have" viewBox="0 0 24 24" width="15" height="15" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l4.6 4.6L19.5 6.7"></path></svg>';
+  const SEED_ICON = '<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5.5" r="2.2"></circle><circle cx="5.5" cy="17.5" r="2.2"></circle><circle cx="18.5" cy="17.5" r="2.2"></circle><path d="M10.9 7.5 6.8 15.5M13.1 7.5l4.1 8M7.7 17.5h8.6"></path></svg>';
+
+  async function build() {
+    const P2P = await import('/assets/js/mentria-p2p-models.js');
+    const man = await (await fetch('/assets/models-manifest.json')).json();
+    listEl.textContent = '';
+    listEl.setAttribute('aria-busy', 'false');
+    for (const name of Object.keys(man)) {
+      const entry = man[name];
+      const item = document.createElement('div');
+      item.className = 'mm__item';
+      const row = document.createElement('div');
+      row.className = 'mm__row2';
+      row.innerHTML = STATE_ICON;
+      row.querySelector('.mm__stateicon').parentElement.setAttribute('data-state', 'idle');
+      item.dataset.state = 'idle';
+      const nm = document.createElement('span');
+      nm.className = 'mm__mname';
+      nm.textContent = name.replace(/\.safetensors$/, '');
+      nm.title = name;
+      const sz = document.createElement('span');
+      sz.className = 'mm__msize';
+      sz.textContent = gb(entry.bytes);
+      row.appendChild(nm);
+      row.appendChild(sz);
+      row.insertAdjacentHTML('beforeend', HAVE_ICON);
+      const have = row.querySelector('.mm__have');
+      have.setAttribute('role', 'img');
+      have.setAttribute('aria-label', COPY.onDevice);
+      P2P.findCachedUrl(name).then((u) => { if (u) have.classList.add('is-on'); });
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mm__seed';
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', COPY.seedTitle.replace('{name}', name));
+      btn.title = COPY.seedTitle.replace('{name}', name);
+      btn.innerHTML = SEED_ICON;
+      row.appendChild(btn);
+      const bar = document.createElement('div');
+      bar.className = 'mm__rowbar';
+      bar.innerHTML = '<div class="mm__rowfill"></div>';
+      const stats = document.createElement('div');
+      stats.className = 'mm__rowstats';
+      stats.innerHTML = '<span><b class="mm-peers">0</b> ⇄</span><span>↓ <b class="mm-down">0</b> MB/s</span><span>↑ <b class="mm-up">0</b> MB</span>';
+      item.appendChild(row);
+      item.appendChild(bar);
+      item.appendChild(stats);
+      listEl.appendChild(item);
+
+      btn.addEventListener('click', async () => {
+        const active = seeds.get(name);
+        if (active) {
+          active.stop();
+          seeds.delete(name);
+          btn.setAttribute('aria-pressed', 'false');
+          item.classList.remove('is-active');
+          item.dataset.state = 'idle';
+          setRowState(item, 'idle');
+          return;
+        }
+        btn.setAttribute('aria-pressed', 'true');
+        item.classList.add('is-active');
+        setRowState(item, 'fetching');
+        try {
+          const P2P2 = await import('/assets/js/mentria-p2p-models.js');
+          const seed = await P2P2.seedShard(name, (st) => {
+            bar.querySelector('.mm__rowfill').style.width = Math.round((st.progress || 0) * 100) + '%';
+            stats.querySelector('.mm-peers').textContent = st.peers;
+            stats.querySelector('.mm-down').textContent = mb(st.downSpeed || 0);
+            stats.querySelector('.mm-up').textContent = mb(st.upBytes || 0);
+            if (st.done) { setRowState(item, 'seeding'); have.classList.add('is-on'); }
+          });
+          seeds.set(name, seed);
+        } catch (err) {
+          btn.setAttribute('aria-pressed', 'false');
+          item.classList.remove('is-active');
+          setRowState(item, 'idle');
+          nm.textContent = COPY.errPrefix + (err.message || err);
+        }
+      });
+    }
+  }
+  function setRowState(item, state) {
+    item.dataset.state = state;
+    const wrap = item.querySelector('.mm__row2');
+    wrap.setAttribute('data-state', state);
+  }
+
+  async function renderBoost() {
+    const P2P = await import('/assets/js/mentria-p2p-models.js');
+    const on = P2P.peersEnabled();
+    boostBtn.setAttribute('aria-checked', on ? 'true' : 'false');
+    boostIp.hidden = !on;
+  }
+  boostBtn.addEventListener('click', async () => {
+    const P2P = await import('/assets/js/mentria-p2p-models.js');
+    P2P.setPeersEnabled(!P2P.peersEnabled());
+    renderBoost();
+  });
+  renderBoost();
+  build();
+})();
+</script>
+
+    </main>
+
+    
+    <nav class="app-bar" aria-label="Navigation de l&#39;application" data-i18na="aria-label=palette.app_bar">
+      <a class="app-bar__item" href="/fr/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.3 12 4.2l8.5 7.1V19a1.2 1.2 0 0 1-1.2 1.2h-4.6v-5.6H9.3v5.6H4.7A1.2 1.2 0 0 1 3.5 19z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.home">Accueil</i18n-t></span>
+      </a>
+      <a class="app-bar__item" href="/fr/feed/">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="17" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.feed">Fil</i18n-t></span>
+      </a>
+      <a class="app-bar__item app-bar__item--comms" href="/comms/" data-comms-link>
+        <span class="app-bar__icwrap">
+          <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 4.8h14.8a1.4 1.4 0 0 1 1.4 1.4v8.6a1.4 1.4 0 0 1-1.4 1.4H9.4l-5.2 3.8V6.2a1.4 1.4 0 0 1 1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="nav-badge" data-comms-badge hidden>0</span>
+        </span>
+        <span class="app-bar__t"><i18n-t data-k="nav.comms">Comms</i18n-t></span>
+      </a>
+      <button type="button" class="app-bar__item" data-palette-open aria-label="Ouvrir la palette de commandes (⌘K)" data-i18na="aria-label=palette.open">
+        <svg class="app-bar__i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span class="app-bar__t"><i18n-t data-k="nav.search">Recherche</i18n-t></span>
+      </button>
+    </nav>
+    
+
+    <!--
+  Non-blocking PWA install prompt.
+  Slim dismissible bottom banner + bottom sheet with platform-specific
+  steps. Hidden when already installed (display-mode: standalone) or on
+  unsupported browsers (Firefox, etc).
+-->
+<div id="pwaInstallBanner" class="pwa-install-banner" hidden>
+  <img src="/assets/img/icon-192x192.png" alt="" class="pwa-install-banner__icon" width="40" height="40">
+  <div class="pwa-install-banner__body">
+    <div class="pwa-install-banner__title"><i18n-t data-k="pwa.banner_title">Installer Mentria</i18n-t></div>
+    <div class="pwa-install-banner__desc"><span class="pwa-install-banner__desc-inner"><i18n-t data-k="pwa.banner_desc">Ajouter à l&#39;écran d&#39;accueil — fonctionne hors ligne.</i18n-t></span></div>
+  </div>
+  <button type="button" id="pwaInstallBannerBtn" class="pwa-install-banner__cta"><i18n-t data-k="pwa.install_btn">Installer</i18n-t></button>
+  <button type="button" id="pwaInstallBannerClose" class="pwa-install-banner__close" aria-label="Fermer" data-i18na="aria-label=pwa.dismiss">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<div id="pwaInstallSheet" class="pwa-install-sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwaInstallSheetTitle">
+  <div class="pwa-install-sheet__backdrop" data-close="1"></div>
+  <div class="pwa-install-sheet__panel">
+    <div class="pwa-install-sheet__handle"></div>
+    <button type="button" class="pwa-install-sheet__close" aria-label="Fermer" data-close="1" data-i18na="aria-label=pwa.dismiss">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="pwa-install-sheet__body">
+      <h2 class="pwa-install-sheet__title" id="pwaInstallSheetTitle"><i18n-t data-k="pwa.banner_title">Installer Mentria</i18n-t></h2>
+      <!--
+        MP4 listed first so iOS Safari (no WebM) picks it up. Square
+        720x720 source. width/height attrs + poster + preload give
+        Safari intrinsic dimensions before metadata loads.
+      -->
+      <video class="pwa-install-sheet__video" id="pwaInstallSheetVideo"
+             width="720" height="720"
+             poster="/assets/videos/mentria-install-poster.jpg"
+             muted playsinline loop controls preload="metadata" hidden>
+        <source src="/assets/videos/mentria-install.mp4" type="video/mp4">
+        <source src="/assets/videos/mentria-install.webm" type="video/webm">
+      </video>
+      <ol class="pwa-install-sheet__steps" id="pwaInstallSheetSteps"></ol>
+      <p class="pwa-install-sheet__note" id="pwaInstallSheetNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.self !== window.top) return;
+  // Skip entirely if already installed (detected pre-paint in base.njk).
+  if (document.documentElement.classList.contains('is-standalone')) return;
+  if (document.documentElement.classList.contains('feed-layout')) return;
+  if (!document.documentElement.classList.contains('app-chrome')) return;
+
+  var DISMISS_KEY   = 'mentria_pwa_install_dismissed_at';
+  var INSTALLED_KEY = 'mentria_pwa_installed_at';
+  var DISMISS_MS    = 7 * 24 * 60 * 60 * 1000; // 7 days
+  var SHOW_DELAY    = 3000;                     // 3s on first visit
+
+  var ls = null;
+  try { ls = window.localStorage; ls.getItem('__probe__'); } catch (_) { ls = null; }
+
+  // Already installed (any prior session)? skip permanently.
+  if (ls && ls.getItem(INSTALLED_KEY)) return;
+
+  // Respect prior dismissal.
+  var dismissed = ls ? parseInt(ls.getItem(DISMISS_KEY), 10) : 0;
+  if (dismissed && (Date.now() - dismissed) < DISMISS_MS) return;
+
+  // ── Platform detection ─────────────────────────────────────
+  var ua = navigator.userAgent;
+  var isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  var isMac = /Macintosh/.test(ua);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  var isChromeLike = /Chrome|CriOS|EdgA?|OPR/.test(ua);
+  var isApplePlatform = isIos || (isMac && isSafari && !isChromeLike);
+  var canInstall = isChromeLike || isApplePlatform;
+
+  // Firefox / unsupported: silently skip — no nag.
+  if (!canInstall) return;
+
+  var banner       = document.getElementById('pwaInstallBanner');
+  var bannerBtn    = document.getElementById('pwaInstallBannerBtn');
+  var bannerClose  = document.getElementById('pwaInstallBannerClose');
+  var sheet        = document.getElementById('pwaInstallSheet');
+  var sheetTitle   = document.getElementById('pwaInstallSheetTitle');
+  var sheetSteps   = document.getElementById('pwaInstallSheetSteps');
+  var sheetNote    = document.getElementById('pwaInstallSheetNote');
+  var sheetVideo   = document.getElementById('pwaInstallSheetVideo');
+
+  var deferredPrompt = null;
+
+  // beforeinstallprompt: only fires on eligible Chrome-family browsers
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // appinstalled: hide everything, don't nag again
+  window.addEventListener('appinstalled', function () {
+    banner.hidden = true;
+    banner.classList.remove('pwa-install-banner--visible');
+    closeSheet();
+    if (ls) { ls.setItem(INSTALLED_KEY, String(Date.now())); ls.setItem(DISMISS_KEY, String(Date.now())); }
+  });
+
+  // Belt-and-suspenders: Chromium exposes getInstalledRelatedApps(); if it
+  // reports this site's PWA already installed (even from a previous browser
+  // session with localStorage cleared), hide the banner and persist the flag.
+  if (navigator.getInstalledRelatedApps) {
+    navigator.getInstalledRelatedApps().then(function (apps) {
+      if (apps && apps.length) {
+        if (ls) ls.setItem(INSTALLED_KEY, String(Date.now()));
+        banner.hidden = true;
+        banner.classList.remove('pwa-install-banner--visible');
+        closeSheet();
+      }
+    }).catch(function () {});
+  }
+
+  var bannerDesc = banner.querySelector('.pwa-install-banner__desc');
+  var bannerDescInner = banner.querySelector('.pwa-install-banner__desc-inner');
+  function setupDescMarquee() {
+    if (!bannerDesc || !bannerDescInner || banner.hidden) return;
+    bannerDesc.classList.remove('is-marquee');
+    var overflow = bannerDescInner.scrollWidth - bannerDesc.clientWidth;
+    if (overflow > 2) {
+      bannerDesc.style.setProperty('--marquee-shift', (-overflow) + 'px');
+      bannerDesc.style.setProperty('--marquee-duration', Math.min(16, Math.max(7, 5 + overflow / 16)).toFixed(1) + 's');
+      bannerDesc.classList.add('is-marquee');
+    }
+  }
+  if (window.ResizeObserver) {
+    var descRO = new ResizeObserver(function () { setupDescMarquee(); });
+    if (bannerDesc) descRO.observe(bannerDesc);
+    if (bannerDescInner) descRO.observe(bannerDescInner);
+  }
+
+  function showBanner() {
+    banner.hidden = false;
+    void banner.offsetHeight; // reflow so the slide-in transition runs
+    banner.classList.add('pwa-install-banner--visible');
+    setupDescMarquee();
+  }
+
+  function dismissBanner() {
+    if (ls) ls.setItem(DISMISS_KEY, String(Date.now()));
+    banner.classList.remove('pwa-install-banner--visible');
+    setTimeout(function () { banner.hidden = true; }, 280);
+  }
+
+  var sheetOpener = null;
+  function sheetTrapTab(e) {
+    if (e.key !== 'Tab') return;
+    if (!sheet.classList.contains('pwa-install-sheet--open')) return;
+    var focusables = Array.prototype.filter.call(
+      sheet.querySelectorAll('button, video[controls], a[href]'),
+      function (el) { return el.offsetParent; }
+    );
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!sheet.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  }
+
+  var sheetBackHandle = null;
+  function openSheet() {
+    sheetOpener = document.activeElement;
+    sheet.classList.add('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('pwa-sheet-open');
+    document.addEventListener('keydown', sheetTrapTab, true);
+    sheetBackHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+      ? window.MentriaUI.backDismiss(closeSheet) : null;
+    var closeBtn = sheet.querySelector('.pwa-install-sheet__close');
+    if (closeBtn) closeBtn.focus();
+    var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sheetVideo.hidden && !noMotion) {
+      sheetVideo.play().catch(function () { /* autoplay blocked — ignore */ });
+    }
+  }
+
+  function closeSheet() {
+    if (sheetBackHandle) { sheetBackHandle.release(); sheetBackHandle = null; }
+    sheet.classList.remove('pwa-install-sheet--open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('pwa-sheet-open');
+    document.removeEventListener('keydown', sheetTrapTab, true);
+    try { sheetVideo.pause(); } catch (_) {}
+    if (sheetOpener && document.contains(sheetOpener)) { try { sheetOpener.focus(); } catch (_) {} }
+    sheetOpener = null;
+  }
+
+  // Inline SVG icons for the iOS step strings — small enough to sit
+  // inline with the text without breaking the line.
+  var SHARE_SVG =
+    '<svg class="pwa-inline-icon" width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+  var ADD_SVG =
+    '<svg class="pwa-inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+
+  // Localized strings for sheet content — emitted from the template so
+  // the JS doesn't have to know the active language.
+  var COPY = {
+    iosTitle:    "Installer Mentria sur iPhone",
+    macosTitle:  "Installer Mentria sur Mac",
+    chromeTitle: "Installer Mentria",
+    iosStep1:    "Appuyez sur le bouton <strong>Partager</strong> en bas de l'écran",
+    iosStep2:    "Choisissez <strong>Sur l'écran d'accueil</strong>",
+    iosStep3:    "Appuyez sur <strong>Ajouter</strong> en haut à droite.",
+    macosStep1:  "Ouvrez cette page dans <strong>Safari 17+</strong>.",
+    macosStep2:  "Dans la barre de menus, choisissez <strong>Fichier → Ajouter au Dock…</strong>",
+    macosStep3:  "Cliquez sur <strong>Ajouter</strong>.",
+    chromeStep1: "Cliquez sur l'icône d'<strong>installation</strong> dans la barre d'adresse de votre navigateur.",
+    chromeStep2: "Ou ouvrez le menu (⋮) et choisissez <strong>Installer Mentria</strong>.",
+    note:        "Une fois installée, Mentria fonctionne hors ligne et vos données locales restent sur votre appareil."
+  };
+
+  function populateSheet() {
+    var stepsHtml = '';
+    var noteHtml  = '';
+    var title     = '';
+    var showVideo = true; // single Mentria install video — works for any platform
+
+    if (isIos) {
+      title = COPY.iosTitle;
+      stepsHtml =
+        '<li>' + COPY.iosStep1 + ' ' + SHARE_SVG + '</li>' +
+        '<li>' + COPY.iosStep2 + ' ' + ADD_SVG + '</li>' +
+        '<li>' + COPY.iosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else if (isApplePlatform) {
+      title = COPY.macosTitle;
+      stepsHtml =
+        '<li>' + COPY.macosStep1 + '</li>' +
+        '<li>' + COPY.macosStep2 + '</li>' +
+        '<li>' + COPY.macosStep3 + '</li>';
+      noteHtml = COPY.note;
+    } else {
+      // Chrome-family fallback if beforeinstallprompt never fired
+      title = COPY.chromeTitle;
+      stepsHtml =
+        '<li>' + COPY.chromeStep1 + '</li>' +
+        '<li>' + COPY.chromeStep2 + '</li>';
+      noteHtml = COPY.note;
+    }
+
+    sheetTitle.textContent = title;
+    sheetSteps.innerHTML   = stepsHtml;
+    sheetNote.innerHTML    = noteHtml || '';
+    sheetNote.hidden       = !noteHtml;
+    sheetVideo.hidden      = !showVideo;
+    if (showVideo) sheetVideo.load();
+  }
+
+  // ── Wire up interactions ───────────────────────────────────
+  bannerBtn.addEventListener('click', function () {
+    if (deferredPrompt) {
+      // Chrome-family with native prompt ready — trigger directly.
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function (result) {
+        deferredPrompt = null;
+        if (result.outcome === 'accepted') dismissBanner();
+      });
+      return;
+    }
+    populateSheet();
+    openSheet();
+  });
+
+  bannerClose.addEventListener('click', dismissBanner);
+
+  sheet.addEventListener('click', function (e) {
+    var target = e.target;
+    if (target && target.closest && target.closest('[data-close]')) {
+      closeSheet();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sheet.classList.contains('pwa-install-sheet--open')) {
+      closeSheet();
+    }
+  });
+
+  // First-paint grace: 3-second delay so users orient before we pop a CTA.
+  setTimeout(showBanner, SHOW_DELAY);
+
+  document.addEventListener('mentria:localechange', function () {
+    if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+    var t = window.MentriaI18n.t;
+    var map = {
+      iosTitle: 'pwa.sheet_title_ios', macosTitle: 'pwa.sheet_title_macos', chromeTitle: 'pwa.sheet_title_chrome',
+      iosStep1: 'pwa.ios_step1', iosStep2: 'pwa.ios_step2', iosStep3: 'pwa.ios_step3',
+      macosStep1: 'pwa.macos_step1', macosStep2: 'pwa.macos_step2', macosStep3: 'pwa.macos_step3',
+      chromeStep1: 'pwa.chrome_step1', chromeStep2: 'pwa.chrome_step2', note: 'pwa.note'
+    };
+    for (var k in map) { var v = t(map[k]); if (v != null) COPY[k] = v; }
+    if (sheet.classList.contains('pwa-install-sheet--open')) populateSheet();
+  });
+})();
+</script>
+
+
+    <div id="m-dialog" popover="manual" class="m-dialog" role="alertdialog" aria-modal="true" aria-labelledby="m-dialog-msg">
+      <p class="m-dialog__msg" id="m-dialog-msg"></p>
+      <div class="m-dialog__actions">
+        <button type="button" class="m-dialog__btn m-dialog__btn--ghost" id="m-dialog-cancel"><i18n-t data-k="common.dialog.cancel">Annuler</i18n-t></button>
+        <button type="button" class="m-dialog__btn m-dialog__btn--primary" id="m-dialog-ok"><i18n-t data-k="common.dialog.ok">OK</i18n-t></button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var dlg = document.getElementById('m-dialog');
+        if (!dlg || typeof dlg.showPopover !== 'function') {
+          window.mentriaConfirm = function (m) { return Promise.resolve(window.confirm(m)); };
+          window.mentriaAlert = function (m) { window.alert(m); return Promise.resolve(); };
+          return;
+        }
+        var msgEl = document.getElementById('m-dialog-msg');
+        var okBtn = document.getElementById('m-dialog-ok');
+        var cancelBtn = document.getElementById('m-dialog-cancel');
+        var okLabel = "OK";
+        var confirmLabel = "Confirmer";
+        var resolver = null;
+        var opener = null;
+        var backHandle = null;
+        function trapKey(e) {
+          if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); settle(false); return; }
+          if (e.key !== 'Tab') return;
+          var focusables = [okBtn, cancelBtn].filter(function (b) { return !b.hidden; });
+          if (!focusables.length) return;
+          var first = focusables[focusables.length - 1];
+          var last = focusables[0];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!dlg.contains(document.activeElement)) { e.preventDefault(); okBtn.focus(); }
+        }
+        function settle(result) {
+          var r = resolver; resolver = null;
+          if (backHandle) { backHandle.release(); backHandle = null; }
+          if (dlg.matches(':popover-open')) dlg.hidePopover();
+          document.removeEventListener('keydown', trapKey, true);
+          var o = opener; opener = null;
+          if (o && document.contains(o)) { try { o.focus(); } catch (_) {} }
+          if (r) r(result);
+        }
+        okBtn.addEventListener('click', function () { settle(true); });
+        cancelBtn.addEventListener('click', function () { settle(false); });
+        function open(message, mode) {
+          if (resolver) settle(false);
+          opener = document.activeElement;
+          msgEl.textContent = message;
+          cancelBtn.hidden = (mode === 'alert');
+          okBtn.textContent = (mode === 'alert') ? okLabel : confirmLabel;
+          dlg.showPopover();
+          document.addEventListener('keydown', trapKey, true);
+          backHandle = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(function () { settle(false); }) : null;
+          okBtn.focus();
+          return new Promise(function (res) { resolver = res; });
+        }
+        window.mentriaConfirm = function (m) { return open(m, 'confirm'); };
+        window.mentriaAlert = function (m) { return open(m, 'alert'); };
+        document.addEventListener('mentria:localechange', function () {
+          if (!window.MentriaI18n || !window.MentriaI18n.t) return;
+          var ok = window.MentriaI18n.t('common.dialog.ok');
+          var cf = window.MentriaI18n.t('common.dialog.confirm');
+          if (ok != null) okLabel = ok;
+          if (cf != null) confirmLabel = cf;
+          if (dlg.matches(':popover-open')) okBtn.textContent = cancelBtn.hidden ? okLabel : confirmLabel;
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var storageFullMsg = "Échec de l'enregistrement — le stockage du navigateur est plein. Libérez de l'espace pour conserver vos modifications.";
+        document.addEventListener('mentria:localechange', function () {
+          if (window.MentriaI18n && window.MentriaI18n.t) {
+            var m = window.MentriaI18n.t('common.storage_full');
+            if (m != null) storageFullMsg = m;
+          }
+        });
+        var storageErrorActive = false;
+        window.addEventListener('mentria:write', function (e) {
+          var d = e.detail || {};
+          if (d.op !== 'error' || storageErrorActive) return;
+          storageErrorActive = true;
+          Promise.resolve(typeof window.mentriaAlert === 'function' ? window.mentriaAlert(storageFullMsg) : null)
+            .catch(function () {})
+            .then(function () { setTimeout(function () { storageErrorActive = false; }, 3000); });
+        });
+      })();
+    </script>
+    <script>
+      window.mentriaConfirmHeavyDownload = async function () {
+        try {
+          if ('caches' in window) {
+            var tierShards = [
+              'https://huggingface.co/mentriaai/Qwen3.5-0.8B-mentria/resolve/main/qwen3.5-0.8b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-2B-mentria/resolve/main/qwen3.5-2b-q4-tied.safetensors',
+              'https://huggingface.co/mentriaai/Qwen3.5-4B-mentria/resolve/main/qwen3.5-4b-q4-tied-00001-of-00002.safetensors'
+            ];
+            for (var i = 0; i < tierShards.length; i++) {
+              var hit = await caches.match(tierShards[i]);
+              if (hit) return true;
+            }
+          }
+        } catch (_) {}
+        var c = navigator.connection;
+        if (!c) return true;
+        var slow = c.saveData === true || ['slow-2g', '2g', '3g'].indexOf(c.effectiveType) !== -1;
+        if (!slow) return true;
+        if (typeof window.mentriaConfirm === 'function') {
+          return window.mentriaConfirm("Cela télécharge un grand modèle d'IA (490 Mo ou plus selon le modèle) et vous semblez être sur une connexion lente ou en économie de données. Continuer ?");
+        }
+        return true;
+      };
+    </script>
+    <script>
+      (function () {
+        if (!navigator.share) return;
+        var locs = (window.MENTRIA_LOCALES || []).filter(function (l) { return l.prefix; }).map(function (l) { return l.prefix.slice(1); }).join('|');
+        var toolRe = new RegExp('^(\\/(' + locs + '))?\\/tools\\/[^/]+\\/?$');
+        if (!toolRe.test(location.pathname)) return;
+        var h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tool-share';
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span></span>';
+        btn.querySelector('span').textContent = "Partager";
+        btn.addEventListener('click', function () {
+          var desc = document.querySelector('meta[name="description"]');
+          navigator.share({
+            title: document.title,
+            text: desc ? desc.content : document.title,
+            url: location.href
+          }).catch(function () {});
+        });
+        h1.insertAdjacentElement('afterend', btn);
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var p = location.pathname, locs = window.MENTRIA_LOCALES || [];
+          for (var i = 0; i < locs.length; i++) { var pre = locs[i].prefix; if (pre && p.indexOf(pre + '/') === 0) { p = p.slice(pre.length); break; } }
+          var m = p.match(/^\/tools\/([^/]+)\/?$/);
+          if (!m) return;
+          var KEY = 'mentria_tool_usage', u = {};
+          try { u = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+          var e = u[m[1]] || { count: 0, last: 0 };
+          e.count++; e.last = Date.now(); u[m[1]] = e;
+          localStorage.setItem(KEY, JSON.stringify(u));
+        } catch (_) {}
+      })();
+    </script>
+    <script src="/assets/js/mentria-i18n.js?v=ec54a8f-09040920"></script>
+    <script>
+      (function () {
+        var brand = document.querySelector('.brand');
+        var count = 0;
+        function update() { if (brand) brand.classList.toggle('brand--ai', count > 0); }
+        document.addEventListener('mentria:ai-start', function () { count++; update(); });
+        document.addEventListener('mentria:ai-stop', function () { count = Math.max(0, count - 1); update(); });
+      })();
+      window.mentriaWrapEngine = function (engine) {
+        if (!engine || engine.__mTracked || typeof engine.generate !== 'function') return engine;
+        engine.__mTracked = true;
+        var orig = engine.generate.bind(engine);
+        engine.generate = function () {
+          document.dispatchEvent(new CustomEvent('mentria:ai-start'));
+          var settled = false;
+          var stop = function () { if (settled) return; settled = true; document.dispatchEvent(new CustomEvent('mentria:ai-stop')); };
+          try {
+            var r = orig.apply(null, arguments);
+            if (r && typeof r.then === 'function') r.then(stop, stop); else stop();
+            return r;
+          } catch (e) { stop(); throw e; }
+        };
+        return engine;
+      };
+    </script>
+    <script>
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('revealed');
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('revealed');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, { threshold: 0 });
+        for (var j = 0; j < els.length; j++) io.observe(els[j]);
+      })();
+    </script>
+    <script>
+      (function () {
+        var FS = 'terminal-frame--fullscreen';
+        var BODY_FS = 'is-fullscreen-tool';
+        function activeFrame() { return document.querySelector('.' + FS); }
+        function toolSlug() {
+          var m = (location.pathname || '').match(/\/tools\/([^/]+)\//);
+          return m ? m[1] : null;
+        }
+        function persist(state) {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.set !== 'function') return;
+          window.MentriaStore.set('ui', 'fullscreen.' + slug, state);
+        }
+        function syncPressed(frame, state) {
+          if (!frame) return;
+          var btns = frame.querySelectorAll('[data-action="toggle-fullscreen"]');
+          for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', state ? 'true' : 'false');
+        }
+        function exit(skipPersist) {
+          var frame = activeFrame();
+          if (!frame) return;
+          frame.classList.remove(FS);
+          document.body.classList.remove(BODY_FS);
+          syncPressed(frame, false);
+          if (!skipPersist) persist(false);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function enter(frame, skipPersist) {
+          var current = activeFrame();
+          if (current && current !== frame) { current.classList.remove(FS); syncPressed(current, false); }
+          frame.classList.add(FS);
+          document.body.classList.add(BODY_FS);
+          syncPressed(frame, true);
+          if (!skipPersist) persist(true);
+          window.dispatchEvent(new Event('resize'));
+        }
+        function withTransition(fn) {
+          if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.startViewTransition(fn);
+          } else {
+            fn();
+          }
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-action="toggle-fullscreen"]');
+          if (!btn) return;
+          var frame = btn.closest('.terminal-frame');
+          if (!frame) return;
+          e.preventDefault();
+          if (frame.classList.contains(FS)) withTransition(function () { exit(); });
+          else withTransition(function () { enter(frame); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape' || !activeFrame()) return;
+          if (document.querySelector('.m-modal:not([hidden]), .m-palette:not([hidden]), .hero--peek')) return;
+          withTransition(function () { exit(); });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+          var slug = toolSlug();
+          if (!slug || !window.MentriaStore || typeof window.MentriaStore.get !== 'function') return;
+          if (window.MentriaStore.get('ui', 'fullscreen.' + slug) !== true) return;
+          var frame = document.querySelector('.terminal-frame');
+          if (frame) enter(frame, true);
+        });
+      })();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.documentElement.classList.contains('app-chrome')) return;
+        var frame = document.querySelector('.terminal-frame');
+        var hero = document.querySelector('.hero');
+        if (!frame || !hero) return;
+        var titlebar = frame.querySelector('.terminal-frame__titlebar');
+        if (!titlebar) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'terminal-frame__info m-btn m-btn--ghost';
+        btn.textContent = 'ⓘ';
+        btn.setAttribute('aria-label', "À propos de cet outil");
+        btn.setAttribute('aria-expanded', 'false');
+        var filename = titlebar.querySelector('.terminal-frame__filename');
+        if (filename) filename.insertAdjacentElement('afterend', btn);
+        else titlebar.appendChild(btn);
+        var peekBack = null;
+        function isOpen() { return hero.classList.contains('hero--peek'); }
+        function open() {
+          hero.classList.add('hero--peek');
+          btn.setAttribute('aria-expanded', 'true');
+          var d = hero.querySelector('.tldr');
+          if (d) d.open = true;
+          peekBack = (window.MentriaUI && window.MentriaUI.backDismiss)
+            ? window.MentriaUI.backDismiss(close) : null;
+        }
+        function close() {
+          if (peekBack) { peekBack.release(); peekBack = null; }
+          hero.classList.remove('hero--peek');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+        btn.addEventListener('click', function () {
+          if (isOpen()) close(); else open();
+        });
+        document.addEventListener('click', function (e) {
+          if (!isOpen()) return;
+          var t = e.target;
+          if (t === btn || (t.closest && (t.closest('.terminal-frame__info') || t.closest('.hero') === hero))) return;
+          close();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && isOpen()) close();
+        });
+      });
+    </script>
+<style>.snapshot-note{margin:32px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));text-align:center;font:12px/1.6 var(--font-mono,monospace);color:var(--term-muted,#77828d);border-top:1px solid var(--term-border,#26303a)}.snapshot-note a{color:var(--accent,#6ef3c5);text-decoration:none}</style><div class="snapshot-note" role="note">Version de test (instantané de la candidature WebMCP), figée pour les tests. Pour un usage courant, rendez-vous sur <a href="https://mentria.ai/">mentria.ai</a>.</div></body>
+</html>
